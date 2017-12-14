@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 from flasgger import Swagger
 
 from app.docs import TEMPLATE
@@ -8,22 +9,12 @@ from app.views import ViewInjector
 from app.middleware import ErrorHandler, Logger
 
 cors = CORS()
-# To Swagger, or Support AJAX
-
+jwt = JWTManager()
 swagger = Swagger(template=TEMPLATE)
-# To Swagger UI
-
 error_handler = ErrorHandler()
-# To handler 4xx, 5xx errors
-
 logger = Logger()
-# To log in every context of Flask
-
 db = Mongo()
-# To Control MongoDB
-
 view = ViewInjector()
-# To Swagger Documentation
 
 
 def create_app(config_name):
@@ -36,6 +27,7 @@ def create_app(config_name):
     app_.config.from_pyfile(config_name)
 
     cors.init_app(app_)
+    jwt.init_app(app_)
     swagger.init_app(app_)
     error_handler.init_app(app_)
     logger.init_app(app_)
