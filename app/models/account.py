@@ -2,6 +2,8 @@ from datetime import datetime
 
 from app.models import *
 
+from app.models.apply import *
+
 
 class SignupWaitingModel(Document):
     """
@@ -61,22 +63,25 @@ class StudentModel(AccountBase):
     )
 
     afterschool_apply = EmbeddedDocumentField(
-        document_type=None
+        document_type=AfterSchoolApplyModel
     )
 
     extension_apply_11 = EmbeddedDocumentField(
-        document_type=None,
-        default=None
+        document_type=ExtensionApplyModel
     )
 
     extension_apply_12 = EmbeddedDocumentField(
-        document_type=None,
-        default=None
+        document_type=ExtensionApplyModel
+    )
+
+    going_out_apply = EmbeddedDocumentField(
+        document_type=GoingoutApplyModel,
+        default=GoingoutApplyModel()
     )
 
     stay_apply = EmbeddedDocumentField(
-        document_type=None,
-        default=None
+        document_type=StayApplyModel,
+        default=StayApplyModel()
     )
 
 
