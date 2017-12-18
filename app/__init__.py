@@ -11,10 +11,10 @@ from app.middleware import ErrorHandler, Logger
 cors = CORS()
 jwt = JWTManager()
 swagger = Swagger(template=TEMPLATE)
-error_handler = ErrorHandler()
-logger = Logger()
 db = Mongo()
 view = ViewInjector()
+error_handler = ErrorHandler()
+logger = Logger()
 
 
 def create_app(config_name):
@@ -29,9 +29,9 @@ def create_app(config_name):
     cors.init_app(app_)
     jwt.init_app(app_)
     swagger.init_app(app_)
+    db.init_app(app_)
     error_handler.init_app(app_)
     logger.init_app(app_)
-    db.init_app(app_)
     view.init_app(app_)
 
     return app_
