@@ -6,10 +6,12 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource, request
 from flasgger import swag_from
 
+from app.docs.student.account.alteration import *
 from app.models.account import StudentModel
 
 
 class ChangePW(Resource):
+    @swag_from(CHANGE_PW_POST)
     @jwt_required
     def post(self):
         """
@@ -57,6 +59,7 @@ class ChangePW(Resource):
 
 
 class ChangeNumber(Resource):
+    @swag_from(CHANGE_NUMBER_POST)
     def post(self):
         """
         학번 변경
