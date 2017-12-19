@@ -8,10 +8,12 @@ from flask_jwt_extended import get_jwt_identity, jwt_refresh_token_required
 from flask_restful import Resource, request
 from flasgger import swag_from
 
+from app.docs.student.account.auth import *
 from app.models.account import StudentModel, RefreshTokenModel
 
 
 class Auth(Resource):
+    @swag_from(AUTH_POST)
     def post(self):
         """
         학생 로그인
