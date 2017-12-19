@@ -61,3 +61,14 @@ class ChangeNumber(Resource):
         """
         학번 변경
         """
+        student = StudentModel.objects(
+            id=get_jwt_identity()
+        ).first()
+        if not student:
+            return Response('', 403)
+
+        new_number = int(request.form['new_number'])
+
+        student.update(number=new_number)
+
+        return Response('', 200)
