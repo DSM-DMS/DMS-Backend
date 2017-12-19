@@ -92,3 +92,25 @@ class AdminModel(AccountBase):
     meta = {
         'collection': 'admin'
     }
+
+
+class RefreshTokenModel(Document):
+    """
+    Manages JWT refresh token
+    """
+    meta = {
+        'collection': 'refresh_token'
+    }
+
+    token = UUIDField(
+        primary_key=True
+    )
+
+    token_owner = ReferenceField(
+        document_type=AccountBase,
+        required=True
+    )
+
+    pw_snapshot = StringField(
+        required=True
+    )

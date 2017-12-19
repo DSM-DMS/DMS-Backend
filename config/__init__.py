@@ -21,6 +21,8 @@ SWAGGER = {
         'title': SERVICE_NAME + ' API',
         'version': '1.0',
         'description': '''
+### <a href="https://github.com/DSM-DMS/Project-DMS-Backend">!! DMS Backend Repository !!</a>
+
 - Status Code 1xx : Informational
 - Status Code 2xx : Success
 - Status Code 3xx : Redirection
