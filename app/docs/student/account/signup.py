@@ -41,3 +41,42 @@ UUID_VERIFICATION_POST = {
         }
     }
 }
+
+SIGNUP_POST = {
+    'tags': ['계정'],
+    'description': '회원가입',
+    'parameters': [
+        {
+            'name': 'uuid',
+            'description': 'UUID',
+            'in': 'formData',
+            'type': 'str',
+            'required': True
+        },
+        {
+            'name': 'id',
+            'description': '사용자 ID',
+            'in': 'formData',
+            'type': 'str',
+            'required': True
+        },
+        {
+            'name': 'pw',
+            'description': '사용자 PW',
+            'in': 'formData',
+            'type': 'str',
+            'required': True
+        }
+    ],
+    'responses': {
+        '201': {
+            'description': '가입 완료'
+        },
+        '204': {
+            'description': '가입 불가능(이미 가입된 ID)'
+        },
+        '205': {
+            'description': '가입 불가능(유효하지 않은 UUID)'
+        }
+    }
+}

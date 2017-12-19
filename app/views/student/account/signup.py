@@ -48,6 +48,7 @@ class UUIDVerification(Resource):
 
 
 class Signup(Resource):
+    @swag_from(SIGNUP_POST)
     def post(self):
         """
         회원가입
