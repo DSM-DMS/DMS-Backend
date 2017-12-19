@@ -1,9 +1,7 @@
 from binascii import hexlify
 from hashlib import pbkdf2_hmac
-from uuid import uuid4
 
 from flask import Response, current_app
-from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource, request
 from flasgger import swag_from
 
@@ -80,7 +78,7 @@ class Signup(Resource):
 
         signup_waiting.delete()
 
-        encrypted_pw = hexlify(
+        pw = hexlify(
             data=pbkdf2_hmac(
                 hash_name='sha256',
                 password=pw.encode(),
@@ -91,7 +89,7 @@ class Signup(Resource):
 
         StudentModel(
             id=id,
-            pw=encrypted_pw,
+            pw=pw,
             name=name,
             number=number
         ).save()

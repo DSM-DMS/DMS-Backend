@@ -21,7 +21,7 @@ class Auth(Resource):
         id = request.form['id']
         pw = request.form['pw']
 
-        encrypted_pw = hexlify(
+        pw = hexlify(
             data=pbkdf2_hmac(
                 hash_name='sha256',
                 password=pw.encode(),
@@ -32,7 +32,7 @@ class Auth(Resource):
 
         student = StudentModel.objects(
             id=id,
-            pw=encrypted_pw
+            pw=pw
         ).first()
 
         if student:
@@ -42,7 +42,7 @@ class Auth(Resource):
         RefreshTokenModel(
             token=refresh_token,
             token_owner=student,
-            pw_snapshot=encrypted_pw
+            pw_snapshot=pw
         ).save()
 
         return {
