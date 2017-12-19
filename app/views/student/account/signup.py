@@ -5,11 +5,12 @@ from flask import Response, current_app
 from flask_restful import Resource, request
 from flasgger import swag_from
 
-# from app.docs.student.account.auth import *
+from app.docs.student.account.signup import *
 from app.models.account import SignupWaitingModel, StudentModel
 
 
 class IDVerification(Resource):
+    @swag_from(ID_VERIFICATION_POST)
     def post(self):
         """
         ID 중복체크
@@ -28,6 +29,7 @@ class IDVerification(Resource):
 
 
 class UUIDVerification(Resource):
+    @swag_from(UUID_VERIFICATION_POST)
     def post(self):
         """
         UUID에 대한 가입 가능 여부 검사
