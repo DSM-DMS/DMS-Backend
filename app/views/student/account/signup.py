@@ -45,3 +45,55 @@ class UUIDVerification(Resource):
             return Response('', 200)
         else:
             return Response('', 204)
+
+
+class Signup(Resource):
+    def post(self):
+        """
+        회원가입
+        API 내부에서 한 번 더 ID 중복체크와 UUID 가입 가능 여부를 검사함
+        """
+        uuid = request.form['uuid']
+        id = request.form['id']
+        pw = request.form['pw']
+
+        signup_waiting = SignupWaitingModel.objects(
+            uuid=uuid
+        )
+
+        student = StudentModel.objects(
+            id=id
+        ).first()
+
+        if not signup_waiting:
+            # Signup unavailable
+            return Response('', 205)
+
+        if student:
+            # Already signed
+            return Response('', 204)
+
+        # --- Create new student account
+
+        name = signup_waiting.name
+        number = signup_waiting.number
+
+        signup_waiting.delete()
+
+        encrypted_pw = hexlify(
+            data=pbkdf2_hmac(
+                hash_name='sha256',
+                password=pw.encode(),
+                salt=current_app.secret_key.encode(),
+                iterations=100000
+            )
+        ).decode('utf-8')
+
+        StudentModel(
+            id=id,
+            pw=encrypted_pw,
+            name=name,
+            number=number
+        ).save()
+
+        return Response('', 201)
