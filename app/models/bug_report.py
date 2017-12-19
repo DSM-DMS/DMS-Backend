@@ -5,8 +5,27 @@ from app.models import *
 
 
 class BugReportModel(Document):
-    informant = ReferenceField(StudentModel)
-    title = StringField(required=True)
-    content = StringField(required=True)
+    """
+    Bug report document
+    """
+    meta = {
+        'collection': 'bug_report'
+    }
 
-    report_date = StringField(required=True, default=str(date.today()))
+    report_date = DateTimeField(
+        required=True,
+        default=date.today()
+    )
+
+    informant = ReferenceField(
+        document_type=StudentModel,
+        required=True
+    )
+
+    title = StringField(
+        required=True
+    )
+
+    content = StringField(
+        required=True
+    )
