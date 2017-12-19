@@ -25,7 +25,7 @@ CHANGE_PW_POST = {
         }
     ],
     'responses': {
-        '201': {
+        '200': {
             'description': '비밀번호 변경 성공'
         },
         '403': {
@@ -54,7 +54,7 @@ CHANGE_NUMBER_POST = {
         }
     ],
     'responses': {
-        '201': {
+        '200': {
             'description': '학번 변경 성공'
         },
         '403': {
