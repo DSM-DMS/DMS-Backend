@@ -7,7 +7,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource, request
 from flasgger import swag_from
 
-from app.docs.student.account.auth import *
+# from app.docs.student.account.auth import *
 from app.models.account import SignupWaitingModel, StudentModel
 
 
@@ -29,4 +29,19 @@ class IDVerification(Resource):
             return Response('', 200)
 
 
-# class Signup(Resource)
+class UUIDVerification(Resource):
+    def post(self):
+        """
+        UUID에 대한 가입 가능 여부 검사
+        """
+        uuid = request.form['uuid']
+
+        signup_waiting = SignupWaitingModel.objects(
+            uuid=uuid
+        )
+
+        if signup_waiting:
+            # Signup available
+            return Response('', 200)
+        else:
+            return Response('', 204)
