@@ -52,6 +52,7 @@ class Auth(Resource):
 
 
 class Refresh(Resource):
+    @swag_from(REFRESH_POST)
     @jwt_refresh_token_required
     def post(self):
         token = RefreshTokenModel.objects(
