@@ -5,22 +5,50 @@ from app.models.account import AdminModel
 
 
 class PostBase(Document):
-    title = StringField(required=True)
-    content = StringField(required=True)
-    author = ReferenceField(AdminModel, required=True)
-    pinned = BooleanField(required=True, default=False)
+    """
+    Post data base document
+    """
+    meta = {
+        'allow_inheritance': True
+    }
 
-    write_date = StringField(required=True, default=str(date.today()))
-    meta = {'allow_inheritance': True}
+    write_date = DateTimeField(
+        required=True,
+        default=date.today()
+    )
+
+    author = ReferenceField(
+        document_type=AdminModel,
+        required=True
+    )
+
+    title = StringField(
+        required=True
+    )
+
+    content = StringField(
+        required=True
+    )
+
+    pinned = BooleanField(
+        required=True,
+        default=False
+    )
 
 
 class FAQModel(PostBase):
-    pass
+    meta = {
+        'collection': 'faq'
+    }
 
 
 class NoticeModel(PostBase):
-    pass
+    meta = {
+        'collection': 'notice'
+    }
 
 
 class RuleModel(PostBase):
-    pass
+    meta = {
+        'collection': 'rule'
+    }
