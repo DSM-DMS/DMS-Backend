@@ -2,7 +2,7 @@ from datetime import datetime
 
 from app.models import *
 
-from app.models.apply import *
+from app.models.apply import ExtensionApplyModel, GoingoutApplyModel, StayApplyModel
 
 
 class SignupWaitingModel(Document):
@@ -27,7 +27,7 @@ class SignupWaitingModel(Document):
 
 class AccountBase(Document):
     """
-    DMS Account Base Document
+    DMS account Base Document
     """
     meta = {
         'collection': 'account_base',
@@ -52,7 +52,7 @@ class AccountBase(Document):
 
 class StudentModel(AccountBase):
     """
-    Student Account
+    Student account document
     """
     meta = {
         'collection': 'student'
@@ -62,9 +62,9 @@ class StudentModel(AccountBase):
         required=True
     )
 
-    afterschool_apply = EmbeddedDocumentField(
-        document_type=AfterSchoolApplyModel
-    )
+    # afterschool_apply = EmbeddedDocumentField(
+    #     document_type=AfterSchoolApplyModel
+    # )
 
     extension_apply_11 = EmbeddedDocumentField(
         document_type=ExtensionApplyModel
@@ -87,7 +87,7 @@ class StudentModel(AccountBase):
 
 class AdminModel(AccountBase):
     """
-    Admin Account
+    Admin account document
     """
     meta = {
         'collection': 'admin'
