@@ -1,7 +1,26 @@
+from bson.objectid import ObjectId
 from datetime import date
 
 from app.models import *
 from app.models.account import StudentModel
+
+
+class AnswerModel(EmbeddedDocumentField):
+    """
+    Answer data for each question document
+    """
+    meta = {
+        'collection': 'answer'
+    }
+
+    answer_student = ReferenceField(
+        document_type=StudentModel,
+        required=True
+    )
+
+    answer = StringField(
+        required=True
+    )
 
 
 class QuestionModel(EmbeddedDocumentField):
@@ -12,8 +31,9 @@ class QuestionModel(EmbeddedDocumentField):
         'collection': 'question'
     }
 
-    survey_id = StringField(
-        required=True
+    survey_id = ObjectIdField(
+        primary_key=True,
+        default=ObjectId()
     )
 
     title = StringField(
@@ -40,15 +60,20 @@ class SurveyModel(Document):
         'collection': 'survey'
     }
 
+    creation_time = DateTimeField(
+        required=True,
+        default=date.today()
+    )
+
     title = StringField(
         required=True
     )
 
-    start_date = StringField(
+    start_date = DateTimeField(
         required=True
     )
 
-    end_date = StringField(
+    end_date = DateTimeField(
         required=True
     )
 
@@ -56,31 +81,7 @@ class SurveyModel(Document):
         IntField()
     )
 
-    creation_date = DateTimeField(
-        required=True,
-        default=date.today()
-    )
-
-    question = EmbeddedDocumentListField(
+    questions = EmbeddedDocumentListField(
         document_type=QuestionModel,
         required=True
     )
-
-
-class AnswerModel(EmbeddedDocumentField):
-    """
-    Answer data for each question document
-    """
-    meta = {
-        'collection': 'answer'
-    }
-
-    answer_student = ReferenceField(
-        document_type=StudentModel
-    )
-
-    question = ReferenceField(
-        document_type=QuestionModel
-    )
-
-    answer = StringField()
