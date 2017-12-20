@@ -3,13 +3,13 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource, request
 from flasgger import swag_from
 
-# from app.docs.student.apply.goingout import *
+from app.docs.student.apply.goingout import *
 from app.models.account import StudentModel
 from app.models.apply import GoingoutApplyModel
 
 
 class Goingout(Resource):
-    # @swag_from(GOINGOUT_GET)
+    @swag_from(GOINGOUT_GET)
     @jwt_required
     def get(self):
         """
@@ -26,7 +26,7 @@ class Goingout(Resource):
             'sun': student.goingout_apply.on_sunday
         }, 200
 
-    # @swag_from(GOINGOUT_POST)
+    @swag_from(GOINGOUT_POST)
     @jwt_required
     def post(self):
         """
