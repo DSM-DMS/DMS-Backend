@@ -15,7 +15,6 @@ MYPAGE_GET = MYPAGE_GET = {
             'description': '마이페이지 조회 성공',
             'examples': {
                 'application/json': {
-                    'signup_date': '2017-10-10',
                     'name': '조민규',
                     'number': 20120,
                     'extension_11': {

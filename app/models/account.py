@@ -11,7 +11,6 @@ class SignupWaitingModel(Document):
     """
     meta = {
         'collection': 'signup_waiting',
-        'max_documents': 240
     }
 
     uuid = UUIDField(
@@ -74,7 +73,7 @@ class StudentModel(AccountBase):
         document_type=ExtensionApplyModel
     )
 
-    going_out_apply = EmbeddedDocumentField(
+    goingout_apply = EmbeddedDocumentField(
         document_type=GoingoutApplyModel,
         default=GoingoutApplyModel()
     )
