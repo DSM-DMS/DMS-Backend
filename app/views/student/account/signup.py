@@ -60,7 +60,7 @@ class Signup(Resource):
 
         signup_waiting = SignupWaitingModel.objects(
             uuid=uuid
-        )
+        ).first()
         # To validate UUID
 
         student = StudentModel.objects(
@@ -84,7 +84,7 @@ class Signup(Resource):
         signup_waiting.delete()
 
         pw = hexlify(
-            data=pbkdf2_hmac(
+            pbkdf2_hmac(
                 hash_name='sha256',
                 password=pw.encode(),
                 salt=current_app.secret_key.encode(),

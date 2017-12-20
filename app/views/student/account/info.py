@@ -23,7 +23,6 @@ class MyPage(Resource):
             return Response('', 403)
 
         return Response(json.dumps({
-            'signup_date': student.signup_date,
             'name': student.name,
             'number': student.number,
 

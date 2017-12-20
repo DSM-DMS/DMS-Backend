@@ -22,7 +22,7 @@ class Auth(Resource):
         pw = request.form['pw']
 
         pw = hexlify(
-            data=pbkdf2_hmac(
+            pbkdf2_hmac(
                 hash_name='sha256',
                 password=pw.encode(),
                 salt=current_app.secret_key.encode(),
@@ -36,7 +36,7 @@ class Auth(Resource):
             pw=pw
         ).first()
 
-        if student:
+        if not student:
             return Response('', 401)
 
         refresh_token = uuid4()

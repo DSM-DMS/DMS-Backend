@@ -20,7 +20,7 @@ class ChangePW(Resource):
         current_pw = request.form['current_pw']
 
         current_pw = hexlify(
-            data=pbkdf2_hmac(
+            pbkdf2_hmac(
                 hash_name='sha256',
                 password=current_pw.encode(),
                 salt=current_app.secret_key.encode(),
@@ -43,7 +43,7 @@ class ChangePW(Resource):
         new_pw = request.form['new_pw']
 
         new_pw = hexlify(
-            data=pbkdf2_hmac(
+            pbkdf2_hmac(
                 hash_name='sha256',
                 password=new_pw.encode(),
                 salt=current_app.secret_key.encode(),
@@ -59,6 +59,7 @@ class ChangePW(Resource):
 
 class ChangeNumber(Resource):
     @swag_from(CHANGE_NUMBER_POST)
+    @jwt_required
     def post(self):
         """
         학번 변경
