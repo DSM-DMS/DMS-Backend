@@ -56,3 +56,49 @@ class Extension11(Resource):
         )
 
         return Response('', 201)
+
+
+class Extension12(Resource):
+    @jwt_required
+    def get(self):
+        """
+        12시 연장신청 정보 조회
+        """
+        student = StudentModel.objects(
+            id=get_jwt_identity()
+        ).first()
+        if not student:
+            return Response('', 403)
+
+        return ({
+            'class': student.extension_apply_12.class_,
+            'seat': student.extension_apply_12.seat
+        }, 200) if student.extension_apply_12 else ('', 204)
+
+    @jwt_required
+    def post(self):
+        """
+        12시 연장신청
+        """
+        student = StudentModel.objects(
+            id=get_jwt_identity()
+        ).first()
+        if not student:
+            return Response('', 403)
+
+        now = datetime.now().time()
+
+        if not APPLY_START < now < APPLY_END_12:
+            return Response('', 204)
+
+        class_ = int(request.form['class'])
+        seat = int(request.form['seat'])
+
+        student.update(
+            extension_apply_12=ExtensionApplyModel(
+                class_=class_,
+                seat=seat
+            )
+        )
+
+        return Response('', 201)
