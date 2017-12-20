@@ -14,6 +14,7 @@ from utils.extension_meta import *
 
 
 class Extension11(Resource):
+    @swag_from(EXTENSION_GET)
     @jwt_required
     def get(self):
         """
@@ -30,6 +31,8 @@ class Extension11(Resource):
             'seat': student.extension_apply_11.seat
         }, 200) if student.extension_apply_11 else ('', 204)
 
+    @swag_from(EXTENSION_POST)
+    @jwt_required
     def post(self):
         """
         11시 연장신청
@@ -59,6 +62,7 @@ class Extension11(Resource):
 
 
 class Extension12(Resource):
+    @swag_from(EXTENSION_GET)
     @jwt_required
     def get(self):
         """
@@ -75,6 +79,7 @@ class Extension12(Resource):
             'seat': student.extension_apply_12.seat
         }, 200) if student.extension_apply_12 else ('', 204)
 
+    @swag_from(EXTENSION_POST)
     @jwt_required
     def post(self):
         """
@@ -133,6 +138,7 @@ def create_extension_map(class_, hour):
 
 
 class ExtensionMap11(Resource):
+    @swag_from(EXTENSION_MAP_GET)
     @jwt_required
     def get(self):
         """
@@ -154,8 +160,12 @@ class ExtensionMap11(Resource):
 
 
 class ExtensionMap12(Resource):
+    @swag_from(EXTENSION_MAP_GET)
     @jwt_required
     def get(self):
+        """
+        12시 연장신청 지도 조회
+        """
         student = StudentModel.objects(
             id=get_jwt_identity()
         ).first()
