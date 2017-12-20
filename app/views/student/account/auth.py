@@ -29,6 +29,7 @@ class Auth(Resource):
                 iterations=100000
             )
         ).decode('utf-8')
+        # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
         student = StudentModel.objects(
             id=id,
@@ -44,6 +45,7 @@ class Auth(Resource):
             token_owner=student,
             pw_snapshot=pw
         ).save()
+        # Generate new refresh token made up of uuid4
 
         return {
             'access_token': create_access_token(id),
@@ -55,11 +57,16 @@ class Refresh(Resource):
     @swag_from(REFRESH_POST)
     @jwt_refresh_token_required
     def post(self):
+        """
+        새로운 Access Token 획득
+        """
         token = RefreshTokenModel.objects(
             token=get_jwt_identity()
         ).first()
 
         if not token or token.token_owner.pw != token.pw_snapshot:
+            # Invalid token or the token issuing password is different from the current password
+            # Returns status code 205 : Reset Content
             return Response('', 205)
 
         return {

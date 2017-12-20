@@ -61,10 +61,12 @@ class Signup(Resource):
         signup_waiting = SignupWaitingModel.objects(
             uuid=uuid
         )
+        # To validate UUID
 
         student = StudentModel.objects(
             id=id
         ).first()
+        # To validate ID
 
         if not signup_waiting:
             # Signup unavailable
@@ -89,6 +91,7 @@ class Signup(Resource):
                 iterations=100000
             )
         ).decode('utf-8')
+        # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
         StudentModel(
             id=id,
