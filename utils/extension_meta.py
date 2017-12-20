@@ -1,3 +1,5 @@
+from datetime import time
+
 APPLY_START = time(17, 30)
 APPLY_END_11 = time(20, 30)
 APPLY_END_12 = time(22, 0)

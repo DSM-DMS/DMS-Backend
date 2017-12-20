@@ -1,4 +1,4 @@
-from datetime import datetime, time
+from datetime import datetime
 import json
 
 from flask import Response
@@ -102,3 +102,70 @@ class Extension12(Resource):
         )
 
         return Response('', 201)
+
+
+def create_extension_map(class_, hour):
+    map_ = MAPS[class_]
+
+    assert hour == 11 or hour == 12
+
+    if hour == 11:
+        applied_students = {student.extension_apply_11.seat: student.name for student in StudentModel.objects() if
+                            student.extension_apply_11 and student.extension_apply_11.class_ == class_}
+    elif hour == 12:
+        applied_students = {student.extension_apply_12.seat: student.name for student in StudentModel.objects() if
+                            student.extension_apply_12 and student.extension_apply_12.class_ == class_}
+    # Dictionary comprehension generates 'seat: name' pair
+
+    seat_count = 1
+
+    for i, row in enumerate(map_):
+        for j, seat in enumerate(row):
+            if map_[i][j]:
+                if seat_count in applied_students:
+                    map_[i][j] = applied_students[seat_count]
+                else:
+                    map_[i][j] = seat_count
+
+                seat_count += 1
+
+    return map_
+
+
+class ExtensionMap11(Resource):
+    @jwt_required
+    def get(self):
+        """
+        11시 연장신청 지도 조회
+        """
+        student = StudentModel.objects(
+            id=get_jwt_identity()
+        ).first()
+        if not student:
+            return Response('', 403)
+
+        class_ = int(request.args['class'])
+
+        return Response(
+            json.dumps(create_extension_map(class_, 11), ensure_ascii=False),
+            200,
+            content_type='application/json; charset=utf8'
+        )
+
+
+class ExtensionMap12(Resource):
+    @jwt_required
+    def get(self):
+        student = StudentModel.objects(
+            id=get_jwt_identity()
+        ).first()
+        if not student:
+            return Response('', 403)
+
+        class_ = int(request.args['class'])
+
+        return Response(
+            json.dumps(create_extension_map(class_, 12), ensure_ascii=False),
+            200,
+            content_type='application/json; charset=utf8'
+        )
