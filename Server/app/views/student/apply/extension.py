@@ -153,7 +153,10 @@ class ExtensionMap11(Resource):
         class_ = int(request.args['class'])
 
         return Response(
-            json.dumps(create_extension_map(class_, 11), ensure_ascii=False),
+            json.dumps(
+                create_extension_map(class_, 11),
+                ensure_ascii=False
+            ),
             200,
             content_type='application/json; charset=utf8'
         )
@@ -175,7 +178,10 @@ class ExtensionMap12(Resource):
         class_ = int(request.args['class'])
 
         return Response(
-            json.dumps(create_extension_map(class_, 12), ensure_ascii=False),
+            json.dumps(
+                create_extension_map(class_, 12),
+                ensure_ascii=False
+            ),
             200,
             content_type='application/json; charset=utf8'
         )
