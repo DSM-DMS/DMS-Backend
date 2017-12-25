@@ -2,7 +2,7 @@ import json
 import unittest2 as unittest
 
 from app.models.account import StudentModel
-from tests.views.student import get_access_token, get_refresh_token
+from tests.views.student import get_access_token
 
 from server import app
 
