@@ -3,6 +3,7 @@ from datetime import datetime
 from app.models import *
 
 from app.models.apply import ExtensionApplyModel, GoingoutApplyModel, StayApplyModel
+from app.models.point import GoodPointModel, BadPointModel
 
 
 class SignupWaitingModel(Document):
@@ -81,6 +82,14 @@ class StudentModel(AccountBase):
     stay_apply = EmbeddedDocumentField(
         document_type=StayApplyModel,
         default=StayApplyModel()
+    )
+
+    good_point = EmbeddedDocumentListField(
+        document_type=GoodPointModel
+    )
+
+    bad_point = EmbeddedDocumentListField(
+        document_type=BadPointModel
     )
 
 
