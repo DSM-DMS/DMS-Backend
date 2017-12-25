@@ -40,14 +40,12 @@ class TestAuth(unittest.TestCase):
         self.assertEqual(data['number'], 1234)
 
         self.assertTrue('extension_11' in data)
-        self.assertEqual(data['extension_11']['class'], None)
-        self.assertEqual(data['extension_11']['seat'], None)
+        self.assertEqual(data['extension_11'], None)
         self.assertTrue('extension_12' in data)
-        self.assertEqual(data['extension_12']['class'], None)
-        self.assertEqual(data['extension_12']['seat'], None)
+        self.assertEqual(data['extension_12'], None)
 
         self.assertTrue('goingout' in data)
-        self.assertEqual(data['goingout']['sat'], None)
-        self.assertEqual(data['goingout']['sun'], None)
+        self.assertEqual(data['goingout']['sat'], False)
+        self.assertEqual(data['goingout']['sun'], False)
 
         self.assertEqual(data['stay_value'], 4)

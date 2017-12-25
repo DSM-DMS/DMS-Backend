@@ -3,7 +3,7 @@ import unittest2 as unittest
 import uuid as u
 
 from app.models.account import SignupWaitingModel, StudentModel
-from tests.views.student import get_access_token, get_refresh_token
+from tests.views.student import get_access_token
 
 from server import app
 
@@ -68,3 +68,7 @@ class TestAuth(unittest.TestCase):
         self.assertEqual(data['name'], 'new')
         self.assertTrue('number' in data)
         self.assertEqual(data['number'], 12345)
+
+        StudentModel.objects(
+            id='doesntexist'
+        ).delete()
