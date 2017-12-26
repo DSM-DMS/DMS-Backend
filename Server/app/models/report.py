@@ -17,16 +17,13 @@ class ReportBase(Document):
         required=True,
         default=datetime.now()
     )
-
     informant = ReferenceField(
         document_type=StudentModel,
         required=True
     )
-
     title = StringField(
         required=True
     )
-
     content = StringField(
         required=True
     )

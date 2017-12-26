@@ -65,16 +65,13 @@ class StudentModel(AccountBase):
     extension_apply_11 = EmbeddedDocumentField(
         document_type=ExtensionApplyModel
     )
-
     extension_apply_12 = EmbeddedDocumentField(
         document_type=ExtensionApplyModel
     )
-
     goingout_apply = EmbeddedDocumentField(
         document_type=GoingoutApplyModel,
         default=GoingoutApplyModel()
     )
-
     stay_apply = EmbeddedDocumentField(
         document_type=StayApplyModel,
         default=StayApplyModel()
@@ -83,7 +80,6 @@ class StudentModel(AccountBase):
     good_point = EmbeddedDocumentListField(
         document_type=GoodPointModel
     )
-
     bad_point = EmbeddedDocumentListField(
         document_type=BadPointModel
     )
@@ -106,12 +102,10 @@ class RefreshTokenModel(Document):
     token = UUIDField(
         primary_key=True
     )
-
     token_owner = ReferenceField(
         document_type=AccountBase,
         required=True
     )
-
     pw_snapshot = StringField(
         required=True
     )

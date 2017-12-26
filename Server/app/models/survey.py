@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 
 from app.models import *
 from app.models.account import StudentModel
@@ -14,21 +14,17 @@ class SurveyModel(Document):
 
     creation_time = DateTimeField(
         required=True,
-        default=date.today()
+        default=datetime.now()
     )
-
     title = StringField(
         required=True
     )
-
     start_date = DateTimeField(
         required=True
     )
-
     end_date = DateTimeField(
         required=True
     )
-
     target = ListField(
         IntField()
     )
@@ -46,11 +42,9 @@ class QuestionModel(Document):
         document_type=SurveyModel,
         required=True
     )
-
     title = StringField(
         required=True
     )
-
     is_objective = BooleanField(
         required=True
     )
@@ -70,12 +64,10 @@ class AnswerModel(Document):
         document_type=QuestionModel,
         required=True
     )
-
     answer_student = ReferenceField(
         document_type=StudentModel,
         required=True
     )
-
     content = StringField(
         required=True
     )

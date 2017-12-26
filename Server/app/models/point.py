@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 
 from app.models import *
 
@@ -12,15 +12,14 @@ class PointBase(EmbeddedDocument):
         'allow_inheritance': True
     }
 
-    date = DateTimeField(
+    time = DateTimeField(
         required=True,
-        default=date.today()
+        default=datetime.now()
     )
 
     reason = StringField(
         required=True
     )
-
     point = IntField(
         required=True
     )

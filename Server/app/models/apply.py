@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 
 from app.models import *
 
@@ -13,7 +13,7 @@ class ApplyBase(EmbeddedDocument):
 
     apply_date = DateTimeField(
         required=True,
-        default=date.today()
+        default=datetime.now()
     )
 
 
@@ -36,7 +36,6 @@ class ExtensionApplyModel(ApplyBase):
     class_ = IntField(
         required=True
     )
-
     seat = IntField(
         required=True
     )
@@ -54,7 +53,6 @@ class GoingoutApplyModel(ApplyBase):
         required=True,
         default=False
     )
-
     on_sunday = BooleanField(
         required=True,
         default=False

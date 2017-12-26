@@ -16,20 +16,16 @@ class PostBase(Document):
         required=True,
         default=datetime.now()
     )
-
     author = ReferenceField(
         document_type=AdminModel,
         required=True
     )
-
     title = StringField(
         required=True
     )
-
     content = StringField(
         required=True
     )
-
     pinned = BooleanField(
         required=True,
         default=False
