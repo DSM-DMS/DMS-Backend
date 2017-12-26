@@ -12,6 +12,9 @@ from app.models.meal import MealModel
 class Meal(Resource):
     @jwt_required
     def get(self):
+        """
+        급식 조회
+        """
         student = StudentModel.objects(
             id=get_jwt_identity()
         ).first()
