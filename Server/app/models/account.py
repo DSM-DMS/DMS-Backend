@@ -30,7 +30,7 @@ class AccountBase(Document):
     DMS account Base Document
     """
     meta = {
-        'collection': 'account_base',
+        'abstract': True,
         'allow_inheritance': True
     }
 

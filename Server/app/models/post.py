@@ -9,7 +9,8 @@ class PostBase(Document):
     Post data base document
     """
     meta = {
-        'allow_inheritance': True
+        'allow_inheritance': True,
+        'abstract': True
     }
 
     write_time = DateTimeField(
