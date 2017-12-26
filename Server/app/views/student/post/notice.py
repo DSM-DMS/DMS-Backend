@@ -5,11 +5,13 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource, request
 from flasgger import swag_from
 
+from app.docs.student.post.notice import *
 from app.models.account import StudentModel
 from app.models.post import NoticeModel
 
 
-class Notice(Resource):
+class NoticeList(Resource):
+    @swag_from(NOTICE_LIST_GET)
     @jwt_required
     def get(self):
         """
@@ -39,6 +41,7 @@ class Notice(Resource):
 
 
 class NoticeItem(Resource):
+    @swag_from(NOTICE_ITEM_GET)
     @jwt_required
     def get(self):
         """
