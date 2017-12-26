@@ -5,11 +5,13 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource, request
 from flasgger import swag_from
 
+from app.docs.student.post.faq import *
 from app.models.account import StudentModel
 from app.models.post import FAQModel
 
 
-class FAQ(Resource):
+class FAQList(Resource):
+    @swag_from(FAQ_LIST_GET)
     @jwt_required
     def get(self):
         """
@@ -39,6 +41,7 @@ class FAQ(Resource):
 
 
 class FAQItem(Resource):
+    @swag_from(FAQ_ITEM_GET)
     @jwt_required
     def get(self):
         """
