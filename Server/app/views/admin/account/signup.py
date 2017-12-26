@@ -14,6 +14,9 @@ class NewAccountAdmin(Resource):
     @swag_from(NEW_ACCOUNT_POST)
     @jwt_required
     def post(self):
+        """
+        새로운 관리자 계정 생성
+        """
         admin = AdminModel.objects(
             id=get_jwt_identity()
         ).first()
