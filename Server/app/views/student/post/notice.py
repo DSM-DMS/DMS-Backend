@@ -43,7 +43,7 @@ class NoticeList(Resource):
 class NoticeItem(Resource):
     @swag_from(NOTICE_ITEM_GET)
     @jwt_required
-    def get(self):
+    def get(self, post_id):
         """
         공지사항 내용 조회
         """
@@ -53,8 +53,6 @@ class NoticeItem(Resource):
 
         if not student:
             return Response('', 403)
-
-        post_id = request.form['post_id']
 
         notice = NoticeModel.objects(id=post_id).first()
 

@@ -30,6 +30,9 @@ FAQ_LIST_GET = {
                 ]
             }
         },
+        '403': {
+            'description': '권한 없음'
+        }
     }
 }
 
@@ -38,7 +41,7 @@ FAQ_ITEM_GET = {
     'description': 'FAQ 내용 조회',
     'parameters': [
         {
-            'name': 'id',
+            'name': 'post_id',
             'description': '조회할 FAQ 아이템의 ID',
             'in': 'path',
             'type': 'str',
@@ -60,6 +63,9 @@ FAQ_ITEM_GET = {
         },
         '204': {
             'description': 'FAQ 조회 실패(존재하지 않는 ID)'
+        },
+        '403': {
+            'description': '권한 없음'
         }
     }
 }

@@ -1,3 +1,4 @@
+
 TEMPLATE = {
     'schemes': [
         'http'
@@ -32,12 +33,8 @@ TEMPLATE = {
             'description': '학생 계정에 대한 신청 API'
         },
         {
-            'name': 'DMS 시스템',
-            'description': 'DMS 시스템에 대한 API'
-        },
-        {
-            'name': '기숙사',
-            'description': '기숙사 관련 API'
+            'name': '신고',
+            'description': '시설 고장, DMS 시스템 등 신고에 관한 API'
         },
         {
             'name': '게시글',

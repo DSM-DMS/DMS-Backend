@@ -11,7 +11,7 @@ from app.models.meal import MealModel
 
 class Meal(Resource):
     @jwt_required
-    def get(self):
+    def get(self, date):
         """
         급식 조회
         """
@@ -21,8 +21,6 @@ class Meal(Resource):
 
         if not student:
             return Response('', 403)
-
-        date = request.args['date']
 
         meal = MealModel.objects(
             date=date

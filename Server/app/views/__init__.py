@@ -7,6 +7,14 @@ from app.views.student.account.signup import *
 from app.views.student.apply.extension import *
 from app.views.student.apply.goingout import *
 from app.views.student.apply.stay import *
+from app.views.student.post.preview import *
+from app.views.student.post.notice import *
+from app.views.student.post.faq import *
+from app.views.student.post.rule import *
+from app.views.student.report.bug_report import *
+from app.views.student.report.facility_report import *
+from app.views.student.school_data.meal import *
+from app.views.student.survey.survey import *
 
 
 class ViewInjector(object):
@@ -32,3 +40,21 @@ class ViewInjector(object):
         api.add_resource(ExtensionMap12, '/extension/map/12')
         api.add_resource(Goingout, '/goingout')
         api.add_resource(Stay, '/stay')
+
+        api.add_resource(FAQPreview, '/preview/faq')
+        api.add_resource(NoticePreview, '/preview/notice')
+        api.add_resource(RulePreview, '/preview/rule')
+
+        api.add_resource(FAQList, '/faq')
+        api.add_resource(FAQItem, '/faq/<post_id>')
+        api.add_resource(NoticeList, '/notice')
+        api.add_resource(NoticeItem, '/notice/<post_id>')
+        api.add_resource(RuleList, '/rule')
+        api.add_resource(RuleItem, '/rule/<post_id>')
+
+        api.add_resource(BugReport, '/report/bug')
+        api.add_resource(FacilityReport, '/report/facility')
+
+        api.add_resource(Meal, '/meal/<date>')
+        api.add_resource(SurveyList, '/survey')
+        api.add_resource(Survey, '/survey/item')

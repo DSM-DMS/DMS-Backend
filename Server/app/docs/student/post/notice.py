@@ -30,6 +30,9 @@ NOTICE_LIST_GET = {
                 ]
             }
         },
+        '403': {
+            'description': '권한 없음'
+        }
     }
 }
 
@@ -38,7 +41,7 @@ NOTICE_ITEM_GET = {
     'description': '공지사항 내용 조회',
     'parameters': [
         {
-            'name': 'id',
+            'name': 'post_id',
             'description': '조회할 공지사항 아이템의 ID',
             'in': 'path',
             'type': 'str',
@@ -60,6 +63,9 @@ NOTICE_ITEM_GET = {
         },
         '204': {
             'description': '공지사항 조회 실패(존재하지 않는 ID)'
+        },
+        '403': {
+            'description': '권한 없음'
         }
     }
 }

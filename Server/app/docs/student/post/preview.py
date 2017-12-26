@@ -16,6 +16,9 @@ FAQ_PREVIEW_GET = {
         },
         '204': {
             'description': '게시글이 하나도 없음'
+        },
+        '403': {
+            'description': '권한 없음'
         }
     }
 }
@@ -38,6 +41,9 @@ NOTICE_PREVIEW_GET = {
         },
         '204': {
             'description': '게시글이 하나도 없음'
+        },
+        '403': {
+            'description': '권한 없음'
         }
     }
 }
@@ -60,6 +66,9 @@ RULE_PREVIEW_GET = {
         },
         '204': {
             'description': '게시글이 하나도 없음'
+        },
+        '403': {
+            'description': '권한 없음'
         }
     }
 }

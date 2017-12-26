@@ -31,7 +31,7 @@ MYPAGE_GET = MYPAGE_GET = {
             }
         },
         '403': {
-            'description': '해당 학생 정보 없음(재로그인 필요)'
+            'description': '권한 없음(재로그인 필요)'
         }
     }
 }

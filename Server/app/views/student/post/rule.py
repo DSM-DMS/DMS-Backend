@@ -43,7 +43,7 @@ class RuleList(Resource):
 class RuleItem(Resource):
     @swag_from(RULE_ITEM_GET)
     @jwt_required
-    def get(self):
+    def get(self, post_id):
         """
         기숙사규칙 내용 조회
         """
@@ -53,8 +53,6 @@ class RuleItem(Resource):
 
         if not student:
             return Response('', 403)
-
-        post_id = request.form['post_id']
 
         rule = RuleModel.objects(id=post_id).first()
 

@@ -43,7 +43,7 @@ class FAQList(Resource):
 class FAQItem(Resource):
     @swag_from(FAQ_ITEM_GET)
     @jwt_required
-    def get(self):
+    def get(self, post_id):
         """
         FAQ 내용 조회
         """
@@ -53,8 +53,6 @@ class FAQItem(Resource):
 
         if not student:
             return Response('', 403)
-
-        post_id = request.form['post_id']
 
         faq = FAQModel.objects(id=post_id).first()
 
