@@ -54,7 +54,12 @@ class RuleItem(Resource):
         if not student:
             return Response('', 403)
 
-        rule = RuleModel.objects(id=post_id).first()
+        if len(post_id) != 24:
+            return Response('', 204)
+
+        rule = RuleModel.objects(
+            id=post_id
+        ).first()
 
         if not rule:
             return Response('', 204)

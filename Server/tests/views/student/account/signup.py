@@ -14,7 +14,7 @@ class TestAuth(unittest.TestCase):
         self.uuid = u.uuid4()
 
         SignupWaitingModel(
-            uuid=self.uuid,
+            uuid=str(self.uuid),
             name='new',
             number=12345
         ).save()

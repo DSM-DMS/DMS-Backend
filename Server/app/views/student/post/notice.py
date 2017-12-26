@@ -54,7 +54,12 @@ class NoticeItem(Resource):
         if not student:
             return Response('', 403)
 
-        notice = NoticeModel.objects(id=post_id).first()
+        if len(post_id) != 24:
+            return Response('', 204)
+
+        notice = NoticeModel.objects(
+            id=post_id
+        ).first()
 
         if not notice:
             return Response('', 204)

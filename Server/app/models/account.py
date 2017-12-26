@@ -14,7 +14,7 @@ class SignupWaitingModel(Document):
         'collection': 'signup_waiting',
     }
 
-    uuid = UUIDField(
+    uuid = StringField(
         primary_key=True,
     )
     name = StringField(
@@ -34,7 +34,7 @@ class AccountBase(Document):
         'allow_inheritance': True
     }
 
-    signup_date = DateTimeField(
+    signup_time = DateTimeField(
         required=True,
         default=datetime.now()
     )

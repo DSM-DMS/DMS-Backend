@@ -54,7 +54,12 @@ class FAQItem(Resource):
         if not student:
             return Response('', 403)
 
-        faq = FAQModel.objects(id=post_id).first()
+        if len(post_id) != 24:
+            return Response('', 204)
+
+        faq = FAQModel.objects(
+            id=post_id
+        ).first()
 
         if not faq:
             return Response('', 204)

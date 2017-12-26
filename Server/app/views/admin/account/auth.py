@@ -39,6 +39,8 @@ class Auth(Resource):
         if not admin:
             return Response('', 401)
 
+        # --- Auth success
+
         refresh_token = uuid4()
         RefreshTokenModel(
             token=refresh_token,

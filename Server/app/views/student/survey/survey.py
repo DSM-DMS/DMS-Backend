@@ -56,6 +56,8 @@ class Survey(Resource):
             return Response('', 403)
 
         survey_id = request.args['survey_id']
+        if len(survey_id) != 24:
+            return Response('', 204)
 
         survey = SurveyModel.objects(
             id=survey_id
@@ -104,6 +106,9 @@ class Survey(Resource):
             return Response('', 403)
 
         question_id = request.form['question_id']
+        if len(question_id) != 24:
+            return Response('', 204)
+
         question = QuestionModel.objects(
             id=question_id
         ).first()

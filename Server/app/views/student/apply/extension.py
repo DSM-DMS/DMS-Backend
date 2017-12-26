@@ -46,6 +46,7 @@ class Extension11(Resource):
         now = datetime.now().time()
 
         if not APPLY_START < now < APPLY_END_11:
+            # Can't apply
             return Response('', 204)
 
         class_ = int(request.form['class'])
@@ -94,6 +95,7 @@ class Extension12(Resource):
         now = datetime.now().time()
 
         if not APPLY_START < now < APPLY_END_12:
+            # Can't apply
             return Response('', 204)
 
         class_ = int(request.form['class'])
@@ -110,6 +112,17 @@ class Extension12(Resource):
 
 
 def create_extension_map(class_, hour):
+    """
+    Creates extension map including applied student names
+
+    :param class_: class number which to create the map
+    :type class_: int
+    :param hour: 11/12
+    :type hour: int
+
+    :return: Generated extension map
+    :rtype: list
+    """
     map_ = MAPS[class_]
 
     assert hour == 11 or hour == 12
