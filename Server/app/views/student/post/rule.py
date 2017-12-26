@@ -28,7 +28,7 @@ class RuleList(Resource):
             json.dumps(
                 [{
                     'id': str(rule.id),
-                    'write_date': str(rule.write_date),
+                    'write_time': str(rule.write_time)[:-7],
                     'author': rule.author.name,
                     'title': rule.title,
                     'pinned': rule.pinned
@@ -62,7 +62,7 @@ class RuleItem(Resource):
         return Response(
             json.dumps(
                 {
-                    'write_date': str(rule.write_date),
+                    'write_time': str(rule.write_time)[:-7],
                     'author': rule.author.name,
                     'title': rule.title,
                     'content': rule.content,

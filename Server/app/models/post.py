@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 
 from app.models import *
 from app.models.account import AdminModel
@@ -12,9 +12,9 @@ class PostBase(Document):
         'allow_inheritance': True
     }
 
-    write_date = DateTimeField(
+    write_time = DateTimeField(
         required=True,
-        default=date.today()
+        default=datetime.now()
     )
 
     author = ReferenceField(

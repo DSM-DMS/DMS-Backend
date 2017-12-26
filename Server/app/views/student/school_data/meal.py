@@ -11,6 +11,7 @@ from app.models.meal import MealModel
 
 
 class Meal(Resource):
+    @swag_from(MEAL_GET)
     @jwt_required
     def get(self, date):
         """

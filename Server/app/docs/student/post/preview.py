@@ -6,7 +6,7 @@ FAQ_PREVIEW_GET = {
             'description': '프리뷰 조회 성공',
             'examples': {
                 'application/json': {
-                    'write_date': '2017-10-11',
+                    'write_time': '2017-10-11 12:14:20',
                     'author': '교촌치킨',
                     'title': '치킨 먹는법',
                     'content': '교촌허니콤보를 웨지감자와 함께',
@@ -31,7 +31,7 @@ NOTICE_PREVIEW_GET = {
             'description': '프리뷰 조회 성공',
             'examples': {
                 'application/json': {
-                    'write_date': '2017-10-16',
+                    'write_time': '2017-10-16 12:14:20',
                     'author': '사감부',
                     'title': '내일 아침 11시 기상 안내',
                     'content': '11시 기상 후 9시간동안 자습 줍니다. 그리고 하교 개꿀 동의? 어 보감~',
@@ -56,7 +56,7 @@ RULE_PREVIEW_GET = {
             'description': '프리뷰 조회 성공',
             'examples': {
                 'application/json': {
-                    'write_date': '2017-10-16',
+                    'write_time': '2017-10-16 12:14:20',
                     'author': '사감부',
                     'title': '오버워치 장려 규정',
                     'content': '기숙사 내에서 오버워치 하면 꿀잼입니다!',

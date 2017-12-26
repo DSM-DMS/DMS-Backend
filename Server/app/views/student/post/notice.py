@@ -28,7 +28,7 @@ class NoticeList(Resource):
             json.dumps(
                 [{
                     'id': str(notice.id),
-                    'write_date': str(notice.write_date),
+                    'write_time': str(notice.write_time)[:-7],
                     'author': notice.author.name,
                     'title': notice.title,
                     'pinned': notice.pinned
@@ -62,7 +62,7 @@ class NoticeItem(Resource):
         return Response(
             json.dumps(
                 {
-                    'write_date': str(notice.write_date),
+                    'write_time': str(notice.write_time)[:-7],
                     'author': notice.author.name,
                     'title': notice.title,
                     'content': notice.content,

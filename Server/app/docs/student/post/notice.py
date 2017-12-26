@@ -8,21 +8,21 @@ NOTICE_LIST_GET = {
                 'application/json': [
                     {
                         'id': 'fkdo13kroafdgmb',
-                        'write_date': '2017-10-11',
+                        'write_time': '2017-10-11 12:14:20',
                         'author': '사감부',
                         'title': '치킨 먹자',
                         'pinned': True
                     },
                     {
                         'id': 'eoqk1kcmdkallw',
-                        'write_date': '2017-10-13',
+                        'write_time': '2017-10-13 12:14:20',
                         'author': '교육부',
                         'title': '아침운동 제거 안내',
                         'pinned': False
                     },
                     {
                         'id': 'p1o9d0vmzjswek',
-                        'write_date': '2017-10-16',
+                        'write_time': '2017-10-16 12:14:20',
                         'author': '사감부',
                         'title': '내일 아침 11시 기상 안내',
                         'pinned': False
@@ -53,7 +53,7 @@ NOTICE_ITEM_GET = {
             'description': '공지사항 조회 성공',
             'examples': {
                 'application/json': {
-                    'write_date': '2017-10-16',
+                    'write_time': '2017-10-16 12:14:20',
                     'author': '사감부',
                     'title': '내일 아침 11시 기상 안내',
                     'content': '11시 기상 후 9시간동안 자습 줍니다. 그리고 하교 개꿀 동의? 어 보감~',

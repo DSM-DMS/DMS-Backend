@@ -28,7 +28,7 @@ class FAQList(Resource):
             json.dumps(
                 [{
                     'id': str(faq.id),
-                    'write_date': str(faq.write_date),
+                    'write_time': str(faq.write_time)[:-7],
                     'author': faq.author.name,
                     'title': faq.title,
                     'pinned': faq.pinned
@@ -62,7 +62,7 @@ class FAQItem(Resource):
         return Response(
             json.dumps(
                 {
-                    'write_date': str(faq.write_date),
+                    'write_time': str(faq.write_time)[:-7],
                     'author': faq.author.name,
                     'title': faq.title,
                     'content': faq.content,

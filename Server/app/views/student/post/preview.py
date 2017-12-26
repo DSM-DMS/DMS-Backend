@@ -35,7 +35,7 @@ class FAQPreview(Resource):
         return Response(
             json.dumps(
                 {
-                    'write_date': str(faq.write_date),
+                    'write_time': str(faq.write_time)[:-7],
                     'author': faq.author.name,
                     'title': faq.title,
                     'content': faq.content,
@@ -73,7 +73,7 @@ class NoticePreview(Resource):
         return Response(
             json.dumps(
                 {
-                    'write_date': str(notice.write_date),
+                    'write_time': str(notice.write_time)[:-7],
                     'author': notice.author.name,
                     'title': notice.title,
                     'content': notice.content,
@@ -111,7 +111,7 @@ class RulePreview(Resource):
         return Response(
             json.dumps(
                 {
-                    'write_date': str(rule.write_date),
+                    'write_time': str(rule.write_time)[:-7],
                     'author': rule.author.name,
                     'title': rule.title,
                     'content': rule.content,

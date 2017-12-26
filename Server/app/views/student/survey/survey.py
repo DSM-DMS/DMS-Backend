@@ -29,7 +29,7 @@ class SurveyList(Resource):
             json.dumps(
                 [{
                     'id': str(survey.id),
-                    'creation_time': str(survey.creation_time)[-7],
+                    'creation_time': str(survey.creation_time)[:-7],
                     'title': survey.title,
                     'start_date': str(survey.start_date),
                     'end_date': str(survey.end_date)
