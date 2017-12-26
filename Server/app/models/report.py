@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 
 from app.models.account import StudentModel
 from app.models import *
@@ -13,9 +13,9 @@ class ReportBase(Document):
         'allow_inheritance': True
     }
 
-    report_date = DateTimeField(
+    report_time = DateTimeField(
         required=True,
-        default=date.today()
+        default=datetime.now()
     )
 
     informant = ReferenceField(
