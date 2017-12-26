@@ -4,12 +4,13 @@ from app.models.account import StudentModel
 from app.models import *
 
 
-class BugReportModel(Document):
+class ReportBase(Document):
     """
-    Bug report document
+    Report document base
     """
     meta = {
-        'collection': 'bug_report'
+        'collection': 'report_base',
+        'allow_inheritance': True
     }
 
     report_date = DateTimeField(
@@ -28,4 +29,21 @@ class BugReportModel(Document):
 
     content = StringField(
         required=True
+    )
+
+
+class BugReportModel(ReportBase):
+    """
+    Bug report document
+    """
+
+
+class FacilityReportModel(ReportBase):
+    """
+    Facility report document
+    """
+    room = IntField(
+        required=True,
+        min_value=200,
+        max_value=599
     )
