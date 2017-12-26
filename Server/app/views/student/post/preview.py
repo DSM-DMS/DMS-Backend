@@ -5,11 +5,13 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource
 from flasgger import swag_from
 
+from app.docs.student.post.preview import *
 from app.models.account import StudentModel
 from app.models.post import FAQModel, NoticeModel, RuleModel
 
 
 class FAQPreview(Resource):
+    @swag_from(FAQ_PREVIEW_GET)
     @jwt_required
     def get(self):
         """
@@ -47,6 +49,7 @@ class FAQPreview(Resource):
 
 
 class NoticePreview(Resource):
+    @swag_from(NOTICE_PREVIEW_GET)
     @jwt_required
     def get(self):
         """
@@ -84,6 +87,7 @@ class NoticePreview(Resource):
 
 
 class RulePreview(Resource):
+    @swag_from(RULE_PREVIEW_GET)
     @jwt_required
     def get(self):
         """
