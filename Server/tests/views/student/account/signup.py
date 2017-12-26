@@ -3,7 +3,7 @@ import unittest2 as unittest
 import uuid as u
 
 from app.models.account import SignupWaitingModel, StudentModel
-from tests.views.student import get_access_token
+from tests.views.student import create_fake_account, get_access_token
 
 from server import app
 
@@ -11,19 +11,13 @@ from server import app
 class TestAuth(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
+        create_fake_account()
         self.uuid = u.uuid4()
 
         SignupWaitingModel(
             uuid=str(self.uuid),
             name='new',
             number=12345
-        ).save()
-
-        StudentModel(
-            id='fake',
-            pw='9b2941f9e75a663a58d8f2102b3e40fab93e2a386471091cf64a80f32aa400fe',
-            name='fake',
-            number=1234
         ).save()
 
     def tearDown(self):

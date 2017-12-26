@@ -2,7 +2,7 @@ import json
 import unittest2 as unittest
 
 from app.models.account import StudentModel
-from tests.views.student import get_access_token, get_refresh_token
+from tests.views.student import create_fake_account, get_access_token, get_refresh_token
 
 from server import app
 
@@ -10,13 +10,7 @@ from server import app
 class TestAuth(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
-
-        StudentModel(
-            id='fake',
-            pw='9b2941f9e75a663a58d8f2102b3e40fab93e2a386471091cf64a80f32aa400fe',
-            name='fake',
-            number=1234
-        ).save()
+        create_fake_account()
 
     def tearDown(self):
         StudentModel.objects(
