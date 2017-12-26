@@ -54,10 +54,6 @@ class StudentModel(AccountBase):
     """
     Student account document
     """
-    meta = {
-        'collection': 'student'
-    }
-
     number = IntField(
         required=True
     )
@@ -97,9 +93,6 @@ class AdminModel(AccountBase):
     """
     Admin account document
     """
-    meta = {
-        'collection': 'admin'
-    }
 
 
 class RefreshTokenModel(Document):
