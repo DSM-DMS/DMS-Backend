@@ -80,7 +80,7 @@ class Extension11(Resource):
             extension_apply_11=None
         )
 
-        return Response('', 204)
+        return Response('', 200)
 
 
 class Extension12(Resource):
@@ -150,7 +150,7 @@ class Extension12(Resource):
             extension_apply_12=None
         )
 
-        return Response('', 204)
+        return Response('', 200)
 
 
 def create_extension_map(class_, hour):

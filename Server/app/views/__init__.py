@@ -63,6 +63,9 @@ class ViewInjector(object):
         api.add_resource(AdminBugReport, '/admin/report/bug')
         api.add_resource(AdminFacilityReport, '/admin/report/facility')
 
+        api.add_resource(AdminSurvey, '/admin/survey')
+        api.add_resource(AdminSurveyQuestion, '/admin/survey/question')
+
         # Student account
         api.add_resource(ChangePW, '/change/pw')
         api.add_resource(ChangeNumber, '/change/number')
@@ -99,4 +102,4 @@ class ViewInjector(object):
         # Mixed school_data
         api.add_resource(Meal, '/meal/<date>')
         api.add_resource(SurveyList, '/survey')
-        api.add_resource(Survey, '/survey/item')
+        api.add_resource(Survey, '/survey/question')

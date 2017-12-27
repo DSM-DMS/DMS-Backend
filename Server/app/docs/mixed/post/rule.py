@@ -1,5 +1,5 @@
 RULE_LIST_GET = {
-    'tags': ['게시글'],
+    'tags': ['게시글', '게시글 관리'],
     'description': '기숙사규정 리스트',
     'responses': {
         '200': {
@@ -37,7 +37,7 @@ RULE_LIST_GET = {
 }
 
 RULE_ITEM_GET = {
-    'tags': ['게시글'],
+    'tags': ['게시글', '게시글 관리'],
     'description': '기숙사규정 내용 조회',
     'parameters': [
         {

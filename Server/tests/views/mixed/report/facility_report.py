@@ -50,7 +50,7 @@ class TestFacilityReport(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
 
         flag = False
-        for report in json.loads(rv.data):
+        for report in json.loads(rv.data.decode()):
             if report['title'] == report['content'] == 'test' and report['room'] == 415:
                 flag = True
 

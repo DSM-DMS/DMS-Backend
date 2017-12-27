@@ -46,7 +46,7 @@ TEMPLATE = {
         },
         {
             'name': '게시글',
-            'description': '학생과 관리자 권한으로 접근 가능한 게시글 조회 관련 API'
+            'description': '학생 권한으로 접근 가능한 게시글 조회 관련 API'
         },
 
         {
