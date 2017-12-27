@@ -9,10 +9,10 @@ services: mongodb
 
 install:
   - pip3 install -r requirements.txt
-  - pip3 install python-coveralls
+  - pip3 install coveralls
 
 script:
-  - python3 Server/server.py -m unittest
+  - coverage run Server/server.py
 
 after_success:
   - coveralls
