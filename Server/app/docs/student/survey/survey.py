@@ -1,6 +1,6 @@
-SURVEY_LIST_GET = {
-    'tags': ['설문조사'],
-    'description': '설문조사 리스트 불러오기(학생 학년에 따라 필터링됨)',
+SURVEY_GET = {
+    'tags': ['설문지'],
+    'description': '설문지 리스트 불러오기(학생 학년에 따라 필터링됨)',
     'parameters': [
         {
             'name': 'Authorization',
@@ -12,7 +12,7 @@ SURVEY_LIST_GET = {
     ],
     'responses': {
         '200': {
-            'description': '설문조사 리스트 불러오기 성공',
+            'description': '설문지 리스트 불러오기 성공',
             'examples': {
                 'application/json': [
                     {
@@ -38,9 +38,9 @@ SURVEY_LIST_GET = {
     }
 }
 
-SURVEY_GET = {
-    'tags': ['설문조사'],
-    'description': '설문조사 질문 리스트 불러오기',
+QUESTION_GET = {
+    'tags': ['설문지'],
+    'description': '설문지 질문 리스트 불러오기',
     'parameters': [
         {
             'name': 'Authorization',
@@ -51,7 +51,7 @@ SURVEY_GET = {
         },
         {
             'name': 'survey_id',
-            'description': '설문조사 ID',
+            'description': '설문지 ID',
             'in': 'query',
             'type': 'str',
             'required': True
@@ -79,7 +79,7 @@ SURVEY_GET = {
             }
         },
         '204': {
-            'description': '존재하지 않는 설문조사 ID'
+            'description': '존재하지 않는 설문지 ID'
         },
         '403': {
             'description': '권한 없음'
@@ -87,8 +87,8 @@ SURVEY_GET = {
     }
 }
 
-SURVEY_POST = {
-    'tags': ['설문조사'],
+QUESTION_POST = {
+    'tags': ['설문지'],
     'description': '답변 남기기',
     'parameters': [
         {

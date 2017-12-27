@@ -49,12 +49,12 @@ TEMPLATE = {
         },
 
         {
-            'name': '설문조사 관리',
-            'description': '관리자 권한으로 접근 가능한 설문조사 관리 API'
+            'name': '설문지 관리',
+            'description': '관리자 권한으로 접근 가능한 설문지 관리 API'
         },
         {
-            'name': '설문조사',
-            'description': '학생 권한으로 접근 가능한 설문조사 API'
+            'name': '설문지',
+            'description': '학생 권한으로 접근 가능한 설문지 API'
         },
 
         {
