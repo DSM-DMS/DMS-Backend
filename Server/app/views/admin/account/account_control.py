@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from flask import Response, jsonify
+from flask import Response
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
 from flask_restful import Resource, request
@@ -14,7 +14,7 @@ class AccountControl(Resource):
     @jwt_required
     def delete(self):
         """
-        학생 계정 삭제
+        학생 계정 제거 후 새로운 UUID 생성
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
@@ -29,9 +29,8 @@ class AccountControl(Resource):
         name = student.name
         student.delete()
 
-        uuid = uuid4()
         SignupWaitingModel(
-            uuid=str(uuid),
+            uuid=str(uuid4()),
             name=name,
             number=number
         ).save()
@@ -41,16 +40,18 @@ class AccountControl(Resource):
     @jwt_required
     def get(self):
         """
-        StudentWaitingModel uuid 확인
+        특정 학번에 해당하는 UUID 조회
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
         number = request.form['number']
-        sign_up = SignupWaitingModel.objects(number=number).first()
+        signup_waiting = SignupWaitingModel.objects(number=number).first()
 
-        if sign_up:
-            return {'uuid': sign_up.uuid}, 200
+        if signup_waiting:
+            return {
+                'uuid': signup_waiting.uuid
+            }, 200
         else:
             return Response('', 204)
