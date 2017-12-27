@@ -1,5 +1,5 @@
 NOTICE_LIST_GET = {
-    'tags': ['게시글'],
+    'tags': ['게시글', '게시글 관리'],
     'description': '공지사항 리스트',
     'responses': {
         '200': {
@@ -37,7 +37,7 @@ NOTICE_LIST_GET = {
 }
 
 NOTICE_ITEM_GET = {
-    'tags': ['게시글'],
+    'tags': ['게시글', '게시글 관리'],
     'description': '공지사항 내용 조회',
     'parameters': [
         {

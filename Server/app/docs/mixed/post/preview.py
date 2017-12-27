@@ -1,5 +1,5 @@
 FAQ_PREVIEW_GET = {
-    'tags': ['게시글'],
+    'tags': ['게시글', '게시글 관리'],
     'description': 'FAQ 프리뷰 조회. Pin된 게시글이 없으면 최신 글을 불러옵니다.',
     'responses': {
         '200': {
@@ -24,7 +24,7 @@ FAQ_PREVIEW_GET = {
 }
 
 NOTICE_PREVIEW_GET = {
-    'tags': ['게시글'],
+    'tags': ['게시글', '게시글 관리'],
     'description': '공지사항 프리뷰 조회. Pin된 게시글이 없으면 최신 글을 불러옵니다.',
     'responses': {
         '200': {
@@ -49,7 +49,7 @@ NOTICE_PREVIEW_GET = {
 }
 
 RULE_PREVIEW_GET = {
-    'tags': ['게시글'],
+    'tags': ['게시글', '게시글 관리'],
     'description': '기숙사규정 프리뷰 조회. Pin된 게시글이 없으면 최신 글을 불러옵니다.',
     'responses': {
         '200': {

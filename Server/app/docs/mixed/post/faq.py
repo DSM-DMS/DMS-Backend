@@ -1,5 +1,5 @@
 FAQ_LIST_GET = {
-    'tags': ['게시글'],
+    'tags': ['게시글', '게시글 관리'],
     'description': 'FAQ 리스트',
     'responses': {
         '200': {
@@ -37,7 +37,7 @@ FAQ_LIST_GET = {
 }
 
 FAQ_ITEM_GET = {
-    'tags': ['게시글'],
+    'tags': ['게시글', '게시글 관리'],
     'description': 'FAQ 내용 조회',
     'parameters': [
         {

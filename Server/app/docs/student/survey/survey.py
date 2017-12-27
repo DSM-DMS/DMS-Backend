@@ -1,5 +1,5 @@
 SURVEY_LIST_GET = {
-    'tags': ['기숙사'],
+    'tags': ['설문조사'],
     'description': '설문조사 리스트 불러오기(학생 학년에 따라 필터링됨)',
     'parameters': [
         {
@@ -39,7 +39,7 @@ SURVEY_LIST_GET = {
 }
 
 SURVEY_GET = {
-    'tags': ['기숙사'],
+    'tags': ['설문조사'],
     'description': '설문조사 질문 리스트 불러오기',
     'parameters': [
         {
@@ -88,7 +88,7 @@ SURVEY_GET = {
 }
 
 SURVEY_POST = {
-    'tags': ['기숙사'],
+    'tags': ['설문조사'],
     'description': '답변 남기기',
     'parameters': [
         {
