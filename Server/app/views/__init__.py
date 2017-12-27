@@ -16,6 +16,7 @@ from app.views.student.report.bug_report import *
 from app.views.student.report.facility_report import *
 from app.views.student.survey.survey import *
 from app.views.admin.account.auth import *
+from app.views.admin.account.signup import *
 
 
 class ViewInjector(object):
@@ -29,6 +30,7 @@ class ViewInjector(object):
         # Admin account
         api.add_resource(Admin_Auth, '/admin/auth')
         api.add_resource(Admin_Refresh, '/admin/refresh')
+        api.add_resource(NewAccountAdmin, '/admin/signup')
 
         # Student account
         api.add_resource(ChangePW, '/change/pw')
