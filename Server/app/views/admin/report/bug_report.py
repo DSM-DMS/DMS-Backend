@@ -2,14 +2,16 @@ import json
 
 from flask import Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
+from flask_restful import Resource
 from flasgger import swag_from
 
+from app.docs.admin.report.bug_report import *
 from app.models.account import AdminModel
 from app.models.report import BugReportModel
 
 
 class AdminBugReport(Resource):
+    @swag_from(BUG_REPORT_GET)
     @jwt_required
     def get(self):
         """
