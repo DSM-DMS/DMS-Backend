@@ -27,7 +27,7 @@ class TestGoingout(unittest.TestCase):
         rv = self.client.get('/goingout', headers={'Authorization': self.access_token})
         self.assertEqual(rv.status_code, 200)
         data = json.loads(rv.data.decode())
-        self.assertFalse((data['sat'], data['sun']))
+        self.assertFalse(all((data['sat'], data['sun'])))
 
         rv = self.client.post('/goingout')
         self.assertEqual(rv.status_code, 401)
