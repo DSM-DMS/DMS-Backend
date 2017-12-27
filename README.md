@@ -1,4 +1,4 @@
-# Project-DMS-Backend [![Build Status](https://travis-ci.org/DSM-DMS/Project-DMS-Backend.svg?branch=master)](https://travis-ci.org/DSM-DMS/Project-DMS-Backend) [![works badge](https://cdn.rawgit.com/nikku/works-on-my-machine/v0.2.0/badge.svg)](https://github.com/nikku/works-on-my-machine)
+# Project-DMS-Backend [![Build Status](https://travis-ci.org/DSM-DMS/Project-DMS-Backend.svg?branch=master)](https://travis-ci.org/DSM-DMS/Project-DMS-Backend) [![Coverage Status](https://coveralls.io/repos/github/DSM-DMS/Project-DMS-Backend/badge.svg?branch=master)](https://coveralls.io/github/DSM-DMS/Project-DMS-Backend?branch=master) [![works badge](https://cdn.rawgit.com/nikku/works-on-my-machine/v0.2.0/badge.svg)](https://github.com/nikku/works-on-my-machine)
 ## About
 DMS 프로젝트의 2017년 12월 리메이크 일정에 의해 만들어진 백엔드 포지션의 Repository입니다.
 
