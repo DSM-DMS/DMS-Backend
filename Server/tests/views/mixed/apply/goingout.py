@@ -20,7 +20,7 @@ class TestGoingout(unittest.TestCase):
         TC about goingout apply
 
         1. Check 'apply status all false'
-        2. Check 'unauthorized'
+        2. Check 'unauthorized on goingout apply'
         3. Check 'apply succeed'
         4. Check 'apply status'
         """

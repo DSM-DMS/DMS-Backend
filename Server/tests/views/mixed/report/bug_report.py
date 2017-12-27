@@ -25,7 +25,14 @@ class TestBugReport(unittest.TestCase):
             content='test'
         ).delete()
 
-    def testReport(self):
+    def testA_report(self):
+        """
+        TC about bug report
+
+        1. Check 'unauthorized on bug report'
+        2. Check 'report succeed'
+        3. Check 'unauthorized on bug report getting'
+        """
         rv = self.client.post('/report/bug')
         self.assertEqual(rv.status_code, 401)
         # Unauthorized check

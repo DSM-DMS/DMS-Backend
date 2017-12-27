@@ -19,7 +19,7 @@ class TestAuth(unittest.TestCase):
         """
         TC about admin's signup
 
-        1. Check 'unauthorized'
+        1. Check 'unauthorized on create new account'
         2. Check 'ID validation failed'
         3. Check 'signup succeed'
         4. Check 'login succeed'

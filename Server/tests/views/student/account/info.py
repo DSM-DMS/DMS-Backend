@@ -14,7 +14,13 @@ class TestAuth(unittest.TestCase):
     def tearDown(self):
         student.remove_fake_account()
 
-    def testMypage(self):
+    def testA_mypage(self):
+        """
+        TC about mypage
+
+        1. Check 'unauthorized on inquire mypage'
+        2. Check 'mypage data'
+        """
         rv = self.client.get('/mypage')
         self.assertEqual(rv.status_code, 401)
         # Unauthorized check

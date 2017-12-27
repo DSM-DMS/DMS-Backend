@@ -23,21 +23,41 @@ class TestAuth(unittest.TestCase):
     def tearDown(self):
         student.remove_fake_account()
 
-    def testIDVerify(self):
+    def testA_IDVerify(self):
+        """
+        TC about ID verification
+
+        1. Check 'already existing ID'
+        2. Check 'non-existing ID'
+        """
         rv = self.client.post('/verify/id', data={'id': 'fake'})
         self.assertEqual(rv.status_code, 204)
 
         rv = self.client.post('/verify/id', data={'id': 'doesntexist'})
         self.assertEqual(rv.status_code, 200)
 
-    def testUUIDVerify(self):
+    def testB_UUIDVerify(self):
+        """
+        TC about UUID verification
+
+        1. Check 'already existing UUID'
+        2. Check 'non-existing UUID'
+        """
         rv = self.client.post('/verify/uuid', data={'uuid': str(u.uuid4())})
         self.assertEqual(rv.status_code, 204)
 
         rv = self.client.post('/verify/uuid', data={'uuid': str(self.uuid)})
         self.assertEqual(rv.status_code, 200)
 
-    def testSignup(self):
+    def testC_signup(self):
+        """
+        TC about student's signup
+
+        1. Check 'UUID validation failed'
+        2. Check 'ID validation failed'
+        3. Check 'signup succeed'
+        4. Check 'account default data'
+        """
         rv = self.client.post('/signup', data={'uuid': str(u.uuid4()), 'id': 'doesntexist', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 205)
         # UUID validation failed

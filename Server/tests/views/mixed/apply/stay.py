@@ -21,7 +21,7 @@ class TestStay(unittest.TestCase):
         TC about stay apply
 
         1. Check 'applied value 4'
-        2. Check 'unauthorized'
+        2. Check 'unauthorized on stay apply'
         3. Check 'apply succeed'
         4. Check 'apply status'
         """

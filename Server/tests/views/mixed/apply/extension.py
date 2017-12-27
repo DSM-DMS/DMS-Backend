@@ -17,12 +17,12 @@ class TestExtension(unittest.TestCase):
     def tearDown(self):
         student.remove_fake_account()
 
-    def testA_extension11_apply(self):
+    def testA_extension11Apply(self):
         """
         TC about extension apply 11
 
         1. Check 'unapplied'
-        2. Check 'unauthorized'
+        2. Check 'unauthorized on extension apply'
         3. Check 'apply succeed'
         4. Check 'apply status'
         """
@@ -47,17 +47,17 @@ class TestExtension(unittest.TestCase):
         else:
             self.assertEqual(rv.status_code, 204)
 
-    def testB_extension11_delete(self):
+    def testB_extension11Delete(self):
         """
         TC about withdraw extension apply 11
         """
 
-    def testC_extension12_apply(self):
+    def testC_extension12Apply(self):
         """
         TC about extension apply 12
 
         1. Check 'unapplied'
-        2. Check 'unauthorized'
+        2. Check 'unauthorized on extension apply'
         3. Check 'apply succeed'
         4. Check 'apply status'
         """
@@ -82,7 +82,7 @@ class TestExtension(unittest.TestCase):
         else:
             self.assertEqual(rv.status_code, 204)
 
-    def testD_extension12_delete(self):
+    def testD_extension12Delete(self):
         """
         TC about withdraw extension apply 12
         """

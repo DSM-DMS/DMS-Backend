@@ -26,7 +26,14 @@ class TestFacilityReport(unittest.TestCase):
             room=415
         ).delete()
 
-    def testReport(self):
+    def testA_report(self):
+        """
+        TC about facility report
+
+        1. Check 'unauthorized on facility report'
+        2. Check 'report succeed'
+        3. Check 'unauthorized on facility report getting'
+        """
         rv = self.client.post('/report/facility')
         self.assertEqual(rv.status_code, 401)
         # Unauthorized check

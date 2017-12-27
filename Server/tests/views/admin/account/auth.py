@@ -38,8 +38,8 @@ class TestAuth(unittest.TestCase):
         """
         TC about admin's refresh
 
-        1. Check 'unauthorized'
-        2. Check 'refresh succeed'
+        1. Check 'unauthorized on refresh'
+        2. Check 'refresh success'
         3. Check 'new access token'
         """
         rv = self.client.post('/admin/refresh')

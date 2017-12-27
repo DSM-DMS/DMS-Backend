@@ -14,7 +14,14 @@ class TestAuth(unittest.TestCase):
     def tearDown(self):
         student.remove_fake_account()
 
-    def testAuth(self):
+    def testA_auth(self):
+        """
+        TC about student's auth
+
+        1. Check 'login failed'
+        2. Check 'login succeed'
+        3. Check 'access token/refresh token'
+        """
         rv = self.client.post('/auth', data={'id': 'chicken', 'pw': 'chicken'})
         self.assertEqual(rv.status_code, 401)
         # Login fail
@@ -27,7 +34,15 @@ class TestAuth(unittest.TestCase):
         self.assertTrue('access_token' in data and 'refresh_token' in data)
         # Token check
 
-    def testRefresh(self):
+    def testB_refresh(self):
+        """
+        TC about admin's refresh
+
+        1. Check 'unauthorized on refresh'
+        2. Check 'refresh success'
+        3. Check 'new access token'
+        4. Check 'refresh failed after password changed'
+        """
         rv = self.client.post('/refresh')
         self.assertEqual(rv.status_code, 401)
         # Unauthorized check
