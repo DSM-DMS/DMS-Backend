@@ -19,6 +19,7 @@ class MyPage(Resource):
         student = StudentModel.objects(
             id=get_jwt_identity()
         ).first()
+
         if not student:
             return Response('', 403)
 

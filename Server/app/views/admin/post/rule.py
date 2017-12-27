@@ -18,6 +18,7 @@ class AdminRule(Resource):
         admin = AdminModel.objects(
             id=get_jwt_identity()
         ).first()
+
         if not admin:
             return Response('', 403)
 

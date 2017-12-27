@@ -19,6 +19,7 @@ class AdminExtension11(Resource):
         admin = AdminModel.objects(
             id=get_jwt_identity()
         ).first()
+
         if not admin:
             return Response('', 403)
 
@@ -65,7 +66,10 @@ class AdminExtension12(Resource):
         """
         12시 연장신청 엑셀 다운로드
         """
-        admin = AdminModel.objects(id=get_jwt_identity())
+        admin = AdminModel.objects(
+            id=get_jwt_identity()
+        ).first()
+
         if not admin:
             return Response('', 403)
 

@@ -15,21 +15,32 @@ class AdminFAQPreview(Resource):
         """
         FAQ 프리뷰 설정
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        admin = AdminModel.objects(
+            id=get_jwt_identity()
+        ).first()
+
         if not admin:
             return Response('', 403)
 
         id = request.form.get('id')
 
-        pinned_faq = FAQModel.objects(pinned=True).first()
+        pinned_faq = FAQModel.objects(
+            pinned=True
+        ).first()
         if pinned_faq:
-            pinned_faq.update(pinned=False)
+            pinned_faq.update(
+                pinned=False
+            )
 
-        faq = FAQModel.objects(id=id).first()
+        faq = FAQModel.objects(
+            id=id
+        ).first()
         if not faq:
             return Response('', 204)
 
-        faq.update(pinned=True)
+        faq.update(
+            pinned=True
+        )
 
         return Response('', 201)
 
@@ -41,21 +52,31 @@ class AdminNoticePreview(Resource):
         """
         공지사항 프리뷰 설정
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        admin = AdminModel.objects(
+            id=get_jwt_identity()
+        ).first()
         if not admin:
             return Response('', 403)
 
         id = request.form.get('id')
 
-        pinned_notice = NoticeModel.objects(pinned=True).first()
+        pinned_notice = NoticeModel.objects(
+            pinned=True
+        ).first()
         if pinned_notice:
-            pinned_notice.update(pinned=False)
+            pinned_notice.update(
+                pinned=False
+            )
 
-        notice = NoticeModel.objects(id=id).first()
+        notice = NoticeModel.objects(
+            id=id
+        ).first()
         if not notice:
             return Response('', 204)
 
-        notice.update(pinned=True)
+        notice.update(
+            pinned=True
+        )
 
         return Response('', 201)
 
@@ -67,20 +88,30 @@ class AdminRulePreview(Resource):
         """
         기숙사규정 프리뷰 설정
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        admin = AdminModel.objects(
+            id=get_jwt_identity()
+        ).first()
         if not admin:
             return Response('', 403)
 
         id = request.form.get('id')
 
-        pinned_rule = RuleModel.objects(pinned=True).first()
+        pinned_rule = RuleModel.objects(
+            pinned=True
+        ).first()
         if pinned_rule:
-            pinned_rule.update(pinned=False)
+            pinned_rule.update(
+                pinned=False
+            )
 
-        rule = RuleModel.objects(id=id).first()
+        rule = RuleModel.objects(
+            id=id
+        ).first()
         if not rule:
             return Response('', 204)
 
-        rule.update(pinned=True)
+        rule.update(
+            pinned=True
+        )
 
         return Response('', 201)

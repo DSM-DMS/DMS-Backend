@@ -23,6 +23,7 @@ class Extension11(Resource):
         student = StudentModel.objects(
             id=get_jwt_identity()
         ).first()
+
         if not student:
             return Response('', 403)
 
@@ -40,6 +41,7 @@ class Extension11(Resource):
         student = StudentModel.objects(
             id=get_jwt_identity()
         ).first()
+
         if not student:
             return Response('', 403)
 
@@ -61,6 +63,24 @@ class Extension11(Resource):
 
         return Response('', 201)
 
+    @jwt_required
+    def delete(self):
+        """
+        11시 연장신청 취소
+        """
+        student = StudentModel.objects(
+            id=get_jwt_identity()
+        ).first()
+
+        if not student:
+            return Response('', 403)
+
+        student.update(
+            extension_apply_11=None
+        )
+
+        return Response('', 204)
+
 
 class Extension12(Resource):
     @swag_from(EXTENSION_GET)
@@ -72,6 +92,7 @@ class Extension12(Resource):
         student = StudentModel.objects(
             id=get_jwt_identity()
         ).first()
+
         if not student:
             return Response('', 403)
 
@@ -89,6 +110,7 @@ class Extension12(Resource):
         student = StudentModel.objects(
             id=get_jwt_identity()
         ).first()
+
         if not student:
             return Response('', 403)
 
@@ -109,6 +131,24 @@ class Extension12(Resource):
         )
 
         return Response('', 201)
+
+    @jwt_required
+    def delete(self):
+        """
+        12시 연장신청 취소
+        """
+        student = StudentModel.objects(
+            id=get_jwt_identity()
+        ).first()
+
+        if not student:
+            return Response('', 403)
+
+        student.update(
+            extension_apply_12=None
+        )
+
+        return Response('', 204)
 
 
 def create_extension_map(class_, hour):
@@ -160,6 +200,7 @@ class ExtensionMap11(Resource):
         student = StudentModel.objects(
             id=get_jwt_identity()
         ).first()
+
         if not student:
             return Response('', 403)
 
@@ -185,6 +226,7 @@ class ExtensionMap12(Resource):
         student = StudentModel.objects(
             id=get_jwt_identity()
         ).first()
+
         if not student:
             return Response('', 403)
 
