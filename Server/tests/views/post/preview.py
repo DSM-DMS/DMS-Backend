@@ -1,7 +1,7 @@
 import json
 import unittest2 as unittest
 
-from tests.views import admin, student
+from tests.views import account_admin, account_student
 
 from server import app
 
@@ -9,15 +9,15 @@ from server import app
 class TestPreview(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
-        admin.create_fake_account()
-        student.create_fake_account()
+        account_admin.create_fake_account()
+        account_student.create_fake_account()
 
-        self.admin_access_token = admin.get_access_token(self.client)
-        self.student_access_token = student.get_access_token(self.client)
+        self.admin_access_token = account_admin.get_access_token(self.client)
+        self.student_access_token = account_student.get_access_token(self.client)
 
     def tearDown(self):
-        student.remove_fake_account()
-        admin.remove_fake_account()
+        account_admin.remove_fake_account()
+        account_student.remove_fake_account()
 
     def testA_faqPreviewSet(self):
         """

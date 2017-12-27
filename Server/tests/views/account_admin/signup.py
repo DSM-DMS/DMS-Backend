@@ -1,6 +1,6 @@
 import unittest2 as unittest
 
-from tests.views import admin
+from tests.views import account_admin
 
 from server import app
 
@@ -8,12 +8,12 @@ from server import app
 class TestAuth(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
-        admin.create_fake_account()
-        self.access_token = admin.get_access_token(self.client)
+        account_admin.create_fake_account()
+        self.access_token = account_admin.get_access_token(self.client)
 
     def tearDown(self):
-        admin.remove_fake_account()
-        admin.remove_fake_account('chicken')
+        account_admin.remove_fake_account()
+        account_admin.remove_fake_account('chicken')
 
     def testA_signup(self):
         """

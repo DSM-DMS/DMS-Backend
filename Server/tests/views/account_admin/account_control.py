@@ -2,8 +2,7 @@ import json
 import unittest2 as unittest
 
 from app.models.account import SignupWaitingModel
-from tests.views import student
-from tests.views import admin
+from tests.views import account_admin, account_student
 
 from server import app
 
@@ -11,13 +10,13 @@ from server import app
 class TestAccountControl(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
-        student.create_fake_account()
-        admin.create_fake_account()
-        self.access_token = admin.get_access_token(self.client)
+        account_admin.create_fake_account()
+        account_student.create_fake_account()
+        self.access_token = account_admin.get_access_token(self.client)
 
     def tearDown(self):
-        student.remove_fake_account()
-        admin.remove_fake_account()
+        account_admin.remove_fake_account()
+        account_student.remove_fake_account()
 
     def testA_DeleteAccount(self):
         """

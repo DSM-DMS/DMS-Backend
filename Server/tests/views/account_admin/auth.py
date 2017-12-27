@@ -1,7 +1,7 @@
 import json
 import unittest2 as unittest
 
-from tests.views import admin
+from tests.views import account_admin
 
 from server import app
 
@@ -9,10 +9,10 @@ from server import app
 class TestAuth(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
-        admin.create_fake_account()
+        account_admin.create_fake_account()
 
     def tearDown(self):
-        admin.remove_fake_account()
+        account_admin.remove_fake_account()
 
     def testA_auth(self):
         """
@@ -46,7 +46,7 @@ class TestAuth(unittest.TestCase):
         self.assertEqual(rv.status_code, 401)
         # Unauthorized check
 
-        refresh_token = admin.get_refresh_token(self.client)
+        refresh_token = account_admin.get_refresh_token(self.client)
         rv = self.client.post('/admin/refresh', headers={'Authorization': refresh_token})
         self.assertEqual(rv.status_code, 200)
         # Success

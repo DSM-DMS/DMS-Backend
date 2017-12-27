@@ -1,7 +1,7 @@
 import json
 import unittest2 as unittest
 
-from tests.views import student
+from tests.views import account_student
 
 from server import app
 
@@ -9,10 +9,10 @@ from server import app
 class TestAuth(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
-        student.create_fake_account()
+        account_student.create_fake_account()
 
     def tearDown(self):
-        student.remove_fake_account()
+        account_student.remove_fake_account()
 
     def testA_auth(self):
         """
@@ -47,7 +47,7 @@ class TestAuth(unittest.TestCase):
         self.assertEqual(rv.status_code, 401)
         # Unauthorized check
 
-        refresh_token = student.get_refresh_token(self.client)
+        refresh_token = account_student.get_refresh_token(self.client)
         rv = self.client.post('/refresh', headers={'Authorization': refresh_token})
         self.assertEqual(rv.status_code, 200)
         # Success
@@ -56,7 +56,7 @@ class TestAuth(unittest.TestCase):
         self.assertTrue('access_token' in data)
         # New access token check
 
-        access_token = student.get_access_token(self.client)
+        access_token = account_student.get_access_token(self.client)
         rv = self.client.post('/change/pw', headers={'Authorization': access_token}, data={'current_pw': 'fake', 'new_pw': 'new'})
         self.assertEqual(rv.status_code, 200)
         # Change password
