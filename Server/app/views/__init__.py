@@ -1,6 +1,7 @@
 from flask_restful import Api
 
 from app.views.admin.account.auth import *
+from app.views.admin.account.account_control import *
 from app.views.admin.account.signup import *
 from app.views.admin.apply.afterschool import *
 from app.views.admin.apply.extension import *
@@ -44,6 +45,7 @@ class ViewInjector(object):
 
         # Admin account
         api.add_resource(AdminAuth, '/admin/auth')
+        api.add_resource(AccountControl, '/account_control')
         api.add_resource(AdminRefresh, '/admin/refresh')
 
         api.add_resource(AdminNewAccount, '/admin/new-account')
