@@ -1,11 +1,11 @@
 import json
 
+from flasgger import swag_from
 from flask import Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
-from flasgger import swag_from
+from flask_restful import Resource
 
-from app.docs.student.post.rule import *
+from app.docs.mixed.post.rule import *
 from app.models.account import StudentModel
 from app.models.post import RuleModel
 

@@ -26,7 +26,7 @@ class BugReport(Resource):
         content = request.form['content']
 
         BugReportModel(
-            informant=student,
+            author=student,
             title=title,
             content=content
         ).save()

@@ -17,7 +17,7 @@ class ReportBase(Document):
         required=True,
         default=datetime.now()
     )
-    informant = ReferenceField(
+    author = ReferenceField(
         document_type=StudentModel,
         required=True
     )

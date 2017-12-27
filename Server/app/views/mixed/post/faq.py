@@ -1,12 +1,12 @@
 import json
 
+from flasgger import swag_from
 from flask import Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
-from flasgger import swag_from
+from flask_restful import Resource
 
-from app.docs.student.post.faq import *
-from app.models.account import StudentModel
+from app.docs.mixed.post.faq import *
+from app.models.account import AdminModel, StudentModel
 from app.models.post import FAQModel
 
 
@@ -17,11 +17,15 @@ class FAQList(Resource):
         """
         FAQ 리스트 조회
         """
+        admin = AdminModel.objects(
+            id=get_jwt_identity()
+        ).first()
+
         student = StudentModel.objects(
             id=get_jwt_identity()
         ).first()
 
-        if not student:
+        if not any((admin, student)):
             return Response('', 403)
 
         return Response(
@@ -47,11 +51,15 @@ class FAQItem(Resource):
         """
         FAQ 내용 조회
         """
+        admin = AdminModel.objects(
+            id=get_jwt_identity()
+        ).first()
+
         student = StudentModel.objects(
             id=get_jwt_identity()
         ).first()
 
-        if not student:
+        if not any((admin, student)):
             return Response('', 403)
 
         if len(post_id) != 24:

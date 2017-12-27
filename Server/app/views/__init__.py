@@ -1,5 +1,10 @@
 from flask_restful import Api
 
+from app.views.mixed.post.faq import *
+from app.views.mixed.post.notice import *
+from app.views.mixed.post.rule import *
+from app.views.mixed.post.preview import *
+from app.views.mixed.school_data.meal import *
 from app.views.student.account.alteration import *
 from app.views.student.account.auth import *
 from app.views.student.account.info import *
@@ -7,13 +12,8 @@ from app.views.student.account.signup import *
 from app.views.student.apply.extension import *
 from app.views.student.apply.goingout import *
 from app.views.student.apply.stay import *
-from app.views.student.post.preview import *
-from app.views.student.post.notice import *
-from app.views.student.post.faq import *
-from app.views.student.post.rule import *
 from app.views.student.report.bug_report import *
 from app.views.student.report.facility_report import *
-from app.views.student.school_data.meal import *
 from app.views.student.survey.survey import *
 
 

@@ -27,7 +27,7 @@ class FacilityReport(Resource):
         room = int(request.form['room'])
 
         FacilityReportModel(
-            informant=student,
+            author=student,
             title=title,
             content=content,
             room=room
