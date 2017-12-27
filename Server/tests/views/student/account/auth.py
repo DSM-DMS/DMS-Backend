@@ -19,7 +19,7 @@ class TestAuth(unittest.TestCase):
 
     def testAuth(self):
         rv = self.client.post('/auth', data={'id': 'chicken', 'pw': 'chicken'})
-        self.assertEqual(rv.status_code, 204)
+        self.assertEqual(rv.status_code, 401)
         # Login fail
 
         rv = self.client.post('/auth', data={'id': 'fake', 'pw': 'fake'})
