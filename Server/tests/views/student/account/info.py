@@ -1,7 +1,6 @@
 import json
 import unittest2 as unittest
 
-from app.models.account import StudentModel
 from tests.views import student
 
 from server import app
@@ -13,9 +12,7 @@ class TestAuth(unittest.TestCase):
         student.create_fake_account()
 
     def tearDown(self):
-        StudentModel.objects(
-            id='fake'
-        ).delete()
+        student.remove_fake_account()
 
     def testMypage(self):
         rv = self.client.get('/mypage')

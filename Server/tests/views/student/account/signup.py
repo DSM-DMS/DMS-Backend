@@ -2,7 +2,7 @@ import json
 import unittest2 as unittest
 import uuid as u
 
-from app.models.account import SignupWaitingModel, StudentModel
+from app.models.account import SignupWaitingModel
 from tests.views import student
 
 from server import app
@@ -21,9 +21,7 @@ class TestAuth(unittest.TestCase):
         ).save()
 
     def tearDown(self):
-        StudentModel.objects(
-            id='fake'
-        ).delete()
+        student.remove_fake_account()
 
     def testIDVerify(self):
         rv = self.client.post('/verify/id', data={'id': 'fake'})

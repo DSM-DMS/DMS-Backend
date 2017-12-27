@@ -2,7 +2,6 @@ from datetime import datetime
 import json
 import unittest2 as unittest
 
-from app.models.account import StudentModel
 from tests.views import student
 
 from server import app
@@ -16,9 +15,7 @@ class TestExtension(unittest.TestCase):
         self.access_token = student.get_access_token(self.client)
 
     def tearDown(self):
-        StudentModel.objects(
-            id='fake'
-        ).delete()
+        student.remove_fake_account()
 
     def testExtension11(self):
         rv = self.client.get('/extension/11', headers={'Authorization': self.access_token})

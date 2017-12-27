@@ -1,7 +1,6 @@
 import json
 import unittest2 as unittest
 
-from app.models.account import AdminModel, StudentModel
 from app.models.report import BugReportModel
 from tests.views import admin, student
 
@@ -18,13 +17,8 @@ class TestBugReport(unittest.TestCase):
         self.admin_access_token = admin.get_access_token(self.client)
 
     def tearDown(self):
-        StudentModel.objects(
-            id='fake'
-        ).delete()
-
-        AdminModel.objects(
-            id='fake'
-        ).delete()
+        student.remove_fake_account()
+        admin.remove_fake_account()
 
         BugReportModel.objects(
             title='test',

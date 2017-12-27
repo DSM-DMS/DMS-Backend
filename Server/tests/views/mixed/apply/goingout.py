@@ -1,7 +1,6 @@
 import json
 import unittest2 as unittest
 
-from app.models.account import StudentModel
 from tests.views import student
 
 from server import app
@@ -14,9 +13,7 @@ class TestGoingout(unittest.TestCase):
         self.access_token = student.get_access_token(self.client)
 
     def tearDown(self):
-        StudentModel.objects(
-            id='fake'
-        ).delete()
+        student.remove_fake_account()
 
     def testGoingout(self):
         rv = self.client.get('/goingout', headers={'Authorization': self.access_token})

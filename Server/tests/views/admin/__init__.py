@@ -24,6 +24,12 @@ def create_fake_account():
     ).save()
 
 
+def remove_fake_account(id='fake'):
+    AdminModel.objects(
+        id=id
+    ).delete()
+
+
 def get_access_token(client, id='fake', pw='fake'):
     rv = client.post('/admin/auth', data={'id': id, 'pw': pw})
 

@@ -1,6 +1,5 @@
 import unittest2 as unittest
 
-from app.models.account import AdminModel
 from tests.views import admin
 
 from server import app
@@ -12,13 +11,8 @@ class TestAuth(unittest.TestCase):
         admin.create_fake_account()
 
     def tearDown(self):
-        AdminModel.objects(
-            id='fake'
-        ).delete()
-
-        AdminModel.objects(
-            id='chicken'
-        ).delete()
+        admin.remove_fake_account()
+        admin.remove_fake_account('chicken')
 
     def testSignup(self):
         rv = self.client.post('/admin/new-account', data={'id': 'chicken', 'pw': 'chicken'})

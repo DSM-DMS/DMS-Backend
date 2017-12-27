@@ -25,6 +25,12 @@ def create_fake_account():
     ).save()
 
 
+def remove_fake_account(id='fake'):
+    StudentModel.objects(
+        id=id
+    ).delete()
+
+
 def get_access_token(client, id='fake', pw='fake'):
     rv = client.post('/auth', data={'id': id, 'pw': pw})
 
