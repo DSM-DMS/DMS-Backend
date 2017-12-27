@@ -15,20 +15,14 @@ class AdminFAQ(Resource):
         """
         FAQ 업로드
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
         title = request.form['title']
         content = request.form['content']
 
-        FAQModel(
-            author=admin,
-            title=title,
-            content=content
-        ).save()
+        FAQModel(author=admin, title=title, content=content).save()
 
         return Response('', 201)
 
@@ -38,10 +32,7 @@ class AdminFAQ(Resource):
         """
         FAQ 수정
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
@@ -49,17 +40,12 @@ class AdminFAQ(Resource):
         title = request.form['title']
         content = request.form['content']
 
-        faq = FAQModel.objects(
-            id=id
-        ).first()
+        faq = FAQModel.objects(id=id).first()
 
         if not faq:
             return Response('', 204)
 
-        faq.update(
-            title=title,
-            content=content
-        )
+        faq.update(title=title, content=content)
 
         return Response('', 200)
 
@@ -69,17 +55,13 @@ class AdminFAQ(Resource):
         """
         FAQ 제거
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
         id = request.form['id']
 
-        faq = FAQModel.objects(
-            id=id
-        ).first()
+        faq = FAQModel.objects(id=id).first()
 
         if not faq:
             return Response('', 204)

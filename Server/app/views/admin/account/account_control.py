@@ -16,17 +16,12 @@ class AccountControl(Resource):
         """
         학생 계정 삭제
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
         number = request.form['number']
-        student = StudentModel.objects(
-            number=number
-        ).first()
+        student = StudentModel.objects(number=number).first()
 
         if not student:
             return Response('', 204)
@@ -46,19 +41,14 @@ class AccountControl(Resource):
     @jwt_required
     def get(self):
         """
-        StudentWatingModel uuid 확인
+        StudentWaitingModel uuid 확인
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
         number = request.form['number']
-        sign_up = SignupWaitingModel.objects(
-            number=number
-        ).first()
+        sign_up = SignupWaitingModel.objects(number=number).first()
 
         if sign_up:
             return {'uuid': sign_up.uuid}, 200

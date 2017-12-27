@@ -21,21 +21,15 @@ class Auth(Resource):
         id = request.form['id']
         pw = request.form['pw']
 
-        pw = hexlify(
-            pbkdf2_hmac(
-                hash_name='sha256',
-                password=pw.encode(),
-                salt=current_app.secret_key.encode(),
-                iterations=100000
-            )
-        ).decode('utf-8')
+        pw = hexlify(pbkdf2_hmac(
+            hash_name='sha256',
+            password=pw.encode(),
+            salt=current_app.secret_key.encode(),
+            iterations=100000
+        )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
-        student = StudentModel.objects(
-            id=id,
-            pw=pw
-        ).first()
-
+        student = StudentModel.objects(id=id,pw=pw).first()
         if not student:
             return Response('', 401)
 
@@ -62,9 +56,7 @@ class Refresh(Resource):
         """
         새로운 Access Token 획득
         """
-        token = RefreshTokenModel.objects(
-            token=get_jwt_identity()
-        ).first()
+        token = RefreshTokenModel.objects(token=get_jwt_identity()).first()
 
         if not token or token.token_owner.pw != token.pw_snapshot:
             # Invalid token or the token issuing password is different from the current password

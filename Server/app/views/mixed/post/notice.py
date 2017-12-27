@@ -17,31 +17,20 @@ class NoticeList(Resource):
         """
         공지사항 리스트 조회
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not any((admin, student)):
             return Response('', 403)
 
-        return Response(
-            json.dumps(
-                [{
-                    'id': str(notice.id),
-                    'write_time': str(notice.write_time)[:-7],
-                    'author': notice.author.name,
-                    'title': notice.title,
-                    'pinned': notice.pinned
-                } for notice in NoticeModel.objects],
-                ensure_ascii=False
-            ),
-            200,
-            content_type='application/json; charset=utf8'
-        )
+        response = [{
+            'id': str(notice.id),
+            'write_time': str(notice.write_time)[:-7],
+            'author': notice.author.name,
+            'title': notice.title,
+            'pinned': notice.pinned
+        } for notice in NoticeModel.objects]
+
+        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
 
 class NoticeItem(Resource):
@@ -51,38 +40,24 @@ class NoticeItem(Resource):
         """
         공지사항 내용 조회
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not any((admin, student)):
             return Response('', 403)
 
         if len(post_id) != 24:
             return Response('', 204)
 
-        notice = NoticeModel.objects(
-            id=post_id
-        ).first()
-
+        notice = NoticeModel.objects(id=post_id).first()
         if not notice:
             return Response('', 204)
 
-        return Response(
-            json.dumps(
-                {
-                    'write_time': str(notice.write_time)[:-7],
-                    'author': notice.author.name,
-                    'title': notice.title,
-                    'content': notice.content,
-                    'pinned': notice.pinned
-                },
-                ensure_ascii=False
-            ),
-            200,
-            content_type='application/json; charset=utf8'
-        )
+        response = {
+            'write_time': str(notice.write_time)[:-7],
+            'author': notice.author.name,
+            'title': notice.title,
+            'content': notice.content,
+            'pinned': notice.pinned
+        }
+
+        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')

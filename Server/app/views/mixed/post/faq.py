@@ -17,31 +17,20 @@ class FAQList(Resource):
         """
         FAQ 리스트 조회
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not any((admin, student)):
             return Response('', 403)
 
-        return Response(
-            json.dumps(
-                [{
-                    'id': str(faq.id),
-                    'write_time': str(faq.write_time)[:-7],
-                    'author': faq.author.name,
-                    'title': faq.title,
-                    'pinned': faq.pinned
-                } for faq in FAQModel.objects],
-                ensure_ascii=False
-            ),
-            200,
-            content_type='application/json; charset=utf8'
-        )
+        response = [{
+            'id': str(faq.id),
+            'write_time': str(faq.write_time)[:-7],
+            'author': faq.author.name,
+            'title': faq.title,
+            'pinned': faq.pinned
+        } for faq in FAQModel.objects]
+
+        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
 
 class FAQItem(Resource):
@@ -51,38 +40,24 @@ class FAQItem(Resource):
         """
         FAQ 내용 조회
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not any((admin, student)):
             return Response('', 403)
 
         if len(post_id) != 24:
             return Response('', 204)
 
-        faq = FAQModel.objects(
-            id=post_id
-        ).first()
-
+        faq = FAQModel.objects(id=post_id).first()
         if not faq:
             return Response('', 204)
 
-        return Response(
-            json.dumps(
-                {
-                    'write_time': str(faq.write_time)[:-7],
-                    'author': faq.author.name,
-                    'title': faq.title,
-                    'content': faq.content,
-                    'pinned': faq.pinned
-                },
-                ensure_ascii=False
-            ),
-            200,
-            content_type='application/json; charset=utf8'
-        )
+        response = {
+            'write_time': str(faq.write_time)[:-7],
+            'author': faq.author.name,
+            'title': faq.title,
+            'content': faq.content,
+            'pinned': faq.pinned
+        }
+
+        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')

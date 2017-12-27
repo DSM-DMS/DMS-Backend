@@ -15,21 +15,14 @@ class AdminRule(Resource):
         """
         기숙사규정 업로드
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
         title = request.form['title']
         content = request.form['content']
 
-        RuleModel(
-            author=admin,
-            title=title,
-            content=content
-        ).save()
+        RuleModel(author=admin, title=title, content=content).save()
 
         return Response('', 201)
 
@@ -39,9 +32,7 @@ class AdminRule(Resource):
         """
         기숙사규정 수정
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
@@ -49,17 +40,12 @@ class AdminRule(Resource):
         title = request.form['title']
         content = request.form['content']
 
-        rule = RuleModel.objects(
-            id=id
-        ).first()
+        rule = RuleModel.objects(id=id).first()
 
         if not rule:
             return Response('', 204)
 
-        rule.update(
-            title=title,
-            content=content
-        )
+        rule.update(title=title, content=content)
 
         return Response('', 200)
 
@@ -69,17 +55,13 @@ class AdminRule(Resource):
         """
         기숙사규정 제거
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
         id = request.form['id']
 
-        rule = RuleModel.objects(
-            id=id
-        ).first()
+        rule = RuleModel.objects(id=id).first()
 
         if not rule:
             return Response('', 204)

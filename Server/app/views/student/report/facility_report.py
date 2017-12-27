@@ -15,10 +15,7 @@ class FacilityReport(Resource):
         """
         시설고장 신고
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 
@@ -26,11 +23,6 @@ class FacilityReport(Resource):
         content = request.form['content']
         room = int(request.form['room'])
 
-        FacilityReportModel(
-            author=student,
-            title=title,
-            content=content,
-            room=room
-        ).save()
+        FacilityReportModel(author=student, title=title, content=content, room=room).save()
 
         return Response('', 201)

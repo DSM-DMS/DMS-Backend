@@ -17,10 +17,7 @@ class AdminNewAccount(Resource):
         """
         새로운 관리자 계정 생성
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
@@ -33,20 +30,14 @@ class AdminNewAccount(Resource):
 
         # --- Create new admin account
 
-        pw = hexlify(
-            pbkdf2_hmac(
-                hash_name='sha256',
-                password=pw.encode(),
-                salt=current_app.secret_key.encode(),
-                iterations=100000
-            )
-        ).decode('utf-8')
+        pw = hexlify(pbkdf2_hmac(
+            hash_name='sha256',
+            password=pw.encode(),
+            salt=current_app.secret_key.encode(),
+            iterations=100000
+        )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
-        AdminModel(
-            id=id,
-            pw=pw,
-            name=name
-        ).save()
+        AdminModel(id=id, pw=pw, name=name).save()
 
         return Response('', 201)

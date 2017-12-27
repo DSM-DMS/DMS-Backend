@@ -16,10 +16,7 @@ class AdminStay(Resource):
         """
         잔류신청 엑셀 다운로드
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 

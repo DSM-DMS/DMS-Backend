@@ -15,10 +15,7 @@ class Goingout(Resource):
         """
         외출신청 정보 조회
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 
@@ -33,21 +30,13 @@ class Goingout(Resource):
         """
         외출신청
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 
         sat = request.form['sat'].upper() == 'TRUE'
         sun = request.form['sun'].upper() == 'TRUE'
 
-        student.update(
-            goingout_apply=GoingoutApplyModel(
-                on_saturday=sat,
-                on_sunday=sun
-            )
-        )
+        student.update(goingout_apply=GoingoutApplyModel(on_saturday=sat,on_sunday=sun))
 
         return Response('', 201)

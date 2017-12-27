@@ -20,10 +20,7 @@ class Extension11(Resource):
         """
         11시 연장신청 정보 조회
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 
@@ -38,10 +35,7 @@ class Extension11(Resource):
         """
         11시 연장신청
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 
@@ -54,12 +48,7 @@ class Extension11(Resource):
         class_ = int(request.form['class'])
         seat = int(request.form['seat'])
 
-        student.update(
-            extension_apply_11=ExtensionApplyModel(
-                class_=class_,
-                seat=seat
-            )
-        )
+        student.update(extension_apply_11=ExtensionApplyModel(class_=class_, seat=seat))
 
         return Response('', 201)
 
@@ -69,16 +58,11 @@ class Extension11(Resource):
         """
         11시 연장신청 취소
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 
-        student.update(
-            extension_apply_11=None
-        )
+        student.update(extension_apply_11=None)
 
         return Response('', 200)
 
@@ -90,10 +74,7 @@ class Extension12(Resource):
         """
         12시 연장신청 정보 조회
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 
@@ -108,10 +89,7 @@ class Extension12(Resource):
         """
         12시 연장신청
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 
@@ -124,12 +102,7 @@ class Extension12(Resource):
         class_ = int(request.form['class'])
         seat = int(request.form['seat'])
 
-        student.update(
-            extension_apply_12=ExtensionApplyModel(
-                class_=class_,
-                seat=seat
-            )
-        )
+        student.update(extension_apply_12=ExtensionApplyModel(class_=class_,seat=seat))
 
         return Response('', 201)
 
@@ -139,16 +112,11 @@ class Extension12(Resource):
         """
         12시 연장신청 취소
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 
-        student.update(
-            extension_apply_12=None
-        )
+        student.update(extension_apply_12=None)
 
         return Response('', 200)
 
@@ -199,23 +167,13 @@ class ExtensionMap11(Resource):
         """
         11시 연장신청 지도 조회
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 
         class_ = int(request.args['class'])
 
-        return Response(
-            json.dumps(
-                create_extension_map(class_, 11),
-                ensure_ascii=False
-            ),
-            200,
-            content_type='application/json; charset=utf8'
-        )
+        return Response(json.dumps(create_extension_map(class_, 11), ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
 
 class ExtensionMap12(Resource):
@@ -225,20 +183,10 @@ class ExtensionMap12(Resource):
         """
         12시 연장신청 지도 조회
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 
         class_ = int(request.args['class'])
 
-        return Response(
-            json.dumps(
-                create_extension_map(class_, 12),
-                ensure_ascii=False
-            ),
-            200,
-            content_type='application/json; charset=utf8'
-        )
+        return Response(json.dumps(create_extension_map(class_, 12), ensure_ascii=False), 200, content_type='application/json; charset=utf8')
