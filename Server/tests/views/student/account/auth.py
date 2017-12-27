@@ -18,6 +18,10 @@ class TestAuth(unittest.TestCase):
         ).delete()
 
     def testAuth(self):
+        rv = self.client.post('/auth', data={'id': 'chicken', 'pw': 'chicken'})
+        self.assertEqual(rv.status_code, 204)
+        # Login fail
+
         rv = self.client.post('/auth', data={'id': 'fake', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 200)
         # Success
