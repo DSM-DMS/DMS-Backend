@@ -61,6 +61,4 @@ class TestAuth(unittest.TestCase):
         self.assertTrue('number' in data)
         self.assertEqual(data['number'], 12345)
 
-        StudentModel.objects(
-            id='doesntexist'
-        ).delete()
+        student.remove_fake_account('doesntexist')
