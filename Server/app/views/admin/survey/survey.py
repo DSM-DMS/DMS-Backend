@@ -23,12 +23,14 @@ class AdminSurvey(Resource):
             return Response('', 403)
 
         title = request.form['title']
+        description = request.form['description']
         start_date = request.form['start_date']
         end_date = request.form['end_date']
         target = list(request.form['target'])
 
         SurveyModel(
             title=title,
+            description=description,
             start_date=start_date,
             end_date=end_date,
             target=target

@@ -12,6 +12,9 @@ class SurveyModel(Document):
         'collection': 'survey'
     }
 
+    description = StringField(
+        required=True
+    )
     creation_time = DateTimeField(
         required=True,
         default=datetime.now()
