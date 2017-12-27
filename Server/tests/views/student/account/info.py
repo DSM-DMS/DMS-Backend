@@ -2,7 +2,7 @@ import json
 import unittest2 as unittest
 
 from app.models.account import StudentModel
-from tests.views.student import create_fake_account, get_access_token
+from tests.views import student
 
 from server import app
 
@@ -10,7 +10,7 @@ from server import app
 class TestAuth(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
-        create_fake_account()
+        student.create_fake_account()
 
     def tearDown(self):
         StudentModel.objects(
@@ -22,7 +22,7 @@ class TestAuth(unittest.TestCase):
         self.assertEqual(rv.status_code, 401)
         # Unauthorized check
 
-        access_token = get_access_token(self.client)
+        access_token = student.get_access_token(self.client)
 
         rv = self.client.get('/mypage', headers={'Authorization': access_token})
         self.assertEqual(rv.status_code, 200)

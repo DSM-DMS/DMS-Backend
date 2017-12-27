@@ -3,7 +3,7 @@ import unittest2 as unittest
 import uuid as u
 
 from app.models.account import SignupWaitingModel, StudentModel
-from tests.views.student import create_fake_account, get_access_token
+from tests.views import student
 
 from server import app
 
@@ -11,7 +11,7 @@ from server import app
 class TestAuth(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
-        create_fake_account()
+        student.create_fake_account()
         self.uuid = u.uuid4()
 
         SignupWaitingModel(
@@ -52,7 +52,7 @@ class TestAuth(unittest.TestCase):
         self.assertEqual(rv.status_code, 201)
         # Success
 
-        access_token = get_access_token(self.client, 'doesntexist', 'fake')
+        access_token = student.get_access_token(self.client, 'doesntexist', 'fake')
 
         rv = self.client.get('/mypage', headers={'Authorization': access_token})
         self.assertEqual(rv.status_code, 200)

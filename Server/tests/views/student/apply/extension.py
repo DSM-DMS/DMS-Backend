@@ -3,7 +3,7 @@ import json
 import unittest2 as unittest
 
 from app.models.account import StudentModel
-from tests.views.student import create_fake_account, get_access_token
+from tests.views import student
 
 from server import app
 from utils.extension_meta import *
@@ -12,8 +12,8 @@ from utils.extension_meta import *
 class TestExtension(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
-        create_fake_account()
-        self.access_token = get_access_token(self.client)
+        student.create_fake_account()
+        self.access_token = student.get_access_token(self.client)
 
     def tearDown(self):
         StudentModel.objects(
