@@ -28,6 +28,7 @@ class TestExtension(unittest.TestCase):
         """
         rv = self.client.get('/extension/11', headers={'Authorization': self.access_token})
         self.assertEqual(rv.status_code, 204)
+        # Unapplied check
 
         rv = self.client.post('/extension/11')
         self.assertEqual(rv.status_code, 401)
@@ -47,10 +48,25 @@ class TestExtension(unittest.TestCase):
         else:
             self.assertEqual(rv.status_code, 204)
 
-    def testB_extension11Delete(self):
+    def testB_extension11Withdraw(self):
         """
         TC about withdraw extension apply 11
+
+        1. Check 'unauthorized on withdraw'
+        2. Check 'withdraw succeed'
+        3. Check 'unapplied'
         """
+        rv = self.client.delete('/extension/11')
+        self.assertEqual(rv.status_code, 401)
+        # Unauthorized check
+
+        rv = self.client.delete('/extension/11', headers={'Authorization': self.access_token})
+        self.assertEqual(rv.status_code, 200)
+        # Withdraw success
+
+        rv = self.client.get('/extension/11', headers={'Authorization': self.access_token})
+        self.assertEqual(rv.status_code, 204)
+        # Unapplied check
 
     def testC_extension12Apply(self):
         """
@@ -63,6 +79,7 @@ class TestExtension(unittest.TestCase):
         """
         rv = self.client.get('/extension/12', headers={'Authorization': self.access_token})
         self.assertEqual(rv.status_code, 204)
+        # Unapplied check
 
         rv = self.client.post('/extension/12')
         self.assertEqual(rv.status_code, 401)
@@ -82,10 +99,25 @@ class TestExtension(unittest.TestCase):
         else:
             self.assertEqual(rv.status_code, 204)
 
-    def testD_extension12Delete(self):
+    def testD_extension12Withdraw(self):
         """
         TC about withdraw extension apply 12
+
+        1. Check 'unauthorized on withdraw'
+        2. Check 'withdraw succeed'
+        3. Check 'unapplied'
         """
+        rv = self.client.delete('/extension/12')
+        self.assertEqual(rv.status_code, 401)
+        # Unauthorized check
+
+        rv = self.client.delete('/extension/12', headers={'Authorization': self.access_token})
+        self.assertEqual(rv.status_code, 200)
+        # Withdraw success
+
+        rv = self.client.get('/extension/12', headers={'Authorization': self.access_token})
+        self.assertEqual(rv.status_code, 204)
+        # Unapplied check
 
     def testE_extension11Download(self):
         pass
