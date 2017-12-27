@@ -48,7 +48,6 @@ class QuestionModel(Document):
     is_objective = BooleanField(
         required=True
     )
-
     choice_paper = ListField()
 
 

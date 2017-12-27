@@ -70,7 +70,7 @@ class Survey(Resource):
             'id': str(question.id),
             'title': question.title,
             'is_objective': question.is_objective,
-            'choice_paper': question.choice_paper
+            'choice_paper': question.choice_paper if question.is_objective else None
         } for question in QuestionModel.objects(survey=survey)]
 
         for question in questions:
