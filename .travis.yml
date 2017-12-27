@@ -12,7 +12,7 @@ install:
   - pip3 install coveralls
 
 script:
-  - coverage run main.py
+  - coverage run Server/server.py test
 
 after_success:
   - coveralls
