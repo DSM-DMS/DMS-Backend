@@ -1,21 +1,21 @@
 import json
 
+from flasgger import swag_from
 from flask import Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource, request
-from flasgger import swag_from
 
 from app.docs.student.survey.survey import *
 from app.models.account import StudentModel
 from app.models.survey import AnswerModel, QuestionModel, SurveyModel
 
 
-class SurveyList(Resource):
-    @swag_from(SURVEY_LIST_GET)
+class Survey(Resource):
+    @swag_from(SURVEY_GET)
     @jwt_required
     def get(self):
         """
-        설문조사 리스트 조회
+        설문지 리스트 조회
         """
         student = StudentModel.objects(
             id=get_jwt_identity()
@@ -35,7 +35,7 @@ class SurveyList(Resource):
                     'title': survey.title,
                     'start_date': str(survey.start_date),
                     'end_date': str(survey.end_date)
-                } for survey in SurveyModel.objects if student_number in survey.target],
+                } for survey in SurveyModel.objects if str(student_number)[0] in survey.target],
                 ensure_ascii=False
             ),
             200,
@@ -44,12 +44,12 @@ class SurveyList(Resource):
         # Filter by student number
 
 
-class Survey(Resource):
-    @swag_from(SURVEY_GET)
+class Question(Resource):
+    @swag_from(QUESTION_GET)
     @jwt_required
     def get(self):
         """
-        설문조사의 질문 리스트 조회
+        설문지의 질문 리스트 조회
         """
         student = StudentModel.objects(
             id=get_jwt_identity()
@@ -96,11 +96,11 @@ class Survey(Resource):
             content_type='application/json; charset=utf8'
         )
 
-    @swag_from(SURVEY_POST)
+    @swag_from(QUESTION_POST)
     @jwt_required
     def post(self):
         """
-        설문조사 답변 업로드
+        설문지 질문의 답변 업로드
         """
         student = StudentModel.objects(
             id=get_jwt_identity()
