@@ -6,7 +6,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource
 
 from app.docs.mixed.post.rule import *
-from app.models.account import StudentModel
+from app.models.account import AdminModel, StudentModel
 from app.models.post import RuleModel
 
 
@@ -17,27 +17,20 @@ class RuleList(Resource):
         """
         기숙사규칙 리스트 조회
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
-        if not student:
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        student = StudentModel.objects(id=get_jwt_identity()).first()
+        if not any((admin, student)):
             return Response('', 403)
 
-        return Response(
-            json.dumps(
-                [{
-                    'id': str(rule.id),
-                    'write_time': str(rule.write_time)[:-7],
-                    'author': rule.author.name,
-                    'title': rule.title,
-                    'pinned': rule.pinned
-                } for rule in RuleModel.objects],
-                ensure_ascii=False
-            ),
-            200,
-            content_type='application/json; charset=utf8'
-        )
+        response = [{
+            'id': str(rule.id),
+            'write_time': str(rule.write_time)[:-7],
+            'author': rule.author.name,
+            'title': rule.title,
+            'pinned': rule.pinned
+        } for rule in RuleModel.objects]
+
+        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
 
 class RuleItem(Resource):
@@ -47,34 +40,24 @@ class RuleItem(Resource):
         """
         기숙사규칙 내용 조회
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
-        if not student:
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        student = StudentModel.objects(id=get_jwt_identity()).first()
+        if not any((admin, student)):
             return Response('', 403)
 
         if len(post_id) != 24:
             return Response('', 204)
 
-        rule = RuleModel.objects(
-            id=post_id
-        ).first()
-
+        rule = RuleModel.objects(id=post_id).first()
         if not rule:
             return Response('', 204)
 
-        return Response(
-            json.dumps(
-                {
-                    'write_time': str(rule.write_time)[:-7],
-                    'author': rule.author.name,
-                    'title': rule.title,
-                    'content': rule.content,
-                    'pinned': rule.pinned
-                },
-                ensure_ascii=False
-            ),
-            200,
-            content_type='application/json; charset=utf8'
-        )
+        response = {
+            'write_time': str(rule.write_time)[:-7],
+            'author': rule.author.name,
+            'title': rule.title,
+            'content': rule.content,
+            'pinned': rule.pinned
+        }
+
+        return Response(json.dumps(response,ensure_ascii=False), 200, content_type='application/json; charset=utf8')

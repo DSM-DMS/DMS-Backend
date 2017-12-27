@@ -15,21 +15,14 @@ class AdminNotice(Resource):
         """
         공지사항 업로드
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
         title = request.form['title']
         content = request.form['content']
 
-        NoticeModel(
-            author=admin,
-            title=title,
-            content=content
-        ).save()
+        NoticeModel(author=admin, title=title, content=content).save()
 
         return Response('', 201)
 
@@ -39,9 +32,7 @@ class AdminNotice(Resource):
         """
         공지사항 수정
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
@@ -49,17 +40,12 @@ class AdminNotice(Resource):
         title = request.form['title']
         content = request.form['content']
 
-        notice = NoticeModel.objects(
-            id=id
-        ).first()
+        notice = NoticeModel.objects(id=id).first()
 
         if not notice:
             return Response('', 204)
 
-        notice.update(
-            title=title,
-            content=content
-        )
+        notice.update(title=title, content=content)
 
         return Response('', 200)
 
@@ -69,17 +55,13 @@ class AdminNotice(Resource):
         """
         공지사항 제거
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
         id = request.form['id']
 
-        notice = NoticeModel.objects(
-            id=id
-        ).first()
+        notice = NoticeModel.objects(id=id).first()
 
         if not notice:
             return Response('', 204)

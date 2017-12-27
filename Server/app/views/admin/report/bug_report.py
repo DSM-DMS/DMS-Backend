@@ -17,22 +17,14 @@ class AdminBugReport(Resource):
         """
         버그신고 리스트 조회
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
-        return Response(
-            json.dumps(
-                [{
-                    'author': bug_report.author.name,
-                    'title': bug_report.title,
-                    'content': bug_report.content
-                } for bug_report in BugReportModel.objects],
-                ensure_ascii=False
-            ),
-            200,
-            content_type='application/json; charset=utf8'
-        )
+        response = [{
+            'author': bug_report.author.name,
+            'title': bug_report.title,
+            'content': bug_report.content
+        } for bug_report in BugReportModel.objects]
+
+        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')

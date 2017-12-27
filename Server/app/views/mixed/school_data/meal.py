@@ -17,33 +17,19 @@ class Meal(Resource):
         """
         급식 조회
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not any((admin, student)):
             return Response('', 403)
 
-        meal = MealModel.objects(
-            date=date
-        ).first()
-
+        meal = MealModel.objects(date=date).first()
         if not meal:
             return Response('', 204)
 
-        return Response(
-            json.dumps(
-                {
-                    'breakfast': meal.breakfast,
-                    'lunch': meal.lunch,
-                    'dinner': meal.dinner
-                },
-                ensure_ascii=False
-            ),
-            200,
-            content_type='application/json; charset=utf8'
-        )
+        response = {
+            'breakfast': meal.breakfast,
+            'lunch': meal.lunch,
+            'dinner': meal.dinner
+        }
+
+        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')

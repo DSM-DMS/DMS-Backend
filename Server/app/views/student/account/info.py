@@ -16,14 +16,11 @@ class MyPage(Resource):
         """
         마이페이지에 해당하는 정보 조회
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 
-        return Response(json.dumps({
+        response = {
             'name': student.name,
             'number': student.number,
 
@@ -42,4 +39,6 @@ class MyPage(Resource):
                 'sun': student.goingout_apply.on_sunday
             },
             'stay_value': student.stay_apply.value
-        }, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        }
+
+        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')

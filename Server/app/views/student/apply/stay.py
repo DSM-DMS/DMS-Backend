@@ -17,10 +17,7 @@ class Stay(Resource):
         """
         잔류신청 정보 조회
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 
@@ -34,10 +31,7 @@ class Stay(Resource):
         """
         잔류신청
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 

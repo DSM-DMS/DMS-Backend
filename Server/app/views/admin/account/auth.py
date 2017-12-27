@@ -21,20 +21,15 @@ class AdminAuth(Resource):
         id = request.form['id']
         pw = request.form['pw']
 
-        pw = hexlify(
-            pbkdf2_hmac(
-                hash_name='sha256',
-                password=pw.encode(),
-                salt=current_app.secret_key.encode(),
-                iterations=100000
-            )
-        ).decode('utf-8')
+        pw = hexlify(pbkdf2_hmac(
+            hash_name='sha256',
+            password=pw.encode(),
+            salt=current_app.secret_key.encode(),
+            iterations=100000
+        )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
-        admin = AdminModel.objects(
-            id=id,
-            pw=pw
-        ).first()
+        admin = AdminModel.objects(id=id, pw=pw).first()
 
         if not admin:
             return Response('', 401)
@@ -62,9 +57,7 @@ class AdminRefresh(Resource):
         """
         새로운 Access Token 획득
         """
-        token = RefreshTokenModel.objects(
-            token=get_jwt_identity()
-        ).first()
+        token = RefreshTokenModel.objects(token=get_jwt_identity()).first()
 
         if not token or token.token_owner.pw != token.pw_snapshot:
             # Invalid token or the token issuing password is different from the current password

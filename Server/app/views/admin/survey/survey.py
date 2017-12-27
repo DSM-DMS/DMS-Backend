@@ -16,28 +16,20 @@ class AdminSurvey(Resource):
         """
         설문지 리스트 조회
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
-        return Response(
-            json.dumps(
-                [{
-                    'id': str(survey.id),
-                    'creation_time': str(survey.creation_time)[:-7],
-                    'description': survey.description,
-                    'title': survey.title,
-                    'start_date': str(survey.start_date),
-                    'end_date': str(survey.end_date)
-                } for survey in SurveyModel.objects],
-                ensure_ascii=False
-            ),
-            200,
-            content_type='application/json; charset=utf8'
-        )
+        response = [{
+            'id': str(survey.id),
+            'creation_time': str(survey.creation_time)[:-7],
+            'description': survey.description,
+            'title': survey.title,
+            'start_date': str(survey.start_date),
+            'end_date': str(survey.end_date)
+        } for survey in SurveyModel.objects]
+
+        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
     @swag_from(SURVEY_POST)
     @jwt_required
@@ -45,10 +37,7 @@ class AdminSurvey(Resource):
         """
         설문지 등록
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
@@ -73,10 +62,7 @@ class AdminSurvey(Resource):
         """
         설문지 제거
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
@@ -98,10 +84,7 @@ class AdminQuestion(Resource):
         """
         설문지의 질문 리스트 조회
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
@@ -109,28 +92,18 @@ class AdminQuestion(Resource):
         if len(survey_id) != 24:
             return Response('', 204)
 
-        survey = SurveyModel.objects(
-            id=survey_id
-        ).first()
+        survey = SurveyModel.objects(id=survey_id).first()
         if not survey:
-            # Survey doesn't exist
             return Response('', 204)
 
-        questions = [{
+        response = [{
             'id': str(question.id),
             'title': question.title,
             'is_objective': question.is_objective,
             'choice_paper': question.choice_paper if question.is_objective else None
         } for question in QuestionModel.objects(survey=survey)]
 
-        return Response(
-            json.dumps(
-                questions,
-                ensure_ascii=False
-            ),
-            200,
-            content_type='application/json; charset=utf8'
-        )
+        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
     @swag_from(QUESTION_POST)
     @jwt_required
@@ -138,10 +111,7 @@ class AdminQuestion(Resource):
         """
         설문지에 질문 등록
         """
-        admin = AdminModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 

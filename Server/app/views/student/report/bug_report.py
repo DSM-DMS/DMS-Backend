@@ -15,20 +15,13 @@ class BugReport(Resource):
         """
         버그 신고
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 
         title = request.form['title']
         content = request.form['content']
 
-        BugReportModel(
-            author=student,
-            title=title,
-            content=content
-        ).save()
+        BugReportModel(author=student, title=title, content=content).save()
 
         return Response('', 201)

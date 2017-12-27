@@ -19,20 +19,15 @@ class ChangePW(Resource):
         """
         current_pw = request.form['current_pw']
 
-        current_pw = hexlify(
-            pbkdf2_hmac(
-                hash_name='sha256',
-                password=current_pw.encode(),
-                salt=current_app.secret_key.encode(),
-                iterations=100000
-            )
-        ).decode()
+        current_pw = hexlify(pbkdf2_hmac(
+            hash_name='sha256',
+            password=current_pw.encode(),
+            salt=current_app.secret_key.encode(),
+            iterations=100000
+        )).decode()
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
-        student = StudentModel.objects(
-            id=get_jwt_identity(),
-            pw=current_pw
-        ).first()
+        student = StudentModel.objects(id=get_jwt_identity(), pw=current_pw).first()
         # Validate account
 
         if not student:
@@ -41,15 +36,12 @@ class ChangePW(Resource):
         # --- Change password
 
         new_pw = request.form['new_pw']
-
-        new_pw = hexlify(
-            pbkdf2_hmac(
-                hash_name='sha256',
-                password=new_pw.encode(),
-                salt=current_app.secret_key.encode(),
-                iterations=100000
-            )
-        ).decode()
+        new_pw = hexlify(pbkdf2_hmac(
+            hash_name='sha256',
+            password=new_pw.encode(),
+            salt=current_app.secret_key.encode(),
+            iterations=100000
+        )).decode()
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
         student.update(pw=new_pw)
@@ -64,10 +56,7 @@ class ChangeNumber(Resource):
         """
         학번 변경
         """
-        student = StudentModel.objects(
-            id=get_jwt_identity()
-        ).first()
-
+        student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
             return Response('', 403)
 

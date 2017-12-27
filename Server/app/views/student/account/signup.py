@@ -17,10 +17,7 @@ class IDVerification(Resource):
         """
         id = request.form['id']
 
-        student = StudentModel.objects(
-            id=id
-        ).first()
-
+        student = StudentModel.objects(id=id).first()
         if student:
             # ID already exists
             return Response('', 204)
@@ -36,10 +33,7 @@ class UUIDVerification(Resource):
         """
         uuid = request.form['uuid']
 
-        signup_waiting = SignupWaitingModel.objects(
-            uuid=uuid
-        )
-
+        signup_waiting = SignupWaitingModel.objects(uuid=uuid)
         if signup_waiting:
             # Signup available
             return Response('', 200)
@@ -58,15 +52,9 @@ class Signup(Resource):
         id = request.form['id']
         pw = request.form['pw']
 
-        signup_waiting = SignupWaitingModel.objects(
-            uuid=uuid
-        ).first()
-        # To validate UUID
-
-        student = StudentModel.objects(
-            id=id
-        ).first()
-        # To validate ID
+        signup_waiting = SignupWaitingModel.objects(uuid=uuid).first()
+        student = StudentModel.objects(id=id).first()
+        # To validate
 
         if not signup_waiting:
             # Signup unavailable
@@ -83,21 +71,14 @@ class Signup(Resource):
 
         signup_waiting.delete()
 
-        pw = hexlify(
-            pbkdf2_hmac(
-                hash_name='sha256',
-                password=pw.encode(),
-                salt=current_app.secret_key.encode(),
-                iterations=100000
-            )
-        ).decode('utf-8')
+        pw = hexlify(pbkdf2_hmac(
+            hash_name='sha256',
+            password=pw.encode(),
+            salt=current_app.secret_key.encode(),
+            iterations=100000
+        )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
-        StudentModel(
-            id=id,
-            pw=pw,
-            name=name,
-            number=number
-        ).save()
+        StudentModel(id=id, pw=pw, name=name, number=number).save()
 
         return Response('', 201)
