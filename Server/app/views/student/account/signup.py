@@ -64,7 +64,7 @@ class Signup(Resource):
             # Already signed
             return Response('', 204)
 
-        # --- Create new student account
+        # --- Create new student account_admin
 
         name = signup_waiting.name
         number = signup_waiting.number

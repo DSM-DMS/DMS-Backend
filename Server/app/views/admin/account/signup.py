@@ -28,7 +28,7 @@ class AdminNewAccount(Resource):
         if AdminModel.objects(id=id):
             return Response('', 204)
 
-        # --- Create new admin account
+        # --- Create new admin account_admin
 
         pw = hexlify(pbkdf2_hmac(
             hash_name='sha256',

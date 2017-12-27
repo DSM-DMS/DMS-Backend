@@ -56,7 +56,7 @@ class TestAuth(unittest.TestCase):
         1. Check 'UUID validation failed'
         2. Check 'ID validation failed'
         3. Check 'signup succeed'
-        4. Check 'account default data'
+        4. Check 'account_admin default data'
         """
         rv = self.client.post('/signup', data={'uuid': str(u.uuid4()), 'id': 'doesntexist', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 205)

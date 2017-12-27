@@ -21,7 +21,7 @@ class TestAccountControl(unittest.TestCase):
 
     def testA_DeleteAccount(self):
         """
-        TC about delete student account control
+        TC about delete student account_admin control
     
         1. Check 'Authorization failed'
         2. Check 'Find number failed'

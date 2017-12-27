@@ -19,20 +19,20 @@ class TestAuth(unittest.TestCase):
         """
         TC about admin's signup
 
-        1. Check 'unauthorized on create new account'
+        1. Check 'unauthorized on create new account_admin'
         2. Check 'ID validation failed'
         3. Check 'signup succeed'
         4. Check 'login succeed'
         """
-        rv = self.client.post('/admin/new-account', data={'id': 'chicken', 'pw': 'chicken'})
+        rv = self.client.post('/admin/new-account_admin', data={'id': 'chicken', 'pw': 'chicken'})
         self.assertEqual(rv.status_code, 401)
         # Authorization failed
 
-        rv = self.client.post('/admin/new-account', headers={'Authorization': self.access_token}, data={'id': 'fake', 'pw': 'chicken', 'name': 'lover'})
+        rv = self.client.post('/admin/new-account_admin', headers={'Authorization': self.access_token}, data={'id': 'fake', 'pw': 'chicken', 'name': 'lover'})
         self.assertEqual(rv.status_code, 204)
         # ID validation failed
 
-        rv = self.client.post('/admin/new-account', headers={'Authorization': self.access_token}, data={'id': 'chicken', 'pw': 'chicken', 'name': 'lover'})
+        rv = self.client.post('/admin/new-account_admin', headers={'Authorization': self.access_token}, data={'id': 'chicken', 'pw': 'chicken', 'name': 'lover'})
         self.assertEqual(rv.status_code, 201)
         # Success
 
