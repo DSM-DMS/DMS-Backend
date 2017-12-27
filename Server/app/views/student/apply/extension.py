@@ -63,6 +63,7 @@ class Extension11(Resource):
 
         return Response('', 201)
 
+    @swag_from(EXTENSION_DELETE)
     @jwt_required
     def delete(self):
         """
@@ -132,6 +133,7 @@ class Extension12(Resource):
 
         return Response('', 201)
 
+    @swag_from(EXTENSION_DELETE)
     @jwt_required
     def delete(self):
         """

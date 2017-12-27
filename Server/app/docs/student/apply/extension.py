@@ -77,6 +77,28 @@ EXTENSION_POST = {
     }
 }
 
+EXTENSION_DELETE = {
+    'tags': ['신청'],
+    'description': '연장신청 취소',
+    'parameters': [
+        {
+            'name': 'Authorization',
+            'description': 'JWT Token',
+            'in': 'header',
+            'type': 'str',
+            'required': True
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': '연장신청 취소 성공'
+        },
+        '403': {
+            'description': '권한 없음'
+        }
+    }
+}
+
 EXTENSION_MAP_GET = {
     'tags': ['신청'],
     'description': '연장신청 지도 조회',
