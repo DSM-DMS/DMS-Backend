@@ -17,7 +17,15 @@ class TestExtension(unittest.TestCase):
     def tearDown(self):
         student.remove_fake_account()
 
-    def testExtension11(self):
+    def testA_extension11_apply(self):
+        """
+        TC about extension apply 11
+
+        1. Check 'unapplied'
+        2. Check 'unauthorized'
+        3. Check 'apply succeed'
+        4. Check 'apply status'
+        """
         rv = self.client.get('/extension/11', headers={'Authorization': self.access_token})
         self.assertEqual(rv.status_code, 204)
 
@@ -35,11 +43,24 @@ class TestExtension(unittest.TestCase):
 
             data = json.loads(rv.data.decode())
             self.assertEqual(data['class'], 1)
-            self.assertEqual(data['seat'], 10)
+            self.assertEqual(data['seat'], 21)
         else:
             self.assertEqual(rv.status_code, 204)
 
-    def testExtension12(self):
+    def testB_extension11_delete(self):
+        """
+        TC about withdraw extension apply 11
+        """
+
+    def testC_extension12_apply(self):
+        """
+        TC about extension apply 12
+
+        1. Check 'unapplied'
+        2. Check 'unauthorized'
+        3. Check 'apply succeed'
+        4. Check 'apply status'
+        """
         rv = self.client.get('/extension/12', headers={'Authorization': self.access_token})
         self.assertEqual(rv.status_code, 204)
 
@@ -57,6 +78,17 @@ class TestExtension(unittest.TestCase):
 
             data = json.loads(rv.data.decode())
             self.assertEqual(data['class'], 1)
-            self.assertEqual(data['seat'], 10)
+            self.assertEqual(data['seat'], 21)
         else:
             self.assertEqual(rv.status_code, 204)
+
+    def testD_extension12_delete(self):
+        """
+        TC about withdraw extension apply 12
+        """
+
+    def testE_extension11Download(self):
+        pass
+
+    def testF_extension12Download(self):
+        pass
