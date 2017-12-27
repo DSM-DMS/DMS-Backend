@@ -1,10 +1,25 @@
 from flask_restful import Api
 
+from app.views.admin.account.auth import *
+from app.views.admin.account.signup import *
+from app.views.admin.apply.afterschool import *
+from app.views.admin.apply.extension import *
+from app.views.admin.apply.goingout import *
+from app.views.admin.apply.stay import *
+from app.views.admin.post.faq import *
+from app.views.admin.post.notice import *
+from app.views.admin.post.rule import *
+from app.views.admin.post.preview import *
+from app.views.admin.report.bug_report import *
+from app.views.admin.report.facility_report import *
+from app.views.admin.survey.survey import *
+
 from app.views.mixed.post.faq import *
 from app.views.mixed.post.notice import *
 from app.views.mixed.post.rule import *
 from app.views.mixed.post.preview import *
 from app.views.mixed.school_data.meal import *
+
 from app.views.student.account.alteration import *
 from app.views.student.account.auth import *
 from app.views.student.account.info import *
@@ -28,9 +43,26 @@ class ViewInjector(object):
         api = Api(app)
 
         # Admin account
-        api.add_resource(Admin_Auth, '/admin/auth')
-        api.add_resource(Admin_Refresh, '/admin/refresh')
+        api.add_resource(AdminAuth, '/admin/auth')
+        api.add_resource(AdminRefresh, '/admin/refresh')
         api.add_resource(NewAccountAdmin, '/admin/signup')
+
+        api.add_resource(AdminNewAccount, '/admin/new-account')
+        api.add_resource(AdminExtension11, '/admin/extension/11')
+        api.add_resource(AdminExtension12, '/admin/extension/12')
+        api.add_resource(AdminGoingout, '/admin/goingout')
+        api.add_resource(AdminStay, '/admin/stay')
+
+        api.add_resource(AdminFAQPreview, '/admin/preview/faq')
+        api.add_resource(AdminNoticePreview, '/admin/preview/notice')
+        api.add_resource(AdminRulePreview, '/admin/preview/rule')
+
+        api.add_resource(AdminFAQ, '/admin/faq')
+        api.add_resource(AdminNotice, '/admin/notice')
+        api.add_resource(AdminRule, '/admin/rule')
+
+        api.add_resource(AdminBugReport, '/admin/report/bug')
+        api.add_resource(AdminFacilityReport, '/admin/report/facility')
 
         # Student account
         api.add_resource(ChangePW, '/change/pw')
