@@ -45,7 +45,6 @@ class ViewInjector(object):
         # Admin account
         api.add_resource(AdminAuth, '/admin/auth')
         api.add_resource(AdminRefresh, '/admin/refresh')
-        api.add_resource(NewAccountAdmin, '/admin/signup')
 
         api.add_resource(AdminNewAccount, '/admin/new-account')
         api.add_resource(AdminExtension11, '/admin/extension/11')
