@@ -15,13 +15,19 @@ class TestGoingout(unittest.TestCase):
     def tearDown(self):
         student.remove_fake_account()
 
-    def testGoingout(self):
+    def testA_apply(self):
+        """
+        TC about goingout apply
+
+        1. Check 'apply status all false'
+        2. Check 'unauthorized'
+        3. Check 'apply succeed'
+        4. Check 'apply status'
+        """
         rv = self.client.get('/goingout', headers={'Authorization': self.access_token})
         self.assertEqual(rv.status_code, 200)
-
         data = json.loads(rv.data.decode())
-        self.assertEqual(data['sat'], False)
-        self.assertEqual(data['sun'], False)
+        self.assertFalse((data['sat'], data['sun']))
 
         rv = self.client.post('/goingout')
         self.assertEqual(rv.status_code, 401)
@@ -33,7 +39,6 @@ class TestGoingout(unittest.TestCase):
 
         rv = self.client.get('/goingout', headers={'Authorization': self.access_token})
         self.assertEqual(rv.status_code, 200)
-
         data = json.loads(rv.data.decode())
         self.assertEqual(data['sat'], True)
         self.assertEqual(data['sun'], False)

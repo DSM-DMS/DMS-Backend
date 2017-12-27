@@ -16,10 +16,17 @@ class TestStay(unittest.TestCase):
     def tearDown(self):
         student.remove_fake_account()
 
-    def testStay(self):
+    def testA_apply(self):
+        """
+        TC about stay apply
+
+        1. Check 'applied value 4'
+        2. Check 'unauthorized'
+        3. Check 'apply succeed'
+        4. Check 'apply status'
+        """
         rv = self.client.get('/stay', headers={'Authorization': self.access_token})
         self.assertEqual(rv.status_code, 200)
-
         self.assertEqual(json.loads(rv.data.decode())['value'], 4)
 
         rv = self.client.post('/stay')
