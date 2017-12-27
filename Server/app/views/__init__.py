@@ -1,8 +1,8 @@
-from app.views.student.post.faq import *
-from app.views.student.post.notice import *
-from app.views.student.post.rule import *
 from flask_restful import Api
 
+from app.views.mixed.post.faq import *
+from app.views.mixed.post.notice import *
+from app.views.mixed.post.rule import *
 from app.views.mixed.post.preview import *
 from app.views.mixed.school_data.meal import *
 from app.views.student.account.alteration import *
