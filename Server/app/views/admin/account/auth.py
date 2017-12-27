@@ -12,7 +12,7 @@ from app.docs.admin.account.auth import *
 from app.models.account import AdminModel, RefreshTokenModel
 
 
-class Auth(Resource):
+class Admin_Auth(Resource):
     @swag_from(AUTH_POST)
     def post(self):
         """
@@ -55,7 +55,7 @@ class Auth(Resource):
         }, 200
 
 
-class Refresh(Resource):
+class Admin_Refresh(Resource):
     @swag_from(REFRESH_POST)
     @jwt_refresh_token_required
     def post(self):

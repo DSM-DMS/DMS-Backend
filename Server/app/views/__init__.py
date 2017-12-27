@@ -15,6 +15,7 @@ from app.views.student.apply.stay import *
 from app.views.student.report.bug_report import *
 from app.views.student.report.facility_report import *
 from app.views.student.survey.survey import *
+from app.views.admin.account.auth import *
 
 
 class ViewInjector(object):
@@ -25,6 +26,11 @@ class ViewInjector(object):
     def init_app(self, app):
         api = Api(app)
 
+        # Admin account
+        api.add_resource(Admin_Auth, '/admin/auth')
+        api.add_resource(Admin_Refresh, '/admin/refresh')
+
+        # Student account
         api.add_resource(ChangePW, '/change/pw')
         api.add_resource(ChangeNumber, '/change/number')
         api.add_resource(Auth, '/auth')
@@ -34,6 +40,7 @@ class ViewInjector(object):
         api.add_resource(UUIDVerification, '/verify/uuid')
         api.add_resource(Signup, '/signup')
 
+        # Student apply
         api.add_resource(Extension11, '/extension/11')
         api.add_resource(Extension12, '/extension/12')
         api.add_resource(ExtensionMap11, '/extension/map/11')
@@ -41,6 +48,7 @@ class ViewInjector(object):
         api.add_resource(Goingout, '/goingout')
         api.add_resource(Stay, '/stay')
 
+        # Mixed post
         api.add_resource(FAQPreview, '/preview/faq')
         api.add_resource(NoticePreview, '/preview/notice')
         api.add_resource(RulePreview, '/preview/rule')
@@ -55,6 +63,7 @@ class ViewInjector(object):
         api.add_resource(BugReport, '/report/bug')
         api.add_resource(FacilityReport, '/report/facility')
 
+        # Mixed school_data
         api.add_resource(Meal, '/meal/<date>')
         api.add_resource(SurveyList, '/survey')
         api.add_resource(Survey, '/survey/item')
