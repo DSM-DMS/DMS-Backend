@@ -75,8 +75,6 @@ class AdminRule(Resource):
             return Response('', 403)
 
         id = request.form['id']
-        title = request.form['title']
-        content = request.form['content']
 
         rule = RuleModel.objects(
             id=id
