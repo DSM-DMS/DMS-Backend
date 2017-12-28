@@ -2,11 +2,9 @@ import json
 
 from flasgger import swag_from
 from flask import Response
-from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource
 
 from app.docs.mixed.school_data.meal import *
-from app.models.account import AdminModel, StudentModel
 from app.models.meal import MealModel
 
 
