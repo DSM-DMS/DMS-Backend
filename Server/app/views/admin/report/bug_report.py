@@ -11,7 +11,7 @@ from app.models.report import BugReportModel
 
 
 class BugReportDownload(Resource):
-    @swag_from(BUG_REPORT_GET)
+    @swag_from(BUG_REPORT_DOWNLOAD_GET)
     @jwt_required
     def get(self):
         """

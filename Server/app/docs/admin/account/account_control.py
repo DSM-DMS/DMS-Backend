@@ -1,4 +1,4 @@
-ACCOUNT_DELETE = {
+ACCOUNT_CONTROL_DELETE = {
     'tags': ['관리자 계정'],
     'description': '계정 삭제 후 새로운 UUID 생성',
     'parameters': [
@@ -30,7 +30,7 @@ ACCOUNT_DELETE = {
     }
 }
 
-UUID_GET = {
+ACCOUNT_CONTROL_GET = {
     'tags': ['관리자 계정'],
     'description': 'UUID 받아오기',
     'parameters': [

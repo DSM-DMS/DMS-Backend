@@ -11,6 +11,7 @@ from app.models.survey import QuestionModel, SurveyModel
 
 
 class SurveyManaging(Resource):
+    @swag_from(SURVEY_MANAGING_GET)
     @jwt_required
     def get(self):
         """
@@ -31,7 +32,7 @@ class SurveyManaging(Resource):
 
         return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
-    @swag_from(SURVEY_POST)
+    @swag_from(SURVEY_MANAGING_POST)
     @jwt_required
     def post(self):
         """
@@ -57,6 +58,7 @@ class SurveyManaging(Resource):
 
         return Response('', 201)
 
+    @swag_from(SURVEY_MANAGING_DELETE)
     @jwt_required
     def delete(self):
         """
@@ -79,6 +81,7 @@ class SurveyManaging(Resource):
 
 
 class QuestionManaging(Resource):
+    @swag_from(QUESTION_MANAGING_GET)
     @jwt_required
     def get(self):
         """
@@ -105,7 +108,7 @@ class QuestionManaging(Resource):
 
         return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
-    @swag_from(QUESTION_POST)
+    @swag_from(QUESTION_MANAGING_POST)
     @jwt_required
     def post(self):
         """

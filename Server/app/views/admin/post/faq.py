@@ -9,7 +9,7 @@ from app.models.post import FAQModel
 
 
 class FAQManaging(Resource):
-    @swag_from(FAQ_POST)
+    @swag_from(FAQ_MANAGING_POST)
     @jwt_required
     def post(self):
         """
@@ -26,7 +26,7 @@ class FAQManaging(Resource):
 
         return Response('', 201)
 
-    @swag_from(FAQ_PATCH)
+    @swag_from(FAQ_MANAGING_PATCH)
     @jwt_required
     def patch(self):
         """
@@ -49,7 +49,7 @@ class FAQManaging(Resource):
 
         return Response('', 200)
 
-    @swag_from(FAQ_DELETE)
+    @swag_from(FAQ_MANAGING_DELETE)
     @jwt_required
     def delete(self):
         """

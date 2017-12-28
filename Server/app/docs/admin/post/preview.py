@@ -1,4 +1,4 @@
-FAQ_PREVIEW_POST = {
+FAQ_PREVIEW_MANAGING_POST = {
     'tags': ['게시글 관리'],
     'description': 'FAQ 프리뷰 설정',
     'parameters': [
@@ -30,7 +30,7 @@ FAQ_PREVIEW_POST = {
     }
 }
 
-NOTICE_PREVIEW_POST = {
+NOTICE_PREVIEW_MANAGING_POST = {
     'tags': ['게시글 관리'],
     'description': '공지사항 프리뷰 설정',
     'parameters': [
@@ -62,7 +62,7 @@ NOTICE_PREVIEW_POST = {
     }
 }
 
-RULE_PREVIEW_POST = {
+RULE_PREVIEW_MANAGING_POST = {
     'tags': ['게시글 관리'],
     'description': '기숙사규정 프리뷰 설정',
     'parameters': [

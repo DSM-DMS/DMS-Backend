@@ -11,7 +11,7 @@ from app.models.account import SignupWaitingModel, StudentModel, AdminModel
 
 
 class AccountControl(Resource):
-    @swag_from(ACCOUNT_DELETE)
+    @swag_from(ACCOUNT_CONTROL_DELETE)
     @jwt_required
     def delete(self):
         """
@@ -45,7 +45,7 @@ class AccountControl(Resource):
 
         return Response('', 200)
 
-    @swag_from(UUID_GET)
+    @swag_from(ACCOUNT_CONTROL_GET)
     @jwt_required
     def get(self):
         """

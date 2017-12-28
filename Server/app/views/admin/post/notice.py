@@ -9,7 +9,7 @@ from app.models.post import NoticeModel
 
 
 class NoticeManaging(Resource):
-    @swag_from(NOTICE_POST)
+    @swag_from(NOTICE_MANAGING_POST)
     @jwt_required
     def post(self):
         """
@@ -26,7 +26,7 @@ class NoticeManaging(Resource):
 
         return Response('', 201)
 
-    @swag_from(NOTICE_PATCH)
+    @swag_from(NOTICE_MANAGING_PATCH)
     @jwt_required
     def patch(self):
         """
@@ -49,7 +49,7 @@ class NoticeManaging(Resource):
 
         return Response('', 200)
 
-    @swag_from(NOTICE_DELETE)
+    @swag_from(NOTICE_MANAGING_DELETE)
     @jwt_required
     def delete(self):
         """

@@ -1,4 +1,4 @@
-BUG_REPORT_GET = {
+BUG_REPORT_DOWNLOAD_GET = {
     'tags': ['신고 관리'],
     'description': '버그신고 리스트 조회',
     'parameters': [

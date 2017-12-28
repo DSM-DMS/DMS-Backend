@@ -1,4 +1,4 @@
-EXTENSION_GET = {
+EXTENSION_DOWNLOAD_GET = {
     'tags': ['신청 정보 관리'],
     'description': '연장신청 정보 다운로드',
     'parameters': [

@@ -1,4 +1,4 @@
-NOTICE_POST = {
+NOTICE_MANAGING_POST = {
     'tags': ['게시글 관리'],
     'description': '공지사항 업로드',
     'parameters': [
@@ -34,7 +34,7 @@ NOTICE_POST = {
     }
 }
 
-NOTICE_PATCH = {
+NOTICE_MANAGING_PATCH = {
     'tags': ['게시글 관리'],
     'description': '공지사항 수정',
     'parameters': [
@@ -80,7 +80,7 @@ NOTICE_PATCH = {
     }
 }
 
-NOTICE_DELETE = {
+NOTICE_MANAGING_DELETE = {
     'tags': ['게시글 관리'],
     'description': '공지사항 삭제',
     'parameters': [

@@ -1,4 +1,4 @@
-SURVEY_GET = {
+SURVEY_MANAGING_GET = {
     'tags': ['설문지'],
     'description': '설문지 리스트 불러오기',
     'parameters': [
@@ -38,7 +38,7 @@ SURVEY_GET = {
     }
 }
 
-SURVEY_POST = {
+SURVEY_MANAGING_POST = {
     'tags': ['설문지 관리'],
     'description': '설문지 등록',
     'parameters': [
@@ -88,7 +88,7 @@ SURVEY_POST = {
     }
 }
 
-SURVEY_DELETE = {
+SURVEY_MANAGING_DELETE = {
     'tags': ['설문지 관리'],
     'description': '설문지 삭제',
     'parameters': [
@@ -120,7 +120,7 @@ SURVEY_DELETE = {
     }
 }
 
-QUESTION_GET = {
+QUESTION_MANAGING_GET = {
     'tags': ['설문지'],
     'description': '설문지 질문 리스트 불러오기',
     'parameters': [
@@ -167,7 +167,7 @@ QUESTION_GET = {
     }
 }
 
-QUESTION_POST = {
+QUESTION_MANAGING_POST = {
     'tags': ['설문지 관리'],
     'description': '설문지에 질문 등록',
     'parameters': [

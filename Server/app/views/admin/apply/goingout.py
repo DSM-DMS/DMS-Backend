@@ -10,7 +10,7 @@ from app.models.account import AdminModel, StudentModel
 
 
 class GoingoutDownload(Resource):
-    @swag_from(GOINGOUT_GET)
+    @swag_from(GOINGOUT_DOWNLOAD_GET)
     @jwt_required
     def get(self):
         """

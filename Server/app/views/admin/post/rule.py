@@ -9,7 +9,7 @@ from app.models.post import RuleModel
 
 
 class RuleManaging(Resource):
-    @swag_from(RULE_POST)
+    @swag_from(RULE_MANAGING_POST)
     @jwt_required
     def post(self):
         """
@@ -26,7 +26,7 @@ class RuleManaging(Resource):
 
         return Response('', 201)
 
-    @swag_from(RULE_PATCH)
+    @swag_from(RULE_MANAGING_PATCH)
     @jwt_required
     def patch(self):
         """
@@ -49,7 +49,7 @@ class RuleManaging(Resource):
 
         return Response('', 200)
 
-    @swag_from(RULE_DELETE)
+    @swag_from(RULE_MANAGING_DELETE)
     @jwt_required
     def delete(self):
         """

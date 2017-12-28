@@ -10,7 +10,7 @@ from app.models.account import AdminModel, StudentModel
 
 
 class Extension11Download(Resource):
-    @swag_from(EXTENSION_GET)
+    @swag_from(EXTENSION_DOWNLOAD_GET)
     @jwt_required
     def get(self):
         """

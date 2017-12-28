@@ -9,7 +9,7 @@ from app.models.post import FAQModel, NoticeModel, RuleModel
 
 
 class FAQPreviewManaging(Resource):
-    @swag_from(FAQ_PREVIEW_POST)
+    @swag_from(FAQ_PREVIEW_MANAGING_POST)
     @jwt_required
     def post(self):
         """
@@ -35,7 +35,7 @@ class FAQPreviewManaging(Resource):
 
 
 class NoticePreviewManaging(Resource):
-    @swag_from(NOTICE_PREVIEW_POST)
+    @swag_from(NOTICE_PREVIEW_MANAGING_POST)
     @jwt_required
     def post(self):
         """
@@ -61,7 +61,7 @@ class NoticePreviewManaging(Resource):
 
 
 class RulePreviewManaging(Resource):
-    @swag_from(RULE_PREVIEW_POST)
+    @swag_from(RULE_PREVIEW_MANAGING_POST)
     @jwt_required
     def post(self):
         """

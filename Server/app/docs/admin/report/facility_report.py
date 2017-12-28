@@ -1,4 +1,4 @@
-FACILITY_REPORT_GET = {
+FACILITY_REPORT_DOWNLOAD_GET = {
     'tags': ['신고 관리'],
     'description': '시설고장신고 리스트 조회',
     'parameters': [

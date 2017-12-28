@@ -11,7 +11,7 @@ from app.models.report import FacilityReportModel
 
 
 class FacilityReportDownload(Resource):
-    @swag_from(FACILITY_REPORT_GET)
+    @swag_from(FACILITY_REPORT_DOWNLOAD_GET)
     @jwt_required
     def get(self):
         """

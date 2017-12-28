@@ -10,7 +10,7 @@ from app.models.account import AdminModel, StudentModel
 
 
 class StayDownload(Resource):
-    @swag_from(STAY_GET)
+    @swag_from(STAY_DOWNLOAD_GET)
     @jwt_required
     def get(self):
         """
