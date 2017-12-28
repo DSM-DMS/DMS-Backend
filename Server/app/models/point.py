@@ -5,7 +5,7 @@ from app.models import *
 
 class PointRuleModel(Document):
     """
-    manages point rule
+    Point rules
     """
     meta = {
         'collection': 'point_rule'
@@ -27,7 +27,7 @@ class PointRuleModel(Document):
 
 class PointHistoryModel(EmbeddedDocument):
     """
-    Dormitory good or bad point base
+    Good/bad point in dormitory of each students
     """
     meta = {
         'collection': 'point_history'

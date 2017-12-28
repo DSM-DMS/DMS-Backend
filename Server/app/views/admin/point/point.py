@@ -94,15 +94,15 @@ class PointManaging(Resource):
         if not student:
             return Response('', 204)
 
-        reason_id = request.form['reason_id']
-        reason = PointRuleModel.objects(id=reason_id).first()
-        if not reason:
+        rule_id = request.form['rule_id']
+        rule = PointRuleModel.objects(id=rule_id).first()
+        if not rule:
             return Response('', 205)
 
         point = int(request.form['point'])
 
         student.point_histories.append(PointHistoryModel(
-            reason=reason,
+            reason=rule,
             point=point
         ))
         student.save()
@@ -116,15 +116,62 @@ class PointRuleManaging(Resource):
         """
         상벌점 규칙 목록 조회
         """
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        if not admin:
+            return Response('', 403)
+
+        response = [{
+            'id': rule.id,
+            'name': rule.name,
+            'min_point': rule.min_point,
+            'max_point': rule.max_point
+        } for rule in PointRuleModel.objects]
+
+        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
     @jwt_required
     def post(self):
         """
         상벌점 규칙 추가
         """
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        if not admin:
+            return Response('', 403)
+
+        name = request.form['name']
+        min_point = int(request.form['min_point'])
+        max_point = int(request.form['max_point'])
+
+        PointRuleModel(
+            name=name,
+            min_point=min_point,
+            max_point=max_point
+        ).save()
+
+        return Response('', 201)
 
     @jwt_required
     def patch(self):
         """
         상벌점 규칙 수정
         """
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        if not admin:
+            return Response('', 403)
+
+        rule_id = request.form['rule_id']
+        rule = PointRuleModel.objects(id=rule_id).first()
+        if not rule:
+            return Response('', 205)
+
+        name = request.form['name']
+        min_point = int(request.form['min_point'])
+        max_point = int(request.form['max_point'])
+
+        rule.update(
+            name=name,
+            min_point=min_point,
+            max_point=max_point
+        )
+
+        return Response('', 200)
