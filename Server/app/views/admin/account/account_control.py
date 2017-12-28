@@ -21,20 +21,27 @@ class AccountControl(Resource):
         if not admin:
             return Response('', 401)
 
-        number = request.form['number']
+        number = int(request.form['number'])
         student = StudentModel.objects(number=number).first()
 
         if not student:
             return Response('', 204)
 
         name = student.name
-        student.delete()
 
-        SignupWaitingModel(
-            uuid=str(uuid4()),
-            name=name,
-            number=number
-        ).save()
+        while True:
+            uuid = str(uuid4())[:4]
+
+            if not SignupWaitingModel.objects(uuid=str(uuid)):
+                student.delete()
+
+                SignupWaitingModel(
+                    uuid=str(uuid4())[:4],
+                    name=name,
+                    number=number
+                ).save()
+
+                break
 
         return Response('', 200)
 
@@ -48,7 +55,7 @@ class AccountControl(Resource):
         if not admin:
             return Response('', 403)
 
-        number = request.form['number']
+        number = int(request.form['number'])
         signup_waiting = SignupWaitingModel.objects(number=number).first()
 
         if signup_waiting:

@@ -1,6 +1,6 @@
 ACCOUNT_DELETE = {
-    'tags': ['계정'],
-    'description': '계정 삭제',
+    'tags': ['관리자 계정'],
+    'description': '계정 삭제 후 새로운 UUID 생성',
     'parameters': [
         {
             'name': 'Authorization',
@@ -22,10 +22,7 @@ ACCOUNT_DELETE = {
             'description': '계정 삭제 성공',
             },
         '204': {
-            'description': '학번에 해당하는 계정 없음'
-        },
-        '401': {
-            'description': 'JWT Token 없음'
+            'description': '해당 학번에 해당하는 계정 없음'
         },
         '403': {
             'description': '권한 없음'
@@ -34,7 +31,7 @@ ACCOUNT_DELETE = {
 }
 
 UUID_GET = {
-    'tags': ['계정'],
+    'tags': ['관리자 계정'],
     'description': 'UUID 받아오기',
     'parameters': [
         {
@@ -57,15 +54,12 @@ UUID_GET = {
             'description': '성공',
             'examples': {
                 'application/json': {
-                    'UUID': '022db29c-d0e2-11e5-bb4c-60f81dca7676'
+                    'UUID': '022d'
                 }
             }
         },
         '204': {
             'description': '이미 가입된 학번'
-        },
-        '401': {
-            'description': 'JWT Token 없음'
         },
         '403': {
             'description': '권한 없음'
