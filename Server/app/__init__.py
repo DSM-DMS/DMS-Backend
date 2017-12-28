@@ -1,5 +1,4 @@
 from flask import Flask
-from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flasgger import Swagger
 
@@ -8,7 +7,6 @@ from app.models import Mongo
 from app.views import ViewInjector
 from app.middleware import ErrorHandler, Logger
 
-cors = CORS()
 jwt = JWTManager()
 swagger = Swagger(template=TEMPLATE)
 db = Mongo()
@@ -26,7 +24,6 @@ def create_app(config_name):
     app_ = Flask(__name__)
     app_.config.from_pyfile(config_name)
 
-    cors.init_app(app_)
     jwt.init_app(app_)
     swagger.init_app(app_)
     db.init_app(app_)
