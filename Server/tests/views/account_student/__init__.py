@@ -18,26 +18,26 @@ def create_fake_account():
     ).decode('utf-8')
 
     StudentModel(
-        id='fake',
+        id='fake_student',
         pw=pw,
         name='fake',
         number=1234
     ).save()
 
 
-def remove_fake_account(id='fake'):
+def remove_fake_account(id='fake_student'):
     StudentModel.objects(
         id=id
     ).delete()
 
 
-def get_access_token(client, id='fake', pw='fake'):
+def get_access_token(client, id='fake_student', pw='fake'):
     rv = client.post('/auth', data={'id': id, 'pw': pw})
 
     return 'JWT ' + json.loads(rv.data.decode())['access_token']
 
 
-def get_refresh_token(client, id='fake', pw='fake'):
+def get_refresh_token(client, id='fake_student', pw='fake'):
     rv = client.post('/auth', data={'id': id, 'pw': pw})
 
     return 'JWT ' + json.loads(rv.data.decode())['refresh_token']

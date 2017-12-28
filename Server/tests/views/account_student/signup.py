@@ -30,7 +30,7 @@ class TestAuth(unittest.TestCase):
         1. Check 'already existing ID'
         2. Check 'non-existing ID'
         """
-        rv = self.client.post('/verify/id', data={'id': 'fake'})
+        rv = self.client.post('/verify/id', data={'id': 'fake_student'})
         self.assertEqual(rv.status_code, 204)
 
         rv = self.client.post('/verify/id', data={'id': 'doesntexist'})
@@ -62,7 +62,7 @@ class TestAuth(unittest.TestCase):
         self.assertEqual(rv.status_code, 205)
         # UUID validation failed
 
-        rv = self.client.post('/signup', data={'uuid': str(self.uuid), 'id': 'fake', 'pw': 'fake'})
+        rv = self.client.post('/signup', data={'uuid': str(self.uuid), 'id': 'fake_student', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 204)
         # ID validation failed
 

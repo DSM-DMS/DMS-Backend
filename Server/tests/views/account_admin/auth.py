@@ -26,7 +26,7 @@ class TestAuth(unittest.TestCase):
         self.assertEqual(rv.status_code, 401)
         # Login fail : Incorrect ID or PW
 
-        rv = self.client.post('/admin/auth', data={'id': 'fake', 'pw': 'fake'})
+        rv = self.client.post('/admin/auth', data={'id': 'fake_admin', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 200)
         # Success
 

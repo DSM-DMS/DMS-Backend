@@ -43,7 +43,7 @@ class ViewInjector(object):
         api.add_resource(AccountControl, '/account_control')
         api.add_resource(AdminRefresh, '/admin/refresh')
 
-        api.add_resource(NewAccount, '/admin/new-account_admin')
+        api.add_resource(NewAccount, '/admin/new-account')
         api.add_resource(Extension11Download, '/admin/extension/11')
         api.add_resource(Extension12Download, '/admin/extension/12')
         api.add_resource(GoingoutDownload, '/admin/goingout')

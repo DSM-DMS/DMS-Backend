@@ -36,7 +36,7 @@ class TestAlteration(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
         # Success
 
-        rv = self.client.post('/auth', data={'id': 'fake', 'pw': 'new'})
+        rv = self.client.post('/auth', data={'id': 'fake_student', 'pw': 'new'})
         self.assertEqual(rv.status_code, 200)
         # Auth check
 

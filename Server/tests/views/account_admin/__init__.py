@@ -18,25 +18,25 @@ def create_fake_account():
     ).decode('utf-8')
 
     AdminModel(
-        id='fake',
+        id='fake_admin',
         pw=pw,
         name='fake'
     ).save()
 
 
-def remove_fake_account(id='fake'):
+def remove_fake_account(id='fake_admin'):
     AdminModel.objects(
         id=id
     ).delete()
 
 
-def get_access_token(client, id='fake', pw='fake'):
+def get_access_token(client, id='fake_admin', pw='fake'):
     rv = client.post('/admin/auth', data={'id': id, 'pw': pw})
 
     return 'JWT ' + json.loads(rv.data.decode())['access_token']
 
 
-def get_refresh_token(client, id='fake', pw='fake'):
+def get_refresh_token(client, id='fake_admin', pw='fake'):
     rv = client.post('/admin/auth', data={'id': id, 'pw': pw})
 
     return 'JWT ' + json.loads(rv.data.decode())['refresh_token']
