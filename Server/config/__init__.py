@@ -1,7 +1,7 @@
 import os
 from datetime import timedelta
 
-PORT = 3000
+PORT = 3001
 
 SECRET_KEY = os.getenv('SECRET_KEY', '85c145a16bd6f6e1f3e104ca78c6a102')
 # Secret key for any 3-rd party libraries
