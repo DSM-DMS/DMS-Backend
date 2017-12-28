@@ -20,7 +20,7 @@ class GoingoutDownload(Resource):
         if not admin:
             return Response('', 403)
 
-        wb = openpyxl.load_workbook('app/views/admin/apply/list.xlsx')
+        wb = openpyxl.load_workbook('list.xlsx')
         ws = wb.active
 
         for row in map(str, range(3, 68)):
