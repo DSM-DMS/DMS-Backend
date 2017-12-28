@@ -25,43 +25,33 @@ class TestAccountControl(unittest.TestCase):
     
         1. Check 'Authorization failed'
         2. Check 'Find number failed'
-        3. Check 'delete succeed'
+        3. Check 'Delete and get uuid succeed'
         """
-        rv = self.client.delete('/admin/account-control', data={'number': 1234})
+        rv = self.client.post('/admin/account-control', data={'number': 1234})
         self.assertEqual(rv.status_code, 401)
         # Authorization failed
 
-        rv = self.client.delete('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 0000})
+        rv = self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 0000})
         self.assertEqual(rv.status_code, 204)
         # Find number failed
 
-        rv = self.client.delete('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1234})
-        self.assertEqual(rv.status_code, 200)
-        # Success
+        rv = self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 0000})
+        self.assertEqual(rv.status_code, 201)
+        # Delete and get uuid Success
 
     def testB_findUUID(self):
         """
         TC about find uuid via student number
 
         1. Initialize account
-        2. Check 'Authorization failed'
-        3. Check 'Find number failed'
-        4. Check 'Succeed'
+        2. Check 'Succeed'
         """
-        self.client.delete('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1234})
+        self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1234})
         # Initialize account
 
-        rv = self.client.get('/admin/account-control', data={'number': 1234})
-        self.assertEqual(rv.status_code, 401)
-        # Authorization failed
-
-        rv = self.client.get('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 0000})
-        self.assertEqual(rv.status_code, 204)
-        # Find number failed
-
-        rv = self.client.get('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1234})
-        self.assertEqual(rv.status_code, 200)
-        # Success
+        rv = self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1234})
+        self.assertEqual(rv.status_code, 201)
+        # Succeed
 
         uuid = SignupWaitingModel.objects(number=1234).first().uuid
         response = json.loads(rv.data.decode())
