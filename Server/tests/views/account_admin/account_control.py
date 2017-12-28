@@ -43,11 +43,13 @@ class TestAccountControl(unittest.TestCase):
         """
         TC about find uuid via student number
 
-        1. Check 'Authorization failed'
-        2. Check 'Find number failed'
-        3. Check 'Succeed'
+        1. Initialize account
+        2. Check 'Authorization failed'
+        3. Check 'Find number failed'
+        4. Check 'Succeed'
         """
         self.client.delete('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1234})
+        # Initialize account
 
         rv = self.client.get('/admin/account-control', data={'number': 1234})
         self.assertEqual(rv.status_code, 401)

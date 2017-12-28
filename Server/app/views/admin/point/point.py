@@ -72,7 +72,7 @@ class PointRuleManaging(Resource):
             return Response('', 403)
 
         response = [{
-            'id': rule.id,
+            'id': str(rule.id),
             'name': rule.name,
             'min_point': rule.min_point,
             'max_point': rule.max_point

@@ -51,8 +51,8 @@ class ViewInjector(object):
         api.add_resource(StayDownload, '/admin/stay')
 
         api.add_resource(StudentManaging, '/admin/managing/student')
-        api.add_resource(PointManaging, '/admin/managing/point')
         api.add_resource(PointRuleManaging, '/admin/managing/rule')
+        api.add_resource(PointManaging, '/admin/managing/point')
 
         api.add_resource(FAQPreviewManaging, '/admin/preview/faq')
         api.add_resource(NoticePreviewManaging, '/admin/preview/notice')
