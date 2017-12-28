@@ -20,7 +20,7 @@ class Extension11Download(Resource):
         if not admin:
             return Response('', 403)
 
-        wb = openpyxl.load_workbook('../list.xlsx')
+        wb = openpyxl.load_workbook('list.xlsx')
         ws = wb.active
 
         for row in map(str, range(3, 68)):
@@ -71,7 +71,7 @@ class Extension12Download(Resource):
         if not admin:
             return Response('', 403)
 
-        wb = openpyxl.load_workbook('../list.xlsx')
+        wb = openpyxl.load_workbook('list.xlsx')
         ws = wb.active
 
         for row in map(str, range(3, 68)):
