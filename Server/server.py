@@ -2,7 +2,6 @@ import os
 import unittest2 as ut
 
 from app import app
-from utils import db_migrator
 
 if __name__ == '__main__':
     if app.config['TEST']:
@@ -10,6 +9,8 @@ if __name__ == '__main__':
         ut.TextTestRunner().run(all_tests)
         exit()
     else:
+        from utils import db_migrator
+
         if os.getenv('MYSQL_PW'):
             db_migrator.migrate_posts()
 
