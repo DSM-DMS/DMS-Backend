@@ -12,15 +12,10 @@ from app.models.meal import MealModel
 
 class Meal(Resource):
     @swag_from(MEAL_GET)
-    @jwt_required
     def get(self, date):
         """
         급식 조회
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not any((admin, student)):
-            return Response('', 403)
 
         meal = MealModel.objects(date=date).first()
         if not meal:
