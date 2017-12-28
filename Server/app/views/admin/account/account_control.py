@@ -43,4 +43,4 @@ class AccountControl(Resource):
         signup_waiting = SignupWaitingModel.objects(number=number).first
         uuid = signup_waiting.uuid
 
-        return {'UUID': uuid}, 200
+        return {'UUID': uuid}, 201

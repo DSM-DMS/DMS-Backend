@@ -1,4 +1,4 @@
-ACCOUNT_CONTROL_DELETE = {
+ACCOUNT_CONTROL_POST = {
     'tags': ['관리자 계정'],
     'description': '계정 삭제 후 새로운 UUID 생성',
     'parameters': [
