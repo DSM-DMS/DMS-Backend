@@ -11,56 +11,36 @@ from app.models.account import SignupWaitingModel, StudentModel, AdminModel
 
 
 class AccountControl(Resource):
-    @swag_from(ACCOUNT_CONTROL_DELETE)
+    @swag_from(ACCOUNT_CONTROL_POST)
     @jwt_required
-    def delete(self):
+    def post(self):
         """
         학생 계정 제거 후 새로운 UUID 생성
-        """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            return Response('', 401)
-
-        number = int(request.form['number'])
-        student = StudentModel.objects(number=number).first()
-
-        if not student:
-            return Response('', 204)
-
-        name = student.name
-
-        while True:
-            uuid = str(uuid4())[:4]
-
-            if not SignupWaitingModel.objects(uuid=str(uuid)):
-                student.delete()
-
-                SignupWaitingModel(
-                    uuid=str(uuid4())[:4],
-                    name=name,
-                    number=number
-                ).save()
-
-                break
-
-        return Response('', 200)
-
-    @swag_from(ACCOUNT_CONTROL_GET)
-    @jwt_required
-    def get(self):
-        """
-        특정 학번에 해당하는 UUID 조회
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
             return Response('', 403)
 
         number = int(request.form['number'])
-        signup_waiting = SignupWaitingModel.objects(number=number).first()
+        student = StudentModel.objects(number=number).first()
 
-        if signup_waiting:
-            return {
-                'uuid': signup_waiting.uuid
-            }, 200
-        else:
-            return Response('', 204)
+        if student:
+            name = student.name
+            student.delete()
+
+            while True:
+                uuid = str(uuid4())[:4]
+
+                if not SignupWaitingModel.objects(uuid=str(uuid)):
+                    SignupWaitingModel(
+                        uuid=uuid,
+                        name=name,
+                        number=number
+                    ).save()
+
+                    break
+
+        signup_waiting = SignupWaitingModel.objects(number=number).first
+        uuid = signup_waiting.uuid
+
+        return {'UUID': uuid}, 200
