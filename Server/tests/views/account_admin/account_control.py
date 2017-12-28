@@ -10,6 +10,7 @@ from server import app
 class TestAccountControl(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
+
         account_admin.create_fake_account()
         account_student.create_fake_account()
         self.access_token = account_admin.get_access_token(self.client)
@@ -18,13 +19,13 @@ class TestAccountControl(unittest.TestCase):
         account_admin.remove_fake_account()
         account_student.remove_fake_account()
 
-    def testA_DeleteAccount(self):
+    def testA_deleteAccount(self):
         """
-        TC about delete student account_admin control
+        TC about student account deletion
     
         1. Check 'Authorization failed'
         2. Check 'Find number failed'
-        3. Check 'delete success
+        3. Check 'delete succeed'
         """
         rv = self.client.delete('/account_control', data={'number': 1234})
         self.assertEqual(rv.status_code, 401)
@@ -38,14 +39,16 @@ class TestAccountControl(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
         # Success
 
-    def testB_FindUUID(self):
+    def testB_findUUID(self):
         """
-        TC about find uuid in SignupWationgModel
+        TC about find uuid via student number
+
         1. Check 'Authorization failed'
         2. Check 'Find number failed'
-        3. Check 'Success'
+        3. Check 'Succeed'
         """
         self.client.delete('/account_control', headers={'Authorization': self.access_token}, data={'number': 1234})
+
         rv = self.client.get('/account_control', data={'number': 1234})
         self.assertEqual(rv.status_code, 401)
         # Authorization failed
@@ -56,7 +59,9 @@ class TestAccountControl(unittest.TestCase):
 
         rv = self.client.get('/account_control', headers={'Authorization': self.access_token}, data={'number': 1234})
         self.assertEqual(rv.status_code, 200)
+        # Success
+
         uuid = SignupWaitingModel.objects(number=1234).first().uuid
         response = json.loads(rv.data.decode())
         self.assertEqual(uuid, response['uuid'])
-        # Success
+        # Validate

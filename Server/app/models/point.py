@@ -3,13 +3,34 @@ from datetime import datetime
 from app.models import *
 
 
-class PointBase(EmbeddedDocument):
+class PointRuleModel(Document):
+    """
+    manages point rule
+    """
+    meta = {
+        'collection': 'point_rule'
+    }
+
+    name = StringField(
+        required=True
+    )
+
+    min_point = IntField(
+        required=True,
+        min_value=1
+    )
+    max_point = IntField(
+        required=True,
+        min_value=1
+    )
+
+
+class PointHistoryModel(EmbeddedDocument):
     """
     Dormitory good or bad point base
     """
     meta = {
-        'collection': 'point_base',
-        'allow_inheritance': True
+        'collection': 'point_history'
     }
 
     time = DateTimeField(
@@ -17,21 +38,10 @@ class PointBase(EmbeddedDocument):
         default=datetime.now()
     )
 
-    reason = StringField(
+    reason = ReferenceField(
+        document_type=PointRuleModel,
         required=True
     )
     point = IntField(
         required=True
     )
-
-
-class GoodPointModel(PointBase):
-    """
-    Dormitory good point document
-    """
-
-
-class BadPointModel(PointBase):
-    """
-    Dormitory bad point document
-    """

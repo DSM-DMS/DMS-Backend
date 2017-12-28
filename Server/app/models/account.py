@@ -3,7 +3,7 @@ from datetime import datetime
 from app.models import *
 
 from app.models.apply import ExtensionApplyModel, GoingoutApplyModel, StayApplyModel
-from app.models.point import GoodPointModel, BadPointModel
+from app.models.point import PointHistoryModel
 
 
 class SignupWaitingModel(Document):
@@ -15,7 +15,7 @@ class SignupWaitingModel(Document):
     }
 
     uuid = StringField(
-        primary_key=True,
+        primary_key=True
     )
     name = StringField(
         required=True
@@ -30,6 +30,7 @@ class AccountBase(Document):
     DMS account_admin Base Document
     """
     meta = {
+        'collection': 'account_base',
         'abstract': True,
         'allow_inheritance': True
     }
@@ -58,10 +59,6 @@ class StudentModel(AccountBase):
         required=True
     )
 
-    # afterschool_apply = EmbeddedDocumentField(
-    #     document_type=AfterSchoolApplyModel
-    # )
-
     extension_apply_11 = EmbeddedDocumentField(
         document_type=ExtensionApplyModel
     )
@@ -77,11 +74,11 @@ class StudentModel(AccountBase):
         default=StayApplyModel()
     )
 
-    good_point = EmbeddedDocumentListField(
-        document_type=GoodPointModel
-    )
-    bad_point = EmbeddedDocumentListField(
-        document_type=BadPointModel
+    good_point = IntField()
+    bad_point = IntField()
+    penalty_training_status = IntField()
+    point_histories = EmbeddedDocumentListField(
+        document_type=PointHistoryModel
     )
 
 
