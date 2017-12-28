@@ -25,6 +25,9 @@ ACCOUNT_DELETE = {
             'description': '학번에 해당하는 계정 없음'
         },
         '401': {
+            'description': 'JWT Token 없음'
+        },
+        '403': {
             'description': '권한 없음'
         }
     }
@@ -62,6 +65,9 @@ UUID_GET = {
             'description': '이미 가입된 학번'
         },
         '401': {
+            'description': 'JWT Token 없음'
+        },
+        '403': {
             'description': '권한 없음'
         }
     }
