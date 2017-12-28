@@ -44,8 +44,28 @@ DMS 프로젝트의 2017년 12월 리메이크 일정에 의해 만들어진 백
 ~~~
 2. 현재 저장소에 Travis CI와 Coveralls를 적용하였습니다. 빌드 테스트와 리포팅을 위해 사용합니다.
 3. 무조건 짧은 코드보단 유지보수 가능하며 명시적인 코드 작성을 지향합니다. 컨벤션은 기본적으로 모두 PEP8을 따릅니다.
-4. TC 작성 시 메소드 네이밍은 test[A|B|C|...]_description으로 합니다. ex) testA_signup(self)
-5. API 작성 시 메소드는 GET - POST - PUT - PATCH - DELETE 순서로 정리합니다.
+4. Lint 적용을 위해 Flake8을 사용합니다.
+5. requirements.txt 생성을 위해 pigar를 사용합니다.
+
+### Rules
+#### Model
+- app/models 하위에 구현합니다.
+- 상속 가능한 Base Model은 ***Base 형태로 네이밍합니다. ex) AccountBase
+- Model은 ***Model 형태로 네이밍합니다. ex) StudentModel
+- 필드 선언 시 파라미터는 키워드 형태로 넘겨줍니다. ex) ReferenceField(document_type=StudentModel, required=True)
+- meta 필드와 docstring을 꼭 적도록 합니다.
+#### API
+- REST API입니다.
+- Flask-restful 패키지를 사용하여 클래스 단위로 URI를 분할합니다.
+- app/views 하위에 구현합니다.
+- 메소드는 GET - POST - PUT - PATCH - DELETE 순서로 정리하는 것을 원칙으로 하나, API의 flow가 중요하다면 정렬을 바꾸어도 좋습니다.
+#### Swagger
+- app/docs 하위에 구현합니다.
+- 딕셔너리 상수는 APINAME_METHOD 방식으로 네이밍합니다. 여기서 APINAME은 해당 API의 클래스 이름에 영향을 받습니다. ex) FAQManaging 클래스의 patch 메소드라면 FAQ_MANAGING_PATCH
+- Swagger template에 명시해두지 않은 태그를 사용하지 않습니다.
+#### TC
+- tests/ 하위에 구현합니다.
+- unittest는 TC들을 사전식으로 실행하므로 TC 작성 시 메소드 네이밍은 test[A|B|C|...]_description으로 합니다. ex) testA_signup(self)
 
 ### 특수한 전제
 #### 연장신청
