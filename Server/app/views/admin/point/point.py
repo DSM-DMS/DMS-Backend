@@ -61,6 +61,7 @@ class StudentManaging(Resource):
 
 
 class PointManaging(Resource):
+    @swag_from(POINT_MANAGING_GET)
     @jwt_required
     def get(self):
         """
@@ -83,6 +84,7 @@ class PointManaging(Resource):
 
         return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
+    @swag_from(POINT_MANAGING_POST)
     @jwt_required
     def post(self):
         """

@@ -138,3 +138,52 @@ POINT_MANAGING_GET = {
         }
     }
 }
+
+POINT_MANAGING_POST = {
+    'tags': ['상벌점 관리'],
+    'description': '특정 학생에 대한 상벌점 부여',
+    'parameters': [
+        {
+            'name': 'Authorization',
+            'description': 'JWT Token(JWT ***)',
+            'in': 'header',
+            'type': 'str',
+            'required': True
+        },
+        {
+            'name': 'id',
+            'description': '상벌점 데이터 등록 대상 학생 ID',
+            'in': 'formData',
+            'type': 'str',
+            'required': True
+        },
+        {
+            'name': 'rule_id',
+            'description': '상벌점을 부여하기 위한 규칙 ID',
+            'in': 'formData',
+            'type': 'str',
+            'required': True
+        },
+        {
+            'name': 'point',
+            'description': '상벌점(상점은 양수, 벌점은 음수)',
+            'in': 'formData',
+            'type': 'int',
+            'required': True
+        }
+    ],
+    'responses': {
+        '201': {
+            'description': '상벌점 데이터 등록 성공'
+        },
+        '204': {
+            'description': '존재하지 않는 학생 ID'
+        },
+        '205': {
+            'description': '존재하지 않는 규칙 ID'
+        },
+        '403': {
+            'description': '권한 없음'
+        }
+    }
+}
