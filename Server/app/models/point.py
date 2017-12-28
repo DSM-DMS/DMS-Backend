@@ -16,12 +16,10 @@ class PointRuleModel(Document):
     )
 
     min_point = IntField(
-        required=True,
-        min_value=1
+        required=True
     )
     max_point = IntField(
-        required=True,
-        min_value=1
+        required=True
     )
 
 
