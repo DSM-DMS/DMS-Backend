@@ -65,7 +65,7 @@ DMS 프로젝트의 2017년 12월 리메이크 일정에 의해 만들어진 백
 - Swagger template에 명시해두지 않은 태그를 사용하지 않습니다.
 #### TC
 - tests/ 하위에 구현합니다.
-- unittest는 TC들을 사전식으로 실행하므로 TC 작성 시 메소드 네이밍은 test[A|B|C|...]_description으로 합니다. ex) testA_signup(self)
+- unittest는 TC들을 사전식으로 실행하므로 TC 작성 시 메소드 네이밍은 test[A|B|C|...]_what으로 합니다. ex) testA_signup(self), testB_getNoticeList(self)
 
 ### 특수한 전제
 #### 연장신청

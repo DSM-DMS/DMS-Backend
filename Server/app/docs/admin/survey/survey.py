@@ -179,7 +179,7 @@ QUESTION_MANAGING_POST = {
             'required': True
         },
         {
-            'name': 'survey)id',
+            'name': 'survey_id',
             'description': '질문을 추가할 설문지 ID',
             'in': 'formData',
             'type': 'str',
