@@ -36,7 +36,7 @@ class TestAccountControl(unittest.TestCase):
         # Find number failed
 
         account_student.create_fake_account()
-        rv = self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 0000})
+        rv = self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1234})
         self.assertEqual(rv.status_code, 201)
         # Delete and get uuid Success
 
