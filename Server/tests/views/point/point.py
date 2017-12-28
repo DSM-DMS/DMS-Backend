@@ -123,3 +123,8 @@ class TestPoint(unittest.TestCase):
         """
         TC about student point giving
         """
+
+    def testE_deleteRule(self):
+        """
+        TC about point rule deletion
+        """

@@ -239,7 +239,7 @@ POINT_MANAGING_GET = {
         {
             'name': 'id',
             'description': '내역 조회 대상 학생 ID',
-            'in': 'formData',
+            'in': 'query',
             'type': 'str',
             'required': True
         }
