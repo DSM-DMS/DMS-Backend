@@ -55,5 +55,5 @@ class TestAccountControl(unittest.TestCase):
 
         uuid = SignupWaitingModel.objects(number=1234).first().uuid
         response = json.loads(rv.data.decode())
-        self.assertEqual(uuid, response['UUID'])
+        self.assertEqual(uuid, response['uuid'])
         # Validate

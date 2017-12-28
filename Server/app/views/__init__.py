@@ -7,6 +7,8 @@ from app.views.admin.apply.extension import *
 from app.views.admin.apply.goingout import *
 from app.views.admin.apply.stay import *
 from app.views.admin.point.point import *
+from app.views.admin.point.rule import *
+from app.views.admin.point.student import *
 from app.views.admin.post.faq import *
 from app.views.admin.post.notice import *
 from app.views.admin.post.preview import *
