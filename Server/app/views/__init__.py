@@ -3,7 +3,6 @@ from flask_restful import Api
 from app.views.admin.account.auth import *
 from app.views.admin.account.account_control import *
 from app.views.admin.account.signup import *
-from app.views.admin.apply.afterschool import *
 from app.views.admin.apply.extension import *
 from app.views.admin.apply.goingout import *
 from app.views.admin.apply.stay import *
