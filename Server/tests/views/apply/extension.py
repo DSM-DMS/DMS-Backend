@@ -18,7 +18,7 @@ class TestExtension(unittest.TestCase):
     def tearDown(self):
         account_student.remove_fake_account()
 
-    def testA_extension11Apply(self):
+    def testA_applyExtension11(self):
         """
         TC about extension apply 11
 
@@ -49,7 +49,7 @@ class TestExtension(unittest.TestCase):
         else:
             self.assertEqual(rv.status_code, 204)
 
-    def testB_extension11Withdraw(self):
+    def testB_withdrawExtension11(self):
         """
         TC about withdraw extension apply 11
 
@@ -69,7 +69,7 @@ class TestExtension(unittest.TestCase):
         self.assertEqual(rv.status_code, 204)
         # Unapplied check
 
-    def testC_extension12Apply(self):
+    def testC_applyExtension12(self):
         """
         TC about extension apply 12
 
@@ -100,7 +100,7 @@ class TestExtension(unittest.TestCase):
         else:
             self.assertEqual(rv.status_code, 204)
 
-    def testD_extension12Withdraw(self):
+    def testD_withdrawExtension12(self):
         """
         TC about withdraw extension apply 12
 
@@ -120,8 +120,8 @@ class TestExtension(unittest.TestCase):
         self.assertEqual(rv.status_code, 204)
         # Unapplied check
 
-    def testE_extension11Download(self):
+    def testE_downloadExtension11(self):
         pass
 
-    def testF_extension12Download(self):
+    def testF_downloadExtension12(self):
         pass

@@ -24,7 +24,7 @@ class TestAuth(unittest.TestCase):
     def tearDown(self):
         account_student.remove_fake_account()
 
-    def testA_IDVerify(self):
+    def testA_verifyID(self):
         """
         TC about ID verification
 
@@ -37,7 +37,7 @@ class TestAuth(unittest.TestCase):
         rv = self.client.post('/verify/id', data={'id': 'doesntexist'})
         self.assertEqual(rv.status_code, 200)
 
-    def testB_UUIDVerify(self):
+    def testB_verifyUUID(self):
         """
         TC about UUID verification
 

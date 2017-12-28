@@ -47,17 +47,17 @@ class TestAccountControl(unittest.TestCase):
         2. Check 'Find number failed'
         3. Check 'Succeed'
         """
-        self.client.delete('/account_control', headers={'Authorization': self.access_token}, data={'number': 1234})
+        self.client.delete('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1234})
 
-        rv = self.client.get('/account_control', data={'number': 1234})
+        rv = self.client.get('/admin/account-control', data={'number': 1234})
         self.assertEqual(rv.status_code, 401)
         # Authorization failed
 
-        rv = self.client.get('/account_control', headers={'Authorization': self.access_token}, data={'number': 0000})
+        rv = self.client.get('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 0000})
         self.assertEqual(rv.status_code, 204)
         # Find number failed
 
-        rv = self.client.get('/account_control', headers={'Authorization': self.access_token}, data={'number': 1234})
+        rv = self.client.get('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1234})
         self.assertEqual(rv.status_code, 200)
         # Success
 

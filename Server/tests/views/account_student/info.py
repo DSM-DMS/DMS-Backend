@@ -15,9 +15,9 @@ class TestAuth(unittest.TestCase):
     def tearDown(self):
         account_student.remove_fake_account()
 
-    def testA_mypage(self):
+    def testA_getMypage(self):
         """
-        TC about mypage
+        TC about mypage getting
 
         1. Check 'unauthorized on inquire mypage'
         2. Check 'mypage data'
