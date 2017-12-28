@@ -6,11 +6,12 @@ from flask_jwt_extended import get_jwt_identity
 from flask_restful import Resource, request
 from flasgger import swag_from
 
-# 여긴 문서의 경로가 들어갈 것이다.
+from app.docs.admin.account.account_control import *
 from app.models.account import SignupWaitingModel, StudentModel, AdminModel
 
 
 class AccountControl(Resource):
+    @swag_from(ACCOUNT_DELETE)
     @jwt_required
     def delete(self):
         """
@@ -18,7 +19,7 @@ class AccountControl(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            return Response('', 401)
 
         number = request.form['number']
         student = StudentModel.objects(number=number).first()
@@ -37,6 +38,7 @@ class AccountControl(Resource):
 
         return Response('', 200)
 
+    @swag_from(UUID_GET)
     @jwt_required
     def get(self):
         """
