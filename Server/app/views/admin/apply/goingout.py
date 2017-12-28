@@ -20,7 +20,7 @@ class GoingoutDownload(Resource):
         if not admin:
             return Response('', 403)
 
-        wb = openpyxl.load_workbook('외출 명렬표.xlsx')
+        wb = openpyxl.load_workbook('명렬표.xlsx')
         ws = wb.active
 
         for row in map(str, range(3, 68)):
@@ -38,6 +38,6 @@ class GoingoutDownload(Resource):
                 ws[column2+row] = sat
                 ws[column3+row] = sun
 
-        wb.save('명렬표.xlsx')
+        wb.save('외출 명렬표.xlsx')
 
         return send_from_directory('.', '외출 명렬표.xlsx'), 200

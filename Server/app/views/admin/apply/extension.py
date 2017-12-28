@@ -20,7 +20,7 @@ class Extension11Download(Resource):
         if not admin:
             return Response('', 403)
 
-        wb = openpyxl.load_workbook('연장 명렬표.xlsx')
+        wb = openpyxl.load_workbook('명렬표.xlsx')
         ws = wb.active
 
         for row in map(str, range(3, 68)):
@@ -51,9 +51,9 @@ class Extension11Download(Resource):
 
                 ws[column2 + row] = status
 
-        wb.save('명렬표.xlsx')
+        wb.save('연장 명렬표 11.xlsx')
 
-        return send_from_directory('.', '연장 명렬표.xlsx'), 200
+        return send_from_directory('.', '연장 명렬표 11.xlsx'), 200
 
 
 class Extension12Download(Resource):
@@ -67,7 +67,7 @@ class Extension12Download(Resource):
         if not admin:
             return Response('', 403)
 
-        wb = openpyxl.load_workbook('연장 명렬표.xlsx')
+        wb = openpyxl.load_workbook('명렬표.xlsx')
         ws = wb.active
 
         for row in map(str, range(3, 68)):
@@ -98,6 +98,6 @@ class Extension12Download(Resource):
 
                 ws[column2 + row] = status
 
-        wb.save('명렬표.xlsx')
+        wb.save('연장 명렬표 12.xlsx')
 
-        return send_from_directory('.', '연장 명렬표.xlsx'), 200
+        return send_from_directory('.', '연장 명렬표 12.xlsx'), 200

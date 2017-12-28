@@ -20,7 +20,7 @@ class StayDownload(Resource):
         if not admin:
             return Response('', 403)
 
-        wb = openpyxl.load_workbook('잔류 명렬표.xlsx')
+        wb = openpyxl.load_workbook('명렬표.xlsx')
         ws = wb.active
 
         for row in map(str, range(3, 68)):
@@ -44,6 +44,6 @@ class StayDownload(Resource):
                     status = '잔류'
                 ws[column2+row] = status
 
-        wb.save('명렬표.xlsx')
+        wb.save('잔류 명렬표.xlsx')
 
         return send_from_directory('.', '잔류 명렬표.xlsx'), 200
