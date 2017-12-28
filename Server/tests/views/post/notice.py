@@ -23,13 +23,8 @@ class TestNotice(unittest.TestCase):
         """
         TC about notice upload
 
-        1. Check 'unauthorized on notice upload'
-        2. Check 'upload succeed'
+        1. Check 'upload succeed'
         """
-        rv = self.client.post('/admin/notice')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
         self.assertEqual(rv.status_code, 201)
         # Post success
@@ -43,15 +38,9 @@ class TestNotice(unittest.TestCase):
         """
         TC about notice patch
 
-        1. Check 'unauthorized on notice getting'
-        2. Load/Check 'existing(uploaded) notice'
-        3. Check 'unauthorized on notice patch'
-        4. Check 'patch succeed'
+        1. Load/Check 'existing(uploaded) notice'
+        2. Check 'patch succeed'
         """
-        rv = self.client.get('/notice')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.get('/notice', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         # Get success
@@ -66,10 +55,6 @@ class TestNotice(unittest.TestCase):
         self.assertTrue(post_id)
         # Data validate
 
-        rv = self.client.patch('/admin/notice')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.patch('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'id': '123456789012345678901234', 'title': 'new', 'content': 'new'})
         self.assertEqual(rv.status_code, 204)
         # Post id doesn't exist
@@ -82,15 +67,9 @@ class TestNotice(unittest.TestCase):
         """
         TC about notice delete
 
-        1. Check 'unauthorized on notice getting'
-        2. Load/Check 'existing(uploaded) notice'
-        3. Check 'unauthorized on notice delete'
-        4. Check 'delete succeed'
+        1. Load/Check 'existing(uploaded) notice'
+        2. Check 'delete succeed'
         """
-        rv = self.client.get('/notice')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.get('/notice', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         # Get success
@@ -104,10 +83,6 @@ class TestNotice(unittest.TestCase):
 
         self.assertTrue(post_id)
         # Data validate
-
-        rv = self.client.delete('/admin/notice')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
 
         rv = self.client.delete('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'id': '123456789012345678901234'})
         self.assertEqual(rv.status_code, 204)

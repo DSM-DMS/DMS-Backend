@@ -21,18 +21,13 @@ class TestGoingout(unittest.TestCase):
         TC about goingout apply
 
         1. Check 'apply status all false'
-        2. Check 'unauthorized on goingout apply'
-        3. Check 'apply succeed'
-        4. Check 'apply status'
+        2. Check 'apply succeed'
+        3. Check 'apply status'
         """
         rv = self.client.get('/goingout', headers={'Authorization': self.access_token})
         self.assertEqual(rv.status_code, 200)
         data = json.loads(rv.data.decode())
         self.assertFalse(all((data['sat'], data['sun'])))
-
-        rv = self.client.post('/goingout')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
 
         rv = self.client.post('/goingout', headers={'Authorization': self.access_token}, data={'sat': True, 'sun': False})
         self.assertEqual(rv.status_code, 201)

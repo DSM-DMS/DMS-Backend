@@ -23,10 +23,6 @@ class TestPoint(unittest.TestCase):
         """
         TC about student point data inserting
         """
-        rv = self.client.post('/admin/managing/student')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.get('/admin/managing/student', headers={'Authorization': self.access_token})
         self.assertEqual(rv.status_code, 200)
         data = json.loads(rv.data.decode())
@@ -58,10 +54,6 @@ class TestPoint(unittest.TestCase):
         """
         TC about point rule inserting
         """
-        rv = self.client.post('/admin/managing/rule')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.access_token})
         self.assertEqual(rv.status_code, 200)
         data = json.loads(rv.data.decode())
@@ -87,10 +79,6 @@ class TestPoint(unittest.TestCase):
         """
         TC about point rule patching
         """
-        rv = self.client.patch('/admin/managing/rule')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.post('/admin/managing/rule', headers={'Authorization': self.access_token}, data={'name': 'test', 'min_point': 1, 'max_point': 1})
         self.assertEqual(rv.status_code, 201)
         # Add rule

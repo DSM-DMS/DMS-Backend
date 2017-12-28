@@ -23,13 +23,8 @@ class TestFAQ(unittest.TestCase):
         """
         TC about FAQ upload
 
-        1. Check 'unauthorized on FAQ upload'
-        2. Check 'upload succeed'
+        1. Check 'upload succeed'
         """
-        rv = self.client.post('/admin/faq')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
         self.assertEqual(rv.status_code, 201)
         # Post success
@@ -43,15 +38,10 @@ class TestFAQ(unittest.TestCase):
         """
         TC about FAQ patch
 
-        1. Check 'unauthorized on FAQ getting'
-        2. Load/Check 'existing(uploaded) FAQ'
-        3. Check 'unauthorized on FAQ patch'
-        4. Check 'patch succeed'
+        1. Load/Check 'existing(uploaded) FAQ'
+        2. Check 'unauthorized on FAQ patch'
+        3. Check 'patch succeed'
         """
-        rv = self.client.get('/faq')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.get('/faq', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         # Get success
@@ -66,10 +56,6 @@ class TestFAQ(unittest.TestCase):
         self.assertTrue(post_id)
         # Data validate
 
-        rv = self.client.patch('/admin/faq')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.patch('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'id': '123456789012345678901234', 'title': 'new', 'content': 'new'})
         self.assertEqual(rv.status_code, 204)
         # Post id doesn't exist
@@ -82,15 +68,9 @@ class TestFAQ(unittest.TestCase):
         """
         TC about FAQ delete
 
-        1. Check 'unauthorized on FAQ getting'
-        2. Load/Check 'existing(uploaded) FAQ'
-        3. Check 'unauthorized on FAQ delete'
-        4. Check 'delete succeed'
+        1. Load/Check 'existing(uploaded) FAQ'
+        2. Check 'delete succeed'
         """
-        rv = self.client.get('/faq')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.get('/faq', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         # Get success
@@ -104,10 +84,6 @@ class TestFAQ(unittest.TestCase):
 
         self.assertTrue(post_id)
         # Data validate
-
-        rv = self.client.delete('/admin/faq')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
 
         rv = self.client.delete('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'id': '123456789012345678901234'})
         self.assertEqual(rv.status_code, 204)

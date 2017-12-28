@@ -39,15 +39,10 @@ class TestAuth(unittest.TestCase):
         """
         TC about admin's refresh
 
-        1. Check 'unauthorized on refresh'
-        2. Check 'refresh success'
-        3. Check 'new access token'
-        4. Check 'refresh failed after password changed'
+        1. Check 'refresh success'
+        2. Check 'new access token'
+        3. Check 'refresh failed after password changed'
         """
-        rv = self.client.post('/refresh')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         refresh_token = account_student.get_refresh_token(self.client)
         rv = self.client.post('/refresh', headers={'Authorization': refresh_token})
         self.assertEqual(rv.status_code, 200)

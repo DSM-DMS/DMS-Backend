@@ -19,13 +19,8 @@ class TestAuth(unittest.TestCase):
         """
         TC about mypage getting
 
-        1. Check 'unauthorized on inquire mypage'
-        2. Check 'mypage data'
+        1. Check 'mypage data'
         """
-        rv = self.client.get('/mypage')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         access_token = account_student.get_access_token(self.client)
 
         rv = self.client.get('/mypage', headers={'Authorization': access_token})

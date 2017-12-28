@@ -30,21 +30,12 @@ class TestBugReport(unittest.TestCase):
         """
         TC about bug report
 
-        1. Check 'unauthorized on bug report'
-        2. Check 'report succeed'
-        3. Check 'unauthorized on bug report getting'
+        1. Check 'report succeed'
+        2. Check 'unauthorized on bug report getting'
         """
-        rv = self.client.post('/report/bug')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.post('/report/bug', headers={'Authorization': self.student_access_token}, data={'title': 'test', 'content': 'test'})
         self.assertEqual(rv.status_code, 201)
         # Report success
-
-        rv = self.client.get('/admin/report/bug')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
 
         rv = self.client.get('/admin/report/bug', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)

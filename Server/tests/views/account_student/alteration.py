@@ -20,15 +20,10 @@ class TestAlteration(unittest.TestCase):
         """
         TC about password change
 
-        1. Check 'unauthorized on password change'
-        2. Check 'incorrect password'
-        3. Check 'password change succeed'
-        4. Check 'auth succeed'
+        1. Check 'incorrect password'
+        2. Check 'password change succeed'
+        3. Check 'auth succeed'
         """
-        rv = self.client.post('/change/pw')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.post('/change/pw', headers={'Authorization': self.access_token}, data={'current_pw': 'invalid'})
         self.assertEqual(rv.status_code, 403)
         # Incorrect password
@@ -45,14 +40,9 @@ class TestAlteration(unittest.TestCase):
         """
         TC about number change
 
-        1. Check 'unauthorized on number change'
-        2. Check 'number change succeed'
-        3. Check 'changed number with /mypage'
+        1. Check 'number change succeed'
+        2. Check 'changed number with /mypage'
         """
-        rv = self.client.post('/change/number')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.post('/change/number', data={'new_number': 2120}, headers={'Authorization': self.access_token})
         self.assertEqual(rv.status_code, 200)
         # Success

@@ -23,14 +23,9 @@ class TestAccountControl(unittest.TestCase):
         """
         TC about student account deletion
     
-        1. Check 'Authorization failed'
-        2. Check 'Find number failed'
-        3. Check 'Delete and get uuid succeed'
+        1. Check 'Find number failed'
+        2. Check 'Delete and get uuid succeed'
         """
-        rv = self.client.post('/admin/account-control', data={'number': 1234})
-        self.assertEqual(rv.status_code, 401)
-        # Authorization failed
-
         rv = self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 0000})
         self.assertEqual(rv.status_code, 204)
         # Find number failed

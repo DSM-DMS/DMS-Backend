@@ -25,17 +25,12 @@ class TestPreview(unittest.TestCase):
         TC about faq preview set
 
         1. Post sample FAQ
-        2. Check 'unauthorized on set FAQ preview'
-        3. Get ID of pre-posted FAQ
-        4. Check 'preview set succeed'
+        2. Get ID of pre-posted FAQ
+        3. Check 'preview set succeed'
         """
         rv = self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
         self.assertEqual(rv.status_code, 201)
         # Post sample FAQ
-
-        rv = self.client.post('/admin/preview/faq')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
 
         rv = self.client.get('/faq', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
@@ -56,14 +51,9 @@ class TestPreview(unittest.TestCase):
         """
         TC about faq preview get
 
-        1. Check 'unauthorized on get FAQ preview
-        2. Check 'preview get succeed using admin's access token'
-        3. Check 'preview get succeed using student's access token'
+        1. Check 'preview get succeed using admin's access token'
+        2. Check 'preview get succeed using student's access token'
         """
-        rv = self.client.get('/preview/faq')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.get('/preview/faq', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         # Get preview success on admin's access token
@@ -85,17 +75,12 @@ class TestPreview(unittest.TestCase):
         TC about notice preview set
 
         1. Post sample notice
-        2. Check 'unauthorized on set notice preview'
-        3. Get ID of pre-posted notice
-        4. Check 'preview set succeed'
+        2. Get ID of pre-posted notice
+        3. Check 'preview set succeed'
         """
         rv = self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
         self.assertEqual(rv.status_code, 201)
         # Post sample notice
-
-        rv = self.client.post('/admin/preview/notice')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
 
         rv = self.client.get('/notice', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
@@ -116,14 +101,9 @@ class TestPreview(unittest.TestCase):
         """
         TC about notice preview get
 
-        1. Check 'unauthorized on get notice preview
-        2. Check 'preview get succeed using admin's access token'
-        3. Check 'preview get succeed using student's access token'
+        1. Check 'preview get succeed using admin's access token'
+        2. Check 'preview get succeed using student's access token'
         """
-        rv = self.client.get('/preview/notice')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.get('/preview/notice', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         # Get preview success on admin's access token
@@ -145,17 +125,12 @@ class TestPreview(unittest.TestCase):
         TC about rule preview set
 
         1. Post sample rule
-        2. Check 'unauthorized on set rule preview'
-        3. Get ID of pre-posted rule
-        4. Check 'preview set succeed'
+        2. Get ID of pre-posted rule
+        3. Check 'preview set succeed'
         """
         rv = self.client.post('/admin/rule', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
         self.assertEqual(rv.status_code, 201)
         # Post sample rule
-
-        rv = self.client.post('/admin/preview/rule')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
 
         rv = self.client.get('/rule', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
@@ -176,14 +151,9 @@ class TestPreview(unittest.TestCase):
         """
         TC about rule preview get
 
-        1. Check 'unauthorized on get rule preview
-        2. Check 'preview get succeed using admin's access token'
-        3. Check 'preview get succeed using student's access token'
+        1. Check 'preview get succeed using admin's access token'
+        2. Check 'preview get succeed using student's access token'
         """
-        rv = self.client.get('/preview/rule')
-        self.assertEqual(rv.status_code, 401)
-        # Unauthorized check
-
         rv = self.client.get('/preview/rule', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         # Get preview success on admin's access token
