@@ -14,7 +14,6 @@ class Meal(Resource):
         """
         급식 조회
         """
-
         meal = MealModel.objects(date=date).first()
         if not meal:
             return Response('', 204)
