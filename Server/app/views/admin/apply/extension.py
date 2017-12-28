@@ -57,7 +57,7 @@ class Extension11Download(Resource):
 
 
 class Extension12Download(Resource):
-    @swag_from(EXTENSION_GET)
+    @swag_from(EXTENSION_DOWNLOAD_GET)
     @jwt_required
     def get(self):
         """
