@@ -5,11 +5,13 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource, request
 from flasgger import swag_from
 
+from app.docs.admin.point.point import *
 from app.models.account import AdminModel, StudentModel
 from app.models.point import PointRuleModel, PointHistoryModel
 
 
 class StudentManaging(Resource):
+    @swag_from(STUDENT_MANAGING_GET)
     @jwt_required
     def get(self):
         """
@@ -30,6 +32,7 @@ class StudentManaging(Resource):
 
         return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
+    @swag_from(STUDENT_MANAGING_POST)
     @jwt_required
     def post(self):
         """
@@ -105,6 +108,13 @@ class PointManaging(Resource):
             reason=rule,
             point=point
         ))
+        # Append history
+
+        if point < 0:
+            student.bad_point += abs(point)
+        else:
+            student.good_point += point
+
         student.save()
 
         return Response('', 201)
