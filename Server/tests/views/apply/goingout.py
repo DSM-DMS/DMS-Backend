@@ -9,6 +9,7 @@ from server import app
 class TestGoingout(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
+
         account_student.create_fake_account()
         self.access_token = account_student.get_access_token(self.client)
 

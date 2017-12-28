@@ -9,6 +9,7 @@ from server import app
 class TestAuth(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
+
         account_student.create_fake_account()
 
     def tearDown(self):

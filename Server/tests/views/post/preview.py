@@ -9,6 +9,7 @@ from server import app
 class TestPreview(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
+
         account_admin.create_fake_account()
         account_student.create_fake_account()
 
