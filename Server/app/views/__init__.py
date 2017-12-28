@@ -6,6 +6,7 @@ from app.views.admin.account.signup import *
 from app.views.admin.apply.extension import *
 from app.views.admin.apply.goingout import *
 from app.views.admin.apply.stay import *
+from app.views.admin.point.point import *
 from app.views.admin.post.faq import *
 from app.views.admin.post.notice import *
 from app.views.admin.post.preview import *
@@ -40,14 +41,18 @@ class ViewInjector(object):
 
         # Admin account_admin
         api.add_resource(AdminAuth, '/admin/auth')
-        api.add_resource(AccountControl, '/account_control')
         api.add_resource(AdminRefresh, '/admin/refresh')
-
+        api.add_resource(AccountControl, '/admin/account-control')
         api.add_resource(NewAccount, '/admin/new-account')
+
         api.add_resource(Extension11Download, '/admin/extension/11')
         api.add_resource(Extension12Download, '/admin/extension/12')
         api.add_resource(GoingoutDownload, '/admin/goingout')
         api.add_resource(StayDownload, '/admin/stay')
+
+        api.add_resource(StudentManaging, '/admin/managing/student')
+        api.add_resource(PointManaging, '/admin/managing/point')
+        api.add_resource(PointRuleManaging, '/admin/managing/rule')
 
         api.add_resource(FAQPreviewManaging, '/admin/preview/faq')
         api.add_resource(NoticePreviewManaging, '/admin/preview/notice')

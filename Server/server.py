@@ -7,5 +7,7 @@ if __name__ == '__main__':
         all_tests = ut.TestLoader().discover('tests', pattern='*.py')
         ut.TextTestRunner().run(all_tests)
         exit()
+    else:
+        app.run(host=app.config['HOST'], port=app.config['PORT'], debug=app.debug)
 
     # app.run(host=app.config['HOST'], port=app.config['PORT'], debug=app.debug)

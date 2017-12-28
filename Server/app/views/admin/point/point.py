@@ -123,6 +123,7 @@ class PointManaging(Resource):
 
 
 class PointRuleManaging(Resource):
+    @swag_from(POINT_RULE_MANAGING_GET)
     @jwt_required
     def get(self):
         """
@@ -141,6 +142,7 @@ class PointRuleManaging(Resource):
 
         return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
+    @swag_from(POINT_RULE_MANAGING_POST)
     @jwt_required
     def post(self):
         """
@@ -162,6 +164,7 @@ class PointRuleManaging(Resource):
 
         return Response('', 201)
 
+    @swag_from(POINT_RULE_MANAGING_PATCH)
     @jwt_required
     def patch(self):
         """

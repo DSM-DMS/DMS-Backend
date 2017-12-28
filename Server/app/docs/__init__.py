@@ -12,14 +12,14 @@ TEMPLATE = {
             'description': '학생 권한으로 접근 가능한 계정 API'
         },
 
-        {
-            'name': '방과후 신청 관리',
-            'description': '관리자 권한으로 접근 가능한 방과후 신청 관리 API'
-        },
-        {
-            'name': '방과후 신청',
-            'description': '학생 권한으로 접근 가능한 방과후 신청 API'
-        },
+        # {
+        #     'name': '방과후 신청 관리',
+        #     'description': '관리자 권한으로 접근 가능한 방과후 신청 관리 API'
+        # },
+        # {
+        #     'name': '방과후 신청',
+        #     'description': '학생 권한으로 접근 가능한 방과후 신청 API'
+        # },
 
         {
             'name': '신청 정보 관리',
