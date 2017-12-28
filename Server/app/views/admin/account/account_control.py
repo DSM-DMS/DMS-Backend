@@ -40,7 +40,7 @@ class AccountControl(Resource):
 
                     break
 
-        signup_waiting = SignupWaitingModel.objects(number=number).first
+        signup_waiting = SignupWaitingModel.objects(number=number).first()
 
         if not signup_waiting:
             return Response('', 204)
