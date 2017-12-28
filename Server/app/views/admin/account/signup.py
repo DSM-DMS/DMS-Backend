@@ -10,7 +10,7 @@ from app.docs.admin.account.signup import NEW_ACCOUNT_POST
 from app.models.account import AdminModel
 
 
-class AdminNewAccount(Resource):
+class NewAccount(Resource):
     @swag_from(NEW_ACCOUNT_POST)
     @jwt_required
     def post(self):

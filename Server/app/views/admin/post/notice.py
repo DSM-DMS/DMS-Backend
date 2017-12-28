@@ -8,7 +8,7 @@ from app.models.account import AdminModel
 from app.models.post import NoticeModel
 
 
-class AdminNotice(Resource):
+class NoticeManaging(Resource):
     @swag_from(NOTICE_POST)
     @jwt_required
     def post(self):

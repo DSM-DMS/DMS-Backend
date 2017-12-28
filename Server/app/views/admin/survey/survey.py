@@ -10,7 +10,7 @@ from app.models.account import AdminModel
 from app.models.survey import QuestionModel, SurveyModel
 
 
-class AdminSurvey(Resource):
+class SurveyManaging(Resource):
     @jwt_required
     def get(self):
         """
@@ -78,7 +78,7 @@ class AdminSurvey(Resource):
         return Response('', 200)
 
 
-class AdminQuestion(Resource):
+class QuestionManaging(Resource):
     @jwt_required
     def get(self):
         """

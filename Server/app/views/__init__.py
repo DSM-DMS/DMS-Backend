@@ -43,25 +43,25 @@ class ViewInjector(object):
         api.add_resource(AccountControl, '/account_control')
         api.add_resource(AdminRefresh, '/admin/refresh')
 
-        api.add_resource(AdminNewAccount, '/admin/new-account_admin')
-        api.add_resource(AdminExtension11, '/admin/extension/11')
-        api.add_resource(AdminExtension12, '/admin/extension/12')
-        api.add_resource(AdminGoingout, '/admin/goingout')
-        api.add_resource(AdminStay, '/admin/stay')
+        api.add_resource(NewAccount, '/admin/new-account_admin')
+        api.add_resource(Extension11Download`, '/admin/extension/11')
+        api.add_resource(Extension12Download, '/admin/extension/12')
+        api.add_resource(GoingoutDownload, '/admin/goingout')
+        api.add_resource(StayDownload, '/admin/stay')
 
-        api.add_resource(AdminFAQPreview, '/admin/preview/faq')
-        api.add_resource(AdminNoticePreview, '/admin/preview/notice')
-        api.add_resource(AdminRulePreview, '/admin/preview/rule')
+        api.add_resource(FAQPreviewManaging, '/admin/preview/faq')
+        api.add_resource(NoticePreviewManaging, '/admin/preview/notice')
+        api.add_resource(RulePreviewManaging, '/admin/preview/rule')
 
-        api.add_resource(AdminFAQ, '/admin/faq')
-        api.add_resource(AdminNotice, '/admin/notice')
-        api.add_resource(AdminRule, '/admin/rule')
+        api.add_resource(FAQManaging, '/admin/faq')
+        api.add_resource(NoticeManaging, '/admin/notice')
+        api.add_resource(RuleManaging, '/admin/rule')
 
-        api.add_resource(AdminBugReport, '/admin/report/bug')
-        api.add_resource(AdminFacilityReport, '/admin/report/facility')
+        api.add_resource(BugReportDownload, '/admin/report/bug')
+        api.add_resource(FacilityReportDownload, '/admin/report/facility')
 
-        api.add_resource(AdminSurvey, '/admin/survey')
-        api.add_resource(AdminQuestion, '/admin/survey/question')
+        api.add_resource(SurveyManaging, '/admin/survey')
+        api.add_resource(QuestionManaging, '/admin/survey/question')
 
         # Student account_admin
         api.add_resource(ChangePW, '/change/pw')

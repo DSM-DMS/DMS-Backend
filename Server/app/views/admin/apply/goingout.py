@@ -9,7 +9,7 @@ from app.docs.admin.apply.goingout import *
 from app.models.account import AdminModel, StudentModel
 
 
-class AdminGoingout(Resource):
+class GoingoutDownload(Resource):
     @swag_from(GOINGOUT_GET)
     @jwt_required
     def get(self):

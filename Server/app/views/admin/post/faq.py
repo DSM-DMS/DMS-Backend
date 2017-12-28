@@ -8,7 +8,7 @@ from app.models.account import AdminModel
 from app.models.post import FAQModel
 
 
-class AdminFAQ(Resource):
+class FAQManaging(Resource):
     @swag_from(FAQ_POST)
     @jwt_required
     def post(self):

@@ -10,7 +10,7 @@ from app.models.account import AdminModel
 from app.models.report import FacilityReportModel
 
 
-class AdminFacilityReport(Resource):
+class FacilityReportDownload(Resource):
     @swag_from(FACILITY_REPORT_GET)
     @jwt_required
     def get(self):

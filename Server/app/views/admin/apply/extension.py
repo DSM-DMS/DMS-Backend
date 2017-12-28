@@ -9,7 +9,7 @@ from app.docs.admin.apply.extension import *
 from app.models.account import AdminModel, StudentModel
 
 
-class AdminExtension11(Resource):
+class Extension11Download(Resource):
     @swag_from(EXTENSION_GET)
     @jwt_required
     def get(self):
@@ -56,7 +56,7 @@ class AdminExtension11(Resource):
         return send_from_directory('.', '연장 명렬표.xlsx'), 200
 
 
-class AdminExtension12(Resource):
+class Extension12Download(Resource):
     @swag_from(EXTENSION_GET)
     @jwt_required
     def get(self):

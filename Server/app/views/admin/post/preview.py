@@ -8,7 +8,7 @@ from app.models.account import AdminModel
 from app.models.post import FAQModel, NoticeModel, RuleModel
 
 
-class AdminFAQPreview(Resource):
+class FAQPreviewManaging(Resource):
     @swag_from(FAQ_PREVIEW_POST)
     @jwt_required
     def post(self):
@@ -34,7 +34,7 @@ class AdminFAQPreview(Resource):
         return Response('', 201)
 
 
-class AdminNoticePreview(Resource):
+class NoticePreviewManaging(Resource):
     @swag_from(NOTICE_PREVIEW_POST)
     @jwt_required
     def post(self):
@@ -60,7 +60,7 @@ class AdminNoticePreview(Resource):
         return Response('', 201)
 
 
-class AdminRulePreview(Resource):
+class RulePreviewManaging(Resource):
     @swag_from(RULE_PREVIEW_POST)
     @jwt_required
     def post(self):

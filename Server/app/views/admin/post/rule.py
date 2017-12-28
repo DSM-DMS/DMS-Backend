@@ -8,7 +8,7 @@ from app.models.account import AdminModel
 from app.models.post import RuleModel
 
 
-class AdminRule(Resource):
+class RuleManaging(Resource):
     @swag_from(RULE_POST)
     @jwt_required
     def post(self):

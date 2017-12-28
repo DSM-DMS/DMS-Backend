@@ -10,7 +10,7 @@ from app.models.account import AdminModel
 from app.models.report import BugReportModel
 
 
-class AdminBugReport(Resource):
+class BugReportDownload(Resource):
     @swag_from(BUG_REPORT_GET)
     @jwt_required
     def get(self):

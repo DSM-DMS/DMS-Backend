@@ -9,7 +9,7 @@ from app.docs.admin.apply.stay import *
 from app.models.account import AdminModel, StudentModel
 
 
-class AdminStay(Resource):
+class StayDownload(Resource):
     @swag_from(STAY_GET)
     @jwt_required
     def get(self):
