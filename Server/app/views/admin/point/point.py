@@ -21,7 +21,7 @@ class PointManaging(Resource):
         if not admin:
             return Response('', 403)
 
-        id = request.form['id']
+        id = request.args['id']
         student = StudentModel.objects(id=id).first()
         if not student:
             return Response('', 204)

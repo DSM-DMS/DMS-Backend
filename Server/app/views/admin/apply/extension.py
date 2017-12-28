@@ -30,7 +30,10 @@ class Extension11Download(Resource):
 
                 number = int(ws[column1 + row].value or 0)
                 student = StudentModel.objects(number=number).first()
-                class_ = student.extension_apply_11.class_ or 0
+                if not student:
+                    continue
+
+                class_ = student.extension_apply_11.class_ if student.extension_apply_11 else 0
 
                 if class_ == 0:
                     status = ''
@@ -51,9 +54,10 @@ class Extension11Download(Resource):
 
                 ws[column2 + row] = status
 
-        wb.save('연장 명렬표 11.xlsx')
+        wb.save('11.xlsx')
+        wb.close()
 
-        return send_from_directory('.', '연장 명렬표 11.xlsx'), 200
+        return send_from_directory('../', '11.xlsx')
 
 
 class Extension12Download(Resource):
@@ -77,7 +81,10 @@ class Extension12Download(Resource):
 
                 number = int(ws[column1 + row].value or 0)
                 student = StudentModel.objects(number=number).first()
-                class_ = student.extension_apply_12.class_ or 0
+                if not student:
+                    continue
+
+                class_ = student.extension_apply_12.class_ if student.extension_apply_12 else 0
 
                 if class_ == 0:
                     status = ''
@@ -98,6 +105,7 @@ class Extension12Download(Resource):
 
                 ws[column2 + row] = status
 
-        wb.save('연장 명렬표 12.xlsx')
+        wb.save('12.xlsx')
+        wb.close()
 
-        return send_from_directory('.', '연장 명렬표 12.xlsx'), 200
+        return send_from_directory('../', '12.xlsx')
