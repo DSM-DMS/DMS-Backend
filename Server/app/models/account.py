@@ -27,7 +27,7 @@ class SignupWaitingModel(Document):
 
 class AccountBase(Document):
     """
-    DMS account Base Document
+    DMS account_admin Base Document
     """
     meta = {
         'abstract': True,
@@ -52,7 +52,7 @@ class AccountBase(Document):
 
 class StudentModel(AccountBase):
     """
-    Student account document
+    Student account_admin document
     """
     number = IntField(
         required=True
@@ -87,7 +87,7 @@ class StudentModel(AccountBase):
 
 class AdminModel(AccountBase):
     """
-    Admin account document
+    Admin account_admin document
     """
 
 

@@ -2,7 +2,7 @@ from datetime import datetime, time
 import json
 import unittest2 as unittest
 
-from tests.views import student
+from tests.views import account_student
 
 from server import app
 
@@ -10,11 +10,11 @@ from server import app
 class TestStay(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
-        student.create_fake_account()
-        self.access_token = student.get_access_token(self.client)
+        account_student.create_fake_account()
+        self.access_token = account_student.get_access_token(self.client)
 
     def tearDown(self):
-        student.remove_fake_account()
+        account_student.remove_fake_account()
 
     def testA_apply(self):
         """

@@ -2,7 +2,7 @@ import json
 import unittest2 as unittest
 
 from app.models.report import FacilityReportModel
-from tests.views import admin, student
+from tests.views import account_admin, account_student
 
 from server import app
 
@@ -10,15 +10,15 @@ from server import app
 class TestFacilityReport(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
-        admin.create_fake_account()
-        student.create_fake_account()
+        account_admin.create_fake_account()
+        account_student.create_fake_account()
 
-        self.student_access_token = student.get_access_token(self.client)
-        self.admin_access_token = admin.get_access_token(self.client)
+        self.admin_access_token = account_admin.get_access_token(self.client)
+        self.student_access_token = account_student.get_access_token(self.client)
 
     def tearDown(self):
-        admin.remove_fake_account()
-        student.remove_fake_account()
+        account_admin.remove_fake_account()
+        account_student.remove_fake_account()
 
         FacilityReportModel.objects(
             title='test',

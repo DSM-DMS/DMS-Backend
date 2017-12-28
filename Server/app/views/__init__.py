@@ -39,12 +39,12 @@ class ViewInjector(object):
     def init_app(self, app):
         api = Api(app)
 
-        # Admin account
+        # Admin account_admin
         api.add_resource(AdminAuth, '/admin/auth')
         api.add_resource(AccountControl, '/account_control')
         api.add_resource(AdminRefresh, '/admin/refresh')
 
-        api.add_resource(AdminNewAccount, '/admin/new-account')
+        api.add_resource(AdminNewAccount, '/admin/new-account_admin')
         api.add_resource(AdminExtension11, '/admin/extension/11')
         api.add_resource(AdminExtension12, '/admin/extension/12')
         api.add_resource(AdminGoingout, '/admin/goingout')
@@ -64,7 +64,7 @@ class ViewInjector(object):
         api.add_resource(AdminSurvey, '/admin/survey')
         api.add_resource(AdminQuestion, '/admin/survey/question')
 
-        # Student account
+        # Student account_admin
         api.add_resource(ChangePW, '/change/pw')
         api.add_resource(ChangeNumber, '/change/number')
         api.add_resource(Auth, '/auth')
