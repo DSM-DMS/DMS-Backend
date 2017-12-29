@@ -38,7 +38,7 @@ class TestFAQ(unittest.TestCase):
         """
         self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
 
-        rv = self.client.get('/rule', headers={'Authorization': self.admin_access_token})
+        rv = self.client.get('/faq', headers={'Authorization': self.admin_access_token})
         rule_id = json.loads(rv.data.decode())[0]['id']
         # Make rule and get rule id
 
