@@ -8,6 +8,11 @@ DMS 프로젝트의 2017년 12월 리메이크 일정에 의해 만들어진 백
 - MongoDB
 - JWT, ODM, Swagger, Cafe24, etc.
 
+### Infrastructure
+- 적용됨 : Git, Travis-CI, Coveralls
+- 빠른 시일 내에 적용할 예정 : Docker(서버 형상관리)
+- 적용하고 싶음 : AWS CloudFormation(인프라 형상관리), JSON 형태의 logging, ELK 또는 Splunk(실시간 로그 분석), Hadoop(일괄 로그 분석)
+
 ### 프로젝트 진행
 1. TDD 기반으로 진행하며, 이를 위해 Flask 어플리케이션의 구조를 테스트에 알맞게 설계해 두었습니다.
 ~~~
@@ -42,10 +47,9 @@ DMS 프로젝트의 2017년 12월 리메이크 일정에 의해 만들어진 백
         |- __init__.py
 |- server.py
 ~~~
-2. 현재 저장소에 Travis CI와 Coveralls를 적용하였습니다. 빌드 테스트와 리포팅을 위해 사용합니다.
-3. 무조건 짧은 코드보단 유지보수 가능하며 명시적인 코드 작성을 지향합니다. 컨벤션은 기본적으로 모두 PEP8을 따릅니다.
-4. Lint 적용을 위해 Flake8을 사용합니다.
-5. requirements.txt 생성을 위해 pigar를 사용합니다.
+2. 무조건 짧은 코드보단 유지보수 가능하며 명시적인 코드 작성을 지향합니다. 컨벤션은 기본적으로 모두 PEP8을 따릅니다.
+3. Lint 적용을 위해 Flake8을 사용합니다.
+4. requirements.txt 생성을 위해 pigar를 사용합니다.
 
 ### Rules
 #### Model
