@@ -32,6 +32,9 @@ class TestNotice(unittest.TestCase):
     def testB_get(self):
         """
         TC about notice get
+        1. Check short wrong id
+        2. Check wrong id
+        3. Success
         """
         self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
 
