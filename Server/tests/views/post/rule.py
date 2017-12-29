@@ -32,7 +32,27 @@ class TestRule(unittest.TestCase):
     def testB_get(self):
         """
         TC about rule get
+        1. Check short wrong id
+        2. Check wrong id
+        3. Success
         """
+        self.client.post('/admin/rule', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+
+        rv = self.client.get('/rule', headers={'Authorization': self.admin_access_token})
+        rule_id = json.load(rv.data.decode()).first()['id']
+        # Make rule and get rule id
+
+        rv = self.client.get('/rule/1234', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 204)
+        # Check short wrong id
+
+        rv = self.client.get('/rule/123456789012345678901234', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 204)
+        # Check wrong id
+
+        rv = self.client.get('/rule/'+rule_id, headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 200)
+        # Success
 
     def testC_patch(self):
         """
