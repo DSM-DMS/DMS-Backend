@@ -33,6 +33,23 @@ class TestNotice(unittest.TestCase):
         """
         TC about notice get
         """
+        self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+
+        rv = self.client.get('/notice', headers={'Authorization': self.admin_access_token})
+        rule_id = json.loads(rv.data.decode())[0]['id']
+        # Make rule and get rule id
+
+        rv = self.client.get('/notice/1234', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 204)
+        # Check short wrong id
+
+        rv = self.client.get('/notice/123456789012345678901234', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 204)
+        # Check wrong id
+
+        rv = self.client.get('/notice/'+rule_id, headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 200)
+        # Success
 
     def testC_patch(self):
         """
