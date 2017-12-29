@@ -33,6 +33,23 @@ class TestFAQ(unittest.TestCase):
         """
         TC about FAQ get
         """
+        self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+
+        rv = self.client.get('/rule', headers={'Authorization': self.admin_access_token})
+        rule_id = json.loads(rv.data.decode())[0]['id']
+        # Make rule and get rule id
+
+        rv = self.client.get('/faq/1234', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 204)
+        # Check short wrong id
+
+        rv = self.client.get('/faq/123456789012345678901234', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 204)
+        # Check wrong id
+
+        rv = self.client.get('/faq/'+rule_id, headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 200)
+        # Success
 
     def testC_patch(self):
         """
