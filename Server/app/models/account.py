@@ -21,7 +21,9 @@ class SignupWaitingModel(Document):
         required=True
     )
     number = IntField(
-        required=True
+        required=True,
+        min_value=1101,
+        max_value=3421
     )
 
 
@@ -47,7 +49,9 @@ class AccountBase(Document):
         required=True
     )
     name = StringField(
-        required=True
+        required=True,
+        min_value=1101,
+        max_value=3421
     )
 
 

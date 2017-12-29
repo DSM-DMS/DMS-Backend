@@ -17,14 +17,6 @@ class ApplyBase(EmbeddedDocument):
     )
 
 
-# class AfterSchoolApplyModel(ApplyBase):
-#     applied = ListField(
-#         StringField(
-#             required=True
-#         )
-#     )
-
-
 class ExtensionApplyModel(ApplyBase):
     """
     Extension apply data of student document includes 11st, 12nd extension apply
