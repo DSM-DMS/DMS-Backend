@@ -39,7 +39,7 @@ class TestRule(unittest.TestCase):
         self.client.post('/admin/rule', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
 
         rv = self.client.get('/rule', headers={'Authorization': self.admin_access_token})
-        rule_id = json.loads(rv.data.decode()).first()['id']
+        rule_id = json.loads(rv.data.decode())[0]['id']
         # Make rule and get rule id
 
         rv = self.client.get('/rule/1234', headers={'Authorization': self.admin_access_token})
