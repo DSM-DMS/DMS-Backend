@@ -1,4 +1,4 @@
-import openpyxl
+from openpyxl import Workbook
 
 from flask import Response, send_from_directory
 from flask_jwt_extended import get_jwt_identity, jwt_required
@@ -7,6 +7,7 @@ from flasgger import swag_from
 
 from app.docs.admin.apply.goingout import *
 from app.models.account import AdminModel, StudentModel
+from utils.apply_excel_manager import get_cells
 
 
 class GoingoutDownload(Resource):
@@ -20,24 +21,32 @@ class GoingoutDownload(Resource):
         if not admin:
             return Response('', 403)
 
-        wb = openpyxl.load_workbook('list.xlsx')
+        wb = Workbook()
         ws = wb.active
 
-        for row in map(str, range(3, 68)):
-            for column1, column2, column3 in zip(['B', 'F', 'J', 'N'], ['D', 'H', 'L', 'P'], ['E', 'I', 'M', 'Q']):
-                if ws[column1+row].value == '학번':
-                    continue
+        ws['B2'] = ws['F2'] = ws['J2'] = ws['N2'] = ws['B25'] = ws['F25'] = ws['J25'] = ws['N25'] = ws['B47'] = ws['F47'] = ws['J47'] = ws['N47'] = '학번'
+        ws['C2'] = ws['G2'] = ws['K2'] = ws['O2'] = ws['C25'] = ws['G25'] = ws['K25'] = ws['O25'] = ws['C47'] = ws['G47'] = ws['K47'] = ws['O47'] = '이름'
 
-                number = int(ws[column1 + row].value or 0)
-                student = StudentModel.objects(number=number).first()
-                if not (student and student.goingout_apply):
-                    continue
+        for student in StudentModel.objects:
+            number_cell, name_cell, status_cell = get_cells(student)
 
-                sat = '토요 외출' if student.goingout_apply.on_saturday else ''
-                sun = '일요 외출' if student.goingout_apply.on_sunday else ''
-                ws[column2+row] = sat
-                ws[column3+row] = sun
+            ws[number_cell] = student.number
+            ws[name_cell] = student.name
 
-        wb.save('외출 list.xlsx')
+            goingout_apply = student.goingout_apply
 
-        return send_from_directory('.', '외출 list.xlsx'), 200
+            if goingout_apply.on_saturday and goingout_apply.on_sunday:
+                status = '토요일, 일요일 외출'
+            elif goingout_apply.on_saturday:
+                status = '토요일 외출'
+            elif goingout_apply.on_sunday:
+                status = '일요일 외출'
+            else:
+                status = ''
+
+            ws[status_cell] = status
+
+        wb.save('goingout.xlsx')
+        wb.close()
+
+        return send_from_directory('../', 'goingout.xlsx')
