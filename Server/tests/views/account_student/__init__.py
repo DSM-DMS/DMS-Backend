@@ -21,7 +21,7 @@ def create_fake_account():
         id='fake_student',
         pw=pw,
         name='fake',
-        number=1234
+        number=1111
     ).save()
 
 

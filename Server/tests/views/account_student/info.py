@@ -30,7 +30,7 @@ class TestAuth(unittest.TestCase):
         self.assertTrue('name' in data)
         self.assertEqual(data['name'], 'fake')
         self.assertTrue('number' in data)
-        self.assertEqual(data['number'], 1234)
+        self.assertEqual(data['number'], 1111)
 
         self.assertTrue('extension_11' in data)
         self.assertEqual(data['extension_11'], None)

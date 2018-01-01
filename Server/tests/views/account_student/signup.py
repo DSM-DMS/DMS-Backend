@@ -18,11 +18,12 @@ class TestAuth(unittest.TestCase):
         SignupWaitingModel(
             uuid=str(self.uuid),
             name='new',
-            number=12345
+            number=1111
         ).save()
 
     def tearDown(self):
         account_student.remove_fake_account()
+        account_student.remove_fake_account('doesntexist')
 
     def testA_verifyID(self):
         """
@@ -80,6 +81,4 @@ class TestAuth(unittest.TestCase):
         self.assertTrue('name' in data)
         self.assertEqual(data['name'], 'new')
         self.assertTrue('number' in data)
-        self.assertEqual(data['number'], 12345)
-
-        account_student.remove_fake_account('doesntexist')
+        self.assertEqual(data['number'], 1111)

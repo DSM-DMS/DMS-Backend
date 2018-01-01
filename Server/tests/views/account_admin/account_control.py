@@ -41,14 +41,14 @@ class TestAccountControl(unittest.TestCase):
         1. Initialize account
         2. Check 'Succeed'
         """
-        self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1234})
+        self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1111})
         # Initialize account
 
-        rv = self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1234})
+        rv = self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1111})
         self.assertEqual(rv.status_code, 201)
         # Succeed
 
-        uuid = SignupWaitingModel.objects(number=1234).first().uuid
+        uuid = SignupWaitingModel.objects(number=1111).first().uuid
         response = json.loads(rv.data.decode())
         self.assertEqual(uuid, response['uuid'])
         # Validate
