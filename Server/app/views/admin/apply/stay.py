@@ -1,4 +1,4 @@
-import openpyxl
+from openpyxl import Workbook
 
 from flask import Response, send_from_directory
 from flask_jwt_extended import get_jwt_identity, jwt_required
@@ -7,6 +7,7 @@ from flasgger import swag_from
 
 from app.docs.admin.apply.stay import *
 from app.models.account import AdminModel, StudentModel
+from utils.apply_excel_manager import get_cells
 
 
 class StayDownload(Resource):
@@ -20,30 +21,32 @@ class StayDownload(Resource):
         if not admin:
             return Response('', 403)
 
-        wb = openpyxl.load_workbook('list.xlsx')
+        wb = Workbook()
         ws = wb.active
 
-        for row in map(str, range(3, 68)):
-            for column1, column2 in zip(['B', 'F', 'J', 'N'], ['D', 'H', 'L', 'P']):
-                if ws[column1+row].value == '학번':
-                    continue
+        ws['B2'] = ws['F2'] = ws['J2'] = ws['N2'] = ws['B25'] = ws['F25'] = ws['J25'] = ws['N25'] = ws['B47'] = ws['F47'] = ws['J47'] = ws['N47'] = '학번'
+        ws['C2'] = ws['G2'] = ws['K2'] = ws['O2'] = ws['C25'] = ws['G25'] = ws['K25'] = ws['O25'] = ws['C47'] = ws['G47'] = ws['K47'] = ws['O47'] = '이름'
 
-                number = int(ws[column1 + row].value or 0)
-                student = StudentModel.objects(number=number).first()
-                value = student.stay_apply.value or 0
+        for student in StudentModel.objects:
+            number_cell, name_cell, status_cell = get_cells(student)
 
-                if value == 0:
-                    status = 0
-                elif value == 1:
-                    status = '금요 귀가'
-                elif value == 2:
-                    status = '토요 귀가'
-                elif value == 3:
-                    status = '토요 귀사'
-                elif value == 4:
-                    status = '잔류'
-                ws[column2+row] = status
+            ws[number_cell] = student.number
+            ws[name_cell] = student.name
 
-        wb.save('잔류 list.xlsx')
+            stay_value = student.stay_apply.value
 
-        return send_from_directory('.', '잔류 list.xlsx'), 200
+            if stay_value == 1:
+                status = '금요 귀가'
+            elif stay_value == 2:
+                status = '토요 귀가'
+            elif stay_value == 3:
+                status = '토요 귀사'
+            else:
+                status = '잔류'
+
+            ws[status_cell] = status
+
+        wb.save('stay.xlsx')
+        wb.close()
+
+        return send_from_directory('../', 'stay.xlsx')
