@@ -1,4 +1,4 @@
-import openpyxl
+from openpyxl import Workbook
 
 from flask import Response, send_from_directory
 from flask_jwt_extended import get_jwt_identity, jwt_required
@@ -7,6 +7,9 @@ from flasgger import swag_from
 
 from app.docs.admin.apply.extension import *
 from app.models.account import AdminModel, StudentModel
+from utils.apply_excel_manager import get_cells
+
+EXTENSION_CLASSES = ['가온실', '나온실', '다온실', '라온실', '3층 독서실', '4층 독서실', '5층 열린교실']
 
 
 class Extension11Download(Resource):
@@ -20,39 +23,24 @@ class Extension11Download(Resource):
         if not admin:
             return Response('', 403)
 
-        wb = openpyxl.load_workbook('list.xlsx')
-        ws = wb.active
+        wb = Workbook()
+        ws = wb.create_sheet('data')
 
-        for row in map(str, range(3, 68)):
-            for column1, column2 in zip(['B', 'F', 'J', 'N'], ['D', 'H', 'L', 'P']):
-                if ws[column1 + row].value == '학번':
-                    continue
+        ws['B2'] = ws['F2'] = ws['J2'] = ws['N2'] = ws['B25'] = ws['F25'] = ws['J25'] = ws['N25'] = ws['B47'] = ws['F47'] = ws['J47'] = ws['N47'] = '학번'
+        ws['C2'] = ws['G2'] = ws['K2'] = ws['O2'] = ws['C25'] = ws['G25'] = ws['K25'] = ws['O25'] = ws['C47'] = ws['G47'] = ws['K47'] = ws['O47'] = '이름'
 
-                number = int(ws[column1 + row].value or 0)
-                student = StudentModel.objects(number=number).first()
-                if not student:
-                    continue
+        for student in StudentModel.objects:
+            number_cell, name_cell, status_cell = get_cells(student)
 
-                class_ = student.extension_apply_11.class_ if student.extension_apply_11 else 0
+            ws[number_cell] = student.number
+            ws[name_cell] = student.name
 
-                if class_ == 0:
-                    status = ''
-                elif class_ == 1:
-                    status = '가온실'
-                elif class_ == 2:
-                    status = '나온실'
-                elif class_ == 3:
-                    status = '다온실'
-                elif class_ == 4:
-                    status = '라온실'
-                elif class_ == 5:
-                    status = '3층 독서실'
-                elif class_ == 6:
-                    status = '4층 독서실'
-                elif class_ == 7:
-                    status = '5층 독서실'
+            extension_apply = student.extension_apply_11
 
-                ws[column2 + row] = status
+            if not extension_apply:
+                continue
+
+            ws[status_cell] = EXTENSION_CLASSES[extension_apply.class_ - 1]
 
         wb.save('11.xlsx')
         wb.close()
@@ -71,39 +59,24 @@ class Extension12Download(Resource):
         if not admin:
             return Response('', 403)
 
-        wb = openpyxl.load_workbook('list.xlsx')
-        ws = wb.active
+        wb = Workbook()
+        ws = wb.create_sheet('data')
 
-        for row in map(str, range(3, 68)):
-            for column1, column2 in zip(['B', 'F', 'J', 'N'], ['D', 'H', 'L', 'P']):
-                if ws[column1 + row].value == '학번':
-                    continue
+        ws['B2'] = ws['F2'] = ws['J2'] = ws['N2'] = ws['B25'] = ws['F25'] = ws['J25'] = ws['N25'] = ws['B47'] = ws['F47'] = ws['J47'] = ws['N47'] = '학번'
+        ws['C2'] = ws['G2'] = ws['K2'] = ws['O2'] = ws['C25'] = ws['G25'] = ws['K25'] = ws['O25'] = ws['C47'] = ws['G47'] = ws['K47'] = ws['O47'] = '이름'
 
-                number = int(ws[column1 + row].value or 0)
-                student = StudentModel.objects(number=number).first()
-                if not student:
-                    continue
+        for student in StudentModel.objects:
+            number_cell, name_cell, status_cell = get_cells(student)
 
-                class_ = student.extension_apply_12.class_ if student.extension_apply_12 else 0
+            ws[number_cell] = student.number
+            ws[name_cell] = student.name
 
-                if class_ == 0:
-                    status = ''
-                elif class_ == 1:
-                    status = '가온실'
-                elif class_ == 2:
-                    status = '나온실'
-                elif class_ == 3:
-                    status = '다온실'
-                elif class_ == 4:
-                    status = '라온실'
-                elif class_ == 5:
-                    status = '3층 독서실'
-                elif class_ == 6:
-                    status = '4층 독서실'
-                elif class_ == 7:
-                    status = '5층 독서실'
+            extension_apply = student.extension_apply_11
 
-                ws[column2 + row] = status
+            if not extension_apply:
+                continue
+
+            ws[status_cell] = EXTENSION_CLASSES[extension_apply.class_ - 1]
 
         wb.save('12.xlsx')
         wb.close()
