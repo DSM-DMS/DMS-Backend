@@ -7,7 +7,7 @@ from flasgger import swag_from
 
 from app.docs.admin.apply.goingout import *
 from app.models.account import AdminModel, StudentModel
-from utils.apply_excel_manager import get_cells
+from utils.apply_excel_manager import get_cells, ready_worksheet
 
 
 class GoingoutDownload(Resource):
@@ -24,8 +24,7 @@ class GoingoutDownload(Resource):
         wb = Workbook()
         ws = wb.active
 
-        ws['B2'] = ws['F2'] = ws['J2'] = ws['N2'] = ws['B25'] = ws['F25'] = ws['J25'] = ws['N25'] = ws['B47'] = ws['F47'] = ws['J47'] = ws['N47'] = '학번'
-        ws['C2'] = ws['G2'] = ws['K2'] = ws['O2'] = ws['C25'] = ws['G25'] = ws['K25'] = ws['O25'] = ws['C47'] = ws['G47'] = ws['K47'] = ws['O47'] = '이름'
+        ready_worksheet(ws)
 
         for student in StudentModel.objects:
             number_cell, name_cell, status_cell = get_cells(student)
