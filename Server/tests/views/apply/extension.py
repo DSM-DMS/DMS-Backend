@@ -107,9 +107,6 @@ class TestExtension(unittest.TestCase):
         """
         TC about download extension apply 11
         """
-        rv = self.client.post('/extension/11', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
-        # Apply
-
         rv = self.client.get('/admin/extension/11', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
 
