@@ -20,6 +20,7 @@ class PostBase(Document):
     )
     author = ReferenceField(
         document_type=AdminModel,
+        reverse_delete_rule=CASCADE,
         required=True
     )
     title = StringField(

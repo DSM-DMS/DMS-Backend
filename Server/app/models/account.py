@@ -49,9 +49,7 @@ class AccountBase(Document):
         required=True
     )
     name = StringField(
-        required=True,
-        min_value=1101,
-        max_value=3421
+        required=True
     )
 
 
@@ -60,7 +58,9 @@ class StudentModel(AccountBase):
     Student account_admin document
     """
     number = IntField(
-        required=True
+        required=True,
+        min_value=1101,
+        max_value=3421
     )
 
     extension_apply_11 = EmbeddedDocumentField(
