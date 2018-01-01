@@ -32,7 +32,27 @@ class TestNotice(unittest.TestCase):
     def testB_get(self):
         """
         TC about notice get
+        1. Check short wrong id
+        2. Check wrong id
+        3. Success
         """
+        self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+
+        rv = self.client.get('/notice', headers={'Authorization': self.admin_access_token})
+        rule_id = json.loads(rv.data.decode())[0]['id']
+        # Make rule and get rule id
+
+        rv = self.client.get('/notice/1234', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 204)
+        # Check short wrong id
+
+        rv = self.client.get('/notice/123456789012345678901234', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 204)
+        # Check wrong id
+
+        rv = self.client.get('/notice/'+rule_id, headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 200)
+        # Success
 
     def testC_patch(self):
         """
@@ -41,6 +61,8 @@ class TestNotice(unittest.TestCase):
         1. Load/Check 'existing(uploaded) notice'
         2. Check 'patch succeed'
         """
+        self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+
         rv = self.client.get('/notice', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         # Get success
@@ -70,6 +92,8 @@ class TestNotice(unittest.TestCase):
         1. Load/Check 'existing(uploaded) notice'
         2. Check 'delete succeed'
         """
+        self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+
         rv = self.client.get('/notice', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         # Get success
@@ -78,7 +102,7 @@ class TestNotice(unittest.TestCase):
 
         post_id = ''
         for notice in data:
-            if notice['title'] == 'new' and notice['author'] == 'fake':
+            if notice['title'] == 'test' and notice['author'] == 'fake':
                 post_id = notice['id']
 
         self.assertTrue(post_id)
