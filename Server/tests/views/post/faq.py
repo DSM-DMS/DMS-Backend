@@ -32,7 +32,27 @@ class TestFAQ(unittest.TestCase):
     def testB_get(self):
         """
         TC about FAQ get
+        1. Check short wrong id
+        2. Check wrong id
+        3. Success
         """
+        self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+
+        rv = self.client.get('/faq', headers={'Authorization': self.admin_access_token})
+        rule_id = json.loads(rv.data.decode())[0]['id']
+        # Make rule and get rule id
+
+        rv = self.client.get('/faq/1234', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 204)
+        # Check short wrong id
+
+        rv = self.client.get('/faq/123456789012345678901234', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 204)
+        # Check wrong id
+
+        rv = self.client.get('/faq/'+rule_id, headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 200)
+        # Success
 
     def testC_patch(self):
         """
@@ -42,6 +62,8 @@ class TestFAQ(unittest.TestCase):
         2. Check 'unauthorized on FAQ patch'
         3. Check 'patch succeed'
         """
+        self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+
         rv = self.client.get('/faq', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         # Get success
@@ -71,6 +93,12 @@ class TestFAQ(unittest.TestCase):
         1. Load/Check 'existing(uploaded) FAQ'
         2. Check 'delete succeed'
         """
+        self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+
+        rv = self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        self.assertEqual(rv.status_code, 201)
+        # Post success
+
         rv = self.client.get('/faq', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         # Get success
@@ -79,7 +107,7 @@ class TestFAQ(unittest.TestCase):
 
         post_id = ''
         for faq in data:
-            if faq['title'] == 'new' and faq['author'] == 'fake':
+            if faq['title'] == 'test' and faq['author'] == 'fake':
                 post_id = faq['id']
 
         self.assertTrue(post_id)
