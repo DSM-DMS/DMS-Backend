@@ -54,6 +54,8 @@ class TestPreview(unittest.TestCase):
         1. Check 'preview get succeed using admin's access token'
         2. Check 'preview get succeed using student's access token'
         """
+        self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+
         rv = self.client.get('/preview/faq', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         # Get preview success on admin's access token
@@ -104,6 +106,8 @@ class TestPreview(unittest.TestCase):
         1. Check 'preview get succeed using admin's access token'
         2. Check 'preview get succeed using student's access token'
         """
+        self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+
         rv = self.client.get('/preview/notice', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         # Get preview success on admin's access token
@@ -154,6 +158,8 @@ class TestPreview(unittest.TestCase):
         1. Check 'preview get succeed using admin's access token'
         2. Check 'preview get succeed using student's access token'
         """
+        self.client.post('/admin/rule', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+
         rv = self.client.get('/preview/rule', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         # Get preview success on admin's access token
