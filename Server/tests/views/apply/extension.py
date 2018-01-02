@@ -54,6 +54,9 @@ class TestExtension(unittest.TestCase):
         1. Check 'withdraw succeed'
         2. Check 'unapplied'
         """
+        self.client.post('/extension/11', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
+        # Sample data
+
         rv = self.client.delete('/extension/11', headers={'Authorization': self.student_access_token})
         self.assertEqual(rv.status_code, 200)
         # Withdraw success
@@ -95,6 +98,9 @@ class TestExtension(unittest.TestCase):
         1. Check 'withdraw succeed'
         2. Check 'unapplied'
         """
+        self.client.post('/extension/12', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
+        # Sample data
+
         rv = self.client.delete('/extension/12', headers={'Authorization': self.student_access_token})
         self.assertEqual(rv.status_code, 200)
         # Withdraw success
@@ -107,6 +113,9 @@ class TestExtension(unittest.TestCase):
         """
         TC about download extension apply 11
         """
+        self.client.post('/extension/11', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
+        # Sample data
+
         rv = self.client.get('/admin/extension/11', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
 
@@ -114,5 +123,8 @@ class TestExtension(unittest.TestCase):
         """
         TC about download extension apply 12
         """
+        self.client.post('/extension/12', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
+        # Sample data
+
         rv = self.client.get('/admin/extension/12', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
