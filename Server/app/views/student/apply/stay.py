@@ -1,6 +1,6 @@
 from datetime import datetime, time
 
-from flask import Response
+from flask import Response, current_app
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource, request
 from flasgger import swag_from
@@ -37,7 +37,7 @@ class Stay(Resource):
 
         now = datetime.now()
 
-        if (now.weekday() == 6 and now.time() > time(20, 30)) or (0 < now.weekday() < 3) or (now.weekday() == 3 and now.time() < time(22, 00)):
+        if not current_app.config['TEST'] and (now.weekday() == 6 and now.time() > time(20, 30)) or (0 < now.weekday() < 3) or (now.weekday() == 3 and now.time() < time(22, 00)):
             # 신청 가능 범위
             # - 일요일 오후 8시 30분 이후부터 목요일 오후 10시까지
             # weekday는 월요일이 0, 일요일이 6

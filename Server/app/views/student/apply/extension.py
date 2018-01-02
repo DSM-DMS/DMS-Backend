@@ -1,7 +1,7 @@
 from datetime import datetime
 import json
 
-from flask import Response
+from flask import Response, current_app
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource, request
 from flasgger import swag_from
@@ -41,8 +41,8 @@ class Extension11(Resource):
 
         now = datetime.now().time()
 
-        if not APPLY_START < now < APPLY_END_11:
-            # Can't apply
+        if not current_app.config['TEST'] and not APPLY_START < now < APPLY_END_11:
+            # Not testing, can't apply
             return Response('', 204)
 
         class_ = int(request.form['class'])
@@ -95,8 +95,8 @@ class Extension12(Resource):
 
         now = datetime.now().time()
 
-        if not APPLY_START < now < APPLY_END_12:
-            # Can't apply
+        if not current_app.config['TEST'] and not APPLY_START < now < APPLY_END_12:
+            # Not testing, can't apply
             return Response('', 204)
 
         class_ = int(request.form['class'])

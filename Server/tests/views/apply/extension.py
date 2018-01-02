@@ -1,11 +1,9 @@
-from datetime import datetime
 import json
 import unittest2 as unittest
 
 from tests.views import account_admin, account_student
 
 from server import app
-from utils.extension_meta import *
 
 
 class TestExtension(unittest.TestCase):
@@ -34,18 +32,15 @@ class TestExtension(unittest.TestCase):
         # Unapplied check
 
         rv = self.client.post('/extension/11', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
-        if APPLY_START < datetime.now().time() < APPLY_END_11:
-            self.assertEqual(rv.status_code, 201)
-            # Apply success
+        self.assertEqual(rv.status_code, 201)
+        # Apply success
 
-            rv = self.client.get('/extension/11', headers={'Authorization': self.student_access_token})
-            self.assertEqual(rv.status_code, 200)
+        rv = self.client.get('/extension/11', headers={'Authorization': self.student_access_token})
+        self.assertEqual(rv.status_code, 200)
 
-            data = json.loads(rv.data.decode())
-            self.assertEqual(data['class'], 1)
-            self.assertEqual(data['seat'], 21)
-        else:
-            self.assertEqual(rv.status_code, 204)
+        data = json.loads(rv.data.decode())
+        self.assertEqual(data['class'], 1)
+        self.assertEqual(data['seat'], 21)
 
     def testB_withdrawExtension11(self):
         """
@@ -78,18 +73,15 @@ class TestExtension(unittest.TestCase):
         # Unapplied check
 
         rv = self.client.post('/extension/12', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
-        if APPLY_START < datetime.now().time() < APPLY_END_12:
-            self.assertEqual(rv.status_code, 201)
-            # Apply success
+        self.assertEqual(rv.status_code, 201)
+        # Apply success
 
-            rv = self.client.get('/extension/12', headers={'Authorization': self.student_access_token})
-            self.assertEqual(rv.status_code, 200)
+        rv = self.client.get('/extension/12', headers={'Authorization': self.student_access_token})
+        self.assertEqual(rv.status_code, 200)
 
-            data = json.loads(rv.data.decode())
-            self.assertEqual(data['class'], 1)
-            self.assertEqual(data['seat'], 21)
-        else:
-            self.assertEqual(rv.status_code, 204)
+        data = json.loads(rv.data.decode())
+        self.assertEqual(data['class'], 1)
+        self.assertEqual(data['seat'], 21)
 
     def testD_withdrawExtension12(self):
         """
