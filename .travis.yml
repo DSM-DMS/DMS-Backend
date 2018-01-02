@@ -1,4 +1,5 @@
 language: python
+
 python:
   - "3.4"
   - "3.5"
@@ -15,4 +16,5 @@ script:
   - coverage run --source=Server/app Server/server.py -t 1
 
 after_success:
+  - coverage report
   - coveralls
