@@ -79,6 +79,15 @@ class Signup(Resource):
         )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
+        StudentModel(
+            id=id,
+            pw=pw,
+            name=name,
+            number=number,
+            good_point=0,
+            bad_point=0,
+            penalty_training_status=0
+        )
         StudentModel(id=id, pw=pw, name=name, number=number).save()
 
         return Response('', 201)
