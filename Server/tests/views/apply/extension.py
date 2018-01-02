@@ -123,8 +123,8 @@ class TestExtension(unittest.TestCase):
         """
         TC about extension map loading
         """
-        rv = self.client.get('/extension/map/11', headers={'Authorization': self.student_access_token}, data={'class': 1})
+        rv = self.client.get('/extension/map/11', headers={'Authorization': self.student_access_token}, query_string={'class': 1})
         self.assertEqual(rv.status_code, 200)
 
-        rv = self.client.get('/extension/map/12', headers={'Authorization': self.student_access_token}, data={'class': 1})
+        rv = self.client.get('/extension/map/12', headers={'Authorization': self.student_access_token}, query_string={'class': 1})
         self.assertEqual(rv.status_code, 200)
