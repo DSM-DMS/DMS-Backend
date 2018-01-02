@@ -43,7 +43,8 @@ class QuestionModel(Document):
 
     survey = ReferenceField(
         document_type=SurveyModel,
-        required=True
+        required=True,
+        reverse_delete_rule=CASCADE
     )
     title = StringField(
         required=True

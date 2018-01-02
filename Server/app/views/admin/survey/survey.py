@@ -69,9 +69,10 @@ class SurveyManaging(Resource):
             return Response('', 403)
 
         survey_id = request.form['survey_id']
+        if len(survey_id) != 24:
+            return Response('', 204)
 
         survey = SurveyModel.objects(id=survey_id).first()
-
         if not survey:
             return Response('', 204)
 
@@ -119,12 +120,15 @@ class QuestionManaging(Resource):
             return Response('', 403)
 
         survey_id = request.form['survey_id']
-        title = request.form['title']
-        is_objective = request.form.get('is_objective')
+        if len(survey_id) != 24:
+            return Response('', 204)
 
         survey = SurveyModel.objects(id=survey_id).first()
         if not survey:
             return Response('', 204)
+
+        title = request.form['title']
+        is_objective = request.form.get('is_objective')
 
         if is_objective:
             choice_paper = list(request.form['choice_paper'])
