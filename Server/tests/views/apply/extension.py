@@ -118,3 +118,13 @@ class TestExtension(unittest.TestCase):
         # Sample data
 
         self.client.get('/admin/extension/12', headers={'Authorization': self.admin_access_token})
+
+    def testG_loadExtensionMap(self):
+        """
+        TC about extension map loading
+        """
+        rv = self.client.get('/extension/map/11', headers={'Authorization': self.student_access_token}, data={'class': 1})
+        self.assertEqual(rv.status_code, 200)
+
+        rv = self.client.get('/extension/map/12', headers={'Authorization': self.student_access_token}, data={'class': 1})
+        self.assertEqual(rv.status_code, 200)
