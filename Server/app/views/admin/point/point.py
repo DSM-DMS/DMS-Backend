@@ -50,6 +50,9 @@ class PointManaging(Resource):
             return Response('', 204)
 
         rule_id = request.form['rule_id']
+        if len(rule_id) != 24:
+            return Response('', 205)
+
         rule = PointRuleModel.objects(id=rule_id).first()
         if not rule:
             return Response('', 205)
