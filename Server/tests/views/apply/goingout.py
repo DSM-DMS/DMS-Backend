@@ -41,6 +41,7 @@ class TestGoingout(unittest.TestCase):
         data = json.loads(rv.data.decode())
         self.assertEqual(data['sat'], True)
         self.assertEqual(data['sun'], False)
+        # Validate apply data
 
     def testB_download(self):
         """

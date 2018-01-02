@@ -16,9 +16,9 @@ class TestSignup(unittest.TestCase):
         account_admin.remove_fake_account()
         account_admin.remove_fake_account('chicken')
 
-    def testA_signup(self):
+    def testA_createAccount(self):
         """
-        TC about admin's signup
+        TC about admin's account creating
 
         1. Check 'ID validation failed'
         2. Check 'signup succeed'
@@ -26,7 +26,7 @@ class TestSignup(unittest.TestCase):
         """
         rv = self.client.post('/admin/new-account', headers={'Authorization': self.access_token}, data={'id': 'fake_admin', 'pw': 'chicken', 'name': 'lover'})
         self.assertEqual(rv.status_code, 204)
-        # ID validation failed
+        # ID validation failed : already exists
 
         rv = self.client.post('/admin/new-account', headers={'Authorization': self.access_token}, data={'id': 'chicken', 'pw': 'chicken', 'name': 'lover'})
         self.assertEqual(rv.status_code, 201)
@@ -34,4 +34,4 @@ class TestSignup(unittest.TestCase):
 
         rv = self.client.post('/admin/auth', data={'id': 'chicken', 'pw': 'chicken'})
         self.assertEqual(rv.status_code, 200)
-        # Login test
+        # Login test with created admin account

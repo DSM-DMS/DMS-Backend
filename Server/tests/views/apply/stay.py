@@ -42,6 +42,7 @@ class TestStay(unittest.TestCase):
             self.assertEqual(rv.status_code, 200)
 
             self.assertEqual(json.loads(rv.data.decode())['value'], 1)
+            # Validate apply data
         else:
             self.assertEqual(rv.status_code, 204)
 

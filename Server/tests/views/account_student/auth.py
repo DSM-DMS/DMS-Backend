@@ -25,7 +25,7 @@ class TestAuth(unittest.TestCase):
         """
         rv = self.client.post('/auth', data={'id': 'chicken', 'pw': 'chicken'})
         self.assertEqual(rv.status_code, 401)
-        # Login fail
+        # Login fail : incorrect ID or PW
 
         rv = self.client.post('/auth', data={'id': 'fake_student', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 200)
@@ -39,7 +39,7 @@ class TestAuth(unittest.TestCase):
         """
         TC about admin's refresh
 
-        1. Check 'refresh success'
+        1. Check 'refresh succeed'
         2. Check 'new access token'
         3. Check 'refresh failed after password changed'
         """
@@ -53,9 +53,7 @@ class TestAuth(unittest.TestCase):
         # New access token check
 
         access_token = account_student.get_access_token(self.client)
-        rv = self.client.post('/change/pw', headers={'Authorization': access_token}, data={'current_pw': 'fake', 'new_pw': 'new'})
-        self.assertEqual(rv.status_code, 200)
-        # Change password
+        self.client.post('/change/pw', headers={'Authorization': access_token}, data={'current_pw': 'fake', 'new_pw': 'new'})
 
         rv = self.client.post('/refresh', headers={'Authorization': refresh_token})
         self.assertEqual(rv.status_code, 205)

@@ -28,15 +28,15 @@ class TestAccountControl(unittest.TestCase):
         """
         rv = self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 0000})
         self.assertEqual(rv.status_code, 204)
-        # Find number failed
+        # Find number failed : number doesn't exist
 
-        rv = self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1234})
+        rv = self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1111})
         self.assertEqual(rv.status_code, 201)
         # Delete and get uuid Success
 
     def testB_findUUID(self):
         """
-        TC about find uuid via student number
+        TC about find uuid with re-initialize student account
 
         1. Initialize account
         2. Check 'Succeed'

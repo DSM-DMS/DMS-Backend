@@ -33,7 +33,7 @@ class TestAuth(unittest.TestCase):
 
         data = json.loads(rv.data.decode())
         self.assertTrue('access_token' in data and 'refresh_token' in data)
-        # Token check
+        # Check token in response data
 
     def testB_refresh(self):
         """

@@ -6,7 +6,7 @@ from tests.views import account_student
 from server import app
 
 
-class TestAuth(unittest.TestCase):
+class TestInfo(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
 

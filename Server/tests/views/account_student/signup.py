@@ -8,7 +8,7 @@ from tests.views import account_student
 from server import app
 
 
-class TestAuth(unittest.TestCase):
+class TestSignup(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
 
@@ -62,11 +62,11 @@ class TestAuth(unittest.TestCase):
         """
         rv = self.client.post('/signup', data={'uuid': str(u.uuid4()), 'id': 'doesntexist', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 205)
-        # UUID validation failed
+        # UUID validation failed : UUID doesn't exist
 
         rv = self.client.post('/signup', data={'uuid': str(self.uuid), 'id': 'fake_student', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 204)
-        # ID validation failed
+        # ID validation failed : ID already exists
 
         rv = self.client.post('/signup', data={'uuid': str(self.uuid), 'id': 'doesntexist', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 201)

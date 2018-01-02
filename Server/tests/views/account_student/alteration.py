@@ -26,7 +26,7 @@ class TestAlteration(unittest.TestCase):
         """
         rv = self.client.post('/change/pw', headers={'Authorization': self.access_token}, data={'current_pw': 'invalid'})
         self.assertEqual(rv.status_code, 403)
-        # Incorrect password
+        # Incorrect current password
 
         rv = self.client.post('/change/pw', headers={'Authorization': self.access_token}, data={'current_pw': 'fake', 'new_pw': 'new'})
         self.assertEqual(rv.status_code, 200)
@@ -34,7 +34,7 @@ class TestAlteration(unittest.TestCase):
 
         rv = self.client.post('/auth', data={'id': 'fake_student', 'pw': 'new'})
         self.assertEqual(rv.status_code, 200)
-        # Auth check
+        # Auth check with changed password
 
     def testB_changeNumber(self):
         """
@@ -49,4 +49,4 @@ class TestAlteration(unittest.TestCase):
 
         rv = self.client.get('/mypage', headers={'Authorization': self.access_token})
         self.assertEqual(json.loads(rv.data.decode())['number'], 2120)
-        # Number check
+        # Changed number check
