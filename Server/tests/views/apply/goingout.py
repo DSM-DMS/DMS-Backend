@@ -50,5 +50,4 @@ class TestGoingout(unittest.TestCase):
         self.client.post('/goingout', headers={'Authorization': self.student_access_token}, data={'sat': True, 'sun': False})
         # Sample data
 
-        rv = self.client.get('/admin/goingout', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
+        self.client.get('/admin/goingout', headers={'Authorization': self.admin_access_token})

@@ -116,8 +116,7 @@ class TestExtension(unittest.TestCase):
         self.client.post('/extension/11', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
         # Sample data
 
-        rv = self.client.get('/admin/extension/11', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
+        self.client.get('/admin/extension/11', headers={'Authorization': self.admin_access_token})
 
     def testF_downloadExtension12(self):
         """
@@ -126,5 +125,4 @@ class TestExtension(unittest.TestCase):
         self.client.post('/extension/12', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
         # Sample data
 
-        rv = self.client.get('/admin/extension/12', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
+        self.client.get('/admin/extension/12', headers={'Authorization': self.admin_access_token})

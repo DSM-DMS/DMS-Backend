@@ -50,5 +50,4 @@ class TestStay(unittest.TestCase):
         """
         TC about download stay apply
         """
-        rv = self.client.get('/admin/stay', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
+        self.client.get('/admin/stay', headers={'Authorization': self.admin_access_token})
