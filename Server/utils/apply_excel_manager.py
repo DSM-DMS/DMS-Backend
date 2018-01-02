@@ -39,5 +39,5 @@ def ready_worksheet(ws):
     ws['B2'] = ws['F2'] = ws['J2'] = ws['N2'] = ws['B25'] = ws['F25'] = ws['J25'] = ws['N25'] = ws['B47'] = ws['F47'] = ws['J47'] = ws['N47'] = '학번'
     ws['C2'] = ws['G2'] = ws['K2'] = ws['O2'] = ws['C25'] = ws['G25'] = ws['K25'] = ws['O25'] = ws['C47'] = ws['G47'] = ws['K47'] = ws['O47'] = '이름'
 
-    for cell in zip(list(ws.rows)[1], list(ws.rows)[24], list(ws.rows)[46]):
-        cell.fill = PatternFill(patternType='solid', fill_type='solid', fgColor=Color('C4C4C4'))
+    for cell1, cell2, cell3 in zip(list(ws.rows)[1], list(ws.rows)[24], list(ws.rows)[46]):
+        cell1.fill = cell2.fill = cell3.fill = PatternFill(patternType='solid', fill_type='solid', fgColor=Color('C4C4C4'))
