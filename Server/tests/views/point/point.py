@@ -104,7 +104,10 @@ class TestPoint(unittest.TestCase):
         # -- Validation --
         rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.access_token})
         self.assertEqual(rv.status_code, 200)
-        self.assertEqual(json.loads(rv.data.decode())[0]['name'], 'test')
+
+        data = json.loads(rv.data.decode())
+        self.assertEqual(len(data), 1)
+        self.assertTrue(data[0]['name'] == 'test' and data[0]['min_point'] == data[0]['max_point'] == 1)
         # -- Validation --
 
     def testC_patchPointRule(self):
@@ -152,8 +155,9 @@ class TestPoint(unittest.TestCase):
         rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.access_token})
         self.assertEqual(rv.status_code, 200)
 
-        data = json.loads(rv.data.decode())[0]
-        self.assertTrue(data['name'] == 'new' and data['min_point'] == data['max_point'] == 2)
+        data = json.loads(rv.data.decode())
+        self.assertEqual(len(data), 1)
+        self.assertTrue(data[0]['name'] == 'new' and data[0]['min_point'] == data[0]['max_point'] == 2)
         # -- Validation --
 
     def testD_deleteRule(self):
@@ -256,4 +260,8 @@ class TestPoint(unittest.TestCase):
         data = json.loads(rv.data.decode())
         self.assertEqual(len(data), 1)
         self.assertTrue(data[0]['reason'] == 'test' and data[0]['point'] == 1)
+
+        rv = self.client.get('/admin/managing/student', headers={'Authorization': self.access_token})
+        self.assertEqual(rv.status_code, 200)
+        self.assertEqual(json.loads(rv.data.decode())[0]['good_point'], 2)
         # -- Validation --
