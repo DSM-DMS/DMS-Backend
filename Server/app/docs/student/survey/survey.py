@@ -19,6 +19,7 @@ SURVEY_GET = {
                         'id': 's3qldmc13opeflds',
                         'creation_time': '2017-12-26 13:58:50',
                         'title': '내일 저녁 치킨먹기 찬반설문',
+                        'description': '설명!',
                         'start_date': '2017-10-24',
                         'end_date': '2017-10-25'
                     },
@@ -26,6 +27,7 @@ SURVEY_GET = {
                         'id': '1fnfdj3391idkflds',
                         'creation_time': '2017-12-26 13:58:50',
                         'title': '등교 후 12시간 자습 찬반설문',
+                        'description': '설명!',
                         'start_date': '2017-10-24',
                         'end_date': '2017-10-30'
                     }
