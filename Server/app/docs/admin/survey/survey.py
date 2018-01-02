@@ -1,5 +1,5 @@
 SURVEY_MANAGING_GET = {
-    'tags': ['설문지'],
+    'tags': ['설문지 관리'],
     'description': '설문지 리스트 불러오기',
     'parameters': [
         {
@@ -130,7 +130,7 @@ SURVEY_MANAGING_DELETE = {
 }
 
 QUESTION_MANAGING_GET = {
-    'tags': ['설문지'],
+    'tags': ['설문지 관리'],
     'description': '설문지 질문 리스트 불러오기',
     'parameters': [
         {

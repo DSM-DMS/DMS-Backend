@@ -12,14 +12,14 @@ class SurveyModel(Document):
         'collection': 'survey'
     }
 
-    description = StringField(
-        required=True
-    )
     creation_time = DateTimeField(
         required=True,
         default=datetime.now()
     )
     title = StringField(
+        required=True
+    )
+    description = StringField(
         required=True
     )
     start_date = DateTimeField(

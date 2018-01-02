@@ -24,8 +24,8 @@ class SurveyManaging(Resource):
         response = [{
             'id': str(survey.id),
             'creation_time': str(survey.creation_time)[:-7],
-            'description': survey.description,
             'title': survey.title,
+            'description': survey.description,
             'start_date': str(survey.start_date),
             'end_date': str(survey.end_date)
         } for survey in SurveyModel.objects]
@@ -122,21 +122,22 @@ class QuestionManaging(Resource):
         title = request.form['title']
         is_objective = request.form.get('is_objective')
 
-        if not SurveyModel.objects(survey_id=survey_id).first():
+        survey = SurveyModel.objects(id=survey_id).first()
+        if not survey:
             return Response('', 204)
 
         if is_objective:
             choice_paper = list(request.form['choice_paper'])
 
             QuestionModel(
-                survey_id=survey_id,
+                survey=survey,
                 title=title,
                 is_objective=True,
                 choice_paper=choice_paper
             ).save()
         else:
             QuestionModel(
-                survey_id=survey_id,
+                survey=survey,
                 title=title,
                 is_objective=False
             ).save()
