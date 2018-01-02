@@ -50,7 +50,7 @@ class TestSurvey(unittest.TestCase):
             'description': 'test',
             'start_date': '2018-01-01',
             'end_date': '2018-12-31',
-            'target': [1, 3]
+            'target': json.dumps([1, 3])
         })
         self.assertEqual(rv.status_code, 201)
         # -- Process --
@@ -84,7 +84,7 @@ class TestSurvey(unittest.TestCase):
             'description': 'test',
             'start_date': '2018-01-01',
             'end_date': '2018-12-31',
-            'target': [1, 3]
+            'target': json.dumps([1, 3])
         })
 
         rv = self.client.get('/admin/survey', headers={'Authorization': self.admin_access_token})
@@ -132,7 +132,7 @@ class TestSurvey(unittest.TestCase):
             'description': 'test',
             'start_date': '2018-01-01',
             'end_date': '2018-12-31',
-            'target': [1, 3]
+            'target': json.dumps([1, 3])
         })
 
         rv = self.client.get('/admin/survey', headers={'Authorization': self.admin_access_token})
@@ -152,7 +152,7 @@ class TestSurvey(unittest.TestCase):
             'survey_id': survey_id,
             'title': 'test',
             'is_objective': True,
-            'choice_paper': ['one', 'two', 'three']
+            'choice_paper': json.dumps(['one', 'two', 'three'])
         })
         self.assertEqual(rv.status_code, 201)
         # -- Process --
@@ -186,7 +186,7 @@ class TestSurvey(unittest.TestCase):
             'description': 'test',
             'start_date': '2018-01-01',
             'end_date': '2018-12-31',
-            'target': [1, 3]
+            'target': json.dumps([1, 3])
         })
 
         rv = self.client.get('/survey', headers={'Authorization': self.student_access_token})
@@ -196,14 +196,14 @@ class TestSurvey(unittest.TestCase):
             'survey_id': survey_id,
             'title': 'test',
             'is_objective': True,
-            'choice_paper': ['one', 'two', 'three']
+            'choice_paper': json.dumps(['one', 'two', 'three'])
         })
 
         self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={
             'survey_id': survey_id,
             'title': 'test2',
             'is_objective': True,
-            'choice_paper': ['one', 'two', 'three']
+            'choice_paper': json.dumps(['one', 'two', 'three'])
         })
 
         rv = self.client.get('/survey/question', headers={'Authorization': self.student_access_token}, query_string={'survey_id': survey_id})

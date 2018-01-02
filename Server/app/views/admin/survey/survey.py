@@ -46,7 +46,7 @@ class SurveyManaging(Resource):
         description = request.form['description']
         start_date = request.form['start_date']
         end_date = request.form['end_date']
-        target = list(request.form['target'])
+        target = json.loads(request.form['target'])
 
         SurveyModel(
             title=title,
@@ -131,7 +131,7 @@ class QuestionManaging(Resource):
         is_objective = request.form.get('is_objective')
 
         if is_objective:
-            choice_paper = list(request.form['choice_paper'])
+            choice_paper = json.loads(request.form['choice_paper'])
 
             QuestionModel(
                 survey=survey,

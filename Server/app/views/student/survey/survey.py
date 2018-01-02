@@ -30,7 +30,7 @@ class Survey(Resource):
             'title': survey.title,
             'start_date': str(survey.start_date),
             'end_date': str(survey.end_date)
-        } for survey in SurveyModel.objects if str(student_number)[0] in survey.target]
+        } for survey in SurveyModel.objects if int(student_number / 1000) in survey.target]
 
         return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
         # Filter by student number
@@ -64,7 +64,7 @@ class Question(Resource):
 
         for question in response:
             answer = AnswerModel.objects(
-                question=question,
+                question=QuestionModel.objects(id=question['id']).first(),
                 answer_student=student
             ).first()
 
@@ -99,7 +99,7 @@ class Question(Resource):
         AnswerModel.objects(question=question, answer_student=student).delete()
         # Delete existing document
 
-        AnswerModel(question=question, answer_student=student, answer=answer).save()
+        AnswerModel(question=question, answer_student=student, content=answer).save()
         # Insert new answer data
 
         return Response('', 201)
