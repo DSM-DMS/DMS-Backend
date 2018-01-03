@@ -1,4 +1,3 @@
-from datetime import datetime, time
 import json
 import unittest2 as unittest
 

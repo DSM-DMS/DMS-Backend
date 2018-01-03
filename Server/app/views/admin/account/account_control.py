@@ -47,4 +47,6 @@ class AccountControl(Resource):
 
         uuid = signup_waiting.uuid
 
-        return {'uuid': uuid}, 201
+        return {
+            'uuid': uuid
+        }, 201

@@ -58,7 +58,7 @@ class TestSurvey(unittest.TestCase):
         # -- Validation --
         rv = self.client.get('/admin/survey', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
-        self.assertEqual(len(json.loads(rv.data.decode())), 1)
+        self.assertTrue(rv.data)
         # -- Validation --
 
     def testB_deleteSurvey(self):
@@ -80,15 +80,17 @@ class TestSurvey(unittest.TestCase):
         Check survey data is empty
         """
         # -- Preparations --
-        self.client.post('/admin/survey', headers={'Authorization': self.admin_access_token}, data={
+        rv = self.client.post('/admin/survey', headers={'Authorization': self.admin_access_token}, data={
             'title': 'test',
             'description': 'test',
             'start_date': '2018-01-01',
             'end_date': '2018-12-31',
             'target': json.dumps([1, 3])
         })
+        self.assertEqual(rv.status_code, 201)
 
         rv = self.client.get('/admin/survey', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 200)
         survey_id = json.loads(rv.data.decode())[0]['id']
         # -- Preparations --
 
@@ -107,6 +109,7 @@ class TestSurvey(unittest.TestCase):
 
         # -- Validation --
         rv = self.client.get('/admin/survey', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 200)
         self.assertFalse(json.loads(rv.data.decode()))
         # -- Validation --
 
@@ -129,15 +132,17 @@ class TestSurvey(unittest.TestCase):
         Check question data length is 1
         """
         # -- Preparations --
-        self.client.post('/admin/survey', headers={'Authorization': self.admin_access_token}, data={
+        rv = self.client.post('/admin/survey', headers={'Authorization': self.admin_access_token}, data={
             'title': 'test',
             'description': 'test',
             'start_date': '2018-01-01',
             'end_date': '2018-12-31',
             'target': json.dumps([1, 3])
         })
+        self.assertEqual(rv.status_code, 201)
 
         rv = self.client.get('/admin/survey', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 200)
         survey_id = json.loads(rv.data.decode())[0]['id']
         # -- Preparations --
 
@@ -162,7 +167,7 @@ class TestSurvey(unittest.TestCase):
         # -- Validation --
         rv = self.client.get('/admin/survey/question', headers={'Authorization': self.admin_access_token}, query_string={'survey_id': survey_id})
         self.assertEqual(rv.status_code, 200)
-        self.assertEqual(len(json.loads(rv.data.decode())), 1)
+        self.assertTrue(rv.data)
         # -- Validation --
 
     def testD_answer(self):
@@ -185,34 +190,38 @@ class TestSurvey(unittest.TestCase):
         Check answer data(API required)
         """
         # -- Preparations --
-        self.client.post('/admin/survey', headers={'Authorization': self.admin_access_token}, data={
+        rv = self.client.post('/admin/survey', headers={'Authorization': self.admin_access_token}, data={
             'title': 'test',
             'description': 'test',
             'start_date': '2018-01-01',
             'end_date': '2018-12-31',
             'target': json.dumps([1, 3])
         })
+        self.assertEqual(rv.status_code, 201)
 
         rv = self.client.get('/survey', headers={'Authorization': self.student_access_token})
+        self.assertEqual(rv.status_code, 200)
         survey_id = json.loads(rv.data.decode())[0]['id']
 
-        self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={
+        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={
             'survey_id': survey_id,
             'title': 'test',
             'is_objective': True,
             'choice_paper': json.dumps(['one', 'two', 'three'])
         })
+        self.assertEqual(rv.status_code, 201)
 
-        self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={
+        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={
             'survey_id': survey_id,
             'title': 'test2',
             'is_objective': True,
             'choice_paper': json.dumps(['one', 'two', 'three'])
         })
+        self.assertEqual(rv.status_code, 201)
 
         rv = self.client.get('/survey/question', headers={'Authorization': self.student_access_token}, query_string={'survey_id': survey_id})
-        data = json.loads(rv.data.decode())
-        question_ids = [question['id'] for question in data]
+        self.assertEqual(rv.status_code, 200)
+        question_ids = [question['id'] for question in json.loads(rv.data.decode())]
         # -- Preparations --
 
         # -- Exception Tests --

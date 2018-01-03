@@ -1,4 +1,3 @@
-import json
 import unittest2 as unittest
 import uuid as u
 
@@ -105,7 +104,6 @@ class TestSignup(unittest.TestCase):
 
         - Validation
         Auth with signed ID/PW
-        Check student data
         """
         # -- Preparations --
         # -- Preparations --
@@ -126,15 +124,5 @@ class TestSignup(unittest.TestCase):
         # -- Validation --
         rv = self.client.post('/auth', data={'id': 'doesntexist', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 200)
-
-        data = json.loads(rv.data.decode())
-        self.assertTrue('access_token' in data and 'refresh_token' in data)
-        access_token = 'JWT ' + data['access_token']
-
-        rv = self.client.get('/mypage', headers={'Authorization': access_token})
-        self.assertEqual(rv.status_code, 200)
-
-        data = json.loads(rv.data.decode())
-        self.assertEqual(data['name'], 'new')
-        self.assertEqual(data['number'], 1111)
+        self.assertTrue(rv.data)
         # -- Validation --

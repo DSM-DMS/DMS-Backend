@@ -39,9 +39,7 @@ class TestAccountControl(unittest.TestCase):
         # -- Preparations --
         rv = self.client.post('/auth', data={'id': 'fake_student', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 200)
-
-        data = json.loads(rv.data.decode())
-        self.assertTrue('access_token' in data and 'refresh_token' in data)
+        self.assertTrue(rv.data)
         # -- Preparations --
 
         # -- Exception Tests --
@@ -76,11 +74,11 @@ class TestAccountControl(unittest.TestCase):
         Get UUID with student number
 
         - Validation
-        Signup with UUID
-        Test student auth
+        Verify UUID
         """
         # -- Preparations --
-        self.client.post('/admin/account-control', headers={'Authorization': self.admin_access_token}, data={'number': 1111})
+        rv = self.client.post('/admin/account-control', headers={'Authorization': self.admin_access_token}, data={'number': 1111})
+        self.assertEqual(rv.status_code, 201)
         # -- Preparations --
 
         # -- Exception Tests --
@@ -93,13 +91,6 @@ class TestAccountControl(unittest.TestCase):
         # -- Process --
 
         # -- Validation --
-        rv = self.client.post('/signup', data={'uuid': uuid, 'id': 'new', 'pw': 'new'})
-        self.assertEqual(rv.status_code, 201)
-
-        rv = self.client.post('/auth', data={'id': 'new', 'pw': 'new'})
+        rv = self.client.post('/verify/uuid', data={'uuid': uuid})
         self.assertEqual(rv.status_code, 200)
-        data = json.loads(rv.data.decode())
-        self.assertTrue('access_token' in data and 'refresh_token' in data)
         # -- Validation --
-
-        account_student.remove_fake_account('new')

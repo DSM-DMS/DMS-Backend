@@ -1,4 +1,3 @@
-import json
 import unittest2 as unittest
 
 from tests.views import account_student
@@ -12,7 +11,6 @@ class TestAuth(unittest.TestCase):
 
         account_student.create_fake_account()
         self.student_access_token = account_student.get_access_token(self.client)
-        self.student_refresh_token = account_student.get_refresh_token(self.client)
 
     def tearDown(self):
         account_student.remove_fake_account()
@@ -31,7 +29,7 @@ class TestAuth(unittest.TestCase):
         Auth
 
         - Validation
-        Check access token, refresh token
+        Check response data
         """
         # -- Preparations --
         # -- Preparations --
@@ -47,8 +45,7 @@ class TestAuth(unittest.TestCase):
         # -- Process --
 
         # -- Validation --
-        data = json.loads(rv.data.decode())
-        self.assertTrue('access_token' in data and 'refresh_token' in data)
+        self.assertTrue(rv.data)
         # -- Validation --
 
     def testB_refresh(self):
@@ -56,7 +53,7 @@ class TestAuth(unittest.TestCase):
         TC about student account refresh
 
         - Preparations
-        None
+        Get refresh token using sample student account
 
         - Exception Tests
         Refresh fail after password changed
@@ -65,23 +62,28 @@ class TestAuth(unittest.TestCase):
         Refresh account
 
         - Validation
-        Check refresh token
+        Check response data
         """
         # -- Preparations --
+        refresh_token = account_student.get_refresh_token(self.client)
         # -- Preparations --
 
         # -- Exception Tests --
-        self.client.post('/change/pw', headers={'Authorization': self.student_access_token}, data={'current_pw': 'fake', 'new_pw': 'new'})
-        rv = self.client.post('/refresh', headers={'Authorization': self.student_refresh_token})
+        rv = self.client.post('/change/pw', headers={'Authorization': self.student_access_token}, data={'current_pw': 'fake', 'new_pw': 'new'})
+        self.assertEqual(rv.status_code, 200)
+
+        rv = self.client.post('/refresh', headers={'Authorization': refresh_token})
         self.assertEqual(rv.status_code, 205)
         # -- Exception Tests --
 
         # -- Process --
-        self.client.post('/change/pw', headers={'Authorization': self.student_access_token}, data={'current_pw': 'new', 'new_pw': 'fake'})
-        rv = self.client.post('/refresh', headers={'Authorization': self.student_refresh_token})
+        rv = self.client.post('/change/pw', headers={'Authorization': self.student_access_token}, data={'current_pw': 'new', 'new_pw': 'fake'})
+        self.assertEqual(rv.status_code, 200)
+
+        rv = self.client.post('/refresh', headers={'Authorization': refresh_token})
         self.assertEqual(rv.status_code, 200)
         # -- Process --
 
         # -- Validation --
-        self.assertTrue('access_token' in json.loads(rv.data.decode()))
+        self.assertTrue(rv.data)
         # -- Validation --

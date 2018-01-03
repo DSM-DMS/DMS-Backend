@@ -1,4 +1,3 @@
-import json
 import unittest2 as unittest
 
 from tests.views import account_admin
@@ -29,7 +28,7 @@ class TestAuth(unittest.TestCase):
         Auth
 
         - Validation
-        Check access token, refresh token
+        Check response data
         """
         # -- Preparations --
         # -- Preparations --
@@ -45,8 +44,7 @@ class TestAuth(unittest.TestCase):
         # -- Process --
 
         # -- Validation --
-        data = json.loads(rv.data.decode())
-        self.assertTrue('access_token' in data and 'refresh_token' in data)
+        self.assertTrue(rv.data)
         # -- Validation --
 
     def testB_refresh(self):
@@ -54,7 +52,7 @@ class TestAuth(unittest.TestCase):
         TC about admin account refresh
 
         - Preparations
-        None
+        Get refresh token using sample admin account
 
         - Exception Tests
         None
@@ -63,20 +61,20 @@ class TestAuth(unittest.TestCase):
         Refresh account
 
         - Validation
-        Check refresh token
+        Check response data
         """
         # -- Preparations --
+        refresh_token = account_admin.get_refresh_token(self.client)
         # -- Preparations --
 
         # -- Exception Tests --
         # -- Exception Tests --
 
         # -- Process --
-        refresh_token = account_admin.get_refresh_token(self.client)
         rv = self.client.post('/admin/refresh', headers={'Authorization': refresh_token})
         self.assertEqual(rv.status_code, 200)
         # -- Process --
 
         # -- Validation --
-        self.assertTrue('access_token' in json.loads(rv.data.decode()))
+        self.assertTrue(rv.data)
         # -- Validation --

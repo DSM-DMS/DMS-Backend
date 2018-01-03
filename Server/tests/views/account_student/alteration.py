@@ -33,6 +33,7 @@ class TestAlteration(unittest.TestCase):
 
         - Validation
         Auth with changed password
+        Check response data
         """
         # -- Preparations --
         # -- Preparations --
@@ -50,6 +51,7 @@ class TestAlteration(unittest.TestCase):
         # -- Validation --
         rv = self.client.post('/auth', data={'id': 'fake_student', 'pw': 'new'})
         self.assertEqual(rv.status_code, 200)
+        self.assertTrue(rv.data)
         # -- Validation --
 
     def testB_changeNumber(self):
