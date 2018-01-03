@@ -23,7 +23,9 @@ class PointRuleManaging(Resource):
 
         response = [{
             'id': str(rule.id),
-            'name': rule.name
+            'name': rule.name,
+            'min_point': rule.min_point,
+            'max_point': rule.max_point
         } for rule in PointRuleModel.objects]
 
         return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
@@ -39,9 +41,13 @@ class PointRuleManaging(Resource):
             return Response('', 403)
 
         name = request.form['name']
+        min_point = int(request.form['min_point'])
+        max_point = int(request.form['max_point'])
 
         PointRuleModel(
-            name=name
+            name=name,
+            min_point=min_point,
+            max_point=max_point
         ).save()
 
         return Response('', 201)
@@ -65,9 +71,13 @@ class PointRuleManaging(Resource):
             return Response('', 204)
 
         name = request.form['name']
+        min_point = int(request.form['min_point'])
+        max_point = int(request.form['max_point'])
 
         rule.update(
             name=name,
+            min_point=min_point,
+            max_point=max_point
         )
 
         return Response('', 200)
