@@ -118,8 +118,8 @@ class TestPoint(unittest.TestCase):
         Add sample rule data and take rule ID
 
         - Exception Tests
-        Non-existing rule ID
         Short rule ID
+        Non-existing rule ID
 
         - Process
         Modify point rule
@@ -134,10 +134,10 @@ class TestPoint(unittest.TestCase):
         # -- Preparations --
 
         # -- Exception Tests --
-        rv = self.client.patch('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': '123456789012345678901234'})
+        rv = self.client.patch('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': '1234'})
         self.assertEqual(rv.status_code, 204)
 
-        rv = self.client.patch('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': '1234'})
+        rv = self.client.patch('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': '123456789012345678901234'})
         self.assertEqual(rv.status_code, 204)
         # -- Exception Tests --
 
@@ -168,8 +168,8 @@ class TestPoint(unittest.TestCase):
         Add sample rule data and take rule ID
 
         - Exception Tests
-        Non-existing rule ID
         Short rule ID
+        Non-existing rule ID
 
         - Process
         Delete rule
@@ -184,10 +184,10 @@ class TestPoint(unittest.TestCase):
         # -- Preparations --
 
         # -- Exception Tests --
-        rv = self.client.delete('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': '123456789012345678901234'})
+        rv = self.client.delete('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': '1234'})
         self.assertEqual(rv.status_code, 204)
 
-        rv = self.client.delete('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': '1234'})
+        rv = self.client.delete('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': '123456789012345678901234'})
         self.assertEqual(rv.status_code, 204)
         # -- Exception Tests --
 
@@ -211,8 +211,8 @@ class TestPoint(unittest.TestCase):
 
         - Exception Tests
         Non-existing student ID
-        Non-existing rule ID
         Short rule ID
+        Non-existing rule ID
 
         - Process
         Give point to student
@@ -237,10 +237,10 @@ class TestPoint(unittest.TestCase):
         rv = self.client.post('/admin/managing/point', headers={'Authorization': self.admin_access_token}, data={'id': 'doesntexist'})
         self.assertEqual(rv.status_code, 204)
 
-        rv = self.client.post('/admin/managing/point', headers={'Authorization': self.admin_access_token}, data={'id': 'fake_student', 'rule_id': '123456789012345678901234'})
+        rv = self.client.post('/admin/managing/point', headers={'Authorization': self.admin_access_token}, data={'id': 'fake_student', 'rule_id': '1234'})
         self.assertEqual(rv.status_code, 205)
 
-        rv = self.client.post('/admin/managing/point', headers={'Authorization': self.admin_access_token}, data={'id': 'fake_student', 'rule_id': '1234'})
+        rv = self.client.post('/admin/managing/point', headers={'Authorization': self.admin_access_token}, data={'id': 'fake_student', 'rule_id': '123456789012345678901234'})
         self.assertEqual(rv.status_code, 205)
         # -- Exception Tests --
 

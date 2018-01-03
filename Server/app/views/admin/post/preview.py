@@ -20,14 +20,16 @@ class FAQPreviewManaging(Resource):
             return Response('', 403)
 
         id = request.form.get('id')
-
-        pinned_faq = FAQModel.objects(pinned=True).first()
-        if pinned_faq:
-            pinned_faq.update(pinned=False)
+        if len(id) != 24:
+            return Response('', 204)
 
         faq = FAQModel.objects(id=id).first()
         if not faq:
             return Response('', 204)
+
+        pinned_faq = FAQModel.objects(pinned=True).first()
+        if pinned_faq:
+            pinned_faq.update(pinned=False)
 
         faq.update(pinned=True)
 
@@ -46,14 +48,16 @@ class NoticePreviewManaging(Resource):
             return Response('', 403)
 
         id = request.form.get('id')
-
-        pinned_notice = NoticeModel.objects(pinned=True).first()
-        if pinned_notice:
-            pinned_notice.update(pinned=False)
+        if len(id) != 24:
+            return Response('', 204)
 
         notice = NoticeModel.objects(id=id).first()
         if not notice:
             return Response('', 204)
+
+        pinned_notice = NoticeModel.objects(pinned=True).first()
+        if pinned_notice:
+            pinned_notice.update(pinned=False)
 
         notice.update(pinned=True)
 
@@ -72,14 +76,16 @@ class RulePreviewManaging(Resource):
             return Response('', 403)
 
         id = request.form.get('id')
-
-        pinned_rule = RuleModel.objects(pinned=True).first()
-        if pinned_rule:
-            pinned_rule.update(pinned=False)
+        if len(id) != 24:
+            return Response('', 204)
 
         rule = RuleModel.objects(id=id).first()
         if not rule:
             return Response('', 204)
+
+        pinned_rule = RuleModel.objects(pinned=True).first()
+        if pinned_rule:
+            pinned_rule.update(pinned=False)
 
         rule.update(pinned=True)
 

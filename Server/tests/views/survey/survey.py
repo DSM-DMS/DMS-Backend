@@ -70,8 +70,8 @@ class TestSurvey(unittest.TestCase):
         Take survey ID
 
         - Exception Tests
-        Non-existing survey ID
         Short survey ID
+        Non-existing survey ID
 
         - Process
         Delete survey data
@@ -93,10 +93,10 @@ class TestSurvey(unittest.TestCase):
         # -- Preparations --
 
         # -- Exception Tests --
-        rv = self.client.delete('/admin/survey', headers={'Authorization': self.admin_access_token}, data={'survey_id': '123456789012345678901234'})
+        rv = self.client.delete('/admin/survey', headers={'Authorization': self.admin_access_token}, data={'survey_id': '1234'})
         self.assertEqual(rv.status_code, 204)
 
-        rv = self.client.delete('/admin/survey', headers={'Authorization': self.admin_access_token}, data={'survey_id': '1234'})
+        rv = self.client.delete('/admin/survey', headers={'Authorization': self.admin_access_token}, data={'survey_id': '123456789012345678901234'})
         self.assertEqual(rv.status_code, 204)
         # -- Exception Tests --
 
@@ -119,8 +119,8 @@ class TestSurvey(unittest.TestCase):
         Take survey ID
 
         - Exception Tests
-        Non-existing survey ID
         Short survey ID
+        Non-existing survey ID
 
         - Process
         Add question data
@@ -142,10 +142,10 @@ class TestSurvey(unittest.TestCase):
         # -- Preparations --
 
         # -- Exception Tests --
-        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={'survey_id': '123456789012345678901234'})
+        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={'survey_id': '1234'})
         self.assertEqual(rv.status_code, 204)
 
-        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={'survey_id': '1234'})
+        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={'survey_id': '123456789012345678901234'})
         self.assertEqual(rv.status_code, 204)
         # -- Exception Tests --
 
@@ -175,8 +175,8 @@ class TestSurvey(unittest.TestCase):
         Take question IDs
 
         - Exception Tests
-        Non-existing question ID
         Short question ID
+        Non-existing question ID
 
         - Process
         Add answer data
@@ -216,10 +216,10 @@ class TestSurvey(unittest.TestCase):
         # -- Preparations --
 
         # -- Exception Tests --
-        rv = self.client.post('/survey/question', headers={'Authorization': self.student_access_token}, data={'question_id': '123456789012345678901234'})
+        rv = self.client.post('/survey/question', headers={'Authorization': self.student_access_token}, data={'question_id': '1234'})
         self.assertEqual(rv.status_code, 204)
 
-        rv = self.client.post('/survey/question', headers={'Authorization': self.student_access_token}, data={'question_id': '1234'})
+        rv = self.client.post('/survey/question', headers={'Authorization': self.student_access_token}, data={'question_id': '123456789012345678901234'})
         self.assertEqual(rv.status_code, 204)
         # -- Exception Tests --
 
