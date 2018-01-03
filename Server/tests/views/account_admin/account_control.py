@@ -1,7 +1,6 @@
 import json
 import unittest2 as unittest
 
-from app.models.account import SignupWaitingModel
 from tests.views import account_admin, account_student
 
 from server import app
@@ -13,7 +12,8 @@ class TestAccountControl(unittest.TestCase):
 
         account_admin.create_fake_account()
         account_student.create_fake_account()
-        self.access_token = account_admin.get_access_token(self.client)
+        self.admin_access_token = account_admin.get_access_token(self.client)
+        self.student_access_token = account_student.get_access_token(self.client)
 
     def tearDown(self):
         account_admin.remove_fake_account()
@@ -21,34 +21,85 @@ class TestAccountControl(unittest.TestCase):
 
     def testA_deleteAccount(self):
         """
-        TC about student account deletion
-    
-        1. Check 'Find number failed'
-        2. Check 'Delete and get uuid succeed'
-        """
-        rv = self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 0000})
-        self.assertEqual(rv.status_code, 204)
-        # Find number failed : number doesn't exist
+        TC about existing student account deletion
 
-        rv = self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1111})
+        - Preparations
+        Test auth with existing student data
+
+        - Exception Tests
+        Non-existing student number
+        Forbidden with student access token
+
+        - Process
+        Delete student account and take UUID
+
+        - Validation
+        Test student auth
+        """
+        # -- Preparations --
+        rv = self.client.post('/auth', data={'id': 'fake_student', 'pw': 'fake'})
+        self.assertEqual(rv.status_code, 200)
+
+        data = json.loads(rv.data.decode())
+        self.assertTrue('access_token' in data and 'refresh_token' in data)
+        # -- Preparations --
+
+        # -- Exception Tests --
+        rv = self.client.post('/admin/account-control', headers={'Authorization': self.admin_access_token}, data={'number': 0000})
+        self.assertEqual(rv.status_code, 204)
+
+        rv = self.client.post('/admin/account-control', headers={'Authorization': self.student_access_token})
+        self.assertEqual(rv.status_code, 403)
+        # -- Exception Tests --
+
+        # -- Process --
+        rv = self.client.post('/admin/account-control', headers={'Authorization': self.admin_access_token}, data={'number': 1111})
         self.assertEqual(rv.status_code, 201)
-        # Delete and get uuid Success
+        # -- Process --
+
+        # -- Validation --
+        rv = self.client.post('/auth', data={'id': 'fake_student', 'pw': 'fake'})
+        self.assertEqual(rv.status_code, 401)
+        # -- Validation --
 
     def testB_findUUID(self):
         """
-        TC about find uuid with re-initialize student account
+        TC about find UUID after student account initialize
 
-        1. Initialize account
-        2. Check 'Succeed'
+        - Preparations
+        Initialize student account
+
+        - Exception Tests
+        None
+
+        - Process
+        Get UUID with student number
+
+        - Validation
+        Signup with UUID
+        Test student auth
         """
-        self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1111})
-        # Initialize account
+        # -- Preparations --
+        self.client.post('/admin/account-control', headers={'Authorization': self.admin_access_token}, data={'number': 1111})
+        # -- Preparations --
 
-        rv = self.client.post('/admin/account-control', headers={'Authorization': self.access_token}, data={'number': 1111})
+        # -- Exception Tests --
+        # -- Exception Tests --
+
+        # -- Process --
+        rv = self.client.post('/admin/account-control', headers={'Authorization': self.admin_access_token}, data={'number': 1111})
         self.assertEqual(rv.status_code, 201)
-        # Succeed
+        uuid = json.loads(rv.data.decode())['uuid']
+        # -- Process --
 
-        uuid = SignupWaitingModel.objects(number=1111).first().uuid
-        response = json.loads(rv.data.decode())
-        self.assertEqual(uuid, response['uuid'])
-        # Validate
+        # -- Validation --
+        rv = self.client.post('/signup', data={'uuid': uuid, 'id': 'new', 'pw': 'new'})
+        self.assertEqual(rv.status_code, 201)
+
+        rv = self.client.post('/auth', data={'id': 'new', 'pw': 'new'})
+        self.assertEqual(rv.status_code, 200)
+        data = json.loads(rv.data.decode())
+        self.assertTrue('access_token' in data and 'refresh_token' in data)
+        # -- Validation --
+
+        account_student.remove_fake_account('new')
