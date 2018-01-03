@@ -16,6 +16,10 @@ class TestPreview(unittest.TestCase):
         self.admin_access_token = account_admin.get_access_token(self.client)
         self.student_access_token = account_student.get_access_token(self.client)
 
+        account_student.create_fake_account('unknown')
+        self.fake_access_token = account_student.get_access_token(self.client, 'unknown')
+        account_student.remove_fake_account('unknown')
+
     def tearDown(self):
         account_admin.remove_fake_account()
         account_student.remove_fake_account()
@@ -33,7 +37,6 @@ class TestPreview(unittest.TestCase):
         Take FAQ ID
 
         - Exception Tests
-        Forbidden with student access token
         Short FAQ ID
         Non-existing FAQ ID
 
@@ -44,8 +47,11 @@ class TestPreview(unittest.TestCase):
         Check preview FAQ data
         """
         # -- Preparations --
-        self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        rv = self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        self.assertEqual(rv.status_code, 201)
+
         rv = self.client.get('/faq', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 200)
         faq_id = json.loads(rv.data.decode())[0]['id']
         # -- Preparations --
 
@@ -80,7 +86,7 @@ class TestPreview(unittest.TestCase):
         Add sample FAQ preview
 
         - Exception Tests
-        None
+        Forbidden with unknown account
 
         - Process
         Get preview with admin access token
@@ -93,14 +99,20 @@ class TestPreview(unittest.TestCase):
         rv = self.client.get('/preview/faq', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 204)
 
-        self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        rv = self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        self.assertEqual(rv.status_code, 201)
+
         rv = self.client.get('/faq', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 200)
         faq_id = json.loads(rv.data.decode())[0]['id']
 
-        self.client.post('/admin/preview/faq', headers={'Authorization': self.admin_access_token}, data={'id': faq_id})
+        rv = self.client.post('/admin/preview/faq', headers={'Authorization': self.admin_access_token}, data={'id': faq_id})
+        self.assertEqual(rv.status_code, 201)
         # -- Preparations --
 
         # -- Exception Tests --
+        rv = self.client.get('/preview/faq', headers={'Authorization': self.fake_access_token})
+        self.assertEqual(rv.status_code, 403)
         # -- Exception Tests --
 
         # -- Process --
@@ -125,7 +137,6 @@ class TestPreview(unittest.TestCase):
         Take notice ID
 
         - Exception Tests
-        Forbidden with student access token
         Short notice ID
         Non-existing notice ID
 
@@ -136,8 +147,11 @@ class TestPreview(unittest.TestCase):
         Check preview notice data
         """
         # -- Preparations --
-        self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        rv = self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        self.assertEqual(rv.status_code, 201)
+
         rv = self.client.get('/notice', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 200)
         notice_id = json.loads(rv.data.decode())[0]['id']
         # -- Preparations --
 
@@ -172,7 +186,7 @@ class TestPreview(unittest.TestCase):
         Add sample notice preview
 
         - Exception Tests
-        None
+        Forbidden with unknown account
 
         - Process
         Get preview with admin access token
@@ -185,14 +199,20 @@ class TestPreview(unittest.TestCase):
         rv = self.client.get('/preview/notice', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 204)
 
-        self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        rv = self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        self.assertEqual(rv.status_code, 201)
+
         rv = self.client.get('/notice', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 200)
         notice_id = json.loads(rv.data.decode())[0]['id']
 
-        self.client.post('/admin/preview/notice', headers={'Authorization': self.admin_access_token}, data={'id': notice_id})
+        rv = self.client.post('/admin/preview/notice', headers={'Authorization': self.admin_access_token}, data={'id': notice_id})
+        self.assertEqual(rv.status_code, 201)
         # -- Preparations --
 
         # -- Exception Tests --
+        rv = self.client.get('/preview/notice', headers={'Authorization': self.fake_access_token})
+        self.assertEqual(rv.status_code, 403)
         # -- Exception Tests --
 
         # -- Process --
@@ -217,7 +237,6 @@ class TestPreview(unittest.TestCase):
         Take rule ID
 
         - Exception Tests
-        Forbidden with student access token
         Short rule ID
         Non-existing rule ID
 
@@ -228,8 +247,11 @@ class TestPreview(unittest.TestCase):
         Check preview rule data
         """
         # -- Preparations --
-        self.client.post('/admin/rule', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        rv = self.client.post('/admin/rule', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        self.assertEqual(rv.status_code, 201)
+
         rv = self.client.get('/rule', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 200)
         rule_id = json.loads(rv.data.decode())[0]['id']
         # -- Preparations --
 
@@ -264,7 +286,7 @@ class TestPreview(unittest.TestCase):
         Add sample rule preview
 
         - Exception Tests
-        None
+        Forbidden with unknown account
 
         - Process
         Get preview with admin access token
@@ -277,14 +299,20 @@ class TestPreview(unittest.TestCase):
         rv = self.client.get('/preview/rule', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 204)
 
-        self.client.post('/admin/rule', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        rv = self.client.post('/admin/rule', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        self.assertEqual(rv.status_code, 201)
+
         rv = self.client.get('/rule', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 200)
         rule_id = json.loads(rv.data.decode())[0]['id']
 
-        self.client.post('/admin/preview/rule', headers={'Authorization': self.admin_access_token}, data={'id': rule_id})
+        rv = self.client.post('/admin/preview/rule', headers={'Authorization': self.admin_access_token}, data={'id': rule_id})
+        self.assertEqual(rv.status_code, 201)
         # -- Preparations --
 
         # -- Exception Tests --
+        rv = self.client.get('/preview/rule', headers={'Authorization': self.fake_access_token})
+        self.assertEqual(rv.status_code, 403)
         # -- Exception Tests --
 
         # -- Process --
