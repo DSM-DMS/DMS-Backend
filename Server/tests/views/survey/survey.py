@@ -66,7 +66,8 @@ class TestSurvey(unittest.TestCase):
         TC about survey deletion
 
         - Preparations
-        Add sample survey data and take survey ID
+        Add sample survey data
+        Take survey ID
 
         - Exception Tests
         Non-existing survey ID
@@ -114,7 +115,8 @@ class TestSurvey(unittest.TestCase):
         TC about survey question addition
 
         - Preparations
-        Add sample survey data and take survey ID
+        Add sample survey data
+        Take survey ID
 
         - Exception Tests
         Non-existing survey ID
@@ -168,7 +170,9 @@ class TestSurvey(unittest.TestCase):
         TC about survey answer upload
 
         - Preparations
-        Add sample survey, question data, and take question IDs
+        Add sample survey data
+        Add sample question data
+        Take question IDs
 
         - Exception Tests
         Non-existing question ID

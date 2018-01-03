@@ -33,7 +33,7 @@ class TestInfo(unittest.TestCase):
         Load mypage(student info)
 
         - Validation
-        Check student datas
+        Check student data
         """
         # -- Preparations --
         # -- Preparations --

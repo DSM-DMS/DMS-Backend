@@ -28,7 +28,7 @@ class ChangePW(Resource):
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
         student = StudentModel.objects(id=get_jwt_identity(), pw=current_pw).first()
-        # Validate account_admin
+        # Validate account_student
 
         if not student:
             return Response('', 403)

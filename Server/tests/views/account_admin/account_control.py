@@ -31,7 +31,7 @@ class TestAccountControl(unittest.TestCase):
         Forbidden with student access token
 
         - Process
-        Delete student account and take UUID
+        Take UUID with student account deletion
 
         - Validation
         Test student auth
