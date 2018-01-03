@@ -18,14 +18,10 @@ POINT_RULE_MANAGING_GET = {
                     {
                         'id': '2316ca13cb1a',
                         'name': '치킨이 맛있는 규칙',
-                        'min_point': 1,
-                        'max_point': 3
                     },
                     {
                         'id': '2316ca13cb1b',
                         'name': '저녁에 배고픈 규칙',
-                        'min_point': -1,
-                        'max_point': -3
                     }
                 ]
             }
@@ -52,20 +48,6 @@ POINT_RULE_MANAGING_POST = {
             'description': '상벌점 규칙의 이름',
             'in': 'formData',
             'type': 'str',
-            'required': True
-        },
-        {
-            'name': 'min_point',
-            'description': '최소 점수',
-            'in': 'formData',
-            'type': 'int',
-            'required': True
-        },
-        {
-            'name': 'max_point',
-            'description': '최대 점수',
-            'in': 'formData',
-            'type': 'int',
             'required': True
         }
     ],
@@ -102,20 +84,6 @@ POINT_RULE_MANAGING_PATCH = {
             'description': '상벌점 규칙의 이름',
             'in': 'formData',
             'type': 'str',
-            'required': True
-        },
-        {
-            'name': 'min_point',
-            'description': '최소 점수',
-            'in': 'formData',
-            'type': 'int',
-            'required': True
-        },
-        {
-            'name': 'max_point',
-            'description': '최대 점수',
-            'in': 'formData',
-            'type': 'int',
             'required': True
         }
     ],

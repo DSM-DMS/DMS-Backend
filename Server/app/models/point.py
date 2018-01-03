@@ -15,13 +15,6 @@ class PointRuleModel(Document):
         required=True
     )
 
-    min_point = IntField(
-        required=True
-    )
-    max_point = IntField(
-        required=True
-    )
-
 
 class PointHistoryModel(EmbeddedDocument):
     """
