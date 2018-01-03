@@ -11,50 +11,77 @@ class TestAuth(unittest.TestCase):
         self.client = app.test_client()
 
         account_student.create_fake_account()
+        self.student_access_token = account_student.get_access_token(self.client)
+        self.student_refresh_token = account_student.get_refresh_token(self.client)
 
     def tearDown(self):
         account_student.remove_fake_account()
 
     def testA_auth(self):
         """
-        TC about student's auth
+        TC about student authentication
 
-        1. Check 'login failed'
-        2. Check 'login succeed'
-        3. Check 'access token/refresh token'
+        - Preparations
+        None
+
+        - Exception Tests
+        Incorrect ID or PW
+
+        - Process
+        Auth
+
+        - Validation
+        Check access token, refresh token
         """
+        # -- Preparations --
+        # -- Preparations --
+
+        # -- Exception Tests --
         rv = self.client.post('/auth', data={'id': 'chicken', 'pw': 'chicken'})
         self.assertEqual(rv.status_code, 401)
-        # Login fail : incorrect ID or PW
+        # -- Exception Tests --
 
+        # -- Process --
         rv = self.client.post('/auth', data={'id': 'fake_student', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 200)
-        # Success
+        # -- Process --
 
+        # -- Validation --
         data = json.loads(rv.data.decode())
         self.assertTrue('access_token' in data and 'refresh_token' in data)
-        # Token check
+        # -- Validation --
 
     def testB_refresh(self):
         """
-        TC about admin's refresh
+        TC about student account refresh
 
-        1. Check 'refresh succeed'
-        2. Check 'new access token'
-        3. Check 'refresh failed after password changed'
+        - Preparations
+        None
+
+        - Exception Tests
+        Refresh fail after password changed
+
+        - Process
+        Refresh account
+
+        - Validation
+        Check refresh token
         """
-        refresh_token = account_student.get_refresh_token(self.client)
-        rv = self.client.post('/refresh', headers={'Authorization': refresh_token})
-        self.assertEqual(rv.status_code, 200)
-        # Success
+        # -- Preparations --
+        # -- Preparations --
 
-        data = json.loads(rv.data.decode())
-        self.assertTrue('access_token' in data)
-        # New access token check
-
-        access_token = account_student.get_access_token(self.client)
-        self.client.post('/change/pw', headers={'Authorization': access_token}, data={'current_pw': 'fake', 'new_pw': 'new'})
-
-        rv = self.client.post('/refresh', headers={'Authorization': refresh_token})
+        # -- Exception Tests --
+        self.client.post('/change/pw', headers={'Authorization': self.student_access_token}, data={'current_pw': 'fake', 'new_pw': 'new'})
+        rv = self.client.post('/refresh', headers={'Authorization': self.student_refresh_token})
         self.assertEqual(rv.status_code, 205)
-        # Refresh fail after password changed
+        # -- Exception Tests --
+
+        # -- Process --
+        self.client.post('/change/pw', headers={'Authorization': self.student_access_token}, data={'current_pw': 'new', 'new_pw': 'fake'})
+        rv = self.client.post('/refresh', headers={'Authorization': self.student_refresh_token})
+        self.assertEqual(rv.status_code, 200)
+        # -- Process --
+
+        # -- Validation --
+        self.assertTrue('access_token' in json.loads(rv.data.decode()))
+        # -- Validation --
