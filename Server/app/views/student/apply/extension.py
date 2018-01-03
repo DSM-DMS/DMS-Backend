@@ -166,10 +166,6 @@ class ExtensionMap11(Resource):
         """
         11시 연장신청 지도 조회
         """
-        student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not student:
-            return Response('', 403)
-
         class_ = int(request.args['class'])
 
         return Response(json.dumps(create_extension_map(class_, 11), ensure_ascii=False), 200, content_type='application/json; charset=utf8')
@@ -181,10 +177,6 @@ class ExtensionMap12(Resource):
         """
         12시 연장신청 지도 조회
         """
-        student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not student:
-            return Response('', 403)
-
         class_ = int(request.args['class'])
 
         return Response(json.dumps(create_extension_map(class_, 12), ensure_ascii=False), 200, content_type='application/json; charset=utf8')
