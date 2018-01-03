@@ -76,7 +76,7 @@ class TestSurvey(unittest.TestCase):
         Delete survey data
 
         - Validation
-        Check survey data length is 0
+        Check survey data is empty
         """
         # -- Preparations --
         self.client.post('/admin/survey', headers={'Authorization': self.admin_access_token}, data={
@@ -106,7 +106,7 @@ class TestSurvey(unittest.TestCase):
 
         # -- Validation --
         rv = self.client.get('/admin/survey', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(len(json.loads(rv.data.decode())), 0)
+        self.assertFalse(json.loads(rv.data.decode()))
         # -- Validation --
 
     def testC_addQuestion(self):

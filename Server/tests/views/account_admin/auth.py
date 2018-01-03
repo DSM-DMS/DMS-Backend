@@ -17,36 +17,66 @@ class TestAuth(unittest.TestCase):
 
     def testA_auth(self):
         """
-        TC about admin's auth
+        TC about admin authentication
 
-        1. Check 'login failed'
-        2. Check 'login succeed'
-        3. Check 'access token/refresh token'
+        - Preparations
+        None
+
+        - Exception Tests
+        Incorrect ID or PW
+
+        - Process
+        Auth
+
+        - Validation
+        Check access token, refresh token
         """
+        # -- Preparations --
+        # -- Preparations --
+
+        # -- Exception Tests --
         rv = self.client.post('/admin/auth', data={'id': 'chicken', 'pw': 'chicken'})
         self.assertEqual(rv.status_code, 401)
-        # Login fail : Incorrect ID or PW
+        # -- Exception Tests --
 
+        # -- Process --
         rv = self.client.post('/admin/auth', data={'id': 'fake_admin', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 200)
-        # Success
+        # -- Process --
 
+        # -- Validation --
         data = json.loads(rv.data.decode())
         self.assertTrue('access_token' in data and 'refresh_token' in data)
-        # Check token in response data
+        # -- Validation --
 
     def testB_refresh(self):
         """
-        TC about admin's refresh
+        TC about admin account refresh
 
-        1. Check 'refresh success'
-        2. Check 'new access token'
+        - Preparations
+        None
+
+        - Exception Tests
+        None
+
+        - Process
+        Refresh account
+
+        - Validation
+        Check refresh token
         """
+        # -- Preparations --
+        # -- Preparations --
+
+        # -- Exception Tests --
+        # -- Exception Tests --
+
+        # -- Process --
         refresh_token = account_admin.get_refresh_token(self.client)
         rv = self.client.post('/admin/refresh', headers={'Authorization': refresh_token})
         self.assertEqual(rv.status_code, 200)
-        # Success
+        # -- Process --
 
-        data = json.loads(rv.data.decode())
-        self.assertTrue('access_token' in data)
-        # New access token check
+        # -- Validation --
+        self.assertTrue('access_token' in json.loads(rv.data.decode()))
+        # -- Validation --

@@ -29,56 +29,112 @@ class TestSignup(unittest.TestCase):
         """
         TC about ID verification
 
-        1. Check 'already existing ID'
-        2. Check 'non-existing ID'
+        - Preparations
+        None
+
+        - Exception Tests
+        Non-existing ID
+
+        - Process
+        Verify ID
+
+        - Validation
+        None
         """
+        # -- Preparations --
+        # -- Preparations --
+
+        # -- Exception Tests --
         rv = self.client.post('/verify/id', data={'id': 'fake_student'})
         self.assertEqual(rv.status_code, 204)
+        # -- Exception Tests --
 
+        # -- Process --
         rv = self.client.post('/verify/id', data={'id': 'doesntexist'})
         self.assertEqual(rv.status_code, 200)
+        # -- Process --
+
+        # -- Validation --
+        # -- Validation --
 
     def testB_verifyUUID(self):
         """
         TC about UUID verification
 
-        1. Check 'already existing UUID'
-        2. Check 'non-existing UUID'
+        - Preparations
+        None
+
+        - Exception Tests
+        Non-existing UUID
+
+        - Process
+        Verify UUID
+
+        - Validation
+        None
         """
+        # -- Preparations --
+        # -- Preparations --
+
+        # -- Exception Tests --
         rv = self.client.post('/verify/uuid', data={'uuid': str(u.uuid4())})
         self.assertEqual(rv.status_code, 204)
+        # -- Exception Tests --
 
+        # -- Process --
         rv = self.client.post('/verify/uuid', data={'uuid': str(self.uuid)})
         self.assertEqual(rv.status_code, 200)
+        # -- Process --
+
+        # -- Validation --
+        # -- Validation --
 
     def testC_signup(self):
         """
-        TC about student's signup
+        TC about Signup
 
-        1. Check 'UUID validation failed'
-        2. Check 'ID validation failed'
-        3. Check 'signup succeed'
-        4. Check 'account_admin default data'
+        - Preparations
+        None
+
+        - Exception Tests
+        Non-existing UUID
+        Already existing ID
+
+        - Process
+        Signup
+
+        - Validation
+        Auth with signed ID/PW
+        Check student data
         """
+        # -- Preparations --
+        # -- Preparations --
+
+        # -- Exception Tests --
         rv = self.client.post('/signup', data={'uuid': str(u.uuid4()), 'id': 'doesntexist', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 205)
-        # UUID validation failed : UUID doesn't exist
 
         rv = self.client.post('/signup', data={'uuid': str(self.uuid), 'id': 'fake_student', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 204)
-        # ID validation failed : ID already exists
+        # -- Exception Tests --
 
+        # -- Process --
         rv = self.client.post('/signup', data={'uuid': str(self.uuid), 'id': 'doesntexist', 'pw': 'fake'})
         self.assertEqual(rv.status_code, 201)
-        # Success
+        # -- Process --
 
-        access_token = account_student.get_access_token(self.client, 'doesntexist', 'fake')
+        # -- Validation --
+        rv = self.client.post('/auth', data={'id': 'doesntexist', 'pw': 'fake'})
+        self.assertEqual(rv.status_code, 200)
+
+        data = json.loads(rv.data.decode())
+        self.assertTrue('access_token' in data and 'refresh_token' in data)
+        access_token = 'JWT ' + data['access_token']
 
         rv = self.client.get('/mypage', headers={'Authorization': access_token})
         self.assertEqual(rv.status_code, 200)
 
         data = json.loads(rv.data.decode())
-        self.assertTrue('name' in data)
         self.assertEqual(data['name'], 'new')
-        self.assertTrue('number' in data)
         self.assertEqual(data['number'], 1111)
+        # -- Validation --

@@ -1,7 +1,7 @@
 import json
 import unittest2 as unittest
 
-from tests.views import account_student
+from tests.views import account_admin, account_student
 
 from server import app
 
@@ -10,43 +10,79 @@ class TestAlteration(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
 
+        account_admin.create_fake_account()
         account_student.create_fake_account()
-        self.access_token = account_student.get_access_token(self.client)
+        self.admin_access_token = account_admin.get_access_token(self.client)
+        self.student_access_token = account_student.get_access_token(self.client)
 
     def tearDown(self):
         account_student.remove_fake_account()
 
     def testA_changePW(self):
         """
-        TC about password change
+        TC about password changing
 
-        1. Check 'incorrect password'
-        2. Check 'password change succeed'
-        3. Check 'auth succeed'
+        - Preparations
+        None
+
+        - Exception Tests
+        Incorrect current password
+
+        - Process
+        Change password
+
+        - Validation
+        Auth with changed password
         """
-        rv = self.client.post('/change/pw', headers={'Authorization': self.access_token}, data={'current_pw': 'invalid'})
+        # -- Preparations --
+        # -- Preparations --
+
+        # -- Exception Tests --
+        rv = self.client.post('/change/pw', headers={'Authorization': self.student_access_token}, data={'current_pw': 'invalid'})
         self.assertEqual(rv.status_code, 403)
-        # Incorrect current password
+        # -- Exception Tests --
 
-        rv = self.client.post('/change/pw', headers={'Authorization': self.access_token}, data={'current_pw': 'fake', 'new_pw': 'new'})
+        # -- Process --
+        rv = self.client.post('/change/pw', headers={'Authorization': self.student_access_token}, data={'current_pw': 'fake', 'new_pw': 'new'})
         self.assertEqual(rv.status_code, 200)
-        # Success
+        # -- Process --
 
+        # -- Validation --
         rv = self.client.post('/auth', data={'id': 'fake_student', 'pw': 'new'})
         self.assertEqual(rv.status_code, 200)
-        # Auth check with changed password
+        # -- Validation --
 
     def testB_changeNumber(self):
         """
-        TC about number change
+        TC about number changing
 
-        1. Check 'number change succeed'
-        2. Check 'changed number with /mypage'
+        - Preparations
+        None
+
+        - Exception Tests
+        Forbidden with admin access token
+
+        - Process
+        Change number
+
+        - Validation
+        Check changed student number
         """
-        rv = self.client.post('/change/number', data={'new_number': 2120}, headers={'Authorization': self.access_token})
-        self.assertEqual(rv.status_code, 200)
-        # Success
+        # -- Preparations --
+        # -- Preparations --
 
-        rv = self.client.get('/mypage', headers={'Authorization': self.access_token})
+        # -- Exception Tests --
+        rv = self.client.post('/change/number', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 403)
+        # -- Exception Tests --
+
+        # -- Process --
+        rv = self.client.post('/change/number', headers={'Authorization': self.student_access_token}, data={'new_number': 2120})
+        self.assertEqual(rv.status_code, 200)
+        # -- Process --
+
+        # -- Validation --
+        rv = self.client.get('/mypage', headers={'Authorization': self.student_access_token})
+        self.assertEqual(rv.status_code, 200)
         self.assertEqual(json.loads(rv.data.decode())['number'], 2120)
-        # Changed number check
+        # -- Validation --
