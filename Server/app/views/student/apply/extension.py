@@ -162,7 +162,6 @@ def create_extension_map(class_, hour):
 
 class ExtensionMap11(Resource):
     @swag_from(EXTENSION_MAP_GET)
-    @jwt_required
     def get(self):
         """
         11시 연장신청 지도 조회
@@ -178,7 +177,6 @@ class ExtensionMap11(Resource):
 
 class ExtensionMap12(Resource):
     @swag_from(EXTENSION_MAP_GET)
-    @jwt_required
     def get(self):
         """
         12시 연장신청 지도 조회
