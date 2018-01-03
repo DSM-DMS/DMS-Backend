@@ -7,7 +7,7 @@ from app import app
 from app.models.account import AdminModel
 
 
-def create_fake_account():
+def create_fake_account(id='fake_admin'):
     pw = hexlify(
         pbkdf2_hmac(
             hash_name='sha256',
@@ -18,7 +18,7 @@ def create_fake_account():
     ).decode('utf-8')
 
     AdminModel(
-        id='fake_admin',
+        id=id,
         pw=pw,
         name='fake'
     ).save()

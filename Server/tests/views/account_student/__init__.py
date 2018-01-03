@@ -7,7 +7,7 @@ from app import app
 from app.models.account import StudentModel
 
 
-def create_fake_account():
+def create_fake_account(id='fake_student'):
     pw = hexlify(
         pbkdf2_hmac(
             hash_name='sha256',
@@ -18,7 +18,7 @@ def create_fake_account():
     ).decode('utf-8')
 
     StudentModel(
-        id='fake_student',
+        id=id,
         pw=pw,
         name='fake',
         number=1111
