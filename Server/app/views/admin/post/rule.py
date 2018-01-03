@@ -40,8 +40,10 @@ class RuleManaging(Resource):
         title = request.form['title']
         content = request.form['content']
 
-        rule = RuleModel.objects(id=id).first()
+        if len(id) != 24:
+            return Response('', 204)
 
+        rule = RuleModel.objects(id=id).first()
         if not rule:
             return Response('', 204)
 
@@ -61,8 +63,10 @@ class RuleManaging(Resource):
 
         id = request.form['id']
 
-        rule = RuleModel.objects(id=id).first()
+        if len(id) != 24:
+            return Response('', 204)
 
+        rule = RuleModel.objects(id=id).first()
         if not rule:
             return Response('', 204)
 

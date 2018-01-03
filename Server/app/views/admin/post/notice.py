@@ -40,8 +40,10 @@ class NoticeManaging(Resource):
         title = request.form['title']
         content = request.form['content']
 
-        notice = NoticeModel.objects(id=id).first()
+        if len(id) != 24:
+            return Response('', 204)
 
+        notice = NoticeModel.objects(id=id).first()
         if not notice:
             return Response('', 204)
 
@@ -61,8 +63,10 @@ class NoticeManaging(Resource):
 
         id = request.form['id']
 
-        notice = NoticeModel.objects(id=id).first()
+        if len(id) != 24:
+            return Response('', 204)
 
+        notice = NoticeModel.objects(id=id).first()
         if not notice:
             return Response('', 204)
 

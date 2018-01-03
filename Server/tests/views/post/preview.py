@@ -73,28 +73,48 @@ class TestPreview(unittest.TestCase):
 
     def testB_faqPreviewGet(self):
         """
-        TC about faq preview get
+        TC about FAQ preview getting
 
-        1. Check 'preview get succeed using admin's access token'
-        2. Check 'preview get succeed using student's access token'
+        - Preparations
+        Get preview when FAQ data is empty
+        Add sample FAQ preview
+
+        - Exception Tests
+        None
+
+        - Process
+        Get preview with admin access token
+        Get preview with student access token
+
+        - Validation
+        None
         """
-        self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        # -- Preparations --
+        rv = self.client.get('/preview/faq', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 204)
 
+        self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        rv = self.client.get('/faq', headers={'Authorization': self.admin_access_token})
+        faq_id = json.loads(rv.data.decode())[0]['id']
+
+        self.client.post('/admin/preview/faq', headers={'Authorization': self.admin_access_token}, data={'id': faq_id})
+        # -- Preparations --
+
+        # -- Exception Tests --
+        # -- Exception Tests --
+
+        # -- Process --
         rv = self.client.get('/preview/faq', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
-        # Get preview success on admin's access token
-
-        data = json.loads(rv.data.decode())
-        self.assertTrue(data['title'] == data['content'] == 'test' and data['author'] == 'fake')
-        # Validate preview data
+        self.assertTrue(rv.data)
 
         rv = self.client.get('/preview/faq', headers={'Authorization': self.student_access_token})
         self.assertEqual(rv.status_code, 200)
-        # Get preview success on student's access token
+        self.assertTrue(rv.data)
+        # -- Process --
 
-        data = json.loads(rv.data.decode())
-        self.assertTrue(data['title'] == data['content'] == 'test' and data['author'] == 'fake')
-        # Validate preview data
+        # -- Validation --
+        # -- Validation --
 
     def testC_noticePreviewSet(self):
         """
@@ -145,28 +165,48 @@ class TestPreview(unittest.TestCase):
 
     def testD_noticePreviewGet(self):
         """
-        TC about notice preview get
+        TC about notice preview getting
 
-        1. Check 'preview get succeed using admin's access token'
-        2. Check 'preview get succeed using student's access token'
+        - Preparations
+        Get preview when notice data is empty
+        Add sample notice preview
+
+        - Exception Tests
+        None
+
+        - Process
+        Get preview with admin access token
+        Get preview with student access token
+
+        - Validation
+        None
         """
-        self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        # -- Preparations --
+        rv = self.client.get('/preview/notice', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 204)
 
+        self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        rv = self.client.get('/notice', headers={'Authorization': self.admin_access_token})
+        notice_id = json.loads(rv.data.decode())[0]['id']
+
+        self.client.post('/admin/preview/notice', headers={'Authorization': self.admin_access_token}, data={'id': notice_id})
+        # -- Preparations --
+
+        # -- Exception Tests --
+        # -- Exception Tests --
+
+        # -- Process --
         rv = self.client.get('/preview/notice', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
-        # Get preview success on admin's access token
-
-        data = json.loads(rv.data.decode())
-        self.assertTrue(data['title'] == data['content'] == 'test' and data['author'] == 'fake')
-        # Validate preview data
+        self.assertTrue(rv.data)
 
         rv = self.client.get('/preview/notice', headers={'Authorization': self.student_access_token})
         self.assertEqual(rv.status_code, 200)
-        # Get preview success on student's access token
+        self.assertTrue(rv.data)
+        # -- Process --
 
-        data = json.loads(rv.data.decode())
-        self.assertTrue(data['title'] == data['content'] == 'test' and data['author'] == 'fake')
-        # Validate preview data
+        # -- Validation --
+        # -- Validation --
 
     def testE_rulePreviewSet(self):
         """
@@ -217,25 +257,45 @@ class TestPreview(unittest.TestCase):
 
     def testF_rulePreviewGet(self):
         """
-        TC about rule preview get
+        TC about rule preview getting
 
-        1. Check 'preview get succeed using admin's access token'
-        2. Check 'preview get succeed using student's access token'
+        - Preparations
+        Get preview when rule data is empty
+        Add sample rule preview
+
+        - Exception Tests
+        None
+
+        - Process
+        Get preview with admin access token
+        Get preview with student access token
+
+        - Validation
+        None
         """
-        self.client.post('/admin/rule', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        # -- Preparations --
+        rv = self.client.get('/preview/rule', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 204)
 
+        self.client.post('/admin/rule', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
+        rv = self.client.get('/rule', headers={'Authorization': self.admin_access_token})
+        rule_id = json.loads(rv.data.decode())[0]['id']
+
+        self.client.post('/admin/preview/rule', headers={'Authorization': self.admin_access_token}, data={'id': rule_id})
+        # -- Preparations --
+
+        # -- Exception Tests --
+        # -- Exception Tests --
+
+        # -- Process --
         rv = self.client.get('/preview/rule', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
-        # Get preview success on admin's access token
-
-        data = json.loads(rv.data.decode())
-        self.assertTrue(data['title'] == data['content'] == 'test' and data['author'] == 'fake')
-        # Validate preview data
+        self.assertTrue(rv.data)
 
         rv = self.client.get('/preview/rule', headers={'Authorization': self.student_access_token})
         self.assertEqual(rv.status_code, 200)
-        # Get preview success on student's access token
+        self.assertTrue(rv.data)
+        # -- Process --
 
-        data = json.loads(rv.data.decode())
-        self.assertTrue(data['title'] == data['content'] == 'test' and data['author'] == 'fake')
-        # Validate preview data
+        # -- Validation --
+        # -- Validation --

@@ -40,8 +40,10 @@ class FAQManaging(Resource):
         title = request.form['title']
         content = request.form['content']
 
-        faq = FAQModel.objects(id=id).first()
+        if len(id) != 24:
+            return Response('', 204)
 
+        faq = FAQModel.objects(id=id).first()
         if not faq:
             return Response('', 204)
 
@@ -61,8 +63,10 @@ class FAQManaging(Resource):
 
         id = request.form['id']
 
-        faq = FAQModel.objects(id=id).first()
+        if len(id) != 24:
+            return Response('', 204)
 
+        faq = FAQModel.objects(id=id).first()
         if not faq:
             return Response('', 204)
 
