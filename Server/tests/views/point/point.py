@@ -14,7 +14,7 @@ class TestPoint(unittest.TestCase):
         account_admin.create_fake_account()
         account_student.create_fake_account()
 
-        self.access_token = account_admin.get_access_token(self.client)
+        self.admin_access_token = account_admin.get_access_token(self.client)
 
     def tearDown(self):
         account_admin.remove_fake_account()
@@ -38,7 +38,7 @@ class TestPoint(unittest.TestCase):
         Check inserted student point data
         """
         # -- Preparations --
-        rv = self.client.get('/admin/managing/student', headers={'Authorization': self.access_token})
+        rv = self.client.get('/admin/managing/student', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
 
         data = json.loads(rv.data.decode())[0]
@@ -50,7 +50,7 @@ class TestPoint(unittest.TestCase):
         # -- Exception Tests --
 
         # -- Process --
-        rv = self.client.post('/admin/managing/student', headers={'Authorization': self.access_token}, data={
+        rv = self.client.post('/admin/managing/student', headers={'Authorization': self.admin_access_token}, data={
             'id': 'fake_student',
             'good_point': 1,
             'bad_point': 2,
@@ -60,7 +60,7 @@ class TestPoint(unittest.TestCase):
         # -- Process --
 
         # -- Validation --
-        rv = self.client.get('/admin/managing/student', headers={'Authorization': self.access_token})
+        rv = self.client.get('/admin/managing/student', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
 
         data = json.loads(rv.data.decode())[0]
@@ -84,7 +84,7 @@ class TestPoint(unittest.TestCase):
         Check inserted rule data
         """
         # -- Preparations --
-        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.access_token})
+        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         self.assertFalse(json.loads(rv.data.decode()))
         # -- Preparations --
@@ -93,7 +93,7 @@ class TestPoint(unittest.TestCase):
         # -- Exception Tests --
 
         # -- Process --
-        rv = self.client.post('/admin/managing/rule', headers={'Authorization': self.access_token}, data={
+        rv = self.client.post('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={
             'name': 'test',
             'min_point': 1,
             'max_point': 1
@@ -102,7 +102,7 @@ class TestPoint(unittest.TestCase):
         # -- Process --
 
         # -- Validation --
-        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.access_token})
+        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
 
         data = json.loads(rv.data.decode())
@@ -128,21 +128,21 @@ class TestPoint(unittest.TestCase):
         Check modified rule data
         """
         # -- Preparations --
-        self.client.post('/admin/managing/rule', headers={'Authorization': self.access_token}, data={'name': 'test', 'min_point': 1, 'max_point': 1})
-        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.access_token})
+        self.client.post('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'name': 'test', 'min_point': 1, 'max_point': 1})
+        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.admin_access_token})
         rule_id = json.loads(rv.data.decode())[0]['id']
         # -- Preparations --
 
         # -- Exception Tests --
-        rv = self.client.patch('/admin/managing/rule', headers={'Authorization': self.access_token}, data={'rule_id': '123456789012345678901234'})
+        rv = self.client.patch('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': '123456789012345678901234'})
         self.assertEqual(rv.status_code, 204)
 
-        rv = self.client.patch('/admin/managing/rule', headers={'Authorization': self.access_token}, data={'rule_id': '1234'})
+        rv = self.client.patch('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': '1234'})
         self.assertEqual(rv.status_code, 204)
         # -- Exception Tests --
 
         # -- Process --
-        rv = self.client.patch('/admin/managing/rule', headers={'Authorization': self.access_token}, data={
+        rv = self.client.patch('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={
             'rule_id': rule_id,
             'name': 'new',
             'min_point': 2,
@@ -152,7 +152,7 @@ class TestPoint(unittest.TestCase):
         # -- Process --
 
         # -- Validation --
-        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.access_token})
+        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
 
         data = json.loads(rv.data.decode())
@@ -178,26 +178,26 @@ class TestPoint(unittest.TestCase):
         Check rule list is empty
         """
         # -- Preparations --
-        self.client.post('/admin/managing/rule', headers={'Authorization': self.access_token}, data={'name': 'test', 'min_point': 1, 'max_point': 1})
-        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.access_token})
+        self.client.post('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'name': 'test', 'min_point': 1, 'max_point': 1})
+        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.admin_access_token})
         rule_id = json.loads(rv.data.decode())[0]['id']
         # -- Preparations --
 
         # -- Exception Tests --
-        rv = self.client.delete('/admin/managing/rule', headers={'Authorization': self.access_token}, data={'rule_id': '123456789012345678901234'})
+        rv = self.client.delete('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': '123456789012345678901234'})
         self.assertEqual(rv.status_code, 204)
 
-        rv = self.client.delete('/admin/managing/rule', headers={'Authorization': self.access_token}, data={'rule_id': '1234'})
+        rv = self.client.delete('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': '1234'})
         self.assertEqual(rv.status_code, 204)
         # -- Exception Tests --
 
         # -- Process --
-        rv = self.client.delete('/admin/managing/rule', headers={'Authorization': self.access_token}, data={'rule_id': rule_id})
+        rv = self.client.delete('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': rule_id})
         self.assertEqual(rv.status_code, 200)
         # -- Process --
 
         # -- Validation --
-        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.access_token})
+        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.admin_access_token})
         self.assertFalse(json.loads(rv.data.decode()))
         # -- Validation --
 
@@ -221,31 +221,31 @@ class TestPoint(unittest.TestCase):
         Check sample student's point history
         """
         # -- Preparations --
-        self.client.post('/admin/managing/student', headers={'Authorization': self.access_token}, data={
+        self.client.post('/admin/managing/student', headers={'Authorization': self.admin_access_token}, data={
             'id': 'fake_student',
             'good_point': 1,
             'bad_point': 2,
             'penalty_training_status': 0
         })
 
-        self.client.post('/admin/managing/rule', headers={'Authorization': self.access_token}, data={'name': 'test', 'min_point': 1, 'max_point': 1})
-        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.access_token})
+        self.client.post('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'name': 'test', 'min_point': 1, 'max_point': 1})
+        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.admin_access_token})
         rule_id = json.loads(rv.data.decode())[0]['id']
         # -- Preparations --
 
         # -- Exception Tests --
-        rv = self.client.post('/admin/managing/point', headers={'Authorization': self.access_token}, data={'id': 'doesntexist'})
+        rv = self.client.post('/admin/managing/point', headers={'Authorization': self.admin_access_token}, data={'id': 'doesntexist'})
         self.assertEqual(rv.status_code, 204)
 
-        rv = self.client.post('/admin/managing/point', headers={'Authorization': self.access_token}, data={'id': 'fake_student', 'rule_id': '123456789012345678901234'})
+        rv = self.client.post('/admin/managing/point', headers={'Authorization': self.admin_access_token}, data={'id': 'fake_student', 'rule_id': '123456789012345678901234'})
         self.assertEqual(rv.status_code, 205)
 
-        rv = self.client.post('/admin/managing/point', headers={'Authorization': self.access_token}, data={'id': 'fake_student', 'rule_id': '1234'})
+        rv = self.client.post('/admin/managing/point', headers={'Authorization': self.admin_access_token}, data={'id': 'fake_student', 'rule_id': '1234'})
         self.assertEqual(rv.status_code, 205)
         # -- Exception Tests --
 
         # -- Process --
-        rv = self.client.post('/admin/managing/point', headers={'Authorization': self.access_token}, data={
+        rv = self.client.post('/admin/managing/point', headers={'Authorization': self.admin_access_token}, data={
             'id': 'fake_student',
             'rule_id': rule_id,
             'point': 1
@@ -254,14 +254,14 @@ class TestPoint(unittest.TestCase):
         # -- Process --
 
         # -- Validation --
-        rv = self.client.get('/admin/managing/point', headers={'Authorization': self.access_token}, query_string={'id': 'fake_student'})
+        rv = self.client.get('/admin/managing/point', headers={'Authorization': self.admin_access_token}, query_string={'id': 'fake_student'})
         self.assertEqual(rv.status_code, 200)
 
         data = json.loads(rv.data.decode())
         self.assertEqual(len(data), 1)
         self.assertTrue(data[0]['reason'] == 'test' and data[0]['point'] == 1)
 
-        rv = self.client.get('/admin/managing/student', headers={'Authorization': self.access_token})
+        rv = self.client.get('/admin/managing/student', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         self.assertEqual(json.loads(rv.data.decode())[0]['good_point'], 2)
         # -- Validation --

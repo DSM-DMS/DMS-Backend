@@ -76,7 +76,7 @@ class TestSurvey(unittest.TestCase):
         Delete survey data
 
         - Validation
-        Check survey data length is 0
+        Check survey data is empty
         """
         # -- Preparations --
         self.client.post('/admin/survey', headers={'Authorization': self.admin_access_token}, data={
