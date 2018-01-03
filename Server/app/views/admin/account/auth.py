@@ -59,10 +59,10 @@ class AdminRefresh(Resource):
         """
         token = RefreshTokenModel.objects(token=get_jwt_identity()).first()
 
-        if not token or token.token_owner.pw != token.pw_snapshot:
-            # Invalid token or the token issuing password is different from the current password
-            # Returns status code 205 : Reset Content
-            return Response('', 205)
+        # if not token or token.token_owner.pw != token.pw_snapshot:
+        #     # Invalid token or the token issuing password is different from the current password
+        #     # Returns status code 205 : Reset Content
+        #     return Response('', 205)
 
         return {
             'access_token': create_access_token(token.token_owner.id)
