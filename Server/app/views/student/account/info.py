@@ -25,13 +25,13 @@ class MyPage(Resource):
             'number': student.number,
 
             'extension_11': {
-                'class': student.extension_apply_11.class_,
-                'seat': student.extension_apply_11.seat
+                'class_num': student.extension_apply_11.class_,
+                'seat_num': student.extension_apply_11.seat
             } if student.extension_apply_11 else None,
 
             'extension_12': {
-                'class': student.extension_apply_12.class_,
-                'seat': student.extension_apply_12.seat
+                'class_num': student.extension_apply_12.class_,
+                'seat_num': student.extension_apply_12.seat
             } if student.extension_apply_12 else None,
 
             'goingout': {
