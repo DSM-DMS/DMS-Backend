@@ -120,6 +120,7 @@ class TestSurvey(unittest.TestCase):
         - Preparations
         Add sample survey data
         Take survey ID
+        Check question data is empty
 
         - Exception Tests
         Short survey ID
@@ -144,6 +145,10 @@ class TestSurvey(unittest.TestCase):
         rv = self.client.get('/admin/survey', headers={'Authorization': self.admin_access_token})
         self.assertEqual(rv.status_code, 200)
         survey_id = json.loads(rv.data.decode())[0]['id']
+
+        rv = self.client.get('/admin/survey/question', headers={'Authorization': self.admin_access_token}, query_string={'survey_id': survey_id})
+        self.assertEqual(rv.status_code, 200)
+        self.assertFalse(json.loads(rv.data.decode()))
         # -- Preparations --
 
         # -- Exception Tests --
@@ -157,9 +162,17 @@ class TestSurvey(unittest.TestCase):
         # -- Process --
         rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={
             'survey_id': survey_id,
-            'title': 'test',
-            'is_objective': True,
-            'choice_paper': json.dumps(['one', 'two', 'three'])
+            'questions': json.dumps([
+                {
+                    'title': 'test',
+                    'is_objective': True,
+                    'choice_paper': json.dumps(['one', 'two', 'three'])
+                },
+                {
+                    'title': 'test2',
+                    'is_objective': False
+                }
+            ])
         })
         self.assertEqual(rv.status_code, 201)
         # -- Process --
@@ -167,7 +180,7 @@ class TestSurvey(unittest.TestCase):
         # -- Validation --
         rv = self.client.get('/admin/survey/question', headers={'Authorization': self.admin_access_token}, query_string={'survey_id': survey_id})
         self.assertEqual(rv.status_code, 200)
-        self.assertTrue(rv.data)
+        self.assertTrue(json.loads(rv.data.decode()))
         # -- Validation --
 
     def testD_answer(self):
@@ -205,17 +218,17 @@ class TestSurvey(unittest.TestCase):
 
         rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={
             'survey_id': survey_id,
-            'title': 'test',
-            'is_objective': True,
-            'choice_paper': json.dumps(['one', 'two', 'three'])
-        })
-        self.assertEqual(rv.status_code, 201)
-
-        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={
-            'survey_id': survey_id,
-            'title': 'test2',
-            'is_objective': True,
-            'choice_paper': json.dumps(['one', 'two', 'three'])
+            'questions': json.dumps([
+                {
+                    'title': 'test',
+                    'is_objective': True,
+                    'choice_paper': json.dumps(['one', 'two', 'three'])
+                },
+                {
+                    'title': 'test2',
+                    'is_objective': False
+                }
+            ])
         })
         self.assertEqual(rv.status_code, 201)
 

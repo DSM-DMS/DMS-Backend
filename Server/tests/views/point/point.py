@@ -56,7 +56,7 @@ class TestPoint(unittest.TestCase):
         self.assertEqual(rv.status_code, 403)
 
         rv = self.client.post('/admin/managing/student', headers={'Authorization': self.student_access_token}, data={'id': 'doesntexist'})
-        self.assertEqual(rv.status_code, 204)
+        self.assertEqual(rv.status_code, 403)
         # -- Exception Tests --
 
         # -- Process --
