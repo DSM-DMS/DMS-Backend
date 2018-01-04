@@ -28,8 +28,8 @@ class Survey(Resource):
             'creation_time': str(survey.creation_time)[:-7],
             'description': survey.description,
             'title': survey.title,
-            'start_date': str(survey.start_date),
-            'end_date': str(survey.end_date)
+            'start_date': str(survey.start_date)[:10],
+            'end_date': str(survey.end_date)[:10]
         } for survey in SurveyModel.objects if int(student_number / 1000) in survey.target]
 
         return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
