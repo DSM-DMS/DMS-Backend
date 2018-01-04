@@ -46,7 +46,7 @@ class SurveyManaging(Resource):
         description = request.form['description']
         start_date = request.form['start_date']
         end_date = request.form['end_date']
-        target = json.loads(request.form['target'])
+        target = [int(a) for a in request.form['target'].split(',')]
 
         SurveyModel(
             title=title,
