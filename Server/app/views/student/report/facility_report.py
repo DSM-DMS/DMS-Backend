@@ -23,6 +23,8 @@ class FacilityReport(Resource):
         content = request.form['content']
         room = int(request.form['room'])
 
-        FacilityReportModel(author=student.name, title=title, content=content, room=room).save()
+        report = FacilityReportModel(author=student.name, title=title, content=content, room=room).save()
 
-        return Response('', 201)
+        return {
+            'id': str(report.id)
+        }, 201
