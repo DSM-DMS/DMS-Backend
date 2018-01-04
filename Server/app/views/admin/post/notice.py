@@ -22,9 +22,11 @@ class NoticeManaging(Resource):
         title = request.form['title']
         content = request.form['content']
 
-        NoticeModel(author=admin.name, title=title, content=content).save()
+        notice = NoticeModel(author=admin.name, title=title, content=content).save()
 
-        return Response('', 201)
+        return {
+            'id': str(notice.id)
+        }, 201
 
     @swag_from(NOTICE_MANAGING_PATCH)
     @jwt_required
