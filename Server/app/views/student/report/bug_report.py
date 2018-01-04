@@ -22,6 +22,6 @@ class BugReport(Resource):
         title = request.form['title']
         content = request.form['content']
 
-        BugReportModel(author=student, title=title, content=content).save()
+        BugReportModel(author=student.name, title=title, content=content).save()
 
         return Response('', 201)
