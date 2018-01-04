@@ -50,7 +50,7 @@ class TestSurvey(unittest.TestCase):
             'description': 'test',
             'start_date': '2018-01-01',
             'end_date': '2018-12-31',
-            'target': json.dumps([1, 3])
+            'target': '1,3'
         })
         self.assertEqual(rv.status_code, 201)
         # -- Process --
@@ -85,7 +85,7 @@ class TestSurvey(unittest.TestCase):
             'description': 'test',
             'start_date': '2018-01-01',
             'end_date': '2018-12-31',
-            'target': json.dumps([1, 3])
+            'target': '1,3'
         })
         self.assertEqual(rv.status_code, 201)
 
@@ -137,7 +137,7 @@ class TestSurvey(unittest.TestCase):
             'description': 'test',
             'start_date': '2018-01-01',
             'end_date': '2018-12-31',
-            'target': json.dumps([1, 3])
+            'target': '1,3'
         })
         self.assertEqual(rv.status_code, 201)
 
@@ -195,7 +195,7 @@ class TestSurvey(unittest.TestCase):
             'description': 'test',
             'start_date': '2018-01-01',
             'end_date': '2018-12-31',
-            'target': json.dumps([1, 3])
+            'target': '1,3'
         })
         self.assertEqual(rv.status_code, 201)
 
