@@ -13,8 +13,8 @@ class TestPoint(unittest.TestCase):
 
         account_admin.create_fake_account()
         account_student.create_fake_account()
-
         self.admin_access_token = account_admin.get_access_token(self.client)
+        self.student_access_token = account_student.get_access_token(self.client)
 
     def tearDown(self):
         account_admin.remove_fake_account()
@@ -29,7 +29,9 @@ class TestPoint(unittest.TestCase):
         Check existing student data
 
         - Exception Tests
-        None
+        Forbidden with student access token when student data loading
+        Forbidden with student access token when student point data inserting
+        Non-existing student ID
 
         - Process
         Initialize student point with sample data
@@ -47,6 +49,14 @@ class TestPoint(unittest.TestCase):
         # -- Preparations --
 
         # -- Exception Tests --
+        rv = self.client.get('/admin/managing/student', headers={'Authorization': self.student_access_token})
+        self.assertEqual(rv.status_code, 403)
+
+        rv = self.client.post('/admin/managing/student', headers={'Authorization': self.student_access_token})
+        self.assertEqual(rv.status_code, 403)
+
+        rv = self.client.post('/admin/managing/student', headers={'Authorization': self.student_access_token}, data={'id': 'doesntexist'})
+        self.assertEqual(rv.status_code, 204)
         # -- Exception Tests --
 
         # -- Process --
@@ -75,7 +85,7 @@ class TestPoint(unittest.TestCase):
         Check existing rule list is empty
 
         - Exception Tests
-        None
+        Forbidden with student access token
 
         - Process
         Insert rule data
@@ -90,6 +100,8 @@ class TestPoint(unittest.TestCase):
         # -- Preparations --
 
         # -- Exception Tests --
+        rv = self.client.post('/admin/managing/rule', headers={'Authorization': self.student_access_token})
+        self.assertEqual(rv.status_code, 403)
         # -- Exception Tests --
 
         # -- Process --
@@ -115,6 +127,7 @@ class TestPoint(unittest.TestCase):
         Add sample rule data and take rule ID
 
         - Exception Tests
+        Forbidden with student access token
         Short rule ID
         Non-existing rule ID
 
@@ -134,6 +147,9 @@ class TestPoint(unittest.TestCase):
         # -- Preparations --
 
         # -- Exception Tests --
+        rv = self.client.patch('/admin/managing/rule', headers={'Authorization': self.student_access_token})
+        self.assertEqual(rv.status_code, 403)
+
         rv = self.client.patch('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': '1234'})
         self.assertEqual(rv.status_code, 204)
 
@@ -167,6 +183,7 @@ class TestPoint(unittest.TestCase):
         Add sample rule data and take rule ID
 
         - Exception Tests
+        Forbidden with student access token
         Short rule ID
         Non-existing rule ID
 
@@ -186,6 +203,9 @@ class TestPoint(unittest.TestCase):
         # -- Preparations --
 
         # -- Exception Tests --
+        rv = self.client.delete('/admin/managing/rule', headers={'Authorization': self.student_access_token})
+        self.assertEqual(rv.status_code, 403)
+
         rv = self.client.delete('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'rule_id': '1234'})
         self.assertEqual(rv.status_code, 204)
 
