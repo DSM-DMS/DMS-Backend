@@ -70,6 +70,7 @@ class TestStay(unittest.TestCase):
 
         - Process
         Download excel file
+        Download with another apply values
 
         - Validation
         * Validation required
@@ -85,6 +86,18 @@ class TestStay(unittest.TestCase):
         # -- Exception Tests --
 
         # -- Process --
+        self.client.get('/admin/stay', headers={'Authorization': self.admin_access_token})
+
+        rv = self.client.post('/stay', headers={'Authorization': self.student_access_token}, data={'value': 2})
+        self.assertEqual(rv.status_code, 201)
+        self.client.get('/admin/stay', headers={'Authorization': self.admin_access_token})
+
+        rv = self.client.post('/stay', headers={'Authorization': self.student_access_token}, data={'value': 3})
+        self.assertEqual(rv.status_code, 201)
+        self.client.get('/admin/stay', headers={'Authorization': self.admin_access_token})
+
+        rv = self.client.post('/stay', headers={'Authorization': self.student_access_token}, data={'value': 4})
+        self.assertEqual(rv.status_code, 201)
         self.client.get('/admin/stay', headers={'Authorization': self.admin_access_token})
         # -- Process --
 
