@@ -8,6 +8,12 @@ from server import app
 class TestMeal(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
+        MealModel(
+            date='2001-04-20',
+            breakfast=['2001년', '04월', '20일은'],
+            lunch=['인상민이', '태어난', '날'],
+            dinner=['기억해주세염', '!!!!']
+        ).save()
 
 
     def tearDown(self):
