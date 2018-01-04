@@ -127,23 +127,16 @@ class QuestionManaging(Resource):
         if not survey:
             return Response('', 204)
 
-        title = request.form['title']
-        is_objective = request.form.get('is_objective')
-
-        if is_objective:
-            choice_paper = json.loads(request.form['choice_paper'])
+        questions = json.loads(request.form['questions'])
+        for question in questions:
+            title = question['title']
+            is_objective = question['is_objective']
 
             QuestionModel(
                 survey=survey,
                 title=title,
-                is_objective=True,
-                choice_paper=choice_paper
-            ).save()
-        else:
-            QuestionModel(
-                survey=survey,
-                title=title,
-                is_objective=False
+                is_objective=is_objective,
+                choice_paper=json.loads(question['choice_paper']) if is_objective else []
             ).save()
 
         return Response('', 201)
