@@ -26,7 +26,12 @@ BUG_REPORT_POST = {
     ],
     'responses': {
         '201': {
-            'description': '버그 신고 성공'
+            'description': '버그 신고 성공. 업로드된 버그 신고의 ID 응답',
+            'examples': {
+                'application/json': {
+                    'id': '13211265df16ads'
+                }
+            }
         },
         '403': {
             'description': '권한 없음'
