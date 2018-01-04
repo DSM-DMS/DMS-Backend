@@ -44,13 +44,15 @@ class PointRuleManaging(Resource):
         min_point = int(request.form['min_point'])
         max_point = int(request.form['max_point'])
 
-        PointRuleModel(
+        rule = PointRuleModel(
             name=name,
             min_point=min_point,
             max_point=max_point
         ).save()
 
-        return Response('', 201)
+        return {
+            'id': str(rule.id)
+        }, 201
 
     @swag_from(POINT_RULE_MANAGING_PATCH)
     @jwt_required

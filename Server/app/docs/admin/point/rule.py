@@ -71,7 +71,12 @@ POINT_RULE_MANAGING_POST = {
     ],
     'responses': {
         '201': {
-            'description': '상벌점 데이터 등록 성공'
+            'description': '상벌점 규칙 등록 성공. 등록된 규칙의 ID 응답',
+            'examples': {
+                'application/json': {
+                    'id': '13211265df16ads'
+                }
+            }
         },
         '403': {
             'description': '권한 없음'
