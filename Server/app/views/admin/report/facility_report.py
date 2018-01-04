@@ -22,7 +22,7 @@ class FacilityReportDownload(Resource):
             return Response('', 403)
 
         response = [{
-            'author': facility_report.author.name,
+            'author': facility_report.author,
             'title': facility_report.title,
             'content': facility_report.content,
             'room': facility_report.room

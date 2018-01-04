@@ -22,7 +22,7 @@ class RuleManaging(Resource):
         title = request.form['title']
         content = request.form['content']
 
-        RuleModel(author=admin, title=title, content=content).save()
+        RuleModel(author=admin.name, title=title, content=content).save()
 
         return Response('', 201)
 

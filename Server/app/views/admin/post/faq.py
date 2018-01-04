@@ -22,7 +22,7 @@ class FAQManaging(Resource):
         title = request.form['title']
         content = request.form['content']
 
-        FAQModel(author=admin, title=title, content=content).save()
+        FAQModel(author=admin.name, title=title, content=content).save()
 
         return Response('', 201)
 
