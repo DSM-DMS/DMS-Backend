@@ -23,26 +23,70 @@ class TestStay(unittest.TestCase):
         """
         TC about stay apply
 
-        1. Check 'applied value 4'
-        2. Check 'apply succeed'
-        3. Check 'apply status'
+        - Preparations
+        Check apply data is 4
+
+        - Exception Tests
+        Forbidden with admin access token
+
+        - Process
+        Apply
+
+        - Validation
+        Check apply data
         """
+        # -- Preparations --
         rv = self.client.get('/stay', headers={'Authorization': self.student_access_token})
         self.assertEqual(rv.status_code, 200)
         self.assertEqual(json.loads(rv.data.decode())['value'], 4)
+        # -- Preparations --
 
+        # -- Exception Tests --
+        rv = self.client.post('/stay', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 403)
+        # -- Exception Tests --
+
+        # -- Process --
         rv = self.client.post('/stay', headers={'Authorization': self.student_access_token}, data={'value': 1})
         self.assertEqual(rv.status_code, 201)
-        # Apply success
+        # -- Process --
 
+        # -- Validation --
         rv = self.client.get('/stay', headers={'Authorization': self.student_access_token})
         self.assertEqual(rv.status_code, 200)
 
         self.assertEqual(json.loads(rv.data.decode())['value'], 1)
-        # Validate apply data
+        # -- Validation --
 
     def testB_download(self):
         """
-        TC about download stay apply
+        TC about stay data download
+
+        - Preparations
+        Apply sample data
+
+        - Exception Tests
+        Forbidden with student access token
+
+        - Process
+        Download excel file
+
+        - Validation
+        * Validation required
         """
+        # -- Preparations --
+        rv = self.client.post('/stay', headers={'Authorization': self.student_access_token}, data={'value': 1})
+        self.assertEqual(rv.status_code, 201)
+        # -- Preparations --
+
+        # -- Exception Tests --
+        rv = self.client.get('/admin/stay', headers={'Authorization': self.student_access_token})
+        self.assertEqual(rv.status_code, 403)
+        # -- Exception Tests --
+
+        # -- Process --
         self.client.get('/admin/stay', headers={'Authorization': self.admin_access_token})
+        # -- Process --
+
+        # -- Validation --
+        # -- Validation --
