@@ -26,7 +26,12 @@ RULE_MANAGING_POST = {
     ],
     'responses': {
         '201': {
-            'description': '기숙사규정 업로드 성공'
+            'description': '기숙사규정 업로드 성공. 업로드된 기숙사규정의 ID 응답',
+            'examples': {
+                'application/json': {
+                    'id': '13211265df16ads'
+                }
+            }
         },
         '204': {
             'description': '존재하지 않는 게시글'

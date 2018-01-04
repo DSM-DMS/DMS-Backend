@@ -22,9 +22,11 @@ class RuleManaging(Resource):
         title = request.form['title']
         content = request.form['content']
 
-        RuleModel(author=admin.name, title=title, content=content).save()
+        rule = RuleModel(author=admin.name, title=title, content=content).save()
 
-        return Response('', 201)
+        return {
+            'id': str(rule.id)
+        }, 201
 
     @swag_from(RULE_MANAGING_PATCH)
     @jwt_required
