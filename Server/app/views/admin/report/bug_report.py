@@ -22,7 +22,7 @@ class BugReportDownload(Resource):
             return Response('', 403)
 
         response = [{
-            'author': bug_report.author.name,
+            'author': bug_report.author,
             'title': bug_report.title,
             'content': bug_report.content
         } for bug_report in BugReportModel.objects]

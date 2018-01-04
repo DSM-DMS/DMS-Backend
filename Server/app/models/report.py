@@ -17,8 +17,7 @@ class ReportBase(Document):
         required=True,
         default=datetime.now()
     )
-    author = ReferenceField(
-        document_type=StudentModel,
+    author = StringField(
         required=True
     )
     title = StringField(

@@ -22,7 +22,7 @@ class NoticeManaging(Resource):
         title = request.form['title']
         content = request.form['content']
 
-        NoticeModel(author=admin, title=title, content=content).save()
+        NoticeModel(author=admin.name, title=title, content=content).save()
 
         return Response('', 201)
 

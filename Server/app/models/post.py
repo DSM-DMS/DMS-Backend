@@ -18,10 +18,9 @@ class PostBase(Document):
         required=True,
         default=datetime.now()
     )
-    author = ReferenceField(
-        document_type=AdminModel,
-        reverse_delete_rule=CASCADE,
-        required=True
+    author = StringField(
+        required=True,
+        default='사감실'
     )
     title = StringField(
         required=True
