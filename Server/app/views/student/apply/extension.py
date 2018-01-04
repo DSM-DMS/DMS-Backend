@@ -25,8 +25,8 @@ class Extension11(Resource):
             return Response('', 403)
 
         return ({
-            'class': student.extension_apply_11.class_,
-            'seat': student.extension_apply_11.seat
+            'class_num': student.extension_apply_11.class_,
+            'seat_num': student.extension_apply_11.seat
         }, 200) if student.extension_apply_11 else ('', 204)
 
     @swag_from(EXTENSION_POST)
@@ -45,8 +45,8 @@ class Extension11(Resource):
             # Not testing, can't apply
             return Response('', 204)
 
-        class_ = int(request.form['class'])
-        seat = int(request.form['seat'])
+        class_ = int(request.form['class_num'])
+        seat = int(request.form['seat_num'])
 
         student.update(extension_apply_11=ExtensionApplyModel(class_=class_, seat=seat))
 
@@ -79,8 +79,8 @@ class Extension12(Resource):
             return Response('', 403)
 
         return ({
-            'class': student.extension_apply_12.class_,
-            'seat': student.extension_apply_12.seat
+            'class_num': student.extension_apply_12.class_,
+            'seat_num': student.extension_apply_12.seat
         }, 200) if student.extension_apply_12 else ('', 204)
 
     @swag_from(EXTENSION_POST)
@@ -99,8 +99,8 @@ class Extension12(Resource):
             # Not testing, can't apply
             return Response('', 204)
 
-        class_ = int(request.form['class'])
-        seat = int(request.form['seat'])
+        class_ = int(request.form['class_num'])
+        seat = int(request.form['seat_num'])
 
         student.update(extension_apply_12=ExtensionApplyModel(class_=class_,seat=seat))
 

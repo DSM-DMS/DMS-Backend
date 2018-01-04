@@ -46,7 +46,7 @@ class TestExtension(unittest.TestCase):
         # -- Exception Tests --
 
         # -- Process --
-        rv = self.client.post('/extension/11', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
+        rv = self.client.post('/extension/11', headers={'Authorization': self.student_access_token}, data={'class_num': 1, 'seat_num': 21})
         self.assertEqual(rv.status_code, 201)
         # -- Process --
 
@@ -55,8 +55,8 @@ class TestExtension(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
 
         data = json.loads(rv.data.decode())
-        self.assertEqual(data['class'], 1)
-        self.assertEqual(data['seat'], 21)
+        self.assertEqual(data['class_num'], 1)
+        self.assertEqual(data['seat_num'], 21)
         # -- Validation --
 
     def testB_withdrawExtension11(self):
@@ -76,7 +76,7 @@ class TestExtension(unittest.TestCase):
         Check apply data is empty
         """
         # -- Preparations --
-        self.client.post('/extension/11', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
+        self.client.post('/extension/11', headers={'Authorization': self.student_access_token}, data={'class_num': 1, 'seat_num': 21})
         # -- Preparations --
 
         # -- Exception Tests --
@@ -121,7 +121,7 @@ class TestExtension(unittest.TestCase):
         # -- Exception Tests --
 
         # -- Process --
-        rv = self.client.post('/extension/12', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
+        rv = self.client.post('/extension/12', headers={'Authorization': self.student_access_token}, data={'class_num': 1, 'seat_num': 21})
         self.assertEqual(rv.status_code, 201)
         # -- Process --
 
@@ -130,8 +130,8 @@ class TestExtension(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
 
         data = json.loads(rv.data.decode())
-        self.assertEqual(data['class'], 1)
-        self.assertEqual(data['seat'], 21)
+        self.assertEqual(data['class_num'], 1)
+        self.assertEqual(data['seat_num'], 21)
         # -- Validation --
 
     def testD_withdrawExtension12(self):
@@ -151,7 +151,7 @@ class TestExtension(unittest.TestCase):
         Check apply data is empty
         """
         # -- Preparations --
-        self.client.post('/extension/12', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
+        self.client.post('/extension/12', headers={'Authorization': self.student_access_token}, data={'class_num': 1, 'seat_num': 21})
         # -- Preparations --
 
         # -- Exception Tests --
@@ -186,7 +186,7 @@ class TestExtension(unittest.TestCase):
         * Validation required
         """
         # -- Preparations --
-        self.client.post('/extension/11', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
+        self.client.post('/extension/11', headers={'Authorization': self.student_access_token}, data={'class_num': 1, 'seat_num': 21})
         # -- Preparations --
 
         # -- Exception Tests --
@@ -217,7 +217,7 @@ class TestExtension(unittest.TestCase):
         - Validation
         """
         # -- Preparations --
-        self.client.post('/extension/12', headers={'Authorization': self.student_access_token}, data={'class': 1, 'seat': 21})
+        self.client.post('/extension/12', headers={'Authorization': self.student_access_token}, data={'class_num': 1, 'seat_num': 21})
         # -- Preparations --
 
         # -- Exception Tests --
@@ -255,13 +255,13 @@ class TestExtension(unittest.TestCase):
         # -- Exception Tests --
 
         # -- Process --
-        rv = self.client.get('/extension/map/11', query_string={'class': 1})
+        rv = self.client.get('/extension/map/11', query_string={'class_num': 1})
         self.assertEqual(rv.status_code, 200)
         self.assertEqual(len(json.loads(rv.data.decode())), 5)
         # -- Process --
 
         # -- Validation --
-        rv = self.client.get('/extension/map/12', query_string={'class': 1})
+        rv = self.client.get('/extension/map/12', query_string={'class_num': 1})
         self.assertEqual(rv.status_code, 200)
         self.assertEqual(len(json.loads(rv.data.decode())), 5)
         # -- Validation --
