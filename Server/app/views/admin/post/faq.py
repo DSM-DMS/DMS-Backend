@@ -22,9 +22,11 @@ class FAQManaging(Resource):
         title = request.form['title']
         content = request.form['content']
 
-        FAQModel(author=admin.name, title=title, content=content).save()
+        faq = FAQModel(author=admin.name, title=title, content=content).save()
 
-        return Response('', 201)
+        return {
+            'id': str(faq.id)
+        }, 201
 
     @swag_from(FAQ_MANAGING_PATCH)
     @jwt_required
