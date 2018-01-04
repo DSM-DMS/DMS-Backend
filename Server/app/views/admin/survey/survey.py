@@ -48,7 +48,7 @@ class SurveyManaging(Resource):
         end_date = request.form['end_date']
         target = json.loads(request.form['target'])
 
-        SurveyModel(
+        survey = SurveyModel(
             title=title,
             description=description,
             start_date=start_date,
@@ -56,7 +56,9 @@ class SurveyManaging(Resource):
             target=target
         ).save()
 
-        return Response('', 201)
+        return {
+            'id': str(survey.id)
+        }, 201
 
     @swag_from(SURVEY_MANAGING_DELETE)
     @jwt_required
@@ -128,15 +130,18 @@ class QuestionManaging(Resource):
             return Response('', 204)
 
         questions = json.loads(request.form['questions'])
+        ids = list()
         for question in questions:
             title = question['title']
             is_objective = question['is_objective']
 
-            QuestionModel(
+            q = QuestionModel(
                 survey=survey,
                 title=title,
                 is_objective=is_objective,
                 choice_paper=json.loads(question['choice_paper']) if is_objective else []
             ).save()
 
-        return Response('', 201)
+            ids.append(str(q.id))
+
+        return ids, 201

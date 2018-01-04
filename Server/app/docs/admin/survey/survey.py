@@ -89,7 +89,12 @@ SURVEY_MANAGING_POST = {
     ],
     'responses': {
         '201': {
-            'description': '설문지 등록 성공'
+            'description': '설문지 등록 성공. 등록된 설문지의 ID 응답',
+            'examples': {
+                'application/json': {
+                    'id': '13211265df16ads'
+                }
+            }
         },
         '403': {
             'description': '권한 없음'
@@ -178,7 +183,7 @@ QUESTION_MANAGING_GET = {
 
 QUESTION_MANAGING_POST = {
     'tags': ['설문지 관리'],
-    'description': '설문지에 질문 등록',
+    'description': '설문지에 1개 이상의 질문 등록. title, is_objective, choice_paper는 "questions"에 JSONArray로 묶어 전송합니다.',
     'parameters': [
         {
             'name': 'Authorization',
@@ -218,7 +223,14 @@ QUESTION_MANAGING_POST = {
     ],
     'responses': {
         '201': {
-            'description': '질문 추가 성공'
+            'description': '질문 추가 성공. 업로드된 질문의 ID 응답',
+            'examples': {
+                'application/json': [
+                    '13211265df16ads',
+                    '13211265df16abc',
+                    '13211265df16add',
+                ]
+            }
         },
         '204': {
             'description': '존재하지 않는 설문지 ID'
