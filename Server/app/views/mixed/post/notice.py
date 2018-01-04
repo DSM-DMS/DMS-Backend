@@ -25,7 +25,7 @@ class NoticeList(Resource):
         response = [{
             'id': str(notice.id),
             'write_time': str(notice.write_time)[:-7],
-            'author': notice.author.name,
+            'author': notice.author,
             'title': notice.title,
             'pinned': notice.pinned
         } for notice in NoticeModel.objects]
@@ -54,7 +54,7 @@ class NoticeItem(Resource):
 
         response = {
             'write_time': str(notice.write_time)[:-7],
-            'author': notice.author.name,
+            'author': notice.author,
             'title': notice.title,
             'content': notice.content,
             'pinned': notice.pinned

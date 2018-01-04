@@ -30,7 +30,7 @@ class FAQPreview(Resource):
 
         response = {
             'write_time': str(faq.write_time)[:-7],
-            'author': faq.author.name,
+            'author': faq.author,
             'title': faq.title,
             'content': faq.content,
             'pinned': faq.pinned
@@ -59,7 +59,7 @@ class NoticePreview(Resource):
 
         response ={
             'write_time': str(notice.write_time)[:-7],
-            'author': notice.author.name,
+            'author': notice.author,
             'title': notice.title,
             'content': notice.content,
             'pinned': notice.pinned
@@ -88,7 +88,7 @@ class RulePreview(Resource):
 
         response = {
             'write_time': str(rule.write_time)[:-7],
-            'author': rule.author.name,
+            'author': rule.author,
             'title': rule.title,
             'content': rule.content,
             'pinned': rule.pinned

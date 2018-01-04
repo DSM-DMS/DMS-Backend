@@ -25,7 +25,7 @@ class FAQList(Resource):
         response = [{
             'id': str(faq.id),
             'write_time': str(faq.write_time)[:-7],
-            'author': faq.author.name,
+            'author': faq.author,
             'title': faq.title,
             'pinned': faq.pinned
         } for faq in FAQModel.objects]
@@ -54,7 +54,7 @@ class FAQItem(Resource):
 
         response = {
             'write_time': str(faq.write_time)[:-7],
-            'author': faq.author.name,
+            'author': faq.author,
             'title': faq.title,
             'content': faq.content,
             'pinned': faq.pinned
