@@ -215,6 +215,7 @@ class TestExtension(unittest.TestCase):
         Download excel file
 
         - Validation
+        * Validation required
         """
         # -- Preparations --
         self.client.post('/extension/12', headers={'Authorization': self.student_access_token}, data={'class_num': 1, 'seat_num': 21})

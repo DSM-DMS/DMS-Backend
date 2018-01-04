@@ -23,31 +23,74 @@ class TestGoingout(unittest.TestCase):
         """
         TC about goingout apply
 
-        1. Check 'apply status all false'
-        2. Check 'apply succeed'
-        3. Check 'apply status'
+        - Preparations
+        Check apply data is all False
+
+        - Exception Tests
+        Forbidden with admin access token
+
+        - Process
+        Apply
+
+        - Validation
+        Check apply data
         """
+        # -- Preparations --
         rv = self.client.get('/goingout', headers={'Authorization': self.student_access_token})
         self.assertEqual(rv.status_code, 200)
+
         data = json.loads(rv.data.decode())
         self.assertFalse(all((data['sat'], data['sun'])))
+        # -- Preparations --
 
+        # -- Exception Tests --
+        rv = self.client.post('/goingout', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 403)
+        # -- Exception Tests --
+
+        # -- Process --
         rv = self.client.post('/goingout', headers={'Authorization': self.student_access_token}, data={'sat': True, 'sun': False})
         self.assertEqual(rv.status_code, 201)
-        # Apply success
+        # -- Process --
 
+        # -- Validation --
         rv = self.client.get('/goingout', headers={'Authorization': self.student_access_token})
         self.assertEqual(rv.status_code, 200)
+
         data = json.loads(rv.data.decode())
-        self.assertEqual(data['sat'], True)
-        self.assertEqual(data['sun'], False)
-        # Validate apply data
+        self.assertTrue(data['sat'])
+        self.assertFalse(data['sun'])
+        # -- Validation --
 
     def testB_download(self):
         """
-        TC about download goingout apply
-        """
-        self.client.post('/goingout', headers={'Authorization': self.student_access_token}, data={'sat': True, 'sun': False})
-        # Sample data
+        TC about goingout data download
 
+        - Preparations
+        Apply sample data
+
+        - Exception Tests
+        Forbidden with student access token
+
+        - Process
+        Download excel file
+
+        - Validation
+        * Validation required
+        """
+        # -- Preparations --
+        rv = self.client.post('/goingout', headers={'Authorization': self.student_access_token}, data={'sat': True, 'sun': False})
+        self.assertEqual(rv.status_code, 201)
+        # -- Preparations --
+
+        # -- Exception Tests --
+        rv = self.client.get('/admin/goingout', headers={'Authorization': self.student_access_token})
+        self.assertEqual(rv.status_code, 403)
+        # -- Exception Tests --
+
+        # -- Process --
         self.client.get('/admin/goingout', headers={'Authorization': self.admin_access_token})
+        # -- Process --
+
+        # -- Validation --
+        # -- Validation --
