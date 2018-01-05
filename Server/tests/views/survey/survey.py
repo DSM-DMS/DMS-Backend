@@ -184,13 +184,13 @@ class TestSurvey(unittest.TestCase):
         - Preparations
         Add sample survey data
         Add sample question data
-        Take question IDs
 
         - Exception Tests
         Short question ID
         Non-existing question ID
 
         - Process
+        Take questions using student survey APIs
         Add answer data
 
         - Validation
@@ -222,7 +222,6 @@ class TestSurvey(unittest.TestCase):
             ])
         })
         self.assertEqual(rv.status_code, 201)
-        question_ids = json.loads(rv.data.decode())
         # -- Preparations --
 
         # -- Exception Tests --
@@ -234,9 +233,17 @@ class TestSurvey(unittest.TestCase):
         # -- Exception Tests --
 
         # -- Process --
-        for question_id in question_ids:
+        rv = self.client.get('/survey', headers={'Authorization': self.student_access_token})
+        self.assertEqual(rv.status_code, 200)
+        survey_id = json.loads(rv.data.decode())[0]['id']
+
+        rv = self.client.get('/survey/question', headers={'Authorization': self.student_access_token}, query_string={'survey_id': survey_id})
+        self.assertEqual(rv.status_code, 200)
+        questions = json.loads(rv.data.decode())
+
+        for question in questions:
             rv = self.client.post('/survey/question', headers={'Authorization': self.student_access_token}, data={
-                'question_id': question_id,
+                'question_id': question['id'],
                 'answer': 'one'
             })
             self.assertEqual(rv.status_code, 201)
