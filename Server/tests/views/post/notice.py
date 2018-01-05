@@ -62,7 +62,6 @@ class TestNotice(unittest.TestCase):
 
         - Preparations
         Post sample notice data
-        Take notice ID
 
         - Exception Tests
         Short notice ID with admin/student access token
@@ -137,10 +136,7 @@ class TestNotice(unittest.TestCase):
         # -- Preparations --
         rv = self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
         self.assertEqual(rv.status_code, 201)
-
-        rv = self.client.get('/notice', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
-        notice_id = json.loads(rv.data.decode())[0]['id']
+        notice_id = json.loads(rv.data.decode())['id']
         # -- Preparations --
 
         # -- Exception Tests --
@@ -189,10 +185,7 @@ class TestNotice(unittest.TestCase):
         # -- Preparations --
         rv = self.client.post('/admin/notice', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
         self.assertEqual(rv.status_code, 201)
-
-        rv = self.client.get('/notice', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
-        notice_id = json.loads(rv.data.decode())[0]['id']
+        notice_id = json.loads(rv.data.decode())['id']
         # -- Preparations --
 
         # -- Exception Tests --

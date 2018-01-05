@@ -62,7 +62,6 @@ class TestRule(unittest.TestCase):
 
         - Preparations
         Post sample rule data
-        Take rule ID
 
         - Exception Tests
         Short rule ID with admin/student access token
@@ -137,10 +136,7 @@ class TestRule(unittest.TestCase):
         # -- Preparations --
         rv = self.client.post('/admin/rule', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
         self.assertEqual(rv.status_code, 201)
-
-        rv = self.client.get('/rule', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
-        rule_id = json.loads(rv.data.decode())[0]['id']
+        rule_id = json.loads(rv.data.decode())['id']
         # -- Preparations --
 
         # -- Exception Tests --
@@ -189,10 +185,7 @@ class TestRule(unittest.TestCase):
         # -- Preparations --
         rv = self.client.post('/admin/rule', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
         self.assertEqual(rv.status_code, 201)
-
-        rv = self.client.get('/rule', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
-        rule_id = json.loads(rv.data.decode())[0]['id']
+        rule_id = json.loads(rv.data.decode())['id']
         # -- Preparations --
 
         # -- Exception Tests --

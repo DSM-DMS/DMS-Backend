@@ -140,10 +140,7 @@ class TestPoint(unittest.TestCase):
         # -- Preparations --
         rv = self.client.post('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'name': 'test', 'min_point': 1, 'max_point': 1})
         self.assertEqual(rv.status_code, 201)
-
-        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
-        rule_id = json.loads(rv.data.decode())[0]['id']
+        rule_id = json.loads(rv.data.decode())['id']
         # -- Preparations --
 
         # -- Exception Tests --
@@ -196,10 +193,7 @@ class TestPoint(unittest.TestCase):
         # -- Preparations --
         rv = self.client.post('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'name': 'test', 'min_point': 1, 'max_point': 1})
         self.assertEqual(rv.status_code, 201)
-
-        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
-        rule_id = json.loads(rv.data.decode())[0]['id']
+        rule_id = json.loads(rv.data.decode())['id']
         # -- Preparations --
 
         # -- Exception Tests --
@@ -254,10 +248,7 @@ class TestPoint(unittest.TestCase):
 
         rv = self.client.post('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'name': 'test', 'min_point': 1, 'max_point': 1})
         self.assertEqual(rv.status_code, 201)
-
-        rv = self.client.get('/admin/managing/rule', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
-        rule_id = json.loads(rv.data.decode())[0]['id']
+        rule_id = json.loads(rv.data.decode())['id']
         # -- Preparations --
 
         # -- Exception Tests --

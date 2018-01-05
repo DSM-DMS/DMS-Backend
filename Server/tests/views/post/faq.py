@@ -62,7 +62,6 @@ class TestFAQ(unittest.TestCase):
 
         - Preparations
         Post sample FAQ data
-        Take FAQ ID
 
         - Exception Tests
         Short FAQ ID with admin/student access token
@@ -137,10 +136,7 @@ class TestFAQ(unittest.TestCase):
         # -- Preparations --
         rv = self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
         self.assertEqual(rv.status_code, 201)
-
-        rv = self.client.get('/faq', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
-        faq_id = json.loads(rv.data.decode())[0]['id']
+        faq_id = json.loads(rv.data.decode())['id']
         # -- Preparations --
 
         # -- Exception Tests --
@@ -189,10 +185,7 @@ class TestFAQ(unittest.TestCase):
         # -- Preparations --
         rv = self.client.post('/admin/faq', headers={'Authorization': self.admin_access_token}, data={'title': 'test', 'content': 'test'})
         self.assertEqual(rv.status_code, 201)
-
-        rv = self.client.get('/faq', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
-        faq_id = json.loads(rv.data.decode())[0]['id']
+        faq_id = json.loads(rv.data.decode())['id']
         # -- Preparations --
 
         # -- Exception Tests --
