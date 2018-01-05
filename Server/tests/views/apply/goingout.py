@@ -67,20 +67,19 @@ class TestGoingout(unittest.TestCase):
         TC about goingout data download
 
         - Preparations
-        Apply sample data
+        None
 
         - Exception Tests
         Forbidden with student access token
 
         - Process
         Download excel file
+        Download with another apply values
 
         - Validation
         * Validation required
         """
         # -- Preparations --
-        rv = self.client.post('/goingout', headers={'Authorization': self.student_access_token}, data={'sat': True, 'sun': False})
-        self.assertEqual(rv.status_code, 201)
         # -- Preparations --
 
         # -- Exception Tests --
@@ -89,6 +88,18 @@ class TestGoingout(unittest.TestCase):
         # -- Exception Tests --
 
         # -- Process --
+        self.client.get('/admin/goingout', headers={'Authorization': self.admin_access_token})
+
+        rv = self.client.post('/goingout', headers={'Authorization': self.student_access_token}, data={'sat': True, 'sun': False})
+        self.assertEqual(rv.status_code, 201)
+        self.client.get('/admin/goingout', headers={'Authorization': self.admin_access_token})
+
+        rv = self.client.post('/goingout', headers={'Authorization': self.student_access_token}, data={'sat': False, 'sun': True})
+        self.assertEqual(rv.status_code, 201)
+        self.client.get('/admin/goingout', headers={'Authorization': self.admin_access_token})
+
+        rv = self.client.post('/goingout', headers={'Authorization': self.student_access_token}, data={'sat': True, 'sun': True})
+        self.assertEqual(rv.status_code, 201)
         self.client.get('/admin/goingout', headers={'Authorization': self.admin_access_token})
         # -- Process --
 

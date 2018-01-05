@@ -186,6 +186,7 @@ class TestSurvey(unittest.TestCase):
         Add sample question data
 
         - Exception Tests
+        Forbidden with admin access token
         Short question ID
         Non-existing question ID
 
@@ -225,6 +226,9 @@ class TestSurvey(unittest.TestCase):
         # -- Preparations --
 
         # -- Exception Tests --
+        rv = self.client.post('/survey/question', headers={'Authorization': self.admin_access_token})
+        self.assertEqual(rv.status_code, 403)
+
         rv = self.client.post('/survey/question', headers={'Authorization': self.student_access_token}, data={'question_id': '1234'})
         self.assertEqual(rv.status_code, 204)
 
