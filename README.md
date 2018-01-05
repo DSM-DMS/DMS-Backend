@@ -65,6 +65,7 @@ DMS 프로젝트의 2017년 12월 리메이크 일정에 의해 만들어진 백
 #### TC
 - tests/ 하위에 구현합니다.
 - 모든 TC는 DB가 완전히 비어있다고 가정합니다.
+- TC에서 request를 보낼 경우 무조건 Status code assertion을 합니다.
 - unittest는 TC들을 사전식으로 실행하므로 TC 작성 시 메소드 네이밍은 test[A|B|C|...]_what으로 합니다. ex) testA_signup(self), testB_getNoticeList(self)
 - 모든 TC 메소드에 docstring을 남깁니다. preparations, process, validation으로 나누어 정리하여 테스트 스켈레톤을 작성한 뒤 리뷰를 한 번 거치고 실제로 TC를 작성하도록 합니다.
 #### API
