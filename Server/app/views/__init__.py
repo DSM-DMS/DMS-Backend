@@ -74,6 +74,7 @@ class ViewInjector(object):
         api.add_resource(ChangePW, '/change/pw')
         api.add_resource(ChangeNumber, '/change/number')
         api.add_resource(Auth, '/auth')
+        api.add_resource(AuthCheck, '/auth-check')
         api.add_resource(Refresh, '/refresh')
         api.add_resource(MyPage, '/mypage')
         api.add_resource(IDVerification, '/verify/id')

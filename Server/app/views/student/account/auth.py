@@ -4,7 +4,7 @@ from uuid import uuid4
 
 from flask import Response, current_app
 from flask_jwt_extended import create_access_token, create_refresh_token
-from flask_jwt_extended import get_jwt_identity, jwt_refresh_token_required
+from flask_jwt_extended import get_jwt_identity, jwt_required, jwt_refresh_token_required
 from flask_restful import Resource, request
 from flasgger import swag_from
 
@@ -47,6 +47,18 @@ class Auth(Resource):
             'access_token': create_access_token(id),
             'refresh_token': create_refresh_token(str(refresh_token))
         }, 200
+
+
+class AuthCheck(Resource):
+    @swag_from(AUTH_CHECK_GET)
+    @jwt_required
+    def get(self):
+        student = StudentModel.objects(id=get_jwt_identity()).first()
+
+        if not student:
+            return Response('', 403)
+
+        return Response('', 200)
 
 
 class Refresh(Resource):

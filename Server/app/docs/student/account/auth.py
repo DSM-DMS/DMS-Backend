@@ -33,6 +33,31 @@ AUTH_POST = {
     }
 }
 
+AUTH_CHECK_GET = {
+    'tags': ['계정'],
+    'description': '로그인 상태 체크',
+    'parameters': [
+        {
+            'name': 'Authorization',
+            'description': 'JWT Token(JWT ***)',
+            'in': 'header',
+            'type': 'str',
+            'required': True
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': '로그인되어 있음'
+        },
+        '401': {
+            'description': '로그인되어 있지 않음'
+        },
+        '403': {
+            'description': '학생 계정이 아님'
+        }
+    }
+}
+
 REFRESH_POST = {
     'tags': ['계정'],
     'description': '새로운 Access Token 획득',
