@@ -10,12 +10,12 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if app.config['TEST']:
-        all_tests = ut.TestLoader().discover('tests', pattern='*.py')
+        all_tests = ut.TestLoader().discover('tests', '*.py')
         ut.TextTestRunner().run(all_tests)
     else:
-        from utils import db_migrator
-
         if os.getenv('MYSQL_PW'):
+            from utils import db_migrator
+
             db_migrator.migrate_posts()
 
     if not args.travis:
