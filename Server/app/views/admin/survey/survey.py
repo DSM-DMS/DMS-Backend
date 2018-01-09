@@ -121,7 +121,9 @@ class QuestionManaging(Resource):
         if not admin:
             return Response('', 403)
 
-        survey_id = request.form['survey_id']
+        rq = request.json
+
+        survey_id = rq['survey_id']
         if len(survey_id) != 24:
             return Response('', 204)
 
@@ -129,7 +131,7 @@ class QuestionManaging(Resource):
         if not survey:
             return Response('', 204)
 
-        questions = json.loads(request.form['questions'])
+        questions = rq['questions']
         ids = list()
         for question in questions:
             title = question['title']
@@ -139,7 +141,7 @@ class QuestionManaging(Resource):
                 survey=survey,
                 title=title,
                 is_objective=is_objective,
-                choice_paper=json.loads(question['choice_paper']) if is_objective else []
+                choice_paper=question['choice_paper'] if is_objective else []
             ).save()
 
             ids.append(str(q.id))
