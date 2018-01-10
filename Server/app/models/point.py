@@ -37,8 +37,7 @@ class PointHistoryModel(EmbeddedDocument):
         default=datetime.now()
     )
 
-    reason = ReferenceField(
-        document_type=PointRuleModel,
+    reason = StringField(
         required=True
     )
     point = IntField(

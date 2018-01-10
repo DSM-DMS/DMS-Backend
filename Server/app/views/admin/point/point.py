@@ -28,7 +28,7 @@ class PointManaging(Resource):
 
         response = [{
             'time': str(history.time)[:-7],
-            'reason': history.reason.name,
+            'reason': history.reason,
             'point': history.point
         } for history in student.point_histories]
 
@@ -60,7 +60,7 @@ class PointManaging(Resource):
         point = int(request.form['point'])
 
         student.point_histories.append(PointHistoryModel(
-            reason=rule,
+            reason=rule.name,
             point=point
         ))
         # Append history
