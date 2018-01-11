@@ -6,7 +6,7 @@ from flask_restful import Resource, request
 from flasgger import swag_from
 
 from app.docs.student.account.signup import *
-from app.models.account import SignupWaitingModel, StudentModel
+from app.models.account import SignupWaitingModel, StudentModel, AdminModel
 
 
 class IDVerification(Resource):
@@ -18,7 +18,8 @@ class IDVerification(Resource):
         id = request.form['id']
 
         student = StudentModel.objects(id=id).first()
-        if student:
+        admin = AdminModel.objects(id=id).first()
+        if any((student, admin)):
             # ID already exists
             return Response('', 204)
         else:

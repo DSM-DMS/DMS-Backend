@@ -7,7 +7,7 @@ from flask_restful import Resource, request
 from flasgger import swag_from
 
 from app.docs.admin.account.signup import NEW_ACCOUNT_POST
-from app.models.account import AdminModel
+from app.models.account import StudentModel, AdminModel
 
 
 class NewAccount(Resource):
@@ -24,8 +24,9 @@ class NewAccount(Resource):
         id = request.form['id']
         pw = request.form['pw']
         name = request.form['name']
-
-        if AdminModel.objects(id=id):
+        student = StudentModel.objects(id=id).first()
+        admin = AdminModel.objects(id=id).first()
+        if any((student, admin)):
             return Response('', 204)
 
         # --- Create new admin account_admin
