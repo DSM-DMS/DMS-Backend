@@ -1,3 +1,4 @@
+from bson import ObjectId
 from datetime import datetime
 
 from app.models import *
@@ -31,6 +32,11 @@ class PointHistoryModel(EmbeddedDocument):
     meta = {
         'collection': 'point_history'
     }
+
+    id = ObjectIdField(
+        required=True,
+        default=ObjectId()
+    )
 
     time = DateTimeField(
         required=True,
