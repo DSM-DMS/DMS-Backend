@@ -19,7 +19,7 @@ class NoticeList(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not any((admin, student)):
+        if all((admin, student)):
             return Response('', 403)
 
         response = [{
@@ -42,7 +42,7 @@ class NoticeItem(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not any((admin, student)):
+        if all((admin, student)):
             return Response('', 403)
 
         if len(post_id) != 24:

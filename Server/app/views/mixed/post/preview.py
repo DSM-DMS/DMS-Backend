@@ -19,7 +19,7 @@ class FAQPreview(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not any((admin, student)):
+        if all((admin, student)):
             return Response('', 403)
 
         faq = FAQModel.objects(pinned=True).first()
@@ -48,7 +48,7 @@ class NoticePreview(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not any((admin, student)):
+        if all((admin, student)):
             return Response('', 403)
 
         notice = NoticeModel.objects(pinned=True).first()
@@ -77,7 +77,7 @@ class RulePreview(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not any((admin, student)):
+        if all((admin, student)):
             return Response('', 403)
 
         rule = RuleModel.objects(pinned=True).first()
