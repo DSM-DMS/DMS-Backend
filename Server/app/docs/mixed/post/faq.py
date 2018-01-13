@@ -8,21 +8,21 @@ FAQ_LIST_GET = {
                 'application/json': [
                     {
                         'id': 'fkdo13kroafdgmb',
-                        'write_time': '2017-10-11 12:14:20',
+                        'write_time': '2017-10-11',
                         'author': '교촌치킨',
                         'title': '치킨 먹는법',
                         'pinned': True
                     },
                     {
                         'id': 'eoqk1kcmdkallw',
-                        'write_time': '2017-10-13 12:14:20',
+                        'write_time': '2017-10-13',
                         'author': '코레일',
                         'title': 'KTX 싸게 예매하는법',
                         'pinned': False
                     },
                     {
                         'id': 'p1o9d0vmzjswek',
-                        'write_time': '2017-10-16 12:14:20',
+                        'write_time': '2017-10-16',
                         'author': '갓석진',
                         'title': '서울에서 먹고살기',
                         'pinned': False
@@ -53,7 +53,7 @@ FAQ_ITEM_GET = {
             'description': 'FAQ 조회 성공',
             'examples': {
                 'application/json': {
-                    'write_time': '2017-10-11 12:14:20',
+                    'write_time': '2017-10-11',
                     'author': '교촌치킨',
                     'title': '치킨 먹는법',
                     'content': '교촌허니콤보를 웨지감자와 함께',

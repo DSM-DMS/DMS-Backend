@@ -18,7 +18,7 @@ SURVEY_MANAGING_GET = {
                     {
                         'id': 's3qldmc13opeflds',
                         'description': '치킨 어때?',
-                        'creation_time': '2017-12-26 13:58:50',
+                        'creation_time': '2017-12-26',
                         'title': '내일 저녁 치킨먹기 찬반설문',
                         'start_date': '2017-10-24',
                         'end_date': '2017-10-25'
@@ -26,7 +26,7 @@ SURVEY_MANAGING_GET = {
                     {
                         'id': '1fnfdj3391idkflds',
                         'description': '졸리다',
-                        'creation_time': '2017-12-26 13:58:50',
+                        'creation_time': '2017-12-26',
                         'title': '등교 후 12시간 자습 찬반설문',
                         'start_date': '2017-10-24',
                         'end_date': '2017-10-30'

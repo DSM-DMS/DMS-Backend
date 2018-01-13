@@ -8,21 +8,21 @@ RULE_LIST_GET = {
                 'application/json': [
                     {
                         'id': 'fkdo13kroafdgmb',
-                        'write_time': '2017-10-11 12:14:20',
+                        'write_time': '2017-10-11',
                         'author': '사감부',
                         'title': '치킨 먹으면 상점주는 규정',
                         'pinned': True
                     },
                     {
                         'id': 'eoqk1kcmdkallw',
-                        'write_time': '2017-10-13 12:14:20',
+                        'write_time': '2017-10-13',
                         'author': '사감부',
                         'title': '아침운동 안나오면 인증제 점수 가산점 규정',
                         'pinned': False
                     },
                     {
                         'id': 'p1o9d0vmzjswek',
-                        'write_time': '2017-10-16 12:14:20',
+                        'write_time': '2017-10-16',
                         'author': '사감부',
                         'title': '오버워치 장려 규정',
                         'pinned': False
@@ -53,7 +53,7 @@ RULE_ITEM_GET = {
             'description': '기숙사규정 조회 성공',
             'examples': {
                 'application/json': {
-                    'write_time': '2017-10-16 12:14:20',
+                    'write_time': '2017-10-16',
                     'author': '사감부',
                     'title': '오버워치 장려 규정',
                     'content': '오버워치 꿀잼',
