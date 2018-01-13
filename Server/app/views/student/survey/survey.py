@@ -25,7 +25,7 @@ class Survey(Resource):
 
         response = [{
             'id': str(survey.id),
-            'creation_time': str(survey.creation_time)[:-7],
+            'creation_time': str(survey.creation_time)[:10],
             'description': survey.description,
             'title': survey.title,
             'start_date': str(survey.start_date)[:10],

@@ -27,7 +27,7 @@ class PointManaging(Resource):
             return Response('', 204)
 
         response = [{
-            'time': str(history.time)[:-7],
+            'time': str(history.time)[:10],
             'reason': history.reason,
             'point': history.point,
             'id': history.id

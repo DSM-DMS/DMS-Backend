@@ -24,7 +24,7 @@ class RuleList(Resource):
 
         response = [{
             'id': str(rule.id),
-            'write_time': str(rule.write_time)[:-7],
+            'write_time': str(rule.write_time)[:10],
             'author': rule.author,
             'title': rule.title,
             'pinned': rule.pinned
@@ -53,7 +53,7 @@ class RuleItem(Resource):
             return Response('', 204)
 
         response = {
-            'write_time': str(rule.write_time)[:-7],
+            'write_time': str(rule.write_time)[:10],
             'author': rule.author,
             'title': rule.title,
             'content': rule.content,
