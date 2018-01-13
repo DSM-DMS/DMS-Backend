@@ -29,7 +29,8 @@ class PointManaging(Resource):
         response = [{
             'time': str(history.time)[:-7],
             'reason': history.reason,
-            'point': history.point
+            'point': history.point,
+            'id': history.id
         } for history in student.point_histories]
 
         return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
@@ -73,3 +74,29 @@ class PointManaging(Resource):
         student.save()
 
         return Response('', 201)
+
+    @swag_from(POINT_MANAGING_DELETE)
+    @jwt_required
+    def delete(self):
+        """
+        상벌점 내역 삭제
+        """
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        if not admin:
+            return Response('', 403)
+
+        student_id = request.form['student_id']
+        point_id = request.form['point_id']
+
+        student = StudentModel.objects(id=student_id).first()
+        if not student:
+            return Response('', 204)
+
+        point = student.point_histories.objects(id=point_id).first()
+        if not point:
+            return Response('', 205)
+
+        point.delete()
+        student.save()
+
+        return Response('', 200)

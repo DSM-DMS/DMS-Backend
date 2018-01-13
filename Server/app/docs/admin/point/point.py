@@ -92,3 +92,45 @@ POINT_MANAGING_POST = {
         }
     }
 }
+
+POINT_MANAGING_DELETE = {
+    'tags': ['상벌점 관리'],
+    'description': '상벌점 데이터 삭제',
+    'parameters': [
+        {
+            'name': 'Authorization',
+            'description': 'JWT Token(JWT ***)',
+            'in': 'header',
+            'type': 'str',
+            'required': True
+        },
+        {
+            'name': 'student_id',
+            'description': '상벌점 데이터 삭제 대상 학생 ID',
+            'in': 'formData',
+            'type': 'str',
+            'required': True
+        },
+        {
+            'name': 'point_id',
+            'description': '삭제할 상벌점 데이터 ID',
+            'in': 'formData',
+            'type': 'str',
+            'required': True
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': '상벌점 데이터 삭제 성공'
+        },
+        '204': {
+            'description': '존재하지 않는 학생 ID'
+        },
+        '205': {
+            'description': '존재하지 않는 상벌점 데이터 ID'
+        },
+        '403': {
+            'description': '권한 없음'
+        }
+    }
+}
