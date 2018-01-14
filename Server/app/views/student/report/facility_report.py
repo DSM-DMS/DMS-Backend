@@ -23,6 +23,9 @@ class FacilityReport(Resource):
         content = request.form['content']
         room = int(request.form['room'])
 
+        if not 200 < room < 519:
+            return Response('', 400)
+
         report = FacilityReportModel(author=student.name, title=title, content=content, room=room).save()
 
         return {
