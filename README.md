@@ -1,14 +1,13 @@
-# Project-DMS-Backend  [![Build Status](https://travis-ci.org/DSM-DMS/DMS-Backend.svg?branch=master)](https://travis-ci.org/DSM-DMS/DMS-Backend) [![Coverage Status](https://coveralls.io/repos/github/DSM-DMS/DMS-Backend/badge.svg?branch=master)](https://coveralls.io/github/DSM-DMS/DMS-Backend?branch=master) [![works badge](https://cdn.rawgit.com/nikku/works-on-my-machine/v0.2.0/badge.svg)](https://github.com/nikku/works-on-my-machine)
-## About
-DMS 프로젝트의 2017년 12월 리메이크 일정에 의해 만들어진 백엔드 포지션의 Repository입니다.
+# DMS for DSM
 
-### Technical Stacks
-- Python
-- Flask
-- MongoDB
-- JWT, ODM, Swagger, Cafe24, etc.
+### Backend [![Build Status](https://travis-ci.org/DSM-DMS/DMS-Backend.svg?branch=master)](https://travis-ci.org/DSM-DMS/DMS-Backend) [![Coverage Status](https://coveralls.io/repos/github/DSM-DMS/DMS-Backend/badge.svg?branch=master)](https://coveralls.io/github/DSM-DMS/DMS-Backend?branch=master) [![works badge](https://cdn.rawgit.com/nikku/works-on-my-machine/v0.2.0/badge.svg)](https://github.com/nikku/works-on-my-machine)
+
+사용 기술 및 언어 : Python, Flask, MongoDB, JWT, ODM, Swagger, Cafe24 등
+
+### 🔥 여러분의 Isuue와 Pull Requests가 **DMS** 를 건강하고 멋지게 발전시킵니다! 🔥
 
 ### Infrastructure
+
 - 적용됨 : Git, Travis-CI, Coveralls
 - 빠른 시일 내에 적용할 예정 : Docker(서버 형상관리)
 - 적용하고 싶음 : JIRA(이슈 관리), AWS CloudFormation(인프라 형상관리), JSON 형태의 logging, ELK 또는 Splunk(실시간 로그 분석), Hadoop(일괄 로그 분석)
