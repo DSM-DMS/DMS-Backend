@@ -30,7 +30,7 @@ class PointManaging(Resource):
             'time': str(history.time)[:10],
             'reason': history.reason,
             'point': history.point,
-            'id': history.id
+            'id': str(history.id)
         } for history in student.point_histories]
 
         return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
@@ -92,7 +92,7 @@ class PointManaging(Resource):
         if not student:
             return Response('', 204)
 
-        point = student.point_histories.objects(id=point_id).first()
+        point = student.point_histories.filter(id=point_id).first()
         if not point:
             return Response('', 205)
 
