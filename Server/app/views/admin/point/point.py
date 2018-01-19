@@ -96,7 +96,7 @@ class PointManaging(Resource):
         if not point:
             return Response('', 205)
 
-        point.delete()
+        student.point_histories = student.point_histories.exclude(id=point_id)
         student.save()
 
         return Response('', 200)
