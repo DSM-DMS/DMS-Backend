@@ -95,10 +95,12 @@ class ViewInjector(object):
         app.register_blueprint(preview.api.blueprint)
         app.register_blueprint(rule.api.blueprint)
 
+        from app.views.mixed.school_data import meal
+        app.register_blueprint(meal.api.blueprint)
+
         api.add_resource(BugReport, '/report/bug')
         api.add_resource(FacilityReport, '/report/facility')
 
         # Mixed school_data
-        api.add_resource(Meal, '/meal/<date>')
         api.add_resource(Survey, '/survey')
         api.add_resource(Question, '/survey/question')
