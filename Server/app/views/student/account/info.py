@@ -38,7 +38,9 @@ class MyPage(Resource):
                 'sat': student.goingout_apply.on_saturday,
                 'sun': student.goingout_apply.on_sunday
             },
-            'stay_value': student.stay_apply.value
+            'stay_value': student.stay_apply.value,
+            'good_point': student.good_point,
+            'bad_point': student.bad_point
         }
 
         return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')

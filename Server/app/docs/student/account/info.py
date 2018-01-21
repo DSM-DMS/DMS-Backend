@@ -26,7 +26,9 @@ MYPAGE_GET = MYPAGE_GET = {
                         'sat': True,
                         'sun': False
                     },
-                    'stay_value': 4
+                    'stay_value': 4,
+                    'good_point': 1,
+                    'bad_point': 458756945
                 }
             }
         },
