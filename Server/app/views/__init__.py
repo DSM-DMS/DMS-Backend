@@ -89,17 +89,11 @@ class ViewInjector(object):
         api.add_resource(Goingout, '/goingout')
         api.add_resource(Stay, '/stay')
 
-        # Mixed post
-        api.add_resource(FAQPreview, '/preview/faq')
-        api.add_resource(NoticePreview, '/preview/notice')
-        api.add_resource(RulePreview, '/preview/rule')
-
-        api.add_resource(FAQList, '/faq')
-        api.add_resource(FAQItem, '/faq/<post_id>')
-        api.add_resource(NoticeList, '/notice')
-        api.add_resource(NoticeItem, '/notice/<post_id>')
-        api.add_resource(RuleList, '/rule')
-        api.add_resource(RuleItem, '/rule/<post_id>')
+        from app.views.mixed.post import faq, notice, preview, rule
+        app.register_blueprint(faq.api.blueprint)
+        app.register_blueprint(notice.api.blueprint)
+        app.register_blueprint(preview.api.blueprint)
+        app.register_blueprint(rule.api.blueprint)
 
         api.add_resource(BugReport, '/report/bug')
         api.add_resource(FacilityReport, '/report/facility')

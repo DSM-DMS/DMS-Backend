@@ -1,15 +1,18 @@
 import json
 
 from flasgger import swag_from
-from flask import Response
+from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource
+from flask_restful import Api, Resource, abort
 
 from app.docs.mixed.post.preview import *
 from app.models.account import AdminModel, StudentModel
 from app.models.post import FAQModel, NoticeModel, RuleModel
 
+api = Api(Blueprint('preview-api', __name__))
 
+
+@api.resource('/preview/faq')
 class FAQPreview(Resource):
     @swag_from(FAQ_PREVIEW_GET)
     @jwt_required
@@ -19,8 +22,8 @@ class FAQPreview(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if all((admin, student)):
-            return Response('', 403)
+        if not any((admin, student)):
+            abort(403)
 
         faq = FAQModel.objects(pinned=True).first()
         if not faq:
@@ -39,6 +42,7 @@ class FAQPreview(Resource):
         return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
 
+@api.resource('/preview/notice')
 class NoticePreview(Resource):
     @swag_from(NOTICE_PREVIEW_GET)
     @jwt_required
@@ -48,8 +52,8 @@ class NoticePreview(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if all((admin, student)):
-            return Response('', 403)
+        if not any((admin, student)):
+            abort(403)
 
         notice = NoticeModel.objects(pinned=True).first()
         if not notice:
@@ -68,6 +72,7 @@ class NoticePreview(Resource):
         return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
 
+@api.resource('/preview/rule')
 class RulePreview(Resource):
     @swag_from(RULE_PREVIEW_GET)
     @jwt_required
@@ -77,8 +82,8 @@ class RulePreview(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if all((admin, student)):
-            return Response('', 403)
+        if not any((admin, student)):
+            abort(403)
 
         rule = RuleModel.objects(pinned=True).first()
         if not rule:

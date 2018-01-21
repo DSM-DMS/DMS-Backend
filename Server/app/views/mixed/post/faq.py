@@ -1,15 +1,18 @@
 import json
 
 from flasgger import swag_from
-from flask import Response
+from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource
+from flask_restful import Api, Resource, abort
 
 from app.docs.mixed.post.faq import *
 from app.models.account import AdminModel, StudentModel
 from app.models.post import FAQModel
 
+api = Api(Blueprint('faq-api', __name__))
 
+
+@api.resource('/faq')
 class FAQList(Resource):
     @swag_from(FAQ_LIST_GET)
     @jwt_required
@@ -19,8 +22,8 @@ class FAQList(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if all((admin, student)):
-            return Response('', 403)
+        if not any((admin, student)):
+            abort(403)
 
         response = [{
             'id': str(faq.id),
@@ -33,6 +36,7 @@ class FAQList(Resource):
         return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
 
 
+@api.resource('/faq/<post_id>')
 class FAQItem(Resource):
     @swag_from(FAQ_ITEM_GET)
     @jwt_required
@@ -42,8 +46,8 @@ class FAQItem(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if all((admin, student)):
-            return Response('', 403)
+        if not any((admin, student)):
+            abort(403)
 
         if len(post_id) != 24:
             return Response('', 204)
