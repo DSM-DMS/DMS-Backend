@@ -1,15 +1,18 @@
 from binascii import hexlify
 from hashlib import pbkdf2_hmac
 
-from flask import Response, current_app
+from flask import Blueprint, Response, current_app
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
+from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
 
 from app.docs.student.account.alteration import *
 from app.models.account import StudentModel
 
+api = Api(Blueprint('student-account-alteration-api', __name__))
 
+
+@api.resource('/change/pw')
 class ChangePW(Resource):
     @swag_from(CHANGE_PW_POST)
     @jwt_required
@@ -31,7 +34,7 @@ class ChangePW(Resource):
         # Validate account_student
 
         if not student:
-            return Response('', 403)
+            return abort(403)
 
         # --- Change password
 
@@ -49,6 +52,7 @@ class ChangePW(Resource):
         return Response('', 200)
 
 
+@api.resource('/change/number')
 class ChangeNumber(Resource):
     @swag_from(CHANGE_NUMBER_POST)
     @jwt_required
@@ -58,7 +62,7 @@ class ChangeNumber(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            return abort(403)
 
         new_number = int(request.form['new_number'])
 

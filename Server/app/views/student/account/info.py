@@ -1,14 +1,17 @@
 import json
 
-from flask import Response
+from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource
+from flask_restful import Api, Resource, abort
 from flasgger import swag_from
 
 from app.docs.student.account.info import MYPAGE_GET
 from app.models.account import StudentModel
 
+api = Api(Blueprint('student-info-api', __name__))
 
+
+@api.resource('/mypage')
 class MyPage(Resource):
     @swag_from(MYPAGE_GET)
     @jwt_required
@@ -18,7 +21,7 @@ class MyPage(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         response = {
             'name': student.name,
@@ -43,4 +46,4 @@ class MyPage(Resource):
             'bad_point': student.bad_point
         }
 
-        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')

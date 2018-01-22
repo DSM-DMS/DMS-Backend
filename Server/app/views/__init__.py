@@ -71,15 +71,11 @@ class ViewInjector(object):
         api.add_resource(QuestionManaging, '/admin/survey/question')
 
         # Student account_admin
-        api.add_resource(ChangePW, '/change/pw')
-        api.add_resource(ChangeNumber, '/change/number')
-        api.add_resource(Auth, '/auth')
-        api.add_resource(AuthCheck, '/auth-check')
-        api.add_resource(Refresh, '/refresh')
-        api.add_resource(MyPage, '/mypage')
-        api.add_resource(IDVerification, '/verify/id')
-        api.add_resource(UUIDVerification, '/verify/uuid')
-        api.add_resource(Signup, '/signup')
+        from app.views.student.account import alteration, auth, info, signup
+        app.register_blueprint(alteration.api.blueprint)
+        app.register_blueprint(auth.api.blueprint)
+        app.register_blueprint(info.api.blueprint)
+        app.register_blueprint(signup.api.blueprint)
 
         # Student apply
         api.add_resource(Extension11, '/extension/11')

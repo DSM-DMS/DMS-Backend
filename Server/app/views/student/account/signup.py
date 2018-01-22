@@ -1,14 +1,17 @@
 from binascii import hexlify
 from hashlib import pbkdf2_hmac
 
-from flask import Response, current_app
-from flask_restful import Resource, request
+from flask import Blueprint, Response, current_app
+from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
 
 from app.docs.student.account.signup import *
 from app.models.account import SignupWaitingModel, StudentModel, AdminModel
 
+api = Api(Blueprint('student-signup-api', __name__))
 
+
+@api.resource('/verify/id')
 class IDVerification(Resource):
     @swag_from(ID_VERIFICATION_POST)
     def post(self):
@@ -26,6 +29,7 @@ class IDVerification(Resource):
             return Response('', 200)
 
 
+@api.resource('/verify/uuid')
 class UUIDVerification(Resource):
     @swag_from(UUID_VERIFICATION_POST)
     def post(self):
@@ -42,6 +46,7 @@ class UUIDVerification(Resource):
             return Response('', 204)
 
 
+@api.resource('/signup')
 class Signup(Resource):
     @swag_from(SIGNUP_POST)
     def post(self):
