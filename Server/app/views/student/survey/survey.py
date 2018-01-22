@@ -1,15 +1,18 @@
 import json
 
-from flasgger import swag_from
-from flask import Response
+from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
+from flask_restful import Api, Resource, abort, request
+from flasgger import swag_from
 
 from app.docs.student.survey.survey import *
 from app.models.account import StudentModel
 from app.models.survey import AnswerModel, QuestionModel, SurveyModel
 
+api = Api(Blueprint('student-survey-api', __name__))
 
+
+@api.resource('/survey')
 class Survey(Resource):
     @swag_from(SURVEY_GET)
     @jwt_required
@@ -19,7 +22,7 @@ class Survey(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         student_number = student.number
 
@@ -36,6 +39,7 @@ class Survey(Resource):
         # Filter by student number
 
 
+@api.resource('/survey/question')
 class Question(Resource):
     @swag_from(QUESTION_GET)
     @jwt_required
@@ -45,7 +49,7 @@ class Question(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         survey_id = request.args['survey_id']
         if len(survey_id) != 24:
@@ -83,7 +87,7 @@ class Question(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         question_id = request.form['question_id']
         if len(question_id) != 24:

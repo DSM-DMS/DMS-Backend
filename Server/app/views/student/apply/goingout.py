@@ -1,13 +1,16 @@
-from flask import Response
+from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
+from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
 
 from app.docs.student.apply.goingout import *
 from app.models.account import StudentModel
 from app.models.apply import GoingoutApplyModel
 
+api = Api(Blueprint('student-goingout-api', __name__))
 
+
+@api.resource('/goingout')
 class Goingout(Resource):
     @swag_from(GOINGOUT_GET)
     @jwt_required
@@ -17,7 +20,7 @@ class Goingout(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         return {
             'sat': student.goingout_apply.on_saturday,
@@ -32,7 +35,7 @@ class Goingout(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         sat = request.form['sat'].upper() == 'TRUE'
         sun = request.form['sun'].upper() == 'TRUE'

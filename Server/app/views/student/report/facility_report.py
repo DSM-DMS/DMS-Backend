@@ -1,13 +1,16 @@
-from flask import Response
+from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
+from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
 
 from app.docs.student.report.facility_report import *
 from app.models.account import StudentModel
 from app.models.report import FacilityReportModel
 
+api = Api(Blueprint('student-facility-report-api', __name__))
 
+
+@api.resource('/report/facility')
 class FacilityReport(Resource):
     @swag_from(FACILITY_REPORT_POST)
     @jwt_required
@@ -17,7 +20,7 @@ class FacilityReport(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         title = request.form['title']
         content = request.form['content']

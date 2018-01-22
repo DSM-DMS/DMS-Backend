@@ -34,7 +34,7 @@ class ChangePW(Resource):
         # Validate account_student
 
         if not student:
-            return abort(403)
+            abort(403)
 
         # --- Change password
 
@@ -62,7 +62,7 @@ class ChangeNumber(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return abort(403)
+            abort(403)
 
         new_number = int(request.form['new_number'])
 

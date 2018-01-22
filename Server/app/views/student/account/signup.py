@@ -2,7 +2,7 @@ from binascii import hexlify
 from hashlib import pbkdf2_hmac
 
 from flask import Blueprint, Response, current_app
-from flask_restful import Api, Resource, abort, request
+from flask_restful import Api, Resource, request
 from flasgger import swag_from
 
 from app.docs.student.account.signup import *

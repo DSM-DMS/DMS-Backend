@@ -70,20 +70,23 @@ class ViewInjector(object):
         api.add_resource(SurveyManaging, '/admin/survey')
         api.add_resource(QuestionManaging, '/admin/survey/question')
 
-        # Student account_admin
         from app.views.student.account import alteration, auth, info, signup
         app.register_blueprint(alteration.api.blueprint)
         app.register_blueprint(auth.api.blueprint)
         app.register_blueprint(info.api.blueprint)
         app.register_blueprint(signup.api.blueprint)
 
-        # Student apply
-        api.add_resource(Extension11, '/extension/11')
-        api.add_resource(Extension12, '/extension/12')
-        api.add_resource(ExtensionMap11, '/extension/map/11')
-        api.add_resource(ExtensionMap12, '/extension/map/12')
-        api.add_resource(Goingout, '/goingout')
-        api.add_resource(Stay, '/stay')
+        from app.views.student.apply import extension, goingout, stay
+        app.register_blueprint(extension.api.blueprint)
+        app.register_blueprint(goingout.api.blueprint)
+        app.register_blueprint(stay.api.blueprint)
+
+        from app.views.student.report import bug_report, facility_report
+        app.register_blueprint(bug_report.api.blueprint)
+        app.register_blueprint(facility_report.api.blueprint)
+
+        from app.views.student.survey import survey
+        app.register_blueprint(survey.api.blueprint)
 
         from app.views.mixed.post import faq, notice, preview, rule
         app.register_blueprint(faq.api.blueprint)
@@ -94,9 +97,3 @@ class ViewInjector(object):
         from app.views.mixed.school_data import meal
         app.register_blueprint(meal.api.blueprint)
 
-        api.add_resource(BugReport, '/report/bug')
-        api.add_resource(FacilityReport, '/report/facility')
-
-        # Mixed school_data
-        api.add_resource(Survey, '/survey')
-        api.add_resource(Question, '/survey/question')

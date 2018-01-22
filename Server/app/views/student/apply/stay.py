@@ -1,15 +1,18 @@
 from datetime import datetime, time
 
-from flask import Response, current_app
+from flask import Blueprint, Response, current_app
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
+from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
 
 from app.docs.student.apply.stay import *
 from app.models.account import StudentModel
 from app.models.apply import StayApplyModel
 
+api = Api(Blueprint('student-stay-api', __name__))
 
+
+@api.resource('/stay')
 class Stay(Resource):
     @swag_from(STAY_GET)
     @jwt_required
@@ -19,7 +22,7 @@ class Stay(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         return {
             'value': student.stay_apply.value
@@ -33,7 +36,7 @@ class Stay(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         now = datetime.now()
 

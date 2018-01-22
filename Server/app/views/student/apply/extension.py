@@ -1,9 +1,9 @@
 from datetime import datetime
 import json
 
-from flask import Response, current_app
+from flask import Blueprint, Response, current_app
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
+from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
 
 from app.docs.student.apply.extension import *
@@ -12,7 +12,10 @@ from app.models.apply import ExtensionApplyModel
 
 from utils.extension_meta import *
 
+api = Api(Blueprint('student-extension-api', __name__))
 
+
+@api.resource('/extension/11')
 class Extension11(Resource):
     @swag_from(EXTENSION_GET)
     @jwt_required
@@ -22,7 +25,7 @@ class Extension11(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         return ({
             'class_num': student.extension_apply_11.class_,
@@ -37,7 +40,7 @@ class Extension11(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         now = datetime.now().time()
 
@@ -60,13 +63,14 @@ class Extension11(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         student.update(extension_apply_11=None)
 
         return Response('', 200)
 
 
+@api.resource('/extension/12')
 class Extension12(Resource):
     @swag_from(EXTENSION_GET)
     @jwt_required
@@ -76,7 +80,7 @@ class Extension12(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         return ({
             'class_num': student.extension_apply_12.class_,
@@ -91,7 +95,7 @@ class Extension12(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         now = datetime.now().time()
 
@@ -114,7 +118,7 @@ class Extension12(Resource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
         if not student:
-            return Response('', 403)
+            abort(403)
 
         student.update(extension_apply_12=None)
 
@@ -160,6 +164,7 @@ def create_extension_map(class_, hour):
     return map_
 
 
+@api.resource('/extension/map/11')
 class ExtensionMap11(Resource):
     @swag_from(EXTENSION_MAP_GET)
     def get(self):
@@ -171,6 +176,7 @@ class ExtensionMap11(Resource):
         return Response(json.dumps(create_extension_map(class_, 11), ensure_ascii=False), content_type='application/json; charset=utf8')
 
 
+@api.resource('/extension/map/12')
 class ExtensionMap12(Resource):
     @swag_from(EXTENSION_MAP_GET)
     def get(self):

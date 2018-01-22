@@ -60,7 +60,7 @@ class AuthCheck(Resource):
         student = StudentModel.objects(id=get_jwt_identity()).first()
 
         if not student:
-            return abort(403)
+            abort(403)
 
         return Response('', 200)
 
