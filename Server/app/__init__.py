@@ -17,17 +17,14 @@ error_handler = ErrorHandler()
 logger = Logger()
 
 
-def create_app(dev=True):
+def create_app(config_name='dev'):
     """
     Creates Flask instance & initialize
 
     :rtype: Flask
     """
     app_ = Flask(__name__)
-    if dev:
-        app_.config.from_pyfile('../config/dev.py')
-    else:
-        app_.config.from_pyfile('../config/production.py')
+    app_.config.from_pyfile('../config/{}.py'.format(config_name))
 
     cors.init_app(app_)
     jwt.init_app(app_)
