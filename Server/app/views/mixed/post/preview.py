@@ -39,7 +39,7 @@ class FAQPreview(Resource):
             'pinned': faq.pinned
         }
 
-        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
 
 
 @api.resource('/preview/notice')
@@ -69,7 +69,7 @@ class NoticePreview(Resource):
             'pinned': notice.pinned
         }
 
-        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
 
 
 @api.resource('/preview/rule')
@@ -99,4 +99,4 @@ class RulePreview(Resource):
             'pinned': rule.pinned
         }
 
-        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')

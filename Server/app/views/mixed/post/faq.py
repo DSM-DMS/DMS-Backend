@@ -33,7 +33,7 @@ class FAQList(Resource):
             'pinned': faq.pinned
         } for faq in FAQModel.objects]
 
-        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
 
 
 @api.resource('/faq/<post_id>')
@@ -64,4 +64,4 @@ class FAQItem(Resource):
             'pinned': faq.pinned
         }
 
-        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')

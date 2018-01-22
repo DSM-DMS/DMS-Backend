@@ -33,7 +33,7 @@ class RuleList(Resource):
             'pinned': rule.pinned
         } for rule in RuleModel.objects]
 
-        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
 
 
 @api.resource('/rule/<post_id>')
@@ -64,4 +64,4 @@ class RuleItem(Resource):
             'pinned': rule.pinned
         }
 
-        return Response(json.dumps(response,ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response,ensure_ascii=False), content_type='application/json; charset=utf8')

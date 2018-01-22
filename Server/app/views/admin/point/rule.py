@@ -28,7 +28,7 @@ class PointRuleManaging(Resource):
             'max_point': rule.max_point
         } for rule in PointRuleModel.objects]
 
-        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
 
     @swag_from(POINT_RULE_MANAGING_POST)
     @jwt_required

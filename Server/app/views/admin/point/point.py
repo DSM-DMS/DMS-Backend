@@ -33,7 +33,7 @@ class PointManaging(Resource):
             'id': str(history.id)
         } for history in student.point_histories]
 
-        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
 
     @swag_from(POINT_MANAGING_POST)
     @jwt_required

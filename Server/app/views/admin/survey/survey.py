@@ -30,7 +30,7 @@ class SurveyManaging(Resource):
             'end_date': str(survey.end_date)
         } for survey in SurveyModel.objects]
 
-        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
 
     @swag_from(SURVEY_MANAGING_POST)
     @jwt_required
@@ -109,7 +109,7 @@ class QuestionManaging(Resource):
             'choice_paper': question.choice_paper if question.is_objective else None
         } for question in QuestionModel.objects(survey=survey)]
 
-        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
 
     @swag_from(QUESTION_MANAGING_POST)
     @jwt_required

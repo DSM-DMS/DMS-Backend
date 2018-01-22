@@ -28,4 +28,4 @@ class FacilityReportDownload(Resource):
             'room': facility_report.room
         } for facility_report in FacilityReportModel.objects]
 
-        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')

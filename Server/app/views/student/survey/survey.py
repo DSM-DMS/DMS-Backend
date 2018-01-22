@@ -32,7 +32,7 @@ class Survey(Resource):
             'end_date': str(survey.end_date)[:10]
         } for survey in SurveyModel.objects if int(student_number / 1000) in survey.target]
 
-        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
         # Filter by student number
 
 

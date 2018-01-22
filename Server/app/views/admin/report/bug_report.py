@@ -27,4 +27,4 @@ class BugReportDownload(Resource):
             'content': bug_report.content
         } for bug_report in BugReportModel.objects]
 
-        return Response(json.dumps(response, ensure_ascii=False), 200, content_type='application/json; charset=utf8')
+        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
