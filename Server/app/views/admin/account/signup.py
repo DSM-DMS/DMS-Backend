@@ -9,7 +9,7 @@ from flasgger import swag_from
 from app.docs.admin.account.signup import NEW_ACCOUNT_POST
 from app.models.account import StudentModel, AdminModel
 
-api = Api(Blueprint('admin-account-control-api', __name__))
+api = Api(Blueprint('admin-signup-api', __name__))
 api.prefix = '/admin'
 
 

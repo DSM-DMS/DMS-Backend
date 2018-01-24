@@ -11,7 +11,7 @@ from flasgger import swag_from
 from app.docs.admin.account.auth import *
 from app.models.account import AdminModel, RefreshTokenModel
 
-api = Api(Blueprint('admin-account-control-api', __name__))
+api = Api(Blueprint('admin-auth-api', __name__))
 api.prefix = '/admin'
 
 
