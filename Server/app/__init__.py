@@ -11,6 +11,7 @@ from app.middleware import ErrorHandler, Logger
 cors = CORS()
 jwt = JWTManager()
 swagger = Swagger(template=TEMPLATE)
+
 db = Mongo()
 view = ViewInjector()
 error_handler = ErrorHandler()

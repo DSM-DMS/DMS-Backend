@@ -3,10 +3,10 @@ from config import Config
 
 class DevConfig(Config):
     HOST = 'localhost'
-    ENDPOINT = '{}:{}'.format(HOST, Config.PORT)
-    Config.SWAGGER.update({'host': ENDPOINT})
 
-    TEST = True
+    if not Config.DOMAIN:
+        Config.SWAGGER.update({'host': '{}:{}'.format(HOST, Config.PORT)})
+
     DEBUG = True
 
     MONGODB_SETTINGS = {

@@ -3,6 +3,7 @@ from datetime import timedelta
 
 
 class Config(object):
+    DOMAIN = 'dsm2015.cafe24.com'
     PORT = 3001
 
     SECRET_KEY = os.getenv('SECRET_KEY', '85c145a16bd6f6e1f3e104ca78c6a102')
@@ -25,5 +26,6 @@ class Config(object):
             'description': ''
         },
 
+        'host': '{}:{}'.format(DOMAIN, PORT) if DOMAIN else None,
         'basePath': '/ '
     }

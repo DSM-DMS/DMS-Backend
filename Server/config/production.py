@@ -5,10 +5,10 @@ from config import Config
 
 class ProductionConfig(Config):
     HOST = socket.gethostbyname(socket.gethostname())
-    ENDPOINT = '{}:{}'.format(HOST, Config.PORT)
-    Config.SWAGGER.update({'host': ENDPOINT})
 
-    TEST = False
+    if not Config.DOMAIN:
+        Config.SWAGGER.update({'host': '{}:{}'.format(HOST, Config.PORT)})
+
     DEBUG = False
 
     MONGODB_SETTINGS = {
