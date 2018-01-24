@@ -1,14 +1,18 @@
 import socket
 
-from config import *
+from config import Config
 
-HOST = socket.gethostbyname(socket.gethostname())
-ENDPOINT = '{0}:{1}'.format(HOST, PORT)
-SWAGGER.update({'host': ENDPOINT})
 
-TEST = False
-DEBUG = False
+class ProductionConfig(Config):
+    HOST = socket.gethostbyname(socket.gethostname())
+    ENDPOINT = '{}:{}'.format(HOST, Config.PORT)
+    Config.SWAGGER.update({'host': ENDPOINT})
 
-MONGODB_SETTINGS = {
-    'db': '{0}-production'.format(SERVICE_NAME)
-}
+    TEST = False
+    DEBUG = False
+
+    MONGODB_SETTINGS = {
+        'host': 'localhost',
+        'port': 27017,
+        'db': '{}-production'.format(Config.SERVICE_NAME)
+    }

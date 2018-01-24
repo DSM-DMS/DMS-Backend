@@ -14,7 +14,7 @@ install:
   - pip3 install coveralls
 
 script:
-  - coverage run --source=Server/app Server/server.py -t 1
+  - coverage run --source=Server/app Server/tests/__init__.py
 
 after_success:
   - coverage report
