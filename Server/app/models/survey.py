@@ -31,9 +31,14 @@ class SurveyModel(Document):
     target = ListField(
         IntField()
     )
+    questions = EmbeddedDocumentListField(
+        document_type=QuestionModel,
+        required=True,
+        default=[]
+    )
 
 
-class QuestionModel(Document):
+class QuestionModel(EmbeddedDocument):
     """
     Each questions in a survey document
     """
@@ -41,11 +46,6 @@ class QuestionModel(Document):
         'collection': 'question'
     }
 
-    survey = ReferenceField(
-        document_type=SurveyModel,
-        required=True,
-        reverse_delete_rule=CASCADE
-    )
     title = StringField(
         required=True
     )

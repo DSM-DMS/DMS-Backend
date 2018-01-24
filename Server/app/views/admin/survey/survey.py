@@ -28,7 +28,7 @@ class SurveyManaging(Resource):
             'description': survey.description,
             'start_date': str(survey.start_date),
             'end_date': str(survey.end_date)
-        } for survey in SurveyModel.objects]
+        } for survey in SurveyModel.objects if len(survey.questions)]
 
         return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
 
@@ -107,7 +107,7 @@ class QuestionManaging(Resource):
             'title': question.title,
             'is_objective': question.is_objective,
             'choice_paper': question.choice_paper if question.is_objective else None
-        } for question in QuestionModel.objects(survey=survey)]
+        } for question in survey.questions]
 
         return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
 
@@ -132,18 +132,14 @@ class QuestionManaging(Resource):
             return Response('', 204)
 
         questions = rq['questions']
-        ids = list()
         for question in questions:
             title = question['title']
             is_objective = question['is_objective']
 
-            q = QuestionModel(
-                survey=survey,
+            survey.questions.append(QuestionModel(
                 title=title,
                 is_objective=is_objective,
                 choice_paper=question['choice_paper'] if is_objective else []
-            ).save()
+            ))
 
-            ids.append(str(q.id))
-
-        return ids, 201
+        return Response('', 201)
