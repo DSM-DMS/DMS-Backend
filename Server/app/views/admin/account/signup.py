@@ -1,15 +1,19 @@
 from binascii import hexlify
 from hashlib import pbkdf2_hmac
 
-from flask import Response, current_app
+from flask import Blueprint, Response, current_app
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
+from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
 
 from app.docs.admin.account.signup import NEW_ACCOUNT_POST
 from app.models.account import StudentModel, AdminModel
 
+api = Api(Blueprint('admin-account-control-api', __name__))
+api.prefix = '/admin'
 
+
+@api.resource('/new-account')
 class NewAccount(Resource):
     @swag_from(NEW_ACCOUNT_POST)
     @jwt_required
@@ -19,11 +23,12 @@ class NewAccount(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         id = request.form['id']
         pw = request.form['pw']
         name = request.form['name']
+
         student = StudentModel.objects(id=id).first()
         admin = AdminModel.objects(id=id).first()
         if any((student, admin)):

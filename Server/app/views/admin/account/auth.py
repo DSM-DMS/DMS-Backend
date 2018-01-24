@@ -2,17 +2,21 @@ from binascii import hexlify
 from hashlib import pbkdf2_hmac
 from uuid import uuid4
 
-from flask import Response, current_app
+from flask import Blueprint, current_app
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity, jwt_refresh_token_required
-from flask_restful import Resource, request
+from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
 
 from app.docs.admin.account.auth import *
 from app.models.account import AdminModel, RefreshTokenModel
 
+api = Api(Blueprint('admin-account-control-api', __name__))
+api.prefix = '/admin'
 
-class AdminAuth(Resource):
+
+@api.resource('/auth')
+class Auth(Resource):
     @swag_from(AUTH_POST)
     def post(self):
         """
@@ -32,7 +36,7 @@ class AdminAuth(Resource):
         admin = AdminModel.objects(id=id, pw=pw).first()
 
         if not admin:
-            return Response('', 401)
+            abort(401)
 
         # --- Auth success
 
@@ -50,7 +54,8 @@ class AdminAuth(Resource):
         }, 200
 
 
-class AdminRefresh(Resource):
+@api.resource('/refresh')
+class Refresh(Resource):
     @swag_from(REFRESH_POST)
     @jwt_refresh_token_required
     def post(self):

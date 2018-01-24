@@ -1,15 +1,18 @@
 from uuid import uuid4
 
-from flask import Response
-from flask_jwt_extended import jwt_required
-from flask_jwt_extended import get_jwt_identity
-from flask_restful import Resource, request
+from flask import Blueprint, Response
+from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
 
 from app.docs.admin.account.account_control import *
 from app.models.account import SignupWaitingModel, StudentModel, AdminModel
 
+api = Api(Blueprint('admin-account-control-api', __name__))
+api.prefix = '/admin'
 
+
+@api.resource('/account-control')
 class AccountControl(Resource):
     @swag_from(ACCOUNT_CONTROL_POST)
     @jwt_required
@@ -19,7 +22,7 @@ class AccountControl(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         number = int(request.form['number'])
         student = StudentModel.objects(number=number).first()

@@ -1,8 +1,5 @@
 from flask_restful import Api
 
-from app.views.admin.account.auth import *
-from app.views.admin.account.account_control import *
-from app.views.admin.account.signup import *
 from app.views.admin.apply.extension import *
 from app.views.admin.apply.goingout import *
 from app.views.admin.apply.stay import *
@@ -16,21 +13,6 @@ from app.views.admin.post.rule import *
 from app.views.admin.report.bug_report import *
 from app.views.admin.report.facility_report import *
 from app.views.admin.survey.survey import *
-from app.views.mixed.post.faq import *
-from app.views.mixed.post.notice import *
-from app.views.mixed.post.preview import *
-from app.views.mixed.post.rule import *
-from app.views.mixed.school_data.meal import *
-from app.views.student.account.alteration import *
-from app.views.student.account.auth import *
-from app.views.student.account.info import *
-from app.views.student.account.signup import *
-from app.views.student.apply.extension import *
-from app.views.student.apply.goingout import *
-from app.views.student.apply.stay import *
-from app.views.student.report.bug_report import *
-from app.views.student.report.facility_report import *
-from app.views.student.survey.survey import *
 
 
 class ViewInjector(object):
@@ -41,11 +23,10 @@ class ViewInjector(object):
     def init_app(self, app):
         api = Api(app)
 
-        # Admin account_admin
-        api.add_resource(AdminAuth, '/admin/auth')
-        api.add_resource(AdminRefresh, '/admin/refresh')
-        api.add_resource(AccountControl, '/admin/account-control')
-        api.add_resource(NewAccount, '/admin/new-account')
+        from app.views.admin.account import account_control, auth, signup
+        app.register_blueprint(account_control.api.blueprint)
+        app.register_blueprint(auth.api.blueprint)
+        app.register_blueprint(signup.api.blueprint)
 
         api.add_resource(Extension11Download, '/admin/extension/11')
         api.add_resource(Extension12Download, '/admin/extension/12')
