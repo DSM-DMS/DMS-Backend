@@ -32,9 +32,7 @@ class SurveyModel(Document):
         IntField()
     )
     questions = EmbeddedDocumentListField(
-        document_type=QuestionModel,
-        required=True,
-        default=[]
+        document_type=QuestionModel
     )
 
 
