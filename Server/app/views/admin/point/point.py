@@ -1,3 +1,4 @@
+from bson import ObjectId
 import json
 
 from flask import Response
@@ -62,7 +63,8 @@ class PointManaging(Resource):
 
         student.point_histories.append(PointHistoryModel(
             reason=rule.name,
-            point=point
+            point=point,
+            id=ObjectId()
         ))
         # Append history
 
