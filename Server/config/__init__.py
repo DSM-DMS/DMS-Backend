@@ -1,5 +1,5 @@
-import os
 from datetime import timedelta
+import os
 
 
 class Config(object):
@@ -27,5 +27,5 @@ class Config(object):
         },
 
         'host': '{}:{}'.format(DOMAIN, PORT) if DOMAIN else None,
-        'basePath': '/ '
+        'basePath': '/'
     }
