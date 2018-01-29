@@ -1,15 +1,19 @@
 import json
 
-from flask import Response
+from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource
+from flask_restful import Api, Resource, abort
 from flasgger import swag_from
 
 from app.docs.admin.report.facility_report import *
 from app.models.account import AdminModel
 from app.models.report import FacilityReportModel
 
+api = Api(Blueprint('admin-facility-report-api', __name__))
+api.prefix = '/admin'
 
+
+@api.resource('/report/facility')
 class FacilityReportDownload(Resource):
     @swag_from(FACILITY_REPORT_DOWNLOAD_GET)
     @jwt_required
@@ -19,7 +23,7 @@ class FacilityReportDownload(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         response = [{
             'author': facility_report.author,

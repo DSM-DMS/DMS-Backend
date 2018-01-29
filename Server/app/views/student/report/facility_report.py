@@ -1,4 +1,4 @@
-from flask import Blueprint, Response
+from flask import Blueprint
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
@@ -27,7 +27,7 @@ class FacilityReport(Resource):
         room = int(request.form['room'])
 
         if not 200 < room < 519:
-            return Response('', 400)
+            abort(400)
 
         report = FacilityReportModel(author=student.name, title=title, content=content, room=room).save()
 

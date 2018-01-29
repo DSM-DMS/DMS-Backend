@@ -1,4 +1,4 @@
-from flask import Blueprint, Response
+from flask import Blueprint
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from

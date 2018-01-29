@@ -1,15 +1,19 @@
 import json
 
-from flask import Response
+from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
+from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
 
 from app.docs.admin.survey.survey import *
 from app.models.account import AdminModel
 from app.models.survey import QuestionModel, SurveyModel
 
+api = Api(Blueprint('admin-survey-api', __name__))
+api.prefix = '/admin'
 
+
+@api.resource('/survey')
 class SurveyManaging(Resource):
     @swag_from(SURVEY_MANAGING_GET)
     @jwt_required
@@ -19,7 +23,7 @@ class SurveyManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         response = [{
             'id': str(survey.id),
@@ -40,7 +44,7 @@ class SurveyManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         title = request.form['title']
         description = request.form['description']
@@ -68,7 +72,7 @@ class SurveyManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         survey_id = request.form['survey_id']
         if len(survey_id) != 24:
@@ -83,6 +87,7 @@ class SurveyManaging(Resource):
         return Response('', 200)
 
 
+@api.resource('/survey/question')
 class QuestionManaging(Resource):
     @swag_from(QUESTION_MANAGING_GET)
     @jwt_required
@@ -92,7 +97,7 @@ class QuestionManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         survey_id = request.args['survey_id']
         if len(survey_id) != 24:
@@ -119,7 +124,7 @@ class QuestionManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         rq = request.json
 

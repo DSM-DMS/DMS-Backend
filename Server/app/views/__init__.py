@@ -45,11 +45,12 @@ class ViewInjector(object):
         api.add_resource(NoticeManaging, '/admin/notice')
         api.add_resource(RuleManaging, '/admin/rule')
 
-        api.add_resource(BugReportDownload, '/admin/report/bug')
-        api.add_resource(FacilityReportDownload, '/admin/report/facility')
+        from app.views.admin.report import bug_report, facility_report
+        app.register_blueprint(bug_report.api.blueprint)
+        app.register_blueprint(facility_report.api.blueprint)
 
-        api.add_resource(SurveyManaging, '/admin/survey')
-        api.add_resource(QuestionManaging, '/admin/survey/question')
+        from app.views.admin.survey import survey
+        app.register_blueprint(survey.api.blueprint)
 
         from app.views.student.account import alteration, auth, info, signup
         app.register_blueprint(alteration.api.blueprint)

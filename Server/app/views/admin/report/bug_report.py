@@ -1,15 +1,19 @@
 import json
 
-from flask import Response
+from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource
+from flask_restful import Api, Resource, abort
 from flasgger import swag_from
 
 from app.docs.admin.report.bug_report import *
 from app.models.account import AdminModel
 from app.models.report import BugReportModel
 
+api = Api(Blueprint('admin-bug-report-api', __name__))
+api.prefix = '/admin'
 
+
+@api.resource('/report/bug')
 class BugReportDownload(Resource):
     @swag_from(BUG_REPORT_DOWNLOAD_GET)
     @jwt_required
@@ -19,7 +23,7 @@ class BugReportDownload(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         response = [{
             'author': bug_report.author,
