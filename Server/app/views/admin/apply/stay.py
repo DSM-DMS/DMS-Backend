@@ -1,15 +1,19 @@
 from openpyxl import Workbook
 
-from flask import Response, send_from_directory
+from flask import Blueprint, send_from_directory
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource
+from flask_restful import Api, Resource, abort
 from flasgger import swag_from
 
 from app.docs.admin.apply.stay import *
 from app.models.account import AdminModel, StudentModel
 from utils.apply_excel_manager import get_cells, ready_worksheet
 
+api = Api(Blueprint('admin-stay-api', __name__))
+api.prefix = '/admin'
 
+
+@api.resource('/stay')
 class StayDownload(Resource):
     @swag_from(STAY_DOWNLOAD_GET)
     @jwt_required
@@ -19,7 +23,7 @@ class StayDownload(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         wb = Workbook()
         ws = wb.active

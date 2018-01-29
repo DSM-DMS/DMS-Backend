@@ -1,10 +1,7 @@
+import json
 import time
 
-from flask_restful import Api
-
-from app.views.admin.apply.extension import *
-from app.views.admin.apply.goingout import *
-from app.views.admin.apply.stay import *
+from flask_restful import Resource
 
 
 class BaseResource(Resource):
@@ -26,17 +23,15 @@ class ViewInjector(object):
             self.init_app(app)
 
     def init_app(self, app):
-        api = Api(app)
-
         from app.views.admin.account import account_control, auth, signup
         app.register_blueprint(account_control.api.blueprint)
         app.register_blueprint(auth.api.blueprint)
         app.register_blueprint(signup.api.blueprint)
 
-        api.add_resource(Extension11Download, '/admin/extension/11')
-        api.add_resource(Extension12Download, '/admin/extension/12')
-        api.add_resource(GoingoutDownload, '/admin/goingout')
-        api.add_resource(StayDownload, '/admin/stay')
+        from app.views.admin.apply import extension, goingout, stay
+        app.register_blueprint(extension.api.blueprint)
+        app.register_blueprint(goingout.api.blueprint)
+        app.register_blueprint(stay.api.blueprint)
 
         from app.views.admin.point import point, rule, student
         app.register_blueprint(point.api.blueprint)
@@ -82,4 +77,3 @@ class ViewInjector(object):
 
         from app.views.mixed.school_data import meal
         app.register_blueprint(meal.api.blueprint)
-

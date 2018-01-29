@@ -1,8 +1,8 @@
 from openpyxl import Workbook
 
-from flask import Response, send_from_directory
+from flask import Blueprint, send_from_directory
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource
+from flask_restful import Api, Resource, abort
 from flasgger import swag_from
 
 from app.docs.admin.apply.extension import *
@@ -11,7 +11,11 @@ from utils.apply_excel_manager import get_cells, ready_worksheet
 
 EXTENSION_CLASSES = ['가온실', '나온실', '다온실', '라온실', '3층 독서실', '4층 독서실', '5층 열린교실']
 
+api = Api(Blueprint('admin-extension-api', __name__))
+api.prefix = '/admin/extension'
 
+
+@api.resource('/11')
 class Extension11Download(Resource):
     @swag_from(EXTENSION_DOWNLOAD_GET)
     @jwt_required
@@ -21,7 +25,7 @@ class Extension11Download(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         wb = Workbook()
         ws = wb.active
@@ -47,6 +51,7 @@ class Extension11Download(Resource):
         return send_from_directory('../', '11.xlsx')
 
 
+@api.resource('/12')
 class Extension12Download(Resource):
     @swag_from(EXTENSION_DOWNLOAD_GET)
     @jwt_required
@@ -56,7 +61,7 @@ class Extension12Download(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         wb = Workbook()
         ws = wb.active
