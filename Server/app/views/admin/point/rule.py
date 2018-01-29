@@ -1,15 +1,19 @@
 import json
 
-from flask import Response
+from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
+from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
 
 from app.docs.admin.point.rule import *
 from app.models.account import AdminModel
 from app.models.point import PointRuleModel
 
+api = Api(Blueprint('admin-point-rule-api', __name__))
+api.prefix = '/admin/managing'
 
+
+@api.resource('/rule')
 class PointRuleManaging(Resource):
     @swag_from(POINT_RULE_MANAGING_GET)
     @jwt_required
@@ -19,7 +23,7 @@ class PointRuleManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         response = [{
             'id': str(rule.id),
@@ -38,7 +42,7 @@ class PointRuleManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         name = request.form['name']
         min_point = int(request.form['min_point'])
@@ -62,7 +66,7 @@ class PointRuleManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         rule_id = request.form['rule_id']
         if len(rule_id) != 24:
@@ -92,7 +96,7 @@ class PointRuleManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         rule_id = request.form['rule_id']
         if len(rule_id) != 24:

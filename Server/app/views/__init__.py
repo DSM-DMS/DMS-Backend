@@ -5,9 +5,6 @@ from flask_restful import Api
 from app.views.admin.apply.extension import *
 from app.views.admin.apply.goingout import *
 from app.views.admin.apply.stay import *
-from app.views.admin.point.point import *
-from app.views.admin.point.rule import *
-from app.views.admin.point.student import *
 
 
 class BaseResource(Resource):
@@ -41,9 +38,10 @@ class ViewInjector(object):
         api.add_resource(GoingoutDownload, '/admin/goingout')
         api.add_resource(StayDownload, '/admin/stay')
 
-        api.add_resource(StudentManaging, '/admin/managing/student')
-        api.add_resource(PointRuleManaging, '/admin/managing/rule')
-        api.add_resource(PointManaging, '/admin/managing/point')
+        from app.views.admin.point import point, rule, student
+        app.register_blueprint(point.api.blueprint)
+        app.register_blueprint(rule.api.blueprint)
+        app.register_blueprint(student.api.blueprint)
 
         from app.views.admin.post import faq, notice, preview, rule
         app.register_blueprint(faq.api.blueprint)

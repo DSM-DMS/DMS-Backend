@@ -1,9 +1,9 @@
 from bson import ObjectId
 import json
 
-from flask import Response
+from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
+from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
 
 from app.docs.admin.point.point import *
@@ -11,6 +11,11 @@ from app.models.account import AdminModel, StudentModel
 from app.models.point import PointRuleModel, PointHistoryModel
 
 
+api = Api(Blueprint('admin-point-api', __name__))
+api.prefix = '/admin/managing'
+
+
+@api.resource('/point')
 class PointManaging(Resource):
     @swag_from(POINT_MANAGING_GET)
     @jwt_required
@@ -20,7 +25,7 @@ class PointManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         id = request.args['id']
         student = StudentModel.objects(id=id).first()
@@ -44,7 +49,7 @@ class PointManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         id = request.form['id']
         student = StudentModel.objects(id=id).first()
@@ -85,7 +90,7 @@ class PointManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         student_id = request.form['student_id']
         point_id = request.form['point_id']
