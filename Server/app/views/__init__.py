@@ -1,3 +1,5 @@
+import time
+
 from flask_restful import Api
 
 from app.views.admin.apply.extension import *
@@ -10,9 +12,19 @@ from app.views.admin.post.faq import *
 from app.views.admin.post.notice import *
 from app.views.admin.post.preview import *
 from app.views.admin.post.rule import *
-from app.views.admin.report.bug_report import *
-from app.views.admin.report.facility_report import *
-from app.views.admin.survey.survey import *
+
+
+class BaseResource(Resource):
+    def __init__(self):
+        self.now = time.strftime('%Y-%m-%d %H:%M:%S')
+
+    @classmethod
+    def json_response(cls, data, status_code=200):
+        return Response(
+            json.dumps(data, ensure_ascii=False),
+            status_code,
+            'application/json; charset=utf8'
+        )
 
 
 class ViewInjector(object):
