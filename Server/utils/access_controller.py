@@ -27,7 +27,7 @@ def admin_only(fn):
 
     @wraps(fn)
     def wrapper(*args, **kwargs):
-        fn()
+        fn(*args, **kwargs)
         # wrapper 안에서 실제로 request를 뜯어 JWT token을 가져옴.
         # 1. get_jwt_identity() 시 제대로된 값을 반환받기 위해서
         # 2. Application context 관련 문제가 없도록
@@ -45,7 +45,7 @@ def student_only(fn):
 
     @wraps(fn)
     def wrapper(*args, **kwargs):
-        fn()
+        fn(*args, **kwargs)
 
         student = StudentModel.objects(id=get_jwt_identity())
         if not student:
@@ -60,7 +60,7 @@ def signed_account_only(fn):
 
     @wraps(fn)
     def wrapper(*args, **kwargs):
-        fn()
+        fn(*args, **kwargs)
 
         admin = AdminModel.objects(id=get_jwt_identity())
         student = StudentModel.objects(id=get_jwt_identity())
