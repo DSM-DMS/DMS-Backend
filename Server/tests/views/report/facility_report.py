@@ -1,5 +1,5 @@
 import json
-import unittest2 as unittest
+import unittest
 
 from app.models.report import FacilityReportModel
 from tests.views import account_admin, account_student

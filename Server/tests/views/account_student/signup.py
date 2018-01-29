@@ -1,4 +1,4 @@
-import unittest2 as unittest
+import unittest
 import uuid as u
 
 from app.models.account import SignupWaitingModel
