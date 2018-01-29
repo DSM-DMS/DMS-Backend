@@ -1,18 +1,19 @@
 from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, Resource, abort, request
+from flask_restful import Api, abort, request
 from flasgger import swag_from
 
 from app.docs.admin.post.rule import *
 from app.models.account import AdminModel
 from app.models.post import RuleModel
+from app.views import BaseResource
 
 api = Api(Blueprint('admin-rule-api', __name__))
 api.prefix = '/admin'
 
 
 @api.resource('/rule')
-class RuleManaging(Resource):
+class RuleManaging(BaseResource):
     @swag_from(RULE_MANAGING_POST)
     @jwt_required
     def post(self):

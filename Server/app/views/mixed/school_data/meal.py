@@ -2,16 +2,17 @@ import json
 
 from flasgger import swag_from
 from flask import Blueprint, Response
-from flask_restful import Api, Resource
+from flask_restful import Api
 
 from app.docs.mixed.school_data.meal import *
 from app.models.meal import MealModel
+from app.views import BaseResource
 
 api = Api(Blueprint('meal-api', __name__))
 
 
 @api.resource('/meal/<date>')
-class Meal(Resource):
+class Meal(BaseResource):
     @swag_from(MEAL_GET)
     def get(self, date):
         """

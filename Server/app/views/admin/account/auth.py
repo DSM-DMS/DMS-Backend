@@ -10,13 +10,14 @@ from flasgger import swag_from
 
 from app.docs.admin.account.auth import *
 from app.models.account import AdminModel, RefreshTokenModel
+from app.views import BaseResource
 
 api = Api(Blueprint('admin-auth-api', __name__))
 api.prefix = '/admin'
 
 
 @api.resource('/auth')
-class Auth(Resource):
+class Auth(BaseResource):
     @swag_from(AUTH_POST)
     def post(self):
         """
@@ -55,7 +56,7 @@ class Auth(Resource):
 
 
 @api.resource('/refresh')
-class Refresh(Resource):
+class Refresh(BaseResource):
     @swag_from(REFRESH_POST)
     @jwt_refresh_token_required
     def post(self):

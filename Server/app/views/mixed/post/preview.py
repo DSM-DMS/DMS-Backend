@@ -2,10 +2,11 @@ import json
 
 from flasgger import swag_from
 from flask import Blueprint, Response
-from flask_restful import Api, Resource
+from flask_restful import Api
 
 from app.docs.mixed.post.preview import *
 from app.models.post import FAQModel, NoticeModel, RuleModel
+from app.views import BaseResource
 
 from utils.access_controller import signed_account_only
 
@@ -13,7 +14,7 @@ api = Api(Blueprint('preview-api', __name__))
 
 
 @api.resource('/preview/faq')
-class FAQPreview(Resource):
+class FAQPreview(BaseResource):
     @swag_from(FAQ_PREVIEW_GET)
     @signed_account_only
     def get(self):
@@ -38,7 +39,7 @@ class FAQPreview(Resource):
 
 
 @api.resource('/preview/notice')
-class NoticePreview(Resource):
+class NoticePreview(BaseResource):
     @swag_from(NOTICE_PREVIEW_GET)
     @signed_account_only
     def get(self):
@@ -63,7 +64,7 @@ class NoticePreview(Resource):
 
 
 @api.resource('/preview/rule')
-class RulePreview(Resource):
+class RulePreview(BaseResource):
     @swag_from(RULE_PREVIEW_GET)
     @signed_account_only
     def get(self):

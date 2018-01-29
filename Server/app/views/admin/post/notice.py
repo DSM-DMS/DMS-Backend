@@ -1,18 +1,19 @@
 from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, Resource, abort, request
+from flask_restful import Api, abort, request
 from flasgger import swag_from
 
 from app.docs.admin.post.notice import *
 from app.models.account import AdminModel
 from app.models.post import NoticeModel
+from app.views import BaseResource
 
 api = Api(Blueprint('admin-notice-api', __name__))
 api.prefix = '/admin'
 
 
 @api.resource('/notice')
-class NoticeManaging(Resource):
+class NoticeManaging(BaseResource):
     @swag_from(NOTICE_MANAGING_POST)
     @jwt_required
     def post(self):

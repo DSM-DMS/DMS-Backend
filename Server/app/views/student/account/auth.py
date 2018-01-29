@@ -5,17 +5,18 @@ from uuid import uuid4
 from flask import Blueprint, Response, current_app
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity, jwt_required, jwt_refresh_token_required
-from flask_restful import Api, Resource, abort, request
+from flask_restful import Api, abort, request
 from flasgger import swag_from
 
 from app.docs.student.account.auth import *
 from app.models.account import StudentModel, RefreshTokenModel
+from app.views import BaseResource
 
 api = Api(Blueprint('student-auth-api', __name__))
 
 
 @api.resource('/auth')
-class Auth(Resource):
+class Auth(BaseResource):
     @swag_from(AUTH_POST)
     def post(self):
         """
@@ -53,7 +54,7 @@ class Auth(Resource):
 
 
 @api.resource('/auth-check')
-class AuthCheck(Resource):
+class AuthCheck(BaseResource):
     @swag_from(AUTH_CHECK_GET)
     @jwt_required
     def get(self):
@@ -66,7 +67,7 @@ class AuthCheck(Resource):
 
 
 @api.resource('/refresh')
-class Refresh(Resource):
+class Refresh(BaseResource):
     @swag_from(REFRESH_POST)
     @jwt_refresh_token_required
     def post(self):

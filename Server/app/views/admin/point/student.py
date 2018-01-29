@@ -2,18 +2,19 @@ import json
 
 from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, Resource, abort, request
+from flask_restful import Api, abort, request
 from flasgger import swag_from
 
 from app.docs.admin.point.student import *
 from app.models.account import AdminModel, StudentModel
+from app.views import BaseResource
 
 api = Api(Blueprint('admin-student-point-api', __name__))
 api.prefix = '/admin/managing'
 
 
 @api.resource('/student')
-class StudentManaging(Resource):
+class StudentManaging(BaseResource):
     @swag_from(STUDENT_MANAGING_GET)
     @jwt_required
     def get(self):

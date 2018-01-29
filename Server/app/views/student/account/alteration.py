@@ -3,17 +3,18 @@ from hashlib import pbkdf2_hmac
 
 from flask import Blueprint, Response, current_app
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, Resource, abort, request
+from flask_restful import Api, abort, request
 from flasgger import swag_from
 
 from app.docs.student.account.alteration import *
 from app.models.account import StudentModel
+from app.views import BaseResource
 
 api = Api(Blueprint('student-account-alteration-api', __name__))
 
 
 @api.resource('/change/pw')
-class ChangePW(Resource):
+class ChangePW(BaseResource):
     @swag_from(CHANGE_PW_POST)
     @jwt_required
     def post(self):
@@ -53,7 +54,7 @@ class ChangePW(Resource):
 
 
 @api.resource('/change/number')
-class ChangeNumber(Resource):
+class ChangeNumber(BaseResource):
     @swag_from(CHANGE_NUMBER_POST)
     @jwt_required
     def post(self):

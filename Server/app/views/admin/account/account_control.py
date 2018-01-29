@@ -7,13 +7,14 @@ from flasgger import swag_from
 
 from app.docs.admin.account.account_control import *
 from app.models.account import SignupWaitingModel, StudentModel, AdminModel
+from app.views import BaseResource
 
 api = Api(Blueprint('admin-account-control-api', __name__))
 api.prefix = '/admin'
 
 
 @api.resource('/account-control')
-class AccountControl(Resource):
+class AccountControl(BaseResource):
     @swag_from(ACCOUNT_CONTROL_POST)
     @jwt_required
     def post(self):

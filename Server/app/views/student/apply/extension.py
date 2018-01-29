@@ -3,12 +3,13 @@ import json
 
 from flask import Blueprint, Response, current_app
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, Resource, abort, request
+from flask_restful import Api, abort, request
 from flasgger import swag_from
 
 from app.docs.student.apply.extension import *
 from app.models.account import StudentModel
 from app.models.apply import ExtensionApplyModel
+from app.views import BaseResource
 
 from utils.extension_meta import *
 
@@ -16,7 +17,7 @@ api = Api(Blueprint('student-extension-api', __name__))
 
 
 @api.resource('/extension/11')
-class Extension11(Resource):
+class Extension11(BaseResource):
     @swag_from(EXTENSION_GET)
     @jwt_required
     def get(self):
@@ -71,7 +72,7 @@ class Extension11(Resource):
 
 
 @api.resource('/extension/12')
-class Extension12(Resource):
+class Extension12(BaseResource):
     @swag_from(EXTENSION_GET)
     @jwt_required
     def get(self):
@@ -165,7 +166,7 @@ def create_extension_map(class_, hour):
 
 
 @api.resource('/extension/map/11')
-class ExtensionMap11(Resource):
+class ExtensionMap11(BaseResource):
     @swag_from(EXTENSION_MAP_GET)
     def get(self):
         """
@@ -177,7 +178,7 @@ class ExtensionMap11(Resource):
 
 
 @api.resource('/extension/map/12')
-class ExtensionMap12(Resource):
+class ExtensionMap12(BaseResource):
     @swag_from(EXTENSION_MAP_GET)
     def get(self):
         """

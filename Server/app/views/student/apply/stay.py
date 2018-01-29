@@ -2,18 +2,19 @@ from datetime import datetime, time
 
 from flask import Blueprint, Response, current_app
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, Resource, abort, request
+from flask_restful import Api, abort, request
 from flasgger import swag_from
 
 from app.docs.student.apply.stay import *
 from app.models.account import StudentModel
 from app.models.apply import StayApplyModel
+from app.views import BaseResource
 
 api = Api(Blueprint('student-stay-api', __name__))
 
 
 @api.resource('/stay')
-class Stay(Resource):
+class Stay(BaseResource):
     @swag_from(STAY_GET)
     @jwt_required
     def get(self):

@@ -2,17 +2,18 @@ import json
 
 from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, Resource, abort
+from flask_restful import Api, abort
 from flasgger import swag_from
 
 from app.docs.student.account.info import MYPAGE_GET
 from app.models.account import StudentModel
+from app.views import BaseResource
 
 api = Api(Blueprint('student-info-api', __name__))
 
 
 @api.resource('/mypage')
-class MyPage(Resource):
+class MyPage(BaseResource):
     @swag_from(MYPAGE_GET)
     @jwt_required
     def get(self):

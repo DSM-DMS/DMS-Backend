@@ -7,6 +7,8 @@ from flasgger import swag_from
 
 from app.docs.admin.apply.stay import *
 from app.models.account import AdminModel, StudentModel
+from app.views import BaseResource
+
 from utils.apply_excel_manager import get_cells, ready_worksheet
 
 api = Api(Blueprint('admin-stay-api', __name__))
@@ -14,7 +16,7 @@ api.prefix = '/admin'
 
 
 @api.resource('/stay')
-class StayDownload(Resource):
+class StayDownload(BaseResource):
     @swag_from(STAY_DOWNLOAD_GET)
     @jwt_required
     def get(self):

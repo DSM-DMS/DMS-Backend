@@ -7,6 +7,8 @@ from flasgger import swag_from
 
 from app.docs.admin.apply.extension import *
 from app.models.account import AdminModel, StudentModel
+from app.views import BaseResource
+
 from utils.apply_excel_manager import get_cells, ready_worksheet
 
 EXTENSION_CLASSES = ['가온실', '나온실', '다온실', '라온실', '3층 독서실', '4층 독서실', '5층 열린교실']
@@ -16,7 +18,7 @@ api.prefix = '/admin/extension'
 
 
 @api.resource('/11')
-class Extension11Download(Resource):
+class Extension11Download(BaseResource):
     @swag_from(EXTENSION_DOWNLOAD_GET)
     @jwt_required
     def get(self):
@@ -52,7 +54,7 @@ class Extension11Download(Resource):
 
 
 @api.resource('/12')
-class Extension12Download(Resource):
+class Extension12Download(BaseResource):
     @swag_from(EXTENSION_DOWNLOAD_GET)
     @jwt_required
     def get(self):

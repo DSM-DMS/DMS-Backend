@@ -8,13 +8,14 @@ from flasgger import swag_from
 
 from app.docs.admin.account.signup import NEW_ACCOUNT_POST
 from app.models.account import StudentModel, AdminModel
+from app.views import BaseResource
 
 api = Api(Blueprint('admin-signup-api', __name__))
 api.prefix = '/admin'
 
 
 @api.resource('/new-account')
-class NewAccount(Resource):
+class NewAccount(BaseResource):
     @swag_from(NEW_ACCOUNT_POST)
     @jwt_required
     def post(self):
