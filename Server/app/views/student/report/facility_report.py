@@ -15,13 +15,12 @@ api = Api(Blueprint('student-facility-report-api', __name__))
 class FacilityReport(BaseResource):
     @swag_from(FACILITY_REPORT_POST)
     @jwt_required
+    @BaseResource.student_only
     def post(self):
         """
         시설고장 신고
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not student:
-            abort(403)
 
         title = request.form['title']
         content = request.form['content']

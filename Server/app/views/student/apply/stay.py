@@ -17,13 +17,12 @@ api = Api(Blueprint('student-stay-api', __name__))
 class Stay(BaseResource):
     @swag_from(STAY_GET)
     @jwt_required
+    @BaseResource.student_only
     def get(self):
         """
         잔류신청 정보 조회
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not student:
-            abort(403)
 
         return self.unicode_safe_json_response({
             'value': student.stay_apply.value
@@ -31,13 +30,12 @@ class Stay(BaseResource):
 
     @swag_from(STAY_POST)
     @jwt_required
+    @BaseResource.student_only
     def post(self):
         """
         잔류신청
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not student:
-            abort(403)
 
         now = datetime.now()
 

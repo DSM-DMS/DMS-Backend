@@ -19,13 +19,12 @@ api = Api(Blueprint('student-extension-api', __name__))
 class Extension11(BaseResource):
     @swag_from(EXTENSION_GET)
     @jwt_required
+    @BaseResource.student_only
     def get(self):
         """
         11시 연장신청 정보 조회
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not student:
-            abort(403)
 
         return ({
             'class_num': student.extension_apply_11.class_,
@@ -34,13 +33,12 @@ class Extension11(BaseResource):
 
     @swag_from(EXTENSION_POST)
     @jwt_required
+    @BaseResource.student_only
     def post(self):
         """
         11시 연장신청
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not student:
-            abort(403)
 
         now = datetime.now().time()
 
@@ -57,13 +55,12 @@ class Extension11(BaseResource):
 
     @swag_from(EXTENSION_DELETE)
     @jwt_required
+    @BaseResource.student_only
     def delete(self):
         """
         11시 연장신청 취소
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not student:
-            abort(403)
 
         student.update(extension_apply_11=None)
 
@@ -74,13 +71,12 @@ class Extension11(BaseResource):
 class Extension12(BaseResource):
     @swag_from(EXTENSION_GET)
     @jwt_required
+    @BaseResource.student_only
     def get(self):
         """
         12시 연장신청 정보 조회
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not student:
-            abort(403)
 
         return ({
             'class_num': student.extension_apply_12.class_,
@@ -89,13 +85,12 @@ class Extension12(BaseResource):
 
     @swag_from(EXTENSION_POST)
     @jwt_required
+    @BaseResource.student_only
     def post(self):
         """
         12시 연장신청
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not student:
-            abort(403)
 
         now = datetime.now().time()
 
@@ -112,6 +107,7 @@ class Extension12(BaseResource):
 
     @swag_from(EXTENSION_DELETE)
     @jwt_required
+    @BaseResource.student_only
     def delete(self):
         """
         12시 연장신청 취소
