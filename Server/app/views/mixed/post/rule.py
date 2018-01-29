@@ -6,15 +6,13 @@ from app.docs.mixed.post.rule import *
 from app.models.post import RuleModel
 from app.views import BaseResource
 
-from utils.access_controller import signed_account_only
-
 api = Api(Blueprint('rule-api', __name__))
 
 
 @api.resource('/rule')
 class RuleList(BaseResource):
     @swag_from(RULE_LIST_GET)
-    @signed_account_only
+    @BaseResource.signed_account_only
     def get(self):
         """
         기숙사규칙 리스트 조회
@@ -33,7 +31,7 @@ class RuleList(BaseResource):
 @api.resource('/rule/<post_id>')
 class RuleItem(BaseResource):
     @swag_from(RULE_ITEM_GET)
-    @signed_account_only
+    @BaseResource.signed_account_only
     def get(self, post_id):
         """
         기숙사규칙 내용 조회
