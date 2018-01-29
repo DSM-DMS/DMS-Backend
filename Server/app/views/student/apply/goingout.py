@@ -23,10 +23,10 @@ class Goingout(BaseResource):
         if not student:
             abort(403)
 
-        return {
+        return self.unicode_safe_json_response({
             'sat': student.goingout_apply.on_saturday,
             'sun': student.goingout_apply.on_sunday
-        }, 200
+        }, 200)
 
     @swag_from(GOINGOUT_POST)
     @jwt_required

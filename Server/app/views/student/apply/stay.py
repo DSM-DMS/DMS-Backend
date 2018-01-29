@@ -25,9 +25,9 @@ class Stay(BaseResource):
         if not student:
             abort(403)
 
-        return {
+        return self.unicode_safe_json_response({
             'value': student.stay_apply.value
-        }, 200
+        }, 200)
 
     @swag_from(STAY_POST)
     @jwt_required

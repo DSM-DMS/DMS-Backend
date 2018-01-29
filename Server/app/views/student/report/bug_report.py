@@ -28,6 +28,6 @@ class BugReport(BaseResource):
 
         report = BugReportModel(author=student.name, title=title, content=content).save()
 
-        return {
+        return self.unicode_safe_json_response({
             'id': str(report.id)
-        }, 201
+        }, 201)

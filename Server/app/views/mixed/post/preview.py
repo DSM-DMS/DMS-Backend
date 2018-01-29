@@ -1,5 +1,3 @@
-import json
-
 from flasgger import swag_from
 from flask import Blueprint, Response
 from flask_restful import Api
@@ -35,7 +33,7 @@ class FAQPreview(BaseResource):
             'pinned': faq.pinned
         }
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)
 
 
 @api.resource('/preview/notice')
@@ -60,7 +58,7 @@ class NoticePreview(BaseResource):
             'pinned': notice.pinned
         }
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)
 
 
 @api.resource('/preview/rule')
@@ -85,4 +83,4 @@ class RulePreview(BaseResource):
             'pinned': rule.pinned
         }
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)

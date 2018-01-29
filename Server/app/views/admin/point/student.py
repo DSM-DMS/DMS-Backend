@@ -1,5 +1,3 @@
-import json
-
 from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Api, abort, request
@@ -34,7 +32,7 @@ class StudentManaging(BaseResource):
             'penalty_training_status': student.penalty_training_status
         } for student in StudentModel.objects]
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)
 
     @swag_from(STUDENT_MANAGING_POST)
     @jwt_required

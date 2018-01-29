@@ -51,6 +51,6 @@ class AccountControl(BaseResource):
 
         uuid = signup_waiting.uuid
 
-        return self.json_response({
+        return self.unicode_safe_json_response({
             'uuid': uuid
         }, 201)

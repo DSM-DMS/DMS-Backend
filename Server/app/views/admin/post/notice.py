@@ -29,9 +29,9 @@ class NoticeManaging(BaseResource):
 
         notice = NoticeModel(author=admin.name, title=title, content=content).save()
 
-        return {
+        return self.unicode_safe_json_response({
             'id': str(notice.id)
-        }, 201
+        }, 201)
 
     @swag_from(NOTICE_MANAGING_PATCH)
     @jwt_required

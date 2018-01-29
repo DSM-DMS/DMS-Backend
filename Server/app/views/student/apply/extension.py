@@ -1,5 +1,4 @@
 from datetime import datetime
-import json
 
 from flask import Blueprint, Response, current_app
 from flask_jwt_extended import get_jwt_identity, jwt_required
@@ -174,7 +173,7 @@ class ExtensionMap11(BaseResource):
         """
         class_ = int(request.args['class_num'])
 
-        return self.json_response(create_extension_map(class_, 11))
+        return self.unicode_safe_json_response(create_extension_map(class_, 11))
 
 
 @api.resource('/extension/map/12')
@@ -186,4 +185,4 @@ class ExtensionMap12(BaseResource):
         """
         class_ = int(request.args['class_num'])
 
-        return self.json_response(create_extension_map(class_, 12))
+        return self.unicode_safe_json_response(create_extension_map(class_, 12))

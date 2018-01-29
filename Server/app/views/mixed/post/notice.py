@@ -1,5 +1,3 @@
-import json
-
 from flasgger import swag_from
 from flask import Blueprint, Response
 from flask_restful import Api
@@ -29,7 +27,7 @@ class NoticeList(BaseResource):
             'pinned': notice.pinned
         } for notice in NoticeModel.objects]
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)
 
 
 @api.resource('/notice/<post_id>')
@@ -55,4 +53,4 @@ class NoticeItem(BaseResource):
             'pinned': notice.pinned
         }
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)

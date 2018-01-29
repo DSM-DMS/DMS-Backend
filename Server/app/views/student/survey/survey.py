@@ -1,5 +1,3 @@
-import json
-
 from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Api, abort, request
@@ -36,7 +34,7 @@ class Survey(BaseResource):
             'end_date': str(survey.end_date)[:10]
         } for survey in SurveyModel.objects if int(student_number / 1000) in survey.target]
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)
         # Filter by student number
 
 
@@ -78,7 +76,7 @@ class Question(BaseResource):
             else:
                 question['answer'] = None
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)
 
     @swag_from(QUESTION_POST)
     @jwt_required

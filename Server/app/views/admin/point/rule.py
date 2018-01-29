@@ -1,5 +1,3 @@
-import json
-
 from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Api, abort, request
@@ -33,7 +31,7 @@ class PointRuleManaging(BaseResource):
             'max_point': rule.max_point
         } for rule in PointRuleModel.objects]
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)
 
     @swag_from(POINT_RULE_MANAGING_POST)
     @jwt_required

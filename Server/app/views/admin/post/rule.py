@@ -29,9 +29,9 @@ class RuleManaging(BaseResource):
 
         rule = RuleModel(author=admin.name, title=title, content=content).save()
 
-        return {
+        return self.unicode_safe_json_response({
             'id': str(rule.id)
-        }, 201
+        }, 201)
 
     @swag_from(RULE_MANAGING_PATCH)
     @jwt_required

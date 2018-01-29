@@ -1,5 +1,4 @@
 from bson import ObjectId
-import json
 
 from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
@@ -40,7 +39,7 @@ class PointManaging(BaseResource):
             'id': str(history.id)
         } for history in student.point_histories]
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)
 
     @swag_from(POINT_MANAGING_POST)
     @jwt_required

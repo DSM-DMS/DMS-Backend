@@ -1,6 +1,4 @@
-import json
-
-from flask import Blueprint, Response
+from flask import Blueprint
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Api, abort
 from flasgger import swag_from
@@ -33,4 +31,4 @@ class FacilityReportDownload(BaseResource):
             'room': facility_report.room
         } for facility_report in FacilityReportModel.objects]
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)

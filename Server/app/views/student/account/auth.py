@@ -47,10 +47,10 @@ class Auth(BaseResource):
         ).save()
         # Generate new refresh token made up of uuid4
 
-        return {
+        return self.unicode_safe_json_response({
             'access_token': create_access_token(id),
             'refresh_token': create_refresh_token(str(refresh_token))
-        }, 200
+        }, 200)
 
 
 @api.resource('/auth-check')
@@ -81,6 +81,6 @@ class Refresh(BaseResource):
             # Returns status code 205 : Reset Content
             return Response('', 205)
 
-        return {
+        return self.unicode_safe_json_response({
             'access_token': create_access_token(token.token_owner.id)
-        }, 200
+        }, 200)

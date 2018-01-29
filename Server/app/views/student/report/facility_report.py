@@ -32,6 +32,6 @@ class FacilityReport(BaseResource):
 
         report = FacilityReportModel(author=student.name, title=title, content=content, room=room).save()
 
-        return {
+        return self.unicode_safe_json_response({
             'id': str(report.id)
-        }, 201
+        }, 201)

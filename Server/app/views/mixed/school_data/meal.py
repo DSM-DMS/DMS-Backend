@@ -1,5 +1,3 @@
-import json
-
 from flasgger import swag_from
 from flask import Blueprint, Response
 from flask_restful import Api
@@ -28,4 +26,4 @@ class Meal(BaseResource):
             'dinner': meal.dinner
         }
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)

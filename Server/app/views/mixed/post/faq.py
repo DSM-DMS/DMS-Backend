@@ -1,5 +1,3 @@
-import json
-
 from flasgger import swag_from
 from flask import Blueprint, Response
 from flask_jwt_extended import jwt_required
@@ -30,7 +28,7 @@ class FAQList(BaseResource):
             'pinned': faq.pinned
         } for faq in FAQModel.objects]
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)
 
 
 @api.resource('/faq/<post_id>')
@@ -56,4 +54,4 @@ class FAQItem(BaseResource):
             'pinned': faq.pinned
         }
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)

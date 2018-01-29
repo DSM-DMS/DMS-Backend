@@ -29,9 +29,9 @@ class FAQManaging(BaseResource):
 
         faq = FAQModel(author=admin.name, title=title, content=content).save()
 
-        return {
+        return self.unicode_safe_json_response({
             'id': str(faq.id)
-        }, 201
+        }, 201)
 
     @swag_from(FAQ_MANAGING_PATCH)
     @jwt_required

@@ -10,7 +10,7 @@ class BaseResource(Resource):
         self.now = time.strftime('%Y-%m-%d %H:%M:%S')
 
     @classmethod
-    def json_response(cls, data, status_code=200):
+    def unicode_safe_json_response(cls, data, status_code=200):
         return Response(
             json.dumps(data, ensure_ascii=False),
             status_code,

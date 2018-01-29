@@ -35,7 +35,7 @@ class SurveyManaging(BaseResource):
             'end_date': str(survey.end_date)
         } for survey in SurveyModel.objects if len(survey.questions)]
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)
 
     @swag_from(SURVEY_MANAGING_POST)
     @jwt_required
@@ -61,9 +61,9 @@ class SurveyManaging(BaseResource):
             target=target
         ).save()
 
-        return {
+        return self.unicode_safe_json_response({
             'id': str(survey.id)
-        }, 201
+        }, 201)
 
     @swag_from(SURVEY_MANAGING_DELETE)
     @jwt_required
@@ -115,7 +115,7 @@ class QuestionManaging(BaseResource):
             'choice_paper': question.choice_paper if question.is_objective else None
         } for question in survey.questions]
 
-        return self.json_response(response)
+        return self.unicode_safe_json_response(response)
 
     @swag_from(QUESTION_MANAGING_POST)
     @jwt_required
