@@ -35,7 +35,7 @@ class FAQPreview(BaseResource):
             'pinned': faq.pinned
         }
 
-        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(response)
 
 
 @api.resource('/preview/notice')
@@ -60,7 +60,7 @@ class NoticePreview(BaseResource):
             'pinned': notice.pinned
         }
 
-        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(response)
 
 
 @api.resource('/preview/rule')
@@ -85,4 +85,4 @@ class RulePreview(BaseResource):
             'pinned': rule.pinned
         }
 
-        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(response)

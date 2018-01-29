@@ -28,4 +28,4 @@ class Meal(BaseResource):
             'dinner': meal.dinner
         }
 
-        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(response)

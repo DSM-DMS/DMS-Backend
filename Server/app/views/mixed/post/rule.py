@@ -29,7 +29,7 @@ class RuleList(BaseResource):
             'pinned': rule.pinned
         } for rule in RuleModel.objects]
 
-        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(response)
 
 
 @api.resource('/rule/<post_id>')
@@ -55,4 +55,4 @@ class RuleItem(BaseResource):
             'pinned': rule.pinned
         }
 
-        return Response(json.dumps(response,ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(response)

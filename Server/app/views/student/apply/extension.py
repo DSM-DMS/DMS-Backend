@@ -174,7 +174,7 @@ class ExtensionMap11(BaseResource):
         """
         class_ = int(request.args['class_num'])
 
-        return Response(json.dumps(create_extension_map(class_, 11), ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(create_extension_map(class_, 11))
 
 
 @api.resource('/extension/map/12')
@@ -186,4 +186,4 @@ class ExtensionMap12(BaseResource):
         """
         class_ = int(request.args['class_num'])
 
-        return Response(json.dumps(create_extension_map(class_, 12), ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(create_extension_map(class_, 12))

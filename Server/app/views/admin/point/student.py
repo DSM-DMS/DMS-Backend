@@ -34,7 +34,7 @@ class StudentManaging(BaseResource):
             'penalty_training_status': student.penalty_training_status
         } for student in StudentModel.objects]
 
-        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(response)
 
     @swag_from(STUDENT_MANAGING_POST)
     @jwt_required

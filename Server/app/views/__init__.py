@@ -14,7 +14,7 @@ class BaseResource(Resource):
         return Response(
             json.dumps(data, ensure_ascii=False),
             status_code,
-            'application/json; charset=utf8'
+            content_type='application/json; charset=utf8'
         )
 
 

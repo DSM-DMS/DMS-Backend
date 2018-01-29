@@ -29,7 +29,7 @@ class NoticeList(BaseResource):
             'pinned': notice.pinned
         } for notice in NoticeModel.objects]
 
-        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(response)
 
 
 @api.resource('/notice/<post_id>')
@@ -55,4 +55,4 @@ class NoticeItem(BaseResource):
             'pinned': notice.pinned
         }
 
-        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(response)

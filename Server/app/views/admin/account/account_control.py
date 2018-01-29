@@ -2,7 +2,7 @@ from uuid import uuid4
 
 from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, Resource, abort, request
+from flask_restful import Api, abort, request
 from flasgger import swag_from
 
 from app.docs.admin.account.account_control import *
@@ -51,6 +51,6 @@ class AccountControl(BaseResource):
 
         uuid = signup_waiting.uuid
 
-        return {
+        return self.json_response({
             'uuid': uuid
-        }, 201
+        }, 201)

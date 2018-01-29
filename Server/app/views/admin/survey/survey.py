@@ -35,7 +35,7 @@ class SurveyManaging(BaseResource):
             'end_date': str(survey.end_date)
         } for survey in SurveyModel.objects if len(survey.questions)]
 
-        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(response)
 
     @swag_from(SURVEY_MANAGING_POST)
     @jwt_required
@@ -115,7 +115,7 @@ class QuestionManaging(BaseResource):
             'choice_paper': question.choice_paper if question.is_objective else None
         } for question in survey.questions]
 
-        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(response)
 
     @swag_from(QUESTION_MANAGING_POST)
     @jwt_required

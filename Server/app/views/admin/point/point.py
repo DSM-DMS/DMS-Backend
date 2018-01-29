@@ -40,7 +40,7 @@ class PointManaging(BaseResource):
             'id': str(history.id)
         } for history in student.point_histories]
 
-        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(response)
 
     @swag_from(POINT_MANAGING_POST)
     @jwt_required

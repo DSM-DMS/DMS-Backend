@@ -32,4 +32,4 @@ class BugReportDownload(BaseResource):
             'content': bug_report.content
         } for bug_report in BugReportModel.objects]
 
-        return Response(json.dumps(response, ensure_ascii=False), content_type='application/json; charset=utf8')
+        return self.json_response(response)
