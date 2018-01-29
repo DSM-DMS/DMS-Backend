@@ -1,13 +1,17 @@
-from flask import Response
+from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
+from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
 
 from app.docs.admin.post.preview import *
 from app.models.account import AdminModel
 from app.models.post import FAQModel, NoticeModel, RuleModel
 
+api = Api(Blueprint('admin-preview-api', __name__))
+api.prefix = '/admin/preview'
 
+
+@api.resource('/faq')
 class FAQPreviewManaging(Resource):
     @swag_from(FAQ_PREVIEW_MANAGING_POST)
     @jwt_required
@@ -17,7 +21,7 @@ class FAQPreviewManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         id = request.form.get('id')
         if len(id) != 24:
@@ -36,6 +40,7 @@ class FAQPreviewManaging(Resource):
         return Response('', 201)
 
 
+@api.resource('/notice')
 class NoticePreviewManaging(Resource):
     @swag_from(NOTICE_PREVIEW_MANAGING_POST)
     @jwt_required
@@ -45,7 +50,7 @@ class NoticePreviewManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         id = request.form.get('id')
         if len(id) != 24:
@@ -64,6 +69,7 @@ class NoticePreviewManaging(Resource):
         return Response('', 201)
 
 
+@api.resource('/rule')
 class RulePreviewManaging(Resource):
     @swag_from(RULE_PREVIEW_MANAGING_POST)
     @jwt_required
@@ -73,7 +79,7 @@ class RulePreviewManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         id = request.form.get('id')
         if len(id) != 24:
