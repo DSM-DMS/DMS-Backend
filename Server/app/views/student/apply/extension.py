@@ -44,7 +44,7 @@ class Extension11(Resource):
 
         now = datetime.now().time()
 
-        if not current_app.config['TEST'] and not APPLY_START < now < APPLY_END_11:
+        if not current_app.debug and not APPLY_START < now < APPLY_END_11:
             # Not testing, can't apply
             return Response('', 204)
 
@@ -99,7 +99,7 @@ class Extension12(Resource):
 
         now = datetime.now().time()
 
-        if not current_app.config['TEST'] and not APPLY_START < now < APPLY_END_12:
+        if not current_app.debug and not APPLY_START < now < APPLY_END_12:
             # Not testing, can't apply
             return Response('', 204)
 
