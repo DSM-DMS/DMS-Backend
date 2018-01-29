@@ -2,12 +2,12 @@ import json
 
 from flasgger import swag_from
 from flask import Blueprint, Response
-from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, Resource, abort
+from flask_restful import Api, Resource
 
 from app.docs.mixed.post.notice import *
-from app.models.account import AdminModel, StudentModel
 from app.models.post import NoticeModel
+
+from utils.access_controller import signed_account_only
 
 api = Api(Blueprint('notice-api', __name__))
 
@@ -15,16 +15,11 @@ api = Api(Blueprint('notice-api', __name__))
 @api.resource('/notice')
 class NoticeList(Resource):
     @swag_from(NOTICE_LIST_GET)
-    @jwt_required
+    @signed_account_only
     def get(self):
         """
         공지사항 리스트 조회
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not any((admin, student)):
-            abort(403)
-
         response = [{
             'id': str(notice.id),
             'write_time': str(notice.write_time)[:10],
@@ -39,16 +34,11 @@ class NoticeList(Resource):
 @api.resource('/notice/<post_id>')
 class NoticeItem(Resource):
     @swag_from(NOTICE_ITEM_GET)
-    @jwt_required
+    @signed_account_only
     def get(self, post_id):
         """
         공지사항 내용 조회
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not any((admin, student)):
-            abort(403)
-
         if len(post_id) != 24:
             return Response('', 204)
 

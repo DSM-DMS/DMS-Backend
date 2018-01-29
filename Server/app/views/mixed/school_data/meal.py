@@ -2,7 +2,7 @@ import json
 
 from flasgger import swag_from
 from flask import Blueprint, Response
-from flask_restful import Api, Resource, abort
+from flask_restful import Api, Resource
 
 from app.docs.mixed.school_data.meal import *
 from app.models.meal import MealModel
