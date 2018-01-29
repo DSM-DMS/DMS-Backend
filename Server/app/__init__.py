@@ -6,6 +6,7 @@ from flasgger import Swagger
 from app.docs import TEMPLATE
 from app.models import Mongo
 from app.views import ViewInjector
+from utils.access_controller import AccessControl
 
 from config.dev import DevConfig
 from config.production import ProductionConfig
@@ -16,6 +17,7 @@ swagger = Swagger(template=TEMPLATE)
 
 db = Mongo()
 view = ViewInjector()
+access_control = AccessControl()
 
 
 def create_app(dev=True):
@@ -32,6 +34,7 @@ def create_app(dev=True):
     swagger.init_app(app_)
     db.init_app(app_)
     view.init_app(app_)
+    access_control.init_app(app_)
 
     return app_
 
