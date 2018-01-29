@@ -1,15 +1,14 @@
 from bson import ObjectId
 
 from flask import Blueprint, Response
-from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, abort, request
+from flask_jwt_extended import jwt_required
+from flask_restful import Api, request
 from flasgger import swag_from
 
 from app.docs.admin.point.point import *
-from app.models.account import AdminModel, StudentModel
+from app.models.account import StudentModel
 from app.models.point import PointRuleModel, PointHistoryModel
 from app.views import BaseResource
-
 
 api = Api(Blueprint('admin-point-api', __name__))
 api.prefix = '/admin/managing'
@@ -19,14 +18,11 @@ api.prefix = '/admin/managing'
 class PointManaging(BaseResource):
     @swag_from(POINT_MANAGING_GET)
     @jwt_required
+    @BaseResource.admin_only
     def get(self):
         """
         특정 학생의 상벌점 내역 조회
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         id = request.args['id']
         student = StudentModel.objects(id=id).first()
         if not student:
@@ -43,14 +39,11 @@ class PointManaging(BaseResource):
 
     @swag_from(POINT_MANAGING_POST)
     @jwt_required
+    @BaseResource.admin_only
     def post(self):
         """
         특정 학생에 대한 상벌점 부여
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         id = request.form['id']
         student = StudentModel.objects(id=id).first()
         if not student:
@@ -84,14 +77,11 @@ class PointManaging(BaseResource):
 
     @swag_from(POINT_MANAGING_DELETE)
     @jwt_required
+    @BaseResource.admin_only
     def delete(self):
         """
         상벌점 내역 삭제
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         student_id = request.form['student_id']
         point_id = request.form['point_id']
 

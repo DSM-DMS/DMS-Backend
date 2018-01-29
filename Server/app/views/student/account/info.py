@@ -1,10 +1,9 @@
 from flask import Blueprint
-from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, abort
+from flask_jwt_extended import jwt_required
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.student.account.info import MYPAGE_GET
-from app.models.account import StudentModel
 from app.views import BaseResource
 
 api = Api(Blueprint('student-info-api', __name__))
@@ -14,14 +13,11 @@ api = Api(Blueprint('student-info-api', __name__))
 class MyPage(BaseResource):
     @swag_from(MYPAGE_GET)
     @jwt_required
+    @BaseResource.student_only
     def get(self):
         """
         마이페이지에 해당하는 정보 조회
         """
-        student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not student:
-            abort(403)
-
         response = {
             'name': student.name,
             'number': student.number,

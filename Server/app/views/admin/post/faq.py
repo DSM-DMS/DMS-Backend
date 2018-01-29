@@ -1,6 +1,6 @@
 from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, abort, request
+from flask_restful import Api, request
 from flasgger import swag_from
 
 from app.docs.admin.post.faq import *
@@ -16,17 +16,15 @@ api.prefix = '/admin'
 class FAQManaging(BaseResource):
     @swag_from(FAQ_MANAGING_POST)
     @jwt_required
+    @BaseResource.admin_only
     def post(self):
         """
         FAQ 업로드
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         title = request.form['title']
         content = request.form['content']
 
+        admin = AdminModel.objects(id=get_jwt_identity()).first()
         faq = FAQModel(author=admin.name, title=title, content=content).save()
 
         return self.unicode_safe_json_response({
@@ -35,14 +33,11 @@ class FAQManaging(BaseResource):
 
     @swag_from(FAQ_MANAGING_PATCH)
     @jwt_required
+    @BaseResource.admin_only
     def patch(self):
         """
         FAQ 수정
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         id = request.form['id']
         title = request.form['title']
         content = request.form['content']
@@ -60,14 +55,11 @@ class FAQManaging(BaseResource):
 
     @swag_from(FAQ_MANAGING_DELETE)
     @jwt_required
+    @BaseResource.admin_only
     def delete(self):
         """
         FAQ 제거
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         id = request.form['id']
 
         if len(id) != 24:

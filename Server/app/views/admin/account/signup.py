@@ -2,8 +2,8 @@ from binascii import hexlify
 from hashlib import pbkdf2_hmac
 
 from flask import Blueprint, Response, current_app
-from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, abort, request
+from flask_jwt_extended import jwt_required
+from flask_restful import Api, request
 from flasgger import swag_from
 
 from app.docs.admin.account.signup import NEW_ACCOUNT_POST
@@ -18,14 +18,11 @@ api.prefix = '/admin'
 class NewAccount(BaseResource):
     @swag_from(NEW_ACCOUNT_POST)
     @jwt_required
+    @BaseResource.admin_only
     def post(self):
         """
         새로운 관리자 계정 생성
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         id = request.form['id']
         pw = request.form['pw']
         name = request.form['name']

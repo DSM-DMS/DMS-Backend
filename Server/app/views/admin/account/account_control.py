@@ -1,12 +1,12 @@
 from uuid import uuid4
 
 from flask import Blueprint, Response
-from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, abort, request
+from flask_restful import Api, request
+from flask_jwt_extended import jwt_required
 from flasgger import swag_from
 
 from app.docs.admin.account.account_control import *
-from app.models.account import SignupWaitingModel, StudentModel, AdminModel
+from app.models.account import SignupWaitingModel, StudentModel
 from app.views import BaseResource
 
 api = Api(Blueprint('admin-account-control-api', __name__))
@@ -17,14 +17,11 @@ api.prefix = '/admin'
 class AccountControl(BaseResource):
     @swag_from(ACCOUNT_CONTROL_POST)
     @jwt_required
+    @BaseResource.admin_only
     def post(self):
         """
         학생 계정 제거 후 새로운 UUID 생성
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         number = int(request.form['number'])
         student = StudentModel.objects(number=number).first()
 

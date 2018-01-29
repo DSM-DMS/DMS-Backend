@@ -1,10 +1,9 @@
 from flask import Blueprint, Response
-from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, abort, request
+from flask_jwt_extended import jwt_required
+from flask_restful import Api, request
 from flasgger import swag_from
 
 from app.docs.admin.post.preview import *
-from app.models.account import AdminModel
 from app.models.post import FAQModel, NoticeModel, RuleModel
 from app.views import BaseResource
 
@@ -16,14 +15,11 @@ api.prefix = '/admin/preview'
 class FAQPreviewManaging(BaseResource):
     @swag_from(FAQ_PREVIEW_MANAGING_POST)
     @jwt_required
+    @BaseResource.admin_only
     def post(self):
         """
         FAQ 프리뷰 설정
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         id = request.form.get('id')
         if len(id) != 24:
             return Response('', 204)
@@ -45,14 +41,11 @@ class FAQPreviewManaging(BaseResource):
 class NoticePreviewManaging(BaseResource):
     @swag_from(NOTICE_PREVIEW_MANAGING_POST)
     @jwt_required
+    @BaseResource.admin_only
     def post(self):
         """
         공지사항 프리뷰 설정
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         id = request.form.get('id')
         if len(id) != 24:
             return Response('', 204)
@@ -74,14 +67,11 @@ class NoticePreviewManaging(BaseResource):
 class RulePreviewManaging(BaseResource):
     @swag_from(RULE_PREVIEW_MANAGING_POST)
     @jwt_required
+    @BaseResource.admin_only
     def post(self):
         """
         기숙사규정 프리뷰 설정
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         id = request.form.get('id')
         if len(id) != 24:
             return Response('', 204)

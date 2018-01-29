@@ -57,12 +57,8 @@ class Auth(BaseResource):
 class AuthCheck(BaseResource):
     @swag_from(AUTH_CHECK_GET)
     @jwt_required
+    @BaseResource.student_only
     def get(self):
-        student = StudentModel.objects(id=get_jwt_identity()).first()
-
-        if not student:
-            abort(403)
-
         return Response('', 200)
 
 

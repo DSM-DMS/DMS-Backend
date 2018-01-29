@@ -1,10 +1,10 @@
 from flask import Blueprint, Response
-from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, abort, request
+from flask_jwt_extended import jwt_required
+from flask_restful import Api, request
 from flasgger import swag_from
 
 from app.docs.admin.point.student import *
-from app.models.account import AdminModel, StudentModel
+from app.models.account import StudentModel
 from app.views import BaseResource
 
 api = Api(Blueprint('admin-student-point-api', __name__))
@@ -15,14 +15,11 @@ api.prefix = '/admin/managing'
 class StudentManaging(BaseResource):
     @swag_from(STUDENT_MANAGING_GET)
     @jwt_required
+    @BaseResource.admin_only
     def get(self):
         """
         학생 목록 조회
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         response = [{
             'id': student.id,
             'name': student.name,
@@ -36,14 +33,11 @@ class StudentManaging(BaseResource):
 
     @swag_from(STUDENT_MANAGING_POST)
     @jwt_required
+    @BaseResource.admin_only
     def post(self):
         """
         새로운 학생 상벌점 데이터 등록
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         id = request.form['id']
         student = StudentModel.objects(id=id).first()
         if not student:

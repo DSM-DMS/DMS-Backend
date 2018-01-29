@@ -1,10 +1,9 @@
 from flask import Blueprint, Response
-from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, abort, request
+from flask_jwt_extended import jwt_required
+from flask_restful import Api, request
 from flasgger import swag_from
 
 from app.docs.admin.point.rule import *
-from app.models.account import AdminModel
 from app.models.point import PointRuleModel
 from app.views import BaseResource
 
@@ -16,14 +15,11 @@ api.prefix = '/admin/managing'
 class PointRuleManaging(BaseResource):
     @swag_from(POINT_RULE_MANAGING_GET)
     @jwt_required
+    @BaseResource.admin_only
     def get(self):
         """
         상벌점 규칙 목록 조회
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         response = [{
             'id': str(rule.id),
             'name': rule.name,
@@ -35,14 +31,11 @@ class PointRuleManaging(BaseResource):
 
     @swag_from(POINT_RULE_MANAGING_POST)
     @jwt_required
+    @BaseResource.admin_only
     def post(self):
         """
         상벌점 규칙 추가
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         name = request.form['name']
         min_point = int(request.form['min_point'])
         max_point = int(request.form['max_point'])
@@ -59,14 +52,11 @@ class PointRuleManaging(BaseResource):
 
     @swag_from(POINT_RULE_MANAGING_PATCH)
     @jwt_required
+    @BaseResource.admin_only
     def patch(self):
         """
         상벌점 규칙 수정
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         rule_id = request.form['rule_id']
         if len(rule_id) != 24:
             return Response('', 204)
@@ -89,14 +79,11 @@ class PointRuleManaging(BaseResource):
 
     @swag_from(POINT_RULE_MANAGING_DELETE)
     @jwt_required
+    @BaseResource.admin_only
     def delete(self):
         """
         상벌점 규칙 삭제
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         rule_id = request.form['rule_id']
         if len(rule_id) != 24:
             return Response('', 204)

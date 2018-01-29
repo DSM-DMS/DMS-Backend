@@ -1,10 +1,9 @@
 from flask import Blueprint
-from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, abort
+from flask_jwt_extended import jwt_required
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.admin.report.bug_report import *
-from app.models.account import AdminModel
 from app.models.report import BugReportModel
 from app.views import BaseResource
 
@@ -16,14 +15,11 @@ api.prefix = '/admin'
 class BugReportDownload(BaseResource):
     @swag_from(BUG_REPORT_DOWNLOAD_GET)
     @jwt_required
+    @BaseResource.admin_only
     def get(self):
         """
         버그신고 리스트 조회
         """
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
-
         response = [{
             'author': bug_report.author,
             'title': bug_report.title,
