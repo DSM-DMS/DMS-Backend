@@ -8,10 +8,6 @@ from app.views.admin.apply.stay import *
 from app.views.admin.point.point import *
 from app.views.admin.point.rule import *
 from app.views.admin.point.student import *
-from app.views.admin.post.faq import *
-from app.views.admin.post.notice import *
-from app.views.admin.post.preview import *
-from app.views.admin.post.rule import *
 
 
 class BaseResource(Resource):
@@ -49,13 +45,11 @@ class ViewInjector(object):
         api.add_resource(PointRuleManaging, '/admin/managing/rule')
         api.add_resource(PointManaging, '/admin/managing/point')
 
-        api.add_resource(FAQPreviewManaging, '/admin/preview/faq')
-        api.add_resource(NoticePreviewManaging, '/admin/preview/notice')
-        api.add_resource(RulePreviewManaging, '/admin/preview/rule')
-
-        api.add_resource(FAQManaging, '/admin/faq')
-        api.add_resource(NoticeManaging, '/admin/notice')
-        api.add_resource(RuleManaging, '/admin/rule')
+        from app.views.admin.post import faq, notice, preview, rule
+        app.register_blueprint(faq.api.blueprint)
+        app.register_blueprint(notice.api.blueprint)
+        app.register_blueprint(preview.api.blueprint)
+        app.register_blueprint(rule.api.blueprint)
 
         from app.views.admin.report import bug_report, facility_report
         app.register_blueprint(bug_report.api.blueprint)

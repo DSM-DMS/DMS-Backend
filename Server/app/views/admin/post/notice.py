@@ -1,13 +1,17 @@
-from flask import Response
+from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, request
+from flask_restful import Api, Resource, abort, request
 from flasgger import swag_from
 
 from app.docs.admin.post.notice import *
 from app.models.account import AdminModel
 from app.models.post import NoticeModel
 
+api = Api(Blueprint('admin-notice-api', __name__))
+api.prefix = '/admin'
 
+
+@api.resource('/notice')
 class NoticeManaging(Resource):
     @swag_from(NOTICE_MANAGING_POST)
     @jwt_required
@@ -17,7 +21,7 @@ class NoticeManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         title = request.form['title']
         content = request.form['content']
@@ -36,7 +40,7 @@ class NoticeManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         id = request.form['id']
         title = request.form['title']
@@ -61,7 +65,7 @@ class NoticeManaging(Resource):
         """
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         if not admin:
-            return Response('', 403)
+            abort(403)
 
         id = request.form['id']
 
