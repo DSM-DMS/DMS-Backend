@@ -146,28 +146,28 @@ class TestSurvey(unittest.TestCase):
         # -- Preparations --
 
         # -- Exception Tests --
-        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={'survey_id': '1234'})
+        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data=json.dumps({'survey_id': '1234'}), content_type='application/json')
         self.assertEqual(rv.status_code, 204)
 
-        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={'survey_id': '123456789012345678901234'})
+        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data=json.dumps({'survey_id': '123456789012345678901234'}), content_type='application/json')
         self.assertEqual(rv.status_code, 204)
         # -- Exception Tests --
 
         # -- Process --
-        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={
+        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data=json.dumps({
             'survey_id': survey_id,
-            'questions': json.dumps([
+            'questions': [
                 {
                     'title': 'test',
                     'is_objective': True,
-                    'choice_paper': json.dumps(['one', 'two', 'three'])
+                    'choice_paper': ['one', 'two', 'three']
                 },
                 {
                     'title': 'test2',
                     'is_objective': False
                 }
-            ])
-        })
+            ]
+        }), content_type='application/json')
         self.assertEqual(rv.status_code, 201)
         # -- Process --
 
@@ -208,20 +208,20 @@ class TestSurvey(unittest.TestCase):
         self.assertEqual(rv.status_code, 201)
         survey_id = json.loads(rv.data.decode())['id']
 
-        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data={
+        rv = self.client.post('/admin/survey/question', headers={'Authorization': self.admin_access_token}, data=json.dumps({
             'survey_id': survey_id,
-            'questions': json.dumps([
+            'questions': [
                 {
                     'title': 'test',
                     'is_objective': True,
-                    'choice_paper': json.dumps(['one', 'two', 'three'])
+                    'choice_paper': ['one', 'two', 'three']
                 },
                 {
                     'title': 'test2',
                     'is_objective': False
                 }
-            ])
-        })
+            ]
+        }), content_type='application/json')
         self.assertEqual(rv.status_code, 201)
         # -- Preparations --
 
