@@ -29,7 +29,7 @@ class SurveyManaging(BaseResource):
             'description': survey.description,
             'start_date': str(survey.start_date),
             'end_date': str(survey.end_date)
-        } for survey in SurveyModel.objects if len(survey.questions)]
+        } for survey in SurveyModel.objects if QuestionModel.objects(survey=survey).count()]
 
         return self.unicode_safe_json_response(response)
 
@@ -100,7 +100,7 @@ class QuestionManaging(BaseResource):
             'title': question.title,
             'is_objective': question.is_objective,
             'choice_paper': question.choice_paper if question.is_objective else None
-        } for question in survey.questions]
+        } for question in QuestionModel.objects(survey=survey)]
 
         return self.unicode_safe_json_response(response)
 
@@ -126,10 +126,11 @@ class QuestionManaging(BaseResource):
             title = question['title']
             is_objective = question['is_objective']
 
-            survey.questions.append(QuestionModel(
+            QuestionModel(
+                survey=survey,
                 title=title,
                 is_objective=is_objective,
                 choice_paper=question['choice_paper'] if is_objective else []
-            ))
+            ).save()
 
         return Response('', 201)

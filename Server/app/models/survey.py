@@ -4,43 +4,6 @@ from app.models import *
 from app.models.account import StudentModel
 
 
-class AnswerModel(EmbeddedDocument):
-    """
-    Answer data for each question document
-    """
-    meta = {
-        'collection': 'answer'
-    }
-
-    answer_student = ReferenceField(
-        document_type=StudentModel,
-        required=True
-    )
-    content = StringField(
-        required=True
-    )
-
-
-class QuestionModel(EmbeddedDocument):
-    """
-    Each questions in a survey document
-    """
-    meta = {
-        'collection': 'question'
-    }
-
-    title = StringField(
-        required=True
-    )
-    is_objective = BooleanField(
-        required=True
-    )
-    choice_paper = ListField()
-    answers = EmbeddedDocumentListField(
-        document_type=AnswerModel
-    )
-
-
 class SurveyModel(Document):
     """
     Survey information document
@@ -68,6 +31,51 @@ class SurveyModel(Document):
     target = ListField(
         IntField()
     )
-    questions = EmbeddedDocumentListField(
-        document_type=QuestionModel
+
+
+class QuestionModel(Document):
+    """
+    Each questions in a survey document
+    """
+
+    meta = {
+        'collection': 'question'
+    }
+
+    survey = ReferenceField(
+        document_type=SurveyModel,
+        required=True,
+        reverse_delete_rule=CASCADE
+    )
+
+    title = StringField(
+        required=True
+    )
+    is_objective = BooleanField(
+        required=True
+    )
+    choice_paper = ListField()
+
+
+class AnswerModel(Document):
+    """
+    Answer data for each question document
+    """
+
+    meta = {
+        'collection': 'answer'
+    }
+
+    question = ReferenceField(
+        document_type=QuestionModel,
+        required=True,
+        reverse_delete_rule=CASCADE
+    )
+
+    answer_student = ReferenceField(
+        document_type=StudentModel,
+        required=True
+    )
+    content = StringField(
+        required=True
     )

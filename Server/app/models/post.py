@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from app.models import *
-from app.models.account import AdminModel
 
 
 class PostBase(Document):
