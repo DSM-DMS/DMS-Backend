@@ -42,3 +42,17 @@ def ready_applyment_worksheet(ws):
 
     for cell1, cell2, cell3 in zip(list(ws.rows)[1], list(ws.rows)[24], list(ws.rows)[46]):
         cell1.fill = cell2.fill = cell3.fill = PatternFill(patternType='solid', fill_type='solid', fgColor=Color('C4C4C4'))
+
+
+def ready_uuid_worksheet(ws):
+    for row in range(1, 23):
+        # 1 to 22
+        for col in range(65, 68):
+            cell = ws[chr(col) + str(row)]
+
+            cell.alignment = Alignment(horizontal='center')
+            cell.font = Font(bold=True)
+
+    ws['A1'] = '학번'
+    ws['B1'] = '이름'
+    ws['C1'] = 'Code'
