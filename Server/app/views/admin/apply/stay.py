@@ -9,7 +9,7 @@ from app.docs.admin.apply.stay import *
 from app.models.account import StudentModel
 from app.views import BaseResource
 
-from utils.apply_excel_manager import get_cells, ready_worksheet
+from utils.apply_excel_manager import get_cell_positions_from_student_number, ready_applyment_worksheet
 
 api = Api(Blueprint('admin-stay-api', __name__))
 api.prefix = '/admin'
@@ -27,10 +27,10 @@ class StayDownload(BaseResource):
         wb = Workbook()
         ws = wb.active
 
-        ready_worksheet(ws)
+        ready_applyment_worksheet(ws)
 
         for student in StudentModel.objects:
-            number_cell, name_cell, status_cell = get_cells(student)
+            number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
 
             ws[number_cell] = student.number
             ws[name_cell] = student.name

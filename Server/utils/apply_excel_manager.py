@@ -1,10 +1,10 @@
 from openpyxl.styles import Alignment, Color, Font, PatternFill
 
 
-def get_cells(student):
+def get_cell_positions_from_student_number(student):
     number = student.number
 
-    # Get row
+    # Get first row number
     grade = int(number / 1000)
     if grade == 1:
         row_start = 3
@@ -17,6 +17,7 @@ def get_cells(student):
     # Get cols
     class_ = int(number % 1000 / 100)
     number_col = chr(ord('B') + (class_ - 1) * 4)
+    # First column is B
     name_col = chr(ord(number_col) + 1)
     status_col = chr(ord(name_col) + 1)
 
@@ -28,7 +29,7 @@ def get_cells(student):
     return number_cell, name_cell, status_cell
 
 
-def ready_worksheet(ws):
+def ready_applyment_worksheet(ws):
     for row in range(2, 70):
         for col in range(65, 81):
             cell = ws[chr(col) + str(row)]

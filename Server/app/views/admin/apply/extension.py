@@ -9,7 +9,7 @@ from app.docs.admin.apply.extension import *
 from app.models.account import StudentModel
 from app.views import BaseResource
 
-from utils.apply_excel_manager import get_cells, ready_worksheet
+from utils.apply_excel_manager import get_cell_positions_from_student_number, ready_applyment_worksheet
 
 EXTENSION_CLASSES = ['가온실', '나온실', '다온실', '라온실', '3층 독서실', '4층 독서실', '5층 열린교실']
 
@@ -29,10 +29,10 @@ class Extension11Download(BaseResource):
         wb = Workbook()
         ws = wb.active
 
-        ready_worksheet(ws)
+        ready_applyment_worksheet(ws)
 
         for student in StudentModel.objects:
-            number_cell, name_cell, status_cell = get_cells(student)
+            number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
 
             ws[number_cell] = student.number
             ws[name_cell] = student.name
@@ -62,10 +62,10 @@ class Extension12Download(BaseResource):
         wb = Workbook()
         ws = wb.active
 
-        ready_worksheet(ws)
+        ready_applyment_worksheet(ws)
 
         for student in StudentModel.objects:
-            number_cell, name_cell, status_cell = get_cells(student)
+            number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
 
             ws[number_cell] = student.number
             ws[name_cell] = student.name
