@@ -34,6 +34,7 @@
 # Server/app/views/student/report/bug_report.py: 1
 # Server/app/views/student/report/facility_report.py: 1
 # Server/app/views/student/survey/survey.py: 1
+# Server/app/views/system/uuid_generator.py: 4
 # Server/server.py: 2
 Flask == 0.12.2
 
@@ -105,6 +106,7 @@ Flask_JWT_Extended == 3.6.0
 # Server/app/views/student/report/bug_report.py: 3
 # Server/app/views/student/report/facility_report.py: 3
 # Server/app/views/student/survey/survey.py: 3
+# Server/app/views/system/uuid_generator.py: 5
 Flask_RESTful == 0.3.6
 
 # Server/app/__init__.py: 4
@@ -143,6 +145,13 @@ flasgger == 0.8.0
 
 # Server/app/models/__init__.py: 1
 mongoengine == 0.15.0
+
+# Server/app/views/admin/apply/extension.py: 1
+# Server/app/views/admin/apply/goingout.py: 1
+# Server/app/views/admin/apply/stay.py: 1
+# Server/app/views/system/uuid_generator.py: 1
+# Server/utils/apply_excel_manager.py: 1
+openpyxl == 2.5.0
 
 # Server/app/models/point.py: 1
 # Server/app/views/admin/point/point.py: 1
