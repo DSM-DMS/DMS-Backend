@@ -13,7 +13,7 @@ class Config(object):
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=365)
     JWT_HEADER_TYPE = 'JWT'
 
-    SERVICE_NAME = 'DMS'
+    SERVICE_NAME = 'dms'
 
     SWAGGER = {
         'title': SERVICE_NAME,
