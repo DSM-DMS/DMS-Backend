@@ -4,7 +4,7 @@ import os
 
 class Config(object):
     DOMAIN = 'dsm2015.cafe24.com'
-    PORT = 3001
+    PORT = 8080
 
     SECRET_KEY = os.getenv('SECRET_KEY', '85c145a16bd6f6e1f3e104ca78c6a102')
     # Secret key for any 3-rd party libraries
