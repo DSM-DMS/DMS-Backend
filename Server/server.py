@@ -1,6 +1,17 @@
 import os
+from flask import render_template
 
 from app import app
+
+
+@app.route('/')
+def student():
+    return render_template('student/index.html')
+
+
+@app.route('/admin')
+def admin():
+    return render_template('admin/index.html')
 
 if __name__ == '__main__':
     if os.getenv('MYSQL_PW'):
