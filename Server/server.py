@@ -6,12 +6,12 @@ from app import app
 
 @app.route('/')
 def student():
-    return render_template('student/index.html')
+    return render_template('student.html')
 
 
 @app.route('/admin')
 def admin():
-    return render_template('admin/index.html')
+    return render_template('admin.html')
 
 if __name__ == '__main__':
     if os.getenv('MYSQL_PW'):
