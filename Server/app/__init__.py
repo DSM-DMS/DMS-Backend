@@ -10,14 +10,6 @@ from app.views import AccessControl, Router
 from config.dev import DevConfig
 from config.production import ProductionConfig
 
-jwt = JWTManager()
-cors = CORS()
-swagger = Swagger(template=TEMPLATE)
-
-db = Mongo()
-access_control = AccessControl()
-router = Router()
-
 
 def create_app(dev=True):
     """
@@ -28,12 +20,12 @@ def create_app(dev=True):
     app_ = Flask(__name__)
     app_.config.from_object(DevConfig if dev else ProductionConfig)
 
-    jwt.init_app(app_)
-    cors.init_app(app_)
-    swagger.init_app(app_)
-    db.init_app(app_)
-    access_control.init_app(app_)
-    router.init_app(app_)
+    JWTManager(app_)
+    CORS(app_)
+    Swagger(app_, template=TEMPLATE)
+    Mongo(app_)
+    AccessControl(app_)
+    Router(app_)
 
     return app_
 
