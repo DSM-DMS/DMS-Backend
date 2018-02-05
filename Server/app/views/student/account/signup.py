@@ -59,6 +59,8 @@ class Signup(BaseResource):
         id = request.form['id']
         pw = request.form['pw']
 
+        print(id, pw, current_app.secret_key)
+
         signup_waiting = SignupWaitingModel.objects(uuid=uuid).first()
         student = StudentModel.objects(id=id).first()
         # To validate
@@ -86,15 +88,6 @@ class Signup(BaseResource):
         )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
-        StudentModel(
-            id=id,
-            pw=pw,
-            name=name,
-            number=number,
-            good_point=0,
-            bad_point=0,
-            penalty_training_status=0
-        )
         StudentModel(id=id, pw=pw, name=name, number=number).save()
 
         return Response('', 201)
