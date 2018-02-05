@@ -35,6 +35,8 @@ class Auth(BaseResource):
         )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
+        print(pw)
+
         student = StudentModel.objects(id=id, pw=pw).first()
         if not student:
             abort(401)

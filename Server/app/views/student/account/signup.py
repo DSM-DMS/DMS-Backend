@@ -61,6 +61,15 @@ class Signup(BaseResource):
 
         print(id, pw, current_app.secret_key)
 
+        pw = hexlify(pbkdf2_hmac(
+            hash_name='sha256',
+            password=pw.encode(),
+            salt=current_app.secret_key.encode(),
+            iterations=100000
+        )).decode('utf-8')
+
+        print(pw)
+
         signup_waiting = SignupWaitingModel.objects(uuid=uuid).first()
         student = StudentModel.objects(id=id).first()
         # To validate
@@ -80,12 +89,12 @@ class Signup(BaseResource):
 
         signup_waiting.delete()
 
-        pw = hexlify(pbkdf2_hmac(
-            hash_name='sha256',
-            password=pw.encode(),
-            salt=current_app.secret_key.encode(),
-            iterations=100000
-        )).decode('utf-8')
+        # pw = hexlify(pbkdf2_hmac(
+        #     hash_name='sha256',
+        #     password=pw.encode(),
+        #     salt=current_app.secret_key.encode(),
+        #     iterations=100000
+        # )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
         StudentModel(id=id, pw=pw, name=name, number=number).save()
