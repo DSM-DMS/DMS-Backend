@@ -1,4 +1,5 @@
 import os
+
 from flask import render_template
 
 from app import app
@@ -12,6 +13,7 @@ def student():
 @app.route('/admin')
 def admin():
     return render_template('admin.html')
+
 
 if __name__ == '__main__':
     if os.getenv('MYSQL_PW'):
