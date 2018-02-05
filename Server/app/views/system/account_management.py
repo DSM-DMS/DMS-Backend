@@ -5,6 +5,7 @@ from openpyxl import Workbook, load_workbook
 from uuid import uuid4
 
 from flask import Blueprint, Response, current_app
+from flask_jwt_extended import jwt_required
 from flask_restful import Api, abort, request
 
 from app.models.account import AdminModel, SignupWaitingModel, StudentModel
@@ -18,6 +19,8 @@ api.prefix = '/system'
 
 @api.resource('/account/admin')
 class AdminAccount(BaseResource):
+    @jwt_required
+    @BaseResource.system_only
     def post(self):
         """
         관리자 계정 생성
@@ -39,12 +42,34 @@ class AdminAccount(BaseResource):
 
         return Response('', 201)
 
+    @jwt_required
+    @BaseResource.system_only
+    def delete(self):
+        """
+        관리자 계정 제거
+        """
+        if not request.is_json:
+            abort(400)
+
+        id = request.json['id']
+        admin = AdminModel.objects(id=id).first()
+
+        if not admin:
+            return Response('', 204)
+
+        admin.delete()
+
+        return Response('', 200)
+
 
 @api.resource('/uuid-generate/new')
 class NewUUIDGeneration(BaseResource):
+    @jwt_required
+    @BaseResource.system_only
     def post(self):
         """
-        아직 가입되지 않은 학생들이 가입 가능하도록 UUID Generation
+        가입되어 있지 않은 학생을 대상으로 UUID Generation
+        이미 준비되어 있던 UUID는 제거되므로 주의 필요
         """
         if not request.is_json:
             abort(400)
@@ -106,6 +131,8 @@ class ExcelUUIDToDB(BaseResource):
                             number=int(wb['B{0}'.format(k)].value)
                         ).save()
 
-    def get(self):
+    @jwt_required
+    @BaseResource.system_only
+    def post(self):
         self._uuid_excel_save()
         return Response('', 201)

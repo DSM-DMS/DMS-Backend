@@ -55,7 +55,7 @@ class AccountBase(Document):
 
 class StudentModel(AccountBase):
     """
-    Student account_admin document
+    Student account model
     """
     number = IntField(
         required=True,
@@ -97,7 +97,13 @@ class StudentModel(AccountBase):
 
 class AdminModel(AccountBase):
     """
-    Admin account_admin document
+    Admin account model
+    """
+
+
+class SystemModel(AccountBase):
+    """
+    System account model
     """
 
 

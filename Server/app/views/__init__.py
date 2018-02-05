@@ -7,7 +7,7 @@ from flask import Response, abort
 from flask_restful import Resource
 from flask_jwt_extended import get_jwt_identity
 
-from app.models.account import AdminModel, StudentModel
+from app.models.account import AdminModel, StudentModel, SystemModel
 
 
 class _Forbidden(Exception):
@@ -55,6 +55,18 @@ class BaseResource(Resource):
         def wrapper(*args, **kwargs):
             student = StudentModel.objects(id=get_jwt_identity()).first()
             if not student:
+                raise _Forbidden()
+
+            return fn(*args, **kwargs)
+
+        return wrapper
+
+    @staticmethod
+    def system_only(fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            system = SystemModel.objects(id=get_jwt_identity()).first()
+            if not system:
                 raise _Forbidden()
 
             return fn(*args, **kwargs)
