@@ -9,7 +9,7 @@ from app.docs.admin.apply.stay import *
 from app.models.account import StudentModel
 from app.views import BaseResource
 
-from utils.apply_excel_manager import get_cell_positions_from_student_number, ready_applyment_worksheet
+from utils.excel_style_manager import get_cell_positions_from_student_number, ready_applyment_worksheet
 
 api = Api(Blueprint('admin-stay-api', __name__))
 api.prefix = '/admin'

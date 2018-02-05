@@ -9,7 +9,7 @@ from app.docs.admin.apply.extension import *
 from app.models.account import StudentModel
 from app.views import BaseResource
 
-from utils.apply_excel_manager import get_cell_positions_from_student_number, ready_applyment_worksheet
+from utils.excel_style_manager import get_cell_positions_from_student_number, ready_applyment_worksheet
 
 EXTENSION_CLASSES = ['가온실', '나온실', '다온실', '라온실', '3층 독서실', '4층 독서실', '5층 열린교실']
 

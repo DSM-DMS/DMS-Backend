@@ -1,6 +1,6 @@
-from flask import Blueprint, Response
+from flask import Blueprint
 from flask_jwt_extended import jwt_required
-from flask_restful import Api, request
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.admin.point.student import *
@@ -26,7 +26,12 @@ class StudentManaging(BaseResource):
             'number': student.number,
             'good_point': student.good_point,
             'bad_point': student.bad_point,
+            'point_histories': [{
+                'time': str(history.time)[:-7],
+                'reason': history.reason,
+                'point': history.point
+            } for history in student.point_histories],
             'penalty_training_status': student.penalty_training_status
-        } for student in StudentModel.objects]
+        } for student in StudentModel.objects.order_by('number')]
 
         return self.unicode_safe_json_response(response)

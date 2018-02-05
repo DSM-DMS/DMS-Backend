@@ -7,7 +7,7 @@ from flask_restful import Api, abort, request
 from app.models.account import SignupWaitingModel, StudentModel
 from app.views import BaseResource
 
-from utils.apply_excel_manager import ready_uuid_worksheet
+from utils.excel_style_manager import ready_uuid_worksheet
 
 api = Api(Blueprint('system-uuid-generation-api', __name__))
 api.prefix = '/system'

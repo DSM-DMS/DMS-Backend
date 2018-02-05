@@ -34,7 +34,8 @@ class PointHistoryModel(EmbeddedDocument):
     }
 
     id = ObjectIdField(
-        primary_key=True
+        primary_key=True,
+        default=ObjectId()
     )
 
     time = DateTimeField(

@@ -56,3 +56,21 @@ def ready_uuid_worksheet(ws):
     ws['A1'] = '학번'
     ws['B1'] = '이름'
     ws['C1'] = 'Code'
+
+
+def ready_point_worksheet(ws):
+    for row in range(1, 83):
+        # 1 to 82
+        for col in range(65, 72):
+            cell = ws[chr(col) + str(row)]
+
+            cell.alignment = Alignment(horizontal='center')
+            cell.font = Font(bold=True)
+
+    ws['A1'] = '학번'
+    ws['B1'] = '이름'
+    ws['C1'] = '상점'
+    ws['D1'] = '벌점'
+    ws['E1'] = '상점 내역'
+    ws['F1'] = '벌점 내역'
+    ws['G1'] = '교육 단계'

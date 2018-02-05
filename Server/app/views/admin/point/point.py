@@ -1,5 +1,3 @@
-from bson import ObjectId
-
 from flask import Blueprint, Response
 from flask_jwt_extended import jwt_required
 from flask_restful import Api, request
@@ -61,8 +59,7 @@ class PointManaging(BaseResource):
 
         student.point_histories.append(PointHistoryModel(
             reason=rule.name,
-            point=point,
-            id=ObjectId()
+            point=point
         ))
         # Append history
 
@@ -97,13 +94,3 @@ class PointManaging(BaseResource):
         student.save()
 
         return Response('', 200)
-
-
-@api.resource('/point/download')
-class PointDownloads(BaseResource):
-    @jwt_required
-    @BaseResource.admin_only
-    def get(self):
-        """
-        상벌점 상태 다운로드
-        """
