@@ -25,8 +25,6 @@ class Auth(BaseResource):
         id = request.form['id']
         pw = request.form['pw']
 
-        print(id, pw, current_app.secret_key)
-
         pw = hexlify(pbkdf2_hmac(
             hash_name='sha256',
             password=pw.encode(),
@@ -34,8 +32,6 @@ class Auth(BaseResource):
             iterations=100000
         )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
-
-        print(pw)
 
         student = StudentModel.objects(id=id, pw=pw).first()
         if not student:
