@@ -21,63 +21,7 @@ class TestPoint(unittest.TestCase):
         account_student.remove_fake_account()
         PointRuleModel.objects.delete()
 
-    def testA_insertPointData(self):
-        """
-        TC about student point data initialization
-
-        - Preparations
-        Check existing student data
-
-        - Exception Tests
-        Forbidden with student access token when student data loading
-        Forbidden with student access token when student point data inserting
-        Non-existing student ID
-
-        - Process
-        Initialize student point with sample data
-
-        - Validation
-        Check inserted student point data
-        """
-        # -- Preparations --
-        rv = self.client.get('/admin/managing/student', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
-
-        data = json.loads(rv.data.decode())[0]
-        self.assertTrue(not all((data['good_point'], data['bad_point'], data['penalty_training_status'])))
-        # All None
-        # -- Preparations --
-
-        # -- Exception Tests --
-        rv = self.client.get('/admin/managing/student', headers={'Authorization': self.student_access_token})
-        self.assertEqual(rv.status_code, 403)
-
-        rv = self.client.post('/admin/managing/student', headers={'Authorization': self.student_access_token})
-        self.assertEqual(rv.status_code, 403)
-
-        rv = self.client.post('/admin/managing/student', headers={'Authorization': self.student_access_token}, data={'id': 'doesntexist'})
-        self.assertEqual(rv.status_code, 403)
-        # -- Exception Tests --
-
-        # -- Process --
-        rv = self.client.post('/admin/managing/student', headers={'Authorization': self.admin_access_token}, data={
-            'id': 'fake_student',
-            'good_point': 1,
-            'bad_point': 2,
-            'penalty_training_status': 0
-        })
-        self.assertEqual(rv.status_code, 201)
-        # -- Process --
-
-        # -- Validation --
-        rv = self.client.get('/admin/managing/student', headers={'Authorization': self.admin_access_token})
-        self.assertEqual(rv.status_code, 200)
-
-        data = json.loads(rv.data.decode())[0]
-        self.assertTrue(all((data['good_point'], data['bad_point'], data['penalty_training_status'] == 0)))
-        # -- Validation --
-
-    def testB_insertPointRule(self):
+    def testA_insertPointRule(self):
         """
         TC about point rule insertion
 
@@ -119,7 +63,7 @@ class TestPoint(unittest.TestCase):
         self.assertTrue(rv.data)
         # -- Validation --
 
-    def testC_patchPointRule(self):
+    def testB_patchPointRule(self):
         """
         TC about point rule modification
 
@@ -172,7 +116,7 @@ class TestPoint(unittest.TestCase):
         self.assertTrue(data[0]['name'] == 'new' and data[0]['min_point'] == data[0]['max_point'] == 2)
         # -- Validation --
 
-    def testD_deleteRule(self):
+    def testC_deleteRule(self):
         """
         TC about
 
@@ -218,12 +162,11 @@ class TestPoint(unittest.TestCase):
         self.assertFalse(json.loads(rv.data.decode()))
         # -- Validation --
 
-    def testE_givePoint(self):
+    def testD_givePoint(self):
         """
         TC about point giving
 
         - Preparations
-        Add sample student point data
         Add sample rule data and take rule ID
 
         - Exception Tests
@@ -238,14 +181,6 @@ class TestPoint(unittest.TestCase):
         Check sample student's point history
         """
         # -- Preparations --
-        rv = self.client.post('/admin/managing/student', headers={'Authorization': self.admin_access_token}, data={
-            'id': 'fake_student',
-            'good_point': 1,
-            'bad_point': 2,
-            'penalty_training_status': 0
-        })
-        self.assertEqual(rv.status_code, 201)
-
         rv = self.client.post('/admin/managing/rule', headers={'Authorization': self.admin_access_token}, data={'name': 'test', 'min_point': 1, 'max_point': 1})
         self.assertEqual(rv.status_code, 201)
         rule_id = json.loads(rv.data.decode())['id']

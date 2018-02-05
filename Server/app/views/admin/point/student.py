@@ -30,27 +30,3 @@ class StudentManaging(BaseResource):
         } for student in StudentModel.objects]
 
         return self.unicode_safe_json_response(response)
-
-    @swag_from(STUDENT_MANAGING_POST)
-    @jwt_required
-    @BaseResource.admin_only
-    def post(self):
-        """
-        새로운 학생 상벌점 데이터 등록
-        """
-        id = request.form['id']
-        student = StudentModel.objects(id=id).first()
-        if not student:
-            return Response('', 204)
-
-        good_point = int(request.form['good_point'])
-        bad_point = int(request.form['bad_point'])
-        penalty_training_status = int(request.form['penalty_training_status'])
-
-        student.update(
-            good_point=good_point,
-            bad_point=bad_point,
-            penalty_training_status=penalty_training_status
-        )
-
-        return Response('', 201)

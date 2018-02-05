@@ -78,9 +78,18 @@ class StudentModel(AccountBase):
         default=StayApplyModel()
     )
 
-    good_point = IntField()
-    bad_point = IntField()
-    penalty_training_status = IntField()
+    good_point = IntField(
+        default=0
+    )
+
+    bad_point = IntField(
+        default=0
+    )
+
+    penalty_training_status = IntField(
+        default=0
+    )
+
     point_histories = EmbeddedDocumentListField(
         document_type=PointHistoryModel
     )

@@ -40,8 +40,8 @@ class MyPage(BaseResource):
                 'sun': student.goingout_apply.on_sunday
             },
             'stay_value': student.stay_apply.value,
-            'good_point': student.good_point if student.good_point else 0,
-            'bad_point': student.bad_point if student.bad_point else 0
+            'good_point': student.good_point,
+            'bad_point': student.bad_point
         }
 
         return self.unicode_safe_json_response(response)

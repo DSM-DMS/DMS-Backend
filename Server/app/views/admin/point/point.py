@@ -97,3 +97,13 @@ class PointManaging(BaseResource):
         student.save()
 
         return Response('', 200)
+
+
+@api.resource('/point/download')
+class PointDownloads(BaseResource):
+    @jwt_required
+    @BaseResource.admin_only
+    def get(self):
+        """
+        상벌점 상태 다운로드
+        """
