@@ -1,20 +1,47 @@
-from openpyxl import Workbook
+from binascii import hexlify
+from hashlib import pbkdf2_hmac
+
+from openpyxl import Workbook, load_workbook
 from uuid import uuid4
 
-from flask import Blueprint, Response
+from flask import Blueprint, Response, current_app
 from flask_restful import Api, abort, request
 
-from app.models.account import SignupWaitingModel, StudentModel
+from app.models.account import AdminModel, SignupWaitingModel, StudentModel
 from app.views import BaseResource
 
 from utils.excel_style_manager import ready_uuid_worksheet
 
-api = Api(Blueprint('system-uuid-generation-api', __name__))
+api = Api(Blueprint('system-account-management-api', __name__))
 api.prefix = '/system'
 
 
-@api.resource('/uuid-generate')
-class UUIDGeneration(BaseResource):
+@api.resource('/account/admin')
+class AdminAccount(BaseResource):
+    def post(self):
+        """
+        관리자 계정 생성
+        """
+        if not request.is_json:
+            abort(400)
+
+        id = request.json['id']
+        pw = request.json['pw']
+
+        pw = hexlify(pbkdf2_hmac(
+            hash_name='sha256',
+            password=pw.encode(),
+            salt=current_app.secret_key.encode(),
+            iterations=100000
+        )).decode('utf-8')
+
+        AdminModel(id=id, pw=pw, name='시스템').save()
+
+        return Response('', 201)
+
+
+@api.resource('/uuid-generate/new')
+class NewUUIDGeneration(BaseResource):
     def post(self):
         """
         아직 가입되지 않은 학생들이 가입 가능하도록 UUID Generation
@@ -23,30 +50,6 @@ class UUIDGeneration(BaseResource):
             abort(400)
 
         student_list = request.json
-        # {
-        #     '1': {
-        #         '1': {
-        #             '01': '사람',
-        #             '02': '사람2',
-        #             ...
-        #         },
-        #         '2': {
-        #
-        #         },
-        #         '3': {
-        #
-        #         },
-        #         '4': {
-        #
-        #         }
-        #     },
-        #     '2' : {
-        #         ...
-        #     },
-        #     '3': {
-        #         ...
-        #     }
-        # }
         workbooks = [Workbook() for _ in range(12)]
 
         SignupWaitingModel.objects.delete()
@@ -86,4 +89,23 @@ class UUIDGeneration(BaseResource):
 
                 wb.save('uuid_{}_{}.xlsx'.format(grade_str, cls_str))
 
+        return Response('', 201)
+
+
+@api.resource('/uuid-generate/excel-to-db')
+class ExcelUUIDToDB(BaseResource):
+    def _uuid_excel_save(self):
+        for i in range(1, 4):
+            for j in range(1, 5):
+                wb = load_workbook('uuid_{0}_{1}.xlsx'.format(i, j)).get_sheet_by_name('Sheet1')
+                for k in range(2, 23):
+                    if wb['A{0}'.format(k)].value:
+                        SignupWaitingModel(
+                            uuid=wb['C{0}'.format(k)].value,
+                            name=wb['A{0}'.format(k)].value,
+                            number=int(wb['B{0}'.format(k)].value)
+                        ).save()
+
+    def get(self):
+        self._uuid_excel_save()
         return Response('', 201)

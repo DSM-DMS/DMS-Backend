@@ -137,6 +137,5 @@ class Router(object):
         from app.views.mixed.school_data import meal
         app.register_blueprint(meal.api.blueprint)
 
-        from app.views.system import uuid_generator, uuid_excel_to_db
-        app.register_blueprint(uuid_generator.api.blueprint)
-        app.register_blueprint(uuid_excel_to_db.api.blueprint)
+        from app.views.system import account_management
+        app.register_blueprint(account_management.api.blueprint)
