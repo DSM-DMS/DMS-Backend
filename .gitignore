@@ -167,3 +167,4 @@ venv.bak/
 
 *.xlsx
 *.log.*
+.DS_Store
