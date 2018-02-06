@@ -1,5 +1,4 @@
 from flask import Blueprint
-from flask_jwt_extended import jwt_required
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -14,7 +13,6 @@ api.prefix = '/admin/managing'
 @api.resource('/student')
 class StudentManaging(BaseResource):
     @swag_from(STUDENT_MANAGING_GET)
-    @jwt_required
     @BaseResource.admin_only
     def get(self):
         """

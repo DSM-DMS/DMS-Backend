@@ -1,5 +1,4 @@
 from flask import Blueprint, Response
-from flask_jwt_extended import jwt_required
 from flask_restful import Api, abort, request
 
 from app.models.account import StudentModel
@@ -12,7 +11,6 @@ api.prefix = '/system'
 
 @api.resource('/apply/extension/11')
 class Extension11(BaseResource):
-    @jwt_required
     @BaseResource.system_only
     def delete(self):
         """
@@ -26,7 +24,6 @@ class Extension11(BaseResource):
 
 @api.resource('/apply/extension/11/<int:number>')
 class Extension11EachStudent(BaseResource):
-    @jwt_required
     @BaseResource.system_only
     def post(self, number):
         """
@@ -47,7 +44,6 @@ class Extension11EachStudent(BaseResource):
 
         return Response('', 201)
 
-    @jwt_required
     @BaseResource.system_only
     def delete(self, number):
         """
@@ -65,7 +61,6 @@ class Extension11EachStudent(BaseResource):
 
 @api.resource('/apply/extension/12')
 class Extension12(BaseResource):
-    @jwt_required
     @BaseResource.system_only
     def delete(self):
         """
@@ -79,7 +74,6 @@ class Extension12(BaseResource):
 
 @api.resource('/apply/extension/12/<int:number>')
 class Extension12EachStudent(BaseResource):
-    @jwt_required
     @BaseResource.system_only
     def post(self, number):
         """
@@ -100,7 +94,6 @@ class Extension12EachStudent(BaseResource):
 
         return Response('', 201)
 
-    @jwt_required
     @BaseResource.system_only
     def delete(self, number):
         """
@@ -118,7 +111,6 @@ class Extension12EachStudent(BaseResource):
 
 @api.resource('/apply/goingout')
 class Goingout(BaseResource):
-    @jwt_required
     @BaseResource.system_only
     def delete(self):
         """
@@ -132,7 +124,6 @@ class Goingout(BaseResource):
 
 @api.resource('/apply/goingout/<int:number>')
 class GoingoutEachStudent(BaseResource):
-    @jwt_required
     @BaseResource.system_only
     def post(self, number):
         """
@@ -153,7 +144,6 @@ class GoingoutEachStudent(BaseResource):
 
         return Response('', 201)
 
-    @jwt_required
     @BaseResource.system_only
     def delete(self, number):
         """
@@ -171,7 +161,6 @@ class GoingoutEachStudent(BaseResource):
 
 @api.resource('/apply/stay/<int:number>')
 class Stay(BaseResource):
-    @jwt_required
     @BaseResource.system_only
     def post(self, number):
         """

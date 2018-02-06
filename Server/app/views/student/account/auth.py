@@ -4,7 +4,7 @@ from uuid import uuid4
 
 from flask import Blueprint, Response, current_app
 from flask_jwt_extended import create_access_token, create_refresh_token
-from flask_jwt_extended import get_jwt_identity, jwt_required, jwt_refresh_token_required
+from flask_jwt_extended import get_jwt_identity, jwt_refresh_token_required
 from flask_restful import Api, abort, request
 from flasgger import swag_from
 
@@ -64,7 +64,6 @@ class Auth(BaseResource):
 @api.resource('/auth-check')
 class AuthCheck(BaseResource):
     @swag_from(AUTH_CHECK_GET)
-    @jwt_required
     @BaseResource.student_only
     def get(self):
         return Response('', 200)

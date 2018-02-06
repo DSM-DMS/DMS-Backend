@@ -1,5 +1,4 @@
 from flask import Blueprint, Response
-from flask_jwt_extended import jwt_required
 from flask_restful import Api, request
 from flasgger import swag_from
 
@@ -14,7 +13,6 @@ api.prefix = '/admin/managing'
 @api.resource('/rule')
 class PointRuleManaging(BaseResource):
     @swag_from(POINT_RULE_MANAGING_GET)
-    @jwt_required
     @BaseResource.admin_only
     def get(self):
         """
@@ -30,7 +28,6 @@ class PointRuleManaging(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(POINT_RULE_MANAGING_POST)
-    @jwt_required
     @BaseResource.admin_only
     def post(self):
         """
@@ -51,7 +48,6 @@ class PointRuleManaging(BaseResource):
         }, 201
 
     @swag_from(POINT_RULE_MANAGING_PATCH)
-    @jwt_required
     @BaseResource.admin_only
     def patch(self):
         """
@@ -78,7 +74,6 @@ class PointRuleManaging(BaseResource):
         return Response('', 200)
 
     @swag_from(POINT_RULE_MANAGING_DELETE)
-    @jwt_required
     @BaseResource.admin_only
     def delete(self):
         """

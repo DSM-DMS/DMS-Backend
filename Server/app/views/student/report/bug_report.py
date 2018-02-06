@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api, request
 from flasgger import swag_from
 
@@ -14,7 +14,6 @@ api = Api(Blueprint('student-bug-report-api', __name__))
 @api.resource('/report/bug')
 class BugReport(BaseResource):
     @swag_from(BUG_REPORT_POST)
-    @jwt_required
     @BaseResource.student_only
     def post(self):
         """

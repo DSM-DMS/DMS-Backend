@@ -1,5 +1,5 @@
 from flask import Blueprint, Response
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api, request
 from flasgger import swag_from
 
@@ -15,7 +15,6 @@ api.prefix = '/admin'
 @api.resource('/notice')
 class NoticeManaging(BaseResource):
     @swag_from(NOTICE_MANAGING_POST)
-    @jwt_required
     @BaseResource.admin_only
     def post(self):
         """
@@ -32,7 +31,6 @@ class NoticeManaging(BaseResource):
         }, 201)
 
     @swag_from(NOTICE_MANAGING_PATCH)
-    @jwt_required
     @BaseResource.admin_only
     def patch(self):
         """
@@ -54,7 +52,6 @@ class NoticeManaging(BaseResource):
         return Response('', 200)
 
     @swag_from(NOTICE_MANAGING_DELETE)
-    @jwt_required
     @BaseResource.admin_only
     def delete(self):
         """

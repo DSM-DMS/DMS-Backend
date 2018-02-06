@@ -1,5 +1,5 @@
 from flask import Blueprint, Response
-from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api, request
 from flasgger import swag_from
 
@@ -14,7 +14,6 @@ api = Api(Blueprint('student-survey-api', __name__))
 @api.resource('/survey')
 class Survey(BaseResource):
     @swag_from(SURVEY_GET)
-    @jwt_required
     @BaseResource.student_only
     def get(self):
         """
@@ -40,7 +39,6 @@ class Survey(BaseResource):
 @api.resource('/survey/question')
 class Question(BaseResource):
     @swag_from(QUESTION_GET)
-    @jwt_required
     @BaseResource.student_only
     def get(self):
         """
@@ -77,7 +75,6 @@ class Question(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(QUESTION_POST)
-    @jwt_required
     @BaseResource.student_only
     def post(self):
         """

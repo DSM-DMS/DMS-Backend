@@ -2,7 +2,7 @@ from binascii import hexlify
 from hashlib import pbkdf2_hmac
 
 from flask import Blueprint, Response, current_app
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api, abort, request
 from flasgger import swag_from
 
@@ -16,7 +16,6 @@ api = Api(Blueprint('student-account-alteration-api', __name__))
 @api.resource('/change/pw')
 class ChangePW(BaseResource):
     @swag_from(CHANGE_PW_POST)
-    @jwt_required
     @BaseResource.student_only
     def post(self):
         """
@@ -57,7 +56,6 @@ class ChangePW(BaseResource):
 @api.resource('/change/number')
 class ChangeNumber(BaseResource):
     @swag_from(CHANGE_NUMBER_POST)
-    @jwt_required
     @BaseResource.student_only
     def post(self):
         """

@@ -5,24 +5,9 @@ import time
 
 from flask import Response, abort
 from flask_restful import Resource
-from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from app.models.account import AdminModel, StudentModel, SystemModel
-
-
-class _Forbidden(Exception):
-    pass
-
-
-class AccessControl(object):
-    def __init__(self, app=None):
-        if app is not None:
-            self.init_app(app)
-
-    def init_app(self, app):
-        @app.errorhandler(_Forbidden)
-        def forbidden_handler(e):
-            return abort(403)
 
 
 class BaseResource(Resource):
@@ -40,10 +25,11 @@ class BaseResource(Resource):
     @staticmethod
     def admin_only(fn):
         @wraps(fn)
+        @jwt_required
         def wrapper(*args, **kwargs):
             admin = AdminModel.objects(id=get_jwt_identity()).first()
             if not admin:
-                raise _Forbidden()
+                abort(403)
 
             return fn(*args, **kwargs)
 
@@ -52,10 +38,11 @@ class BaseResource(Resource):
     @staticmethod
     def student_only(fn):
         @wraps(fn)
+        @jwt_required
         def wrapper(*args, **kwargs):
             student = StudentModel.objects(id=get_jwt_identity()).first()
             if not student:
-                raise _Forbidden()
+                abort(403)
 
             return fn(*args, **kwargs)
 
@@ -64,10 +51,11 @@ class BaseResource(Resource):
     @staticmethod
     def system_only(fn):
         @wraps(fn)
+        @jwt_required
         def wrapper(*args, **kwargs):
             system = SystemModel.objects(id=get_jwt_identity()).first()
             if not system:
-                raise _Forbidden()
+                abort(403)
 
             return fn(*args, **kwargs)
 
@@ -76,12 +64,13 @@ class BaseResource(Resource):
     @staticmethod
     def signed_account_only(fn):
         @wraps(fn)
+        @jwt_required
         def wrapper(*args, **kwargs):
             admin = AdminModel.objects(id=get_jwt_identity()).first()
             student = StudentModel.objects(id=get_jwt_identity()).first()
 
             if not any((admin, student)):
-                raise _Forbidden()
+                abort(403)
 
             return fn(*args, **kwargs)
 

@@ -1,7 +1,7 @@
 from datetime import datetime, time
 
 from flask import Blueprint, Response, current_app
-from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api, request
 from flasgger import swag_from
 
@@ -16,7 +16,6 @@ api = Api(Blueprint('student-stay-api', __name__))
 @api.resource('/stay')
 class Stay(BaseResource):
     @swag_from(STAY_GET)
-    @jwt_required
     @BaseResource.student_only
     def get(self):
         """
@@ -29,7 +28,6 @@ class Stay(BaseResource):
         }, 200)
 
     @swag_from(STAY_POST)
-    @jwt_required
     @BaseResource.student_only
     def post(self):
         """

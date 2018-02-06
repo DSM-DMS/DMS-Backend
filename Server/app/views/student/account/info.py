@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -13,7 +13,6 @@ api = Api(Blueprint('student-info-api', __name__))
 @api.resource('/mypage')
 class MyPage(BaseResource):
     @swag_from(MYPAGE_GET)
-    @jwt_required
     @BaseResource.student_only
     def get(self):
         """

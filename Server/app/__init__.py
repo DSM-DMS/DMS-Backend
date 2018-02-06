@@ -5,7 +5,7 @@ from flasgger import Swagger
 
 from app.docs import TEMPLATE
 from app.models import Mongo
-from app.views import AccessControl, Router
+from app.views import Router
 
 from config.dev import DevConfig
 from config.production import ProductionConfig
@@ -24,7 +24,6 @@ def create_app(dev=True):
     CORS(app_)
     Swagger(app_, template=TEMPLATE)
     Mongo(app_)
-    AccessControl(app_)
     Router(app_)
 
     return app_

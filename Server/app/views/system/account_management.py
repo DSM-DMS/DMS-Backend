@@ -5,7 +5,6 @@ from openpyxl import Workbook, load_workbook
 from uuid import uuid4
 
 from flask import Blueprint, Response, current_app
-from flask_jwt_extended import jwt_required
 from flask_restful import Api, abort, request
 
 from app.models.account import AdminModel, SignupWaitingModel, StudentModel
@@ -19,7 +18,6 @@ api.prefix = '/system'
 
 @api.resource('/account/admin')
 class AdminAccount(BaseResource):
-    @jwt_required
     @BaseResource.system_only
     def post(self):
         """
@@ -42,7 +40,6 @@ class AdminAccount(BaseResource):
 
         return Response('', 201)
 
-    @jwt_required
     @BaseResource.system_only
     def delete(self):
         """
@@ -64,7 +61,6 @@ class AdminAccount(BaseResource):
 
 @api.resource('/uuid-generate/new')
 class NewUUIDGeneration(BaseResource):
-    @jwt_required
     @BaseResource.system_only
     def post(self):
         """
@@ -131,7 +127,6 @@ class ExcelUUIDToDB(BaseResource):
                             number=int(wb['B{0}'.format(k)].value)
                         ).save()
 
-    @jwt_required
     @BaseResource.system_only
     def post(self):
         self._uuid_excel_save()

@@ -1,7 +1,6 @@
 from openpyxl import Workbook
 
 from flask import Blueprint, send_from_directory
-from flask_jwt_extended import jwt_required
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -20,7 +19,6 @@ api.prefix = '/admin/extension'
 @api.resource('/11')
 class Extension11Download(BaseResource):
     @swag_from(EXTENSION_DOWNLOAD_GET)
-    @jwt_required
     @BaseResource.admin_only
     def get(self):
         """
@@ -53,7 +51,6 @@ class Extension11Download(BaseResource):
 @api.resource('/12')
 class Extension12Download(BaseResource):
     @swag_from(EXTENSION_DOWNLOAD_GET)
-    @jwt_required
     @BaseResource.admin_only
     def get(self):
         """

@@ -1,5 +1,4 @@
 from flask import Blueprint, Response
-from flask_jwt_extended import jwt_required
 from flask_restful import Api, request
 from flasgger import swag_from
 
@@ -14,7 +13,6 @@ api.prefix = '/admin/preview'
 @api.resource('/faq')
 class FAQPreviewManaging(BaseResource):
     @swag_from(FAQ_PREVIEW_MANAGING_POST)
-    @jwt_required
     @BaseResource.admin_only
     def post(self):
         """
@@ -40,7 +38,6 @@ class FAQPreviewManaging(BaseResource):
 @api.resource('/notice')
 class NoticePreviewManaging(BaseResource):
     @swag_from(NOTICE_PREVIEW_MANAGING_POST)
-    @jwt_required
     @BaseResource.admin_only
     def post(self):
         """
@@ -66,7 +63,6 @@ class NoticePreviewManaging(BaseResource):
 @api.resource('/rule')
 class RulePreviewManaging(BaseResource):
     @swag_from(RULE_PREVIEW_MANAGING_POST)
-    @jwt_required
     @BaseResource.admin_only
     def post(self):
         """

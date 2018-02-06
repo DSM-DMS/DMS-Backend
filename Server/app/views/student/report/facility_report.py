@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api, abort, request
 from flasgger import swag_from
 
@@ -14,7 +14,6 @@ api = Api(Blueprint('student-facility-report-api', __name__))
 @api.resource('/report/facility')
 class FacilityReport(BaseResource):
     @swag_from(FACILITY_REPORT_POST)
-    @jwt_required
     @BaseResource.student_only
     def post(self):
         """

@@ -2,7 +2,6 @@ from binascii import hexlify
 from hashlib import pbkdf2_hmac
 
 from flask import Blueprint, Response, current_app
-from flask_jwt_extended import jwt_required
 from flask_restful import Api, request
 from flasgger import swag_from
 
@@ -17,7 +16,6 @@ api.prefix = '/admin'
 @api.resource('/new-account')
 class NewAccount(BaseResource):
     @swag_from(NEW_ACCOUNT_POST)
-    @jwt_required
     @BaseResource.admin_only
     def post(self):
         """

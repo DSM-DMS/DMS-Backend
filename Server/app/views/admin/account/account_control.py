@@ -2,7 +2,6 @@ from uuid import uuid4
 
 from flask import Blueprint, Response
 from flask_restful import Api, request
-from flask_jwt_extended import jwt_required
 from flasgger import swag_from
 
 from app.docs.admin.account.account_control import *
@@ -16,7 +15,6 @@ api.prefix = '/admin'
 @api.resource('/account-control')
 class AccountControl(BaseResource):
     @swag_from(ACCOUNT_CONTROL_POST)
-    @jwt_required
     @BaseResource.admin_only
     def post(self):
         """
@@ -53,7 +51,6 @@ class AccountControl(BaseResource):
         }, 201)
 
     @swag_from(ACCOUNT_CONTROL_DELETE)
-    @jwt_required
     @BaseResource.admin_only
     def delete(self):
         """
