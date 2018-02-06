@@ -1,3 +1,5 @@
+import os
+
 from binascii import hexlify
 from hashlib import pbkdf2_hmac
 from uuid import uuid4
@@ -29,14 +31,23 @@ class Auth(BaseResource):
         pw = hexlify(pbkdf2_hmac(
             hash_name='sha256',
             password=pw.encode(),
-            salt='rkeo31.dovmsoql1p!'.encode(),
+            salt=current_app.secret_key.encode(),
             iterations=100000
         )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
-        admin = AdminModel.objects(id=id, pw=pw).first()
+        # Secret key 관련 이슈를 방어하기 위해 두 개의 salt를 이용해서 digest를 두개 얻어내야 함
+        pw2 = hexlify(pbkdf2_hmac(
+            hash_name='sha256',
+            password=pw.encode(),
+            salt='85c145a16bd6f6e1f3e104ca78c6a102'.encode() if 'SECRET_KEY' not in os.environ else current_app.secret_key.encode(),
+            iterations=100000
+        )).decode('utf-8')
 
-        if not admin:
+        admin = AdminModel.objects(id=id, pw=pw).first()
+        admin2 = AdminModel.objects(id=id, pw=pw2).first()
+
+        if not any((admin, admin2)):
             abort(401)
 
         # --- Auth success
@@ -44,7 +55,7 @@ class Auth(BaseResource):
         refresh_token = uuid4()
         RefreshTokenModel(
             token=refresh_token,
-            token_owner=admin,
+            token_owner=admin if admin else admin2,
             pw_snapshot=pw
         ).save()
         # Generate new refresh token made up of uuid4
