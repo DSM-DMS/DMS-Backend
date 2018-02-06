@@ -2,7 +2,7 @@ from datetime import datetime, time
 
 from flask import Blueprint, Response, current_app
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, abort, request
+from flask_restful import Api, request
 from flasgger import swag_from
 
 from app.docs.student.apply.stay import *

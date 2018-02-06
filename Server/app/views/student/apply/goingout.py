@@ -39,6 +39,6 @@ class Goingout(BaseResource):
         sat = request.form['sat'].upper() == 'TRUE'
         sun = request.form['sun'].upper() == 'TRUE'
 
-        student.update(goingout_apply=GoingoutApplyModel(on_saturday=sat,on_sunday=sun))
+        student.update(goingout_apply=GoingoutApplyModel(on_saturday=sat, on_sunday=sun))
 
         return Response('', 201)

@@ -34,8 +34,16 @@ class Auth(BaseResource):
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
         student = StudentModel.objects(id=id, pw=pw).first()
+
         if not student:
-            abort(401)
+            student = StudentModel.objects(id=id).first()
+            if not student:
+                abort(401)
+            else:
+                # 비밀번호 암호화가 어떤 key로 salting되었는지 모르므로 id만 같다면 일단 pass시켜 줌
+                # 새롭게 암호화된 비밀번호로 업데이트
+                # TODO 비밀번호 암호화 관련 이슈를 해결하기 위한 것이므로 추후 제거해야 함
+                student.update(pw=pw)
 
         # --- Auth success
 

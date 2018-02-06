@@ -29,7 +29,7 @@ class Auth(BaseResource):
         pw = hexlify(pbkdf2_hmac(
             hash_name='sha256',
             password=pw.encode(),
-            salt='rkeo31.dovmsoql1p!'.encode(),
+            salt=current_app.secret_key.encode(),
             iterations=100000
         )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
