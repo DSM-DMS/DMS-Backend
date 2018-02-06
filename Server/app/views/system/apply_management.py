@@ -3,6 +3,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Api, abort, current_app, request
 from flasgger import swag_from
 
+from app.models.account import StudentModel
 from app.views import BaseResource
 
 api = Api(Blueprint('api', __name__))
@@ -15,6 +16,8 @@ class Extension11(BaseResource):
         """
         11시 연장신청 정보 제거
         """
+        for student in StudentModel.objects:
+            student.update(extension_apply_11=None)
 
 
 @api.resource('/apply/extension/11/<number>')
@@ -41,6 +44,8 @@ class Extension12(BaseResource):
         """
         12시 연장신청 정보 제거
         """
+        for student in StudentModel.objects:
+            student.update(extension_apply_12s=None)
 
 
 @api.resource('/apply/extension/12/<number>')
