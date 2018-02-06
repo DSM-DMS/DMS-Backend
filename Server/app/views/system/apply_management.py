@@ -45,7 +45,7 @@ class Extension12(BaseResource):
         12시 연장신청 정보 제거
         """
         for student in StudentModel.objects:
-            student.update(extension_apply_12s=None)
+            student.update(extension_apply_12=None)
 
 
 @api.resource('/apply/extension/12/<number>')
