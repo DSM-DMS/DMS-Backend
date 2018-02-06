@@ -18,9 +18,7 @@ def admin():
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-
     parser.add_argument('-p', '--port')
-
     args = parser.parse_args()
 
     if os.getenv('MYSQL_PW'):
