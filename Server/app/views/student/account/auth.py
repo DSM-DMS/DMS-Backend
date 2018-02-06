@@ -1,5 +1,3 @@
-import os
-
 from binascii import hexlify
 from hashlib import pbkdf2_hmac
 from uuid import uuid4
@@ -24,9 +22,6 @@ class Auth(BaseResource):
         """
         학생 로그인
         """
-        # sudo 권한으로 환경 변수에 접근하려면 -E 옵션이 있어야 하는데, 해당 옵션 없이 켜진 적 있어서 기본 값의 SECRET_KEY로 비밀번호 암호화가 salting되어 있음
-        # 무조건 환경 변수의 SECRET_KEY가 사용된다고 가정하고, 기본 값의 SECRET_KEY로 salting한 비밀번호도 검사해줘야 함
-
         id = request.form['id']
         pw = request.form['pw']
 
@@ -38,30 +33,24 @@ class Auth(BaseResource):
         )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
-        # Secret key 관련 이슈를 방어하기 위해 두 개의 salt를 이용해서 digest를 두개 얻어내야 함
-        pw2 = hexlify(pbkdf2_hmac(
-            hash_name='sha256',
-            password=pw.encode(),
-            salt='85c145a16bd6f6e1f3e104ca78c6a102'.encode(),
-            iterations=100000
-        )).decode('utf-8')
-
         student = StudentModel.objects(id=id, pw=pw).first()
-        student2 = StudentModel.objects(id=id, pw=pw2).first()
 
-        if not any((student, student2)):
-            abort(401)
+        if not student:
+            student = StudentModel.objects(id=id).first()
+            if not student:
+                abort(401)
+            else:
+                # 비밀번호 암호화가 어떤 key로 salting되었는지 모르므로 id만 같다면 일단 pass시켜 줌
+                # 새롭게 암호화된 비밀번호로 업데이트
+                # TODO 비밀번호 암호화 관련 이슈를 해결하기 위한 것이므로 추후 제거해야 함
+                student.update(pw=pw)
 
         # --- Auth success
-
-        if student2:
-            # 기본값의 SECRET_KEY로 salting된 경우
-            student2.update(pw=pw)
 
         refresh_token = uuid4()
         RefreshTokenModel(
             token=refresh_token,
-            token_owner=student if student else student2,
+            token_owner=student,
             pw_snapshot=pw
         ).save()
         # Generate new refresh token made up of uuid4
