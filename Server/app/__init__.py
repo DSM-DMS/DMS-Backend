@@ -30,7 +30,7 @@ def create_app(dev=True):
     return app_
 
 
-app = create_app(False)
+app = create_app()
 
 
 @app.after_request
