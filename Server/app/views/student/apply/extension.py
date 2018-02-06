@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask import Blueprint, Response, current_app
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, abort, request
+from flask_restful import Api, request
 from flasgger import swag_from
 
 from app.docs.student.apply.extension import *
@@ -113,8 +113,6 @@ class Extension12(BaseResource):
         12시 연장신청 취소
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not student:
-            abort(403)
 
         student.update(extension_apply_12=None)
 
