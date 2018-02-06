@@ -13,7 +13,7 @@ install:
   - pip3 install coveralls
 
 script:
-  - coverage run --source=Server/app Server/run_test.py --skip-apply-time-limits 1
+  - coverage run --source=Server/app Server/run_test.py --testing 1
 
 after_success:
   - coverage report
