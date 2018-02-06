@@ -24,6 +24,9 @@ class Auth(BaseResource):
         """
         학생 로그인
         """
+        # sudo 권한으로 환경 변수에 접근하려면 -E 옵션이 있어야 하는데, 해당 옵션 없이 켜진 적 있어서 기본 값의 SECRET_KEY로 비밀번호 암호화가 salting되어 있음
+        # 무조건 환경 변수의 SECRET_KEY가 사용된다고 가정하고, 기본 값의 SECRET_KEY로 salting한 비밀번호도 검사해줘야 함
+
         id = request.form['id']
         pw = request.form['pw']
 
@@ -39,7 +42,7 @@ class Auth(BaseResource):
         pw2 = hexlify(pbkdf2_hmac(
             hash_name='sha256',
             password=pw.encode(),
-            salt='85c145a16bd6f6e1f3e104ca78c6a102'.encode() if 'SECRET_KEY' not in os.environ else current_app.secret_key.encode(),
+            salt='85c145a16bd6f6e1f3e104ca78c6a102'.encode(),
             iterations=100000
         )).decode('utf-8')
 
@@ -52,7 +55,8 @@ class Auth(BaseResource):
         # --- Auth success
 
         if student2:
-            student2.update(pw=pw2)
+            # 기본값의 SECRET_KEY로 salting된 경우
+            student2.update(pw=pw)
 
         refresh_token = uuid4()
         RefreshTokenModel(
