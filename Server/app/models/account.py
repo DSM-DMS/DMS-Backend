@@ -11,7 +11,7 @@ class SignupWaitingModel(Document):
     Data before the student's signup
     """
     meta = {
-        'collection': 'signup_waiting',
+        'collection': 'signup_waiting'
     }
 
     uuid = StringField(
@@ -32,7 +32,6 @@ class AccountBase(Document):
     DMS account_admin Base Document
     """
     meta = {
-        'collection': 'account_base',
         'abstract': True,
         'allow_inheritance': True
     }
@@ -57,6 +56,10 @@ class StudentModel(AccountBase):
     """
     Student account model
     """
+    meta = {
+        'collection': 'account_student'
+    }
+
     number = IntField(
         required=True,
         min_value=1101,
@@ -99,12 +102,18 @@ class AdminModel(AccountBase):
     """
     Admin account model
     """
+    meta = {
+        'collection': 'account_admin'
+    }
 
 
 class SystemModel(AccountBase):
     """
     System account model
     """
+    meta = {
+        'collection': 'account_system'
+    }
 
 
 class RefreshTokenModel(Document):
