@@ -29,6 +29,10 @@ class PointHistoryModel(EmbeddedDocument):
     """
     Good/bad point in dormitory of each students
     """
+    meta = {
+        'collection': 'point_history'
+    }
+
     id = ObjectIdField(
         primary_key=True,
         default=ObjectId()

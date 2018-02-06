@@ -21,6 +21,10 @@ class ExtensionApplyModel(ApplyBase):
     """
     Extension apply data of student document includes 11st, 12nd extension apply
     """
+    meta = {
+        'collection': 'extension_apply'
+    }
+
     class_ = IntField(
         required=True
     )
@@ -33,6 +37,10 @@ class GoingoutApplyModel(ApplyBase):
     """
     Goingout apply data of student document
     """
+    meta = {
+        'collection': 'goingout_apply'
+    }
+
     on_saturday = BooleanField(
         required=True,
         default=False
@@ -51,6 +59,10 @@ class StayApplyModel(ApplyBase):
     3 : Saturday dormitory coming
     4 : Stay
     """
+    meta = {
+        'collection': 'stay_apply'
+    }
+
     value = IntField(
         required=True,
         default=4

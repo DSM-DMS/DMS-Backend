@@ -8,6 +8,7 @@ class PostBase(Document):
     Post data base document
     """
     meta = {
+        'collection': 'post_base',
         'abstract': True,
         'allow_inheritance': True
     }
