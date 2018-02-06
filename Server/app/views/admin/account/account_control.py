@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required
 from flasgger import swag_from
 
 from app.docs.admin.account.account_control import *
-from app.models.account import SignupWaitingModel, StudentModel
+from app.models.account import SignupWaitingModel, StudentModel, AdminModel
 from app.views import BaseResource
 
 api = Api(Blueprint('admin-account-control-api', __name__))
@@ -51,3 +51,19 @@ class AccountControl(BaseResource):
         return self.unicode_safe_json_response({
             'uuid': uuid
         }, 201)
+
+    @swag_from(ACCOUNT_CONTROL_DELETE)
+    @jwt_required
+    @BaseResource.admin_only
+    def delete(self):
+        """
+        관리자 계정 삭제 
+        """
+        id = request.form['id']
+        admin = AdminModel.objects(id=id).first()
+
+        if not admin:
+            return Response('', 204)
+
+        admin.delete()
+        return Response('', 201)
