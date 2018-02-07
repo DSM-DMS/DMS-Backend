@@ -49,4 +49,4 @@ class GoingoutDownload(BaseResource):
         wb.save('goingout.xlsx')
         wb.close()
 
-        return send_from_directory('../', 'goingout.xlsx')
+        return send_from_directory('../../', 'goingout.xlsx')

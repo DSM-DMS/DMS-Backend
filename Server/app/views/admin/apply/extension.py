@@ -45,7 +45,7 @@ class Extension11Download(BaseResource):
         wb.save('11.xlsx')
         wb.close()
 
-        return send_from_directory('../', '11.xlsx')
+        return send_from_directory('../../', '11.xlsx')
 
 
 @api.resource('/12')
@@ -77,4 +77,4 @@ class Extension12Download(BaseResource):
         wb.save('12.xlsx')
         wb.close()
 
-        return send_from_directory('../', '12.xlsx')
+        return send_from_directory('../../', '12.xlsx')
