@@ -43,6 +43,10 @@ class GoingoutDownload(BaseResource):
                 status = '일요일 외출'
             else:
                 status = ''
+            ws.column_dimensions['D'].width = 20
+            ws.column_dimensions['H'].width = 20
+            ws.column_dimensions['L'].width = 20
+            ws.column_dimensions['P'].width = 20
 
             ws[status_cell] = status
 
