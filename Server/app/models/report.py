@@ -10,6 +10,7 @@ class ReportBase(Document):
     """
     meta = {
         'collection': 'report_base',
+        'abstract': True,
         'allow_inheritance': True
     }
 
