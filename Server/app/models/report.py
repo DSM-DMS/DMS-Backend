@@ -32,12 +32,18 @@ class BugReportModel(ReportBase):
     """
     Bug report document
     """
+    meta = {
+        'collection': 'bug_report'
+    }
 
 
 class FacilityReportModel(ReportBase):
     """
     Facility report document
     """
+    meta = {
+        'collection': 'facility_report'
+    }
     room = IntField(
         required=True,
         min_value=200,
