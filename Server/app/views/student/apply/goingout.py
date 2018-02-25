@@ -1,4 +1,6 @@
-from flask import Blueprint, Response
+from datetime import datetime, time
+
+from flask import Blueprint, Response, current_app
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Api, request
 from flasgger import swag_from
@@ -36,9 +38,13 @@ class Goingout(BaseResource):
         """
         student = StudentModel.objects(id=get_jwt_identity()).first()
 
-        sat = request.form['sat'].upper() == 'TRUE'
-        sun = request.form['sun'].upper() == 'TRUE'
+        now = datetime.now()
 
-        student.update(goingout_apply=GoingoutApplyModel(on_saturday=sat, on_sunday=sun))
+        if current_app.testing or (now.weekday() == 6 and now.time() > time(20, 30)) or (0 <= now.weekday() < 4) or (now.weekday() == 4 and now.time() < time(22, 00)):
+            sat = request.form['sat'].upper() == 'TRUE'
+            sun = request.form['sun'].upper() == 'TRUE'
 
-        return Response('', 201)
+            student.update(goingout_apply=GoingoutApplyModel(on_saturday=sat, on_sunday=sun))
+            return Response('', 201)
+        else:
+            return Response('', 204)
