@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from app.models.account import StudentModel
 from app.models import *
 
 
