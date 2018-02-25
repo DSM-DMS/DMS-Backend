@@ -65,6 +65,11 @@ TEMPLATE = {
         {
             'name': '학교',
             'description': '학생과 관리자 권한으로 접근 가능한 학교 정보 조회 관련 API'
+        },
+
+        {
+            'name': '버전',
+            'description': '플랫폼 최신 버전 관련 api'
         }
     ]
 }

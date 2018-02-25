@@ -18,7 +18,7 @@ VERSION_GET = {
 }
 
 VERSION_POST = {
-    'tags': ['version'],
+    'tags': ['버전'],
     'description': '플랫폼의 최신 버전 등록',
     'parameters': [
         {

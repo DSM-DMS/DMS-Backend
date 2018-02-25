@@ -141,3 +141,6 @@ class Router(object):
         from app.views.system import account_management, apply_management
         app.register_blueprint(account_management.api.blueprint)
         app.register_blueprint(apply_management.api.blueprint)
+
+        from app.views.etc import version
+        app.register_blueprint(version.api.blueprint)
