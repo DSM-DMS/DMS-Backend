@@ -36,7 +36,7 @@ VERSION_POST = {
             'required': True
         },
         {
-            'name': 'versoon',
+            'name': 'version',
             'description': '최신 버전 등록할 플랫폼의 버전',
             'in': 'formData',
             'type': 'str',
