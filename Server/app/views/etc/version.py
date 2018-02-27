@@ -19,7 +19,10 @@ class Version(BaseResource):
         platform = request.args['platform']
 
         newest = VersionModel.objects(platform=platform).first().version
-        return Response(newest, 200)
+        if newest:
+            return Response(newest, 200)
+        else:
+            return Response('', 204)
 
     @swag_from(VERSION_POST)
     @BaseResource.admin_only
@@ -30,7 +33,11 @@ class Version(BaseResource):
         platform = request.form['platform']
         version = request.form['version']
 
-        VersionModel.objects(platform=platform).first().delete()
+        past = VersionModel.objects(platform=platform).first()
+
+        if past:
+            past.delete()
+
         VersionModel(
             platform=platform,
             version=version

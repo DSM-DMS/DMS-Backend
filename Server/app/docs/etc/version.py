@@ -13,6 +13,9 @@ VERSION_GET = {
     'responses': {
         '200': {
             'description': '최신 버전 조회 성공'
+        },
+        '204': {
+            'description': '최신 버전 조회 실패'
         }
     }
 }
