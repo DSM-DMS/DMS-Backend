@@ -20,7 +20,9 @@ class Version(BaseResource):
 
         newest = VersionModel.objects(platform=platform).first().version
         if newest:
-            return Response(newest, 200)
+            return Response({
+                'newest_version': newest
+            }, 200)
         else:
             return Response('', 204)
 
