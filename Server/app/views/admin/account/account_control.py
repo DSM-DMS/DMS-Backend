@@ -64,3 +64,17 @@ class AccountControl(BaseResource):
 
         admin.delete()
         return Response('', 201)
+
+
+@api.resource('/student-sign-status')
+class StudentSignStatus(BaseResource):
+    @swag_from(STUDENT_SIGN_STATUS_GET)
+    @BaseResource.admin_only
+    def get(self):
+        """
+        학생 계정 회원가입 상태 확인
+        """
+        return self.unicode_safe_json_response({
+            'unsigned_student_count': SignupWaitingModel.objects.count(),
+            'signed_student_count': StudentModel.objects.count()
+        })
