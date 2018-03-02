@@ -72,3 +72,34 @@ ACCOUNT_CONTROL_DELETE = {
         }
     }
 }
+
+STUDENT_SIGN_STATUS_GET = {
+    'tags': ['관리자 계정'],
+    'description': '학생 계정 회원가입 상태(카운트) 확인',
+    'parameters': [
+        {
+            'name': 'Authorization',
+            'description': 'JWT Token',
+            'in': 'header',
+            'type': 'str',
+            'required': True
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': '성공',
+            'examples': {
+                'application/json': {
+                    'unsigned_student_count': 103,
+                    'signed_student_count': 124
+                }
+            }
+        },
+        '401': {
+            'description': 'JWT Token 없음'
+        },
+        '403': {
+            'description': '권한 없음'
+        }
+    }
+}
