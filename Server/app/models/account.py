@@ -15,7 +15,8 @@ class SignupWaitingModel(Document):
     }
 
     uuid = StringField(
-        primary_key=True
+        primary_key=True,
+        max_length=4
     )
     name = StringField(
         required=True
@@ -32,7 +33,6 @@ class AccountBase(Document):
     DMS account_admin Base Document
     """
     meta = {
-        'collection': 'account_base',
         'abstract': True,
         'allow_inheritance': True
     }
@@ -57,6 +57,9 @@ class StudentModel(AccountBase):
     """
     Student account model
     """
+    meta = {
+        'collection': 'account_student'
+    }
     number = IntField(
         required=True,
         min_value=1101,
@@ -99,12 +102,18 @@ class AdminModel(AccountBase):
     """
     Admin account model
     """
+    meta = {
+        'collection': 'account_admin'
+    }
 
 
 class SystemModel(AccountBase):
     """
     System account model
     """
+    meta = {
+        'collection': 'account_system'
+    }
 
 
 class RefreshTokenModel(Document):
@@ -120,7 +129,8 @@ class RefreshTokenModel(Document):
     )
     token_owner = ReferenceField(
         document_type=AccountBase,
-        required=True
+        required=True,
+        reverse_delete_rule=CASCADE
     )
     pw_snapshot = StringField(
         required=True
