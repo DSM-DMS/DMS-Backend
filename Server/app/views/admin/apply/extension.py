@@ -10,7 +10,7 @@ from app.views import BaseResource
 
 from utils.excel_style_manager import get_cell_positions_from_student_number, ready_applyment_worksheet
 
-EXTENSION_CLASSES = ['가온실', '나온실', '다온실', '라온실', '3층 독서실', '4층 독서실', '5층 열린교실']
+EXTENSION_CLASSES = ['가온실', '나온실', '다온실', '라온실', '3층', '4층', '5층']
 
 api = Api(Blueprint('admin-extension-api', __name__))
 api.prefix = '/admin/extension'
