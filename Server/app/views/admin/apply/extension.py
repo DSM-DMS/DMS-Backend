@@ -67,7 +67,7 @@ class Extension12Download(BaseResource):
             ws[number_cell] = student.number
             ws[name_cell] = student.name
 
-            extension_apply = student.extension_apply_11
+            extension_apply = student.extension_apply_12
 
             if not extension_apply:
                 continue
