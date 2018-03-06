@@ -43,7 +43,7 @@ class Stay(BaseResource):
             # weekday는 월요일이 0, 일요일이 6
             value = int(request.form['value'])
 
-            student.update(stay_apply=StayApplyModel(value=value, apply_date=datetime.now()))
+            student.update(stay_apply=StayApplyModel(value=value))
 
             return Response('', 201)
         else:

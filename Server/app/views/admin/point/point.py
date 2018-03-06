@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from flask import Blueprint, Response
 from flask_restful import Api, request
 from flasgger import swag_from
@@ -58,8 +56,7 @@ class PointManaging(BaseResource):
 
         student.point_histories.append(PointHistoryModel(
             reason=rule.name,
-            point=point,
-            time=datetime.now()
+            point=point
         ))
         # Append history
 

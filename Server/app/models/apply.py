@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from app.models import *
 
 
@@ -10,7 +12,8 @@ class ApplyBase(EmbeddedDocument):
     }
 
     apply_date = DateTimeField(
-        required=True
+        required=True,
+        default=datetime.now()
     )
 
 

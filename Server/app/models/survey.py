@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from app.models import *
 from app.models.account import StudentModel
 
@@ -11,7 +13,8 @@ class SurveyModel(Document):
     }
 
     creation_time = DateTimeField(
-        required=True
+        required=True,
+        default=datetime.now()
     )
     title = StringField(
         required=True

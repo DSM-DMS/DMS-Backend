@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from flask import Blueprint
 from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api, abort, request
@@ -30,7 +28,7 @@ class FacilityReport(BaseResource):
         if not 200 < room < 519:
             abort(400)
 
-        report = FacilityReportModel(author=student.name, title=title, content=content, room=room, report_time=datetime.now()).save()
+        report = FacilityReportModel(author=student.name, title=title, content=content, room=room).save()
 
         return self.unicode_safe_json_response({
             'id': str(report.id)

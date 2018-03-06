@@ -1,5 +1,4 @@
 from binascii import hexlify
-from datetime import datetime
 from hashlib import pbkdf2_hmac
 
 from flask import Blueprint, Response, current_app
@@ -87,6 +86,6 @@ class Signup(BaseResource):
         )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
-        StudentModel(id=id, pw=pw, name=name, number=number, signup_time=datetime.now()).save()
+        StudentModel(id=id, pw=pw, name=name, number=number).save()
 
         return Response('', 201)

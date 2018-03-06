@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from app.models import *
 
 
@@ -12,7 +14,8 @@ class ReportBase(Document):
     }
 
     report_time = DateTimeField(
-        required=True
+        required=True,
+        default=datetime.now()
     )
     author = StringField(
         required=True

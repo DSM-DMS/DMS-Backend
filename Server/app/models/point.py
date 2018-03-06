@@ -1,4 +1,5 @@
 from bson import ObjectId
+from datetime import datetime
 
 from app.models import *
 
@@ -38,7 +39,8 @@ class PointHistoryModel(EmbeddedDocument):
     )
 
     time = DateTimeField(
-        required=True
+        required=True,
+        default=datetime.now()
     )
 
     reason = StringField(

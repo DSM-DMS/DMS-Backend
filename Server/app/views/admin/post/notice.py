@@ -1,4 +1,3 @@
-from datetime import datetime
 from flask import Blueprint, Response
 from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api, request
@@ -25,7 +24,7 @@ class NoticeManaging(BaseResource):
         content = request.form['content']
 
         admin = AdminModel.objects(id=get_jwt_identity()).first()
-        notice = NoticeModel(author=admin.name, title=title, content=content, write_time=datetime.now()).save()
+        notice = NoticeModel(author=admin.name, title=title, content=content).save()
 
         return self.unicode_safe_json_response({
             'id': str(notice.id)
