@@ -1,6 +1,6 @@
 STUDENT_MANAGING_GET = {
     'tags': ['상벌점 관리'],
-    'description': '학생 목록 조회',
+    'description': '학생 목록 조회. 벌점 교육 단계는 9점 이하가 0, 10점 이상이 1, 15점 이상 2, ...',
     'parameters': [
         {
             'name': 'Authorization',
@@ -59,6 +59,42 @@ STUDENT_MANAGING_GET = {
                     }
                 ]
             }
+        },
+        '403': {
+            'description': '권한 없음'
+        }
+    }
+}
+
+STUDENT_PENALTY_MANAGING_PATCH = {
+    'tags': ['상벌점 관리'],
+    'description': '학생 벌점 교육 상태 변경',
+    'parameters': [
+        {
+            'name': 'Authorization',
+            'description': 'JWT Token(JWT ***)',
+            'in': 'header',
+            'type': 'str',
+            'required': True
+        },
+        {
+            'name': 'id',
+            'description': '상벌점 교육 상태 변경 대상 학생 ID',
+            'in': 'formData',
+            'type': 'str',
+            'required': True
+        },
+        {
+            'name': 'status',
+            'description': '교육 상태(true : 교육됨, false : 교육되지 않음)',
+            'in': 'formData',
+            'type': 'bool',
+            'required': True
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': '변경 성공'
         },
         '403': {
             'description': '권한 없음'

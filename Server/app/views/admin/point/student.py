@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, Response, request
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -34,3 +34,23 @@ class StudentManaging(BaseResource):
         } for student in StudentModel.objects.order_by('number')]
 
         return self.unicode_safe_json_response(response)
+
+
+@api.resource('/student/penalty')
+class StudentPenaltyManaging(BaseResource):
+    @swag_from(STUDENT_PENALTY_MANAGING_PATCH)
+    @BaseResource.admin_only
+    def patch(self):
+        """
+        학생 벌점 교육 상태 변경
+        """
+        id = request.form['id']
+        student = StudentModel.objects(id=id).first()
+        if not student:
+            return Response('', 204)
+
+        status = request.form['status'].upper() == 'TRUE'
+
+        student.update(penalty_trained=status)
+
+        return Response('', 200)
