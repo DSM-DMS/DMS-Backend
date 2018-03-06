@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 
 from flask import Blueprint, Response
@@ -48,7 +49,8 @@ class SurveyManaging(BaseResource):
             description=description,
             start_date=start_date,
             end_date=end_date,
-            target=target
+            target=target,
+            creation_time=datetime.now()
         ).save()
 
         return self.unicode_safe_json_response({

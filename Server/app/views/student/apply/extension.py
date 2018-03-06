@@ -49,7 +49,7 @@ class Extension11(BaseResource):
         class_ = int(request.form['class_num'])
         seat = int(request.form['seat_num'])
 
-        student.update(extension_apply_11=ExtensionApplyModel(class_=class_, seat=seat))
+        student.update(extension_apply_11=ExtensionApplyModel(class_=class_, seat=seat, apply_date=datetime.now()))
 
         return Response('', 201)
 
@@ -101,7 +101,7 @@ class Extension12(BaseResource):
         class_ = int(request.form['class_num'])
         seat = int(request.form['seat_num'])
 
-        student.update(extension_apply_12=ExtensionApplyModel(class_=class_,seat=seat))
+        student.update(extension_apply_12=ExtensionApplyModel(class_=class_, seat=seat, apply_date=datetime.now()))
 
         return Response('', 201)
 

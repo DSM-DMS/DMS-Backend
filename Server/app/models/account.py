@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from app.models import *
 
 from app.models.apply import ExtensionApplyModel, GoingoutApplyModel, StayApplyModel
@@ -37,10 +35,7 @@ class AccountBase(Document):
         'allow_inheritance': True
     }
 
-    signup_time = DateTimeField(
-        required=True,
-        default=datetime.now()
-    )
+    signup_time = DateTimeField()
 
     id = StringField(
         primary_key=True,
