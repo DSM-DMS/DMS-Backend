@@ -24,12 +24,13 @@ class StudentManaging(BaseResource):
             'number': student.number,
             'good_point': student.good_point,
             'bad_point': student.bad_point,
+            'bad_point_status': (student.bad_point - 5) // 5,
             'point_histories': [{
                 'time': str(history.time)[:-7],
                 'reason': history.reason,
                 'point': history.point
             } for history in student.point_histories],
-            'penalty_training_status': student.penalty_training_status
+            'penalty_trained': student.penalty_trained
         } for student in StudentModel.objects.order_by('number')]
 
         return self.unicode_safe_json_response(response)

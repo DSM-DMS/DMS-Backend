@@ -20,7 +20,8 @@ STUDENT_MANAGING_GET = {
                         'name': '조민규',
                         'number': 2120,
                         'good_point': 1,
-                        'bad_point': 50,
+                        'bad_point': 15,
+                        'bad_point_status': 2,
                         'point_histories': [
                             {
                                 'time': '2018-01-01 12:34:12',
@@ -33,7 +34,7 @@ STUDENT_MANAGING_GET = {
                                 'point': -3
                             }
                         ],
-                        'penalty_training_status': 4
+                        'penalty_trained': False
                     },
                     {
                         'id': 'geni429',
@@ -41,6 +42,7 @@ STUDENT_MANAGING_GET = {
                         'number': 2117,
                         'good_point': 0,
                         'bad_point': 0,
+                        'bad_point_status': 0,
                         'point_histories': [
                             {
                                 'time': '2018-01-01 12:34:12',
@@ -53,7 +55,7 @@ STUDENT_MANAGING_GET = {
                                 'point': -3
                             }
                         ],
-                        'penalty_training_status': 0
+                        'penalty_trained': False
                     }
                 ]
             }
