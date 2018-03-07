@@ -8,6 +8,7 @@ from flasgger import swag_from
 
 from app.docs.student.account.signup import *
 from app.models.account import SignupWaitingModel, StudentModel, AdminModel
+from app.models.apply import GoingoutApplyModel, StayApplyModel
 from app.views import BaseResource
 
 api = Api(Blueprint('student-signup-api', __name__))
@@ -87,6 +88,14 @@ class Signup(BaseResource):
         )).decode('utf-8')
         # pbkdf2_hmac hash with salt(secret key) and 100000 iteration
 
-        StudentModel(id=id, pw=pw, name=name, number=number, signup_time=datetime.now()).save()
+        StudentModel(
+            id=id,
+            pw=pw,
+            name=name,
+            number=number,
+            signup_time=datetime.now(),
+            goingout_apply=GoingoutApplyModel(apply_date=datetime.now()),
+            stay_apply=StayApplyModel(apply_date=datetime.now())
+        ).save()
 
         return Response('', 201)

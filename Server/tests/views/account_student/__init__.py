@@ -1,10 +1,12 @@
 from binascii import hexlify
+from datetime import datetime
 from hashlib import pbkdf2_hmac
 import json
 
 from app import app
 
 from app.models.account import StudentModel
+from app.models.apply import GoingoutApplyModel, StayApplyModel
 
 
 def create_fake_account(id='fake_student'):
@@ -21,7 +23,9 @@ def create_fake_account(id='fake_student'):
         id=id,
         pw=pw,
         name='fake',
-        number=1111
+        number=1111,
+        goingout_apply=GoingoutApplyModel(apply_date=datetime.now()),
+        stay_apply=StayApplyModel(apply_date=datetime.now())
     ).save()
 
 

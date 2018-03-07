@@ -65,12 +65,10 @@ class StudentModel(AccountBase):
         document_type=ExtensionApplyModel
     )
     goingout_apply = EmbeddedDocumentField(
-        document_type=GoingoutApplyModel,
-        default=GoingoutApplyModel()
+        document_type=GoingoutApplyModel
     )
     stay_apply = EmbeddedDocumentField(
-        document_type=StayApplyModel,
-        default=StayApplyModel()
+        document_type=StayApplyModel
     )
 
     good_point = IntField(
