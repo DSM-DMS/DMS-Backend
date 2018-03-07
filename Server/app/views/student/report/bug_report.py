@@ -10,6 +10,8 @@ from app.models.account import StudentModel
 from app.models.report import BugReportModel
 from app.views import BaseResource
 
+from utils.slack_bot import slack_bot
+
 api = Api(Blueprint('student-bug-report-api', __name__))
 
 
@@ -25,8 +27,10 @@ class BugReport(BaseResource):
 
         title = request.form['title']
         content = request.form['content']
+        time = datetime.now()
 
-        report = BugReportModel(author=student.name, title=title, content=content, report_time=datetime.now()).save()
+        report = BugReportModel(author=student.name, title=title, content=content, report_time=time).save()
+        slack_bot.chat.post_message(channel='#bug-report', text='제보자: {0}\n제보시간: {1}\n제목: {2}\n내용: {3}'.format(student.name, time, title, content))
 
         return self.unicode_safe_json_response({
             'id': str(report.id)
