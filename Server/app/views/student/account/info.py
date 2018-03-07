@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api
 from flasgger import swag_from
@@ -18,6 +18,7 @@ class MyPage(BaseResource):
         """
         마이페이지에 해당하는 정보 조회
         """
+        print(request.headers)
         student = StudentModel.objects(id=get_jwt_identity()).first()
 
         response = {
