@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Blueprint
 from flask_jwt_extended import get_jwt_identity
 from flask_restful import Api, request
@@ -24,7 +26,7 @@ class BugReport(BaseResource):
         title = request.form['title']
         content = request.form['content']
 
-        report = BugReportModel(author=student.name, title=title, content=content).save()
+        report = BugReportModel(author=student.name, title=title, content=content, report_time=datetime.now()).save()
 
         return self.unicode_safe_json_response({
             'id': str(report.id)
