@@ -12,10 +12,10 @@ if __name__ == '__main__':
     if 'SECRET_KEY' not in os.environ:
         print('[WARN] SECRET KEY is not set in the environment variable !!')
 
-    if os.getenv('MYSQL_PW'):
-        from utils import db_migrator
-
-        db_migrator.migrate_posts()
+    # if os.getenv('MYSQL_PW'):
+    #     from utils import db_migrator
+    #
+    #     db_migrator.migrate_posts()
 
     from utils.schedulers import apply_status_cleaner
     apply_status_cleaner.run()
