@@ -90,6 +90,9 @@ class StudentModel(AccountBase):
         document_type=PointHistoryModel
     )
 
+    # -- Deprecated
+    penalty_training_status = IntField(required=False)
+
 
 class AdminModel(AccountBase):
     """
