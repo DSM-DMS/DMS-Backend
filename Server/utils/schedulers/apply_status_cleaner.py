@@ -8,7 +8,7 @@ from app.models.account import StudentModel
 def clean_extension_apply(sleep_seconds):
     while True:
         now = datetime.now()
-        if 0 < now.hour < 2:
+        if 0 < now.hour < 16:
             for student in StudentModel.objects:
                 student.update(extension_apply_11=None, extension_apply_12=None)
 
