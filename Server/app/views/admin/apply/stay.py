@@ -49,4 +49,4 @@ class StayDownload(BaseResource):
         wb.save('stay.xlsx')
         wb.close()
 
-        return send_from_directory('../../', 'stay.xlsx')
+        return send_from_directory('../', 'stay.xlsx')
