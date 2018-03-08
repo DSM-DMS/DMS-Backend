@@ -1,3 +1,4 @@
+from bson import ObjectId
 from datetime import datetime
 
 from flask import Blueprint, Response
@@ -59,7 +60,8 @@ class PointManaging(BaseResource):
         student.point_histories.append(PointHistoryModel(
             reason=rule.name,
             point=point,
-            time=datetime.now()
+            time=datetime.now(),
+            id=ObjectId()
         ))
         # Append history
 

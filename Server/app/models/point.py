@@ -1,5 +1,3 @@
-from bson import ObjectId
-
 from app.models import *
 
 
@@ -33,8 +31,7 @@ class PointHistoryModel(EmbeddedDocument):
     }
 
     id = ObjectIdField(
-        primary_key=True,
-        default=ObjectId()
+        primary_key=True
     )
 
     time = DateTimeField(
