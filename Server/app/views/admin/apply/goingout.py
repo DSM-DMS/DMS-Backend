@@ -34,6 +34,8 @@ class GoingoutDownload(BaseResource):
 
             number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
 
+            print('{} 이새끼 엑셀에 기록할 예정임'.format(student.name))
+            print('근데 그 전에 셀에 있던 데이터 이거임 : {}, {}'.format(ws[number_cell], ws[name_cell]))
             ws[number_cell] = student.number
             ws[name_cell] = student.name
 
