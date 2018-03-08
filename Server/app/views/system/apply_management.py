@@ -42,7 +42,7 @@ class Extension11EachStudent(BaseResource):
         class_ = request.json['class_num']
         seat = request.json['seat']
 
-        student.update(extension_apply_11=ExtensionApplyModel(class_=class_, seat=seat), apply_date=datetime.now())
+        student.update(extension_apply_11=ExtensionApplyModel(class_=class_, seat=seat, apply_date=datetime.now()))
 
         return Response('', 201)
 
@@ -92,7 +92,7 @@ class Extension12EachStudent(BaseResource):
         class_ = request.json['class_num']
         seat = request.json['seat']
 
-        student.update(extension_apply_12=ExtensionApplyModel(class_=class_, seat=seat), apply_date=datetime.now())
+        student.update(extension_apply_12=ExtensionApplyModel(class_=class_, seat=seat, apply_date=datetime.now()))
 
         return Response('', 201)
 
@@ -119,7 +119,7 @@ class Goingout(BaseResource):
         모든 학생의 외출신청 정보 초기화
         """
         for student in StudentModel.objects:
-            student.update(goingout_apply=GoingoutApplyModel())
+            student.update(goingout_apply=GoingoutApplyModel(apply_date=datetime.now()))
 
         return Response('', 200)
 
@@ -142,7 +142,7 @@ class GoingoutEachStudent(BaseResource):
         sat = request.json['sat']
         sun = request.json['sun']
 
-        student.update(goingout_apply=GoingoutApplyModel(on_saturday=sat, on_sunday=sun), apply_date=datetime.now())
+        student.update(goingout_apply=GoingoutApplyModel(on_saturday=sat, on_sunday=sun, apply_date=datetime.now()))
 
         return Response('', 201)
 
@@ -156,7 +156,7 @@ class GoingoutEachStudent(BaseResource):
         if not student:
             return Response('', 204)
 
-        student.update(goingout_apply=GoingoutApplyModel())
+        student.update(goingout_apply=GoingoutApplyModel(apply_date=datetime.now()))
 
         return Response('', 200)
 
@@ -178,6 +178,6 @@ class Stay(BaseResource):
 
         value = request.json['value']
 
-        student.update(stay_apply=StayApplyModel(value=value), apply_date=datetime.now())
+        student.update(stay_apply=StayApplyModel(value=value, apply_date=datetime.now()))
 
         return Response('', 201)
