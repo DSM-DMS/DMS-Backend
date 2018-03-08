@@ -90,6 +90,11 @@ class PointManaging(BaseResource):
             return Response('', 205)
 
         student.point_histories = student.point_histories.exclude(id=point_id)
+
+        if point.point < 0:
+            student.bad_point -= point.point
+        else:
+            student.good_point -= point.point
         student.save()
 
         return Response('', 200)
