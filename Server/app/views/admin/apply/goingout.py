@@ -28,12 +28,17 @@ class GoingoutDownload(BaseResource):
         ready_applyment_worksheet(ws)
 
         for student in StudentModel.objects:
-            print(student.stay_apply.value)
-            if not student.stay_apply.value == 3 or student.stay_apply.value == 4:
-                print('얘 외출 무시해야 함')
+            number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
+            print('이새끼 엑셀 준비 중임 : {}'.format(student.name))
+            print('근데 그 전에 셀에 있던 데이터 이거임 : {}, {}'.format(ws[number_cell].value, ws[name_cell].value))
+
+            if student.stay_apply.value < 3:
+                print('{} 이새끼 외출 무시'.format(student.name))
+                ws[number_cell] = None
+                ws[name_cell] = None
                 continue
 
-            number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
+            print('{} 이새끼 외출 인정'.format(student.name))
 
             ws[number_cell] = student.number
             ws[name_cell] = student.name
