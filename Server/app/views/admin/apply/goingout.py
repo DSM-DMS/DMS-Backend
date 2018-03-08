@@ -34,9 +34,9 @@ class GoingoutDownload(BaseResource):
 
             if student.stay_apply.value < 3:
                 print('{} 이새끼 외출 무시'.format(student.name))
+                ws[number_cell] = None
+                ws[name_cell] = None
                 continue
-
-            number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
 
             print('{} 이새끼 외출 인정'.format(student.name))
 
