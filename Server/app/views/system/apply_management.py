@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Blueprint, Response
 from flask_restful import Api, abort, request
 
@@ -40,7 +42,7 @@ class Extension11EachStudent(BaseResource):
         class_ = request.json['class_num']
         seat = request.json['seat']
 
-        student.update(extension_apply_11=ExtensionApplyModel(class_=class_, seat=seat))
+        student.update(extension_apply_11=ExtensionApplyModel(class_=class_, seat=seat), apply_date=datetime.now())
 
         return Response('', 201)
 
@@ -90,7 +92,7 @@ class Extension12EachStudent(BaseResource):
         class_ = request.json['class_num']
         seat = request.json['seat']
 
-        student.update(extension_apply_12=ExtensionApplyModel(class_=class_, seat=seat))
+        student.update(extension_apply_12=ExtensionApplyModel(class_=class_, seat=seat), apply_date=datetime.now())
 
         return Response('', 201)
 
@@ -140,7 +142,7 @@ class GoingoutEachStudent(BaseResource):
         sat = request.json['sat']
         sun = request.json['sun']
 
-        student.update(goingout_apply=GoingoutApplyModel(on_saturday=sat, on_sunday=sun))
+        student.update(goingout_apply=GoingoutApplyModel(on_saturday=sat, on_sunday=sun), apply_date=datetime.now())
 
         return Response('', 201)
 
@@ -176,6 +178,6 @@ class Stay(BaseResource):
 
         value = request.json['value']
 
-        student.update(stay_apply=StayApplyModel(value=value))
+        student.update(stay_apply=StayApplyModel(value=value), apply_date=datetime.now())
 
         return Response('', 201)
