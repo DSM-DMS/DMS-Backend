@@ -30,16 +30,15 @@ class Extension11Download(BaseResource):
         ready_applyment_worksheet(ws)
 
         for student in StudentModel.objects:
-            number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
-
-            ws[number_cell] = student.number
-            ws[name_cell] = student.name
-
             extension_apply = student.extension_apply_11
 
             if not extension_apply:
                 continue
 
+            number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
+
+            ws[number_cell] = student.number
+            ws[name_cell] = student.name
             ws[status_cell] = EXTENSION_CLASSES[extension_apply.class_ - 1]
 
         wb.save('11.xlsx')
@@ -62,16 +61,15 @@ class Extension12Download(BaseResource):
         ready_applyment_worksheet(ws)
 
         for student in StudentModel.objects:
-            number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
-
-            ws[number_cell] = student.number
-            ws[name_cell] = student.name
-
             extension_apply = student.extension_apply_12
 
             if not extension_apply:
                 continue
 
+            number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
+
+            ws[number_cell] = student.number
+            ws[name_cell] = student.name
             ws[status_cell] = EXTENSION_CLASSES[extension_apply.class_ - 1]
 
         wb.save('12.xlsx')

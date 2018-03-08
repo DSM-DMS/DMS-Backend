@@ -138,9 +138,10 @@ class Router(object):
         from app.views.mixed.school_data import meal
         app.register_blueprint(meal.api.blueprint)
 
-        from app.views.system import account_management, apply_management
+        from app.views.system import account_management, apply_management, auth
         app.register_blueprint(account_management.api.blueprint)
         app.register_blueprint(apply_management.api.blueprint)
+        app.register_blueprint(auth.api.blueprint)
 
         from app.views.etc import version
         app.register_blueprint(version.api.blueprint)
