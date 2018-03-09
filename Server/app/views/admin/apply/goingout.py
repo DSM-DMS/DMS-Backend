@@ -56,7 +56,7 @@ class GoingoutDownload(BaseResource):
 
             ws[status_cell] = status
 
-        filename = 'goingout-{}.xlsx'.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        filename = 'goingout.xlsx'
 
         wb.save('./Server/{}'.format(filename))
         wb.close()

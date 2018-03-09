@@ -47,7 +47,7 @@ class StayDownload(BaseResource):
 
             ws[status_cell] = status
 
-        filename = 'stay-{}.xlsx'.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        filename = 'stay.xlsx'
 
         wb.save('./Server/{}'.format(filename))
         wb.close()
