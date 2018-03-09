@@ -53,4 +53,15 @@ class StudentPenaltyManaging(BaseResource):
 
         student.update(penalty_trained=status)
 
+        if not status:
+            good_point = student.good_point
+            if good_point > 4:
+                bad_point = student.bad_point - 5
+                good_point -= 5
+            else:
+                bad_point = student.bad_point - good_point
+                good_point = 0
+
+            student.update(bad_point=bad_point, good_point=good_point)
+
         return Response('', 200)
