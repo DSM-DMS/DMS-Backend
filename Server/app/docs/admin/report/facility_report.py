@@ -1,4 +1,4 @@
-FACILITY_REPORT_DOWNLOAD_GET = {
+FACILITY_REPORT_GET = {
     'tags': ['신고 관리'],
     'description': '시설고장신고 리스트 조회',
     'parameters': [
@@ -35,6 +35,38 @@ FACILITY_REPORT_DOWNLOAD_GET = {
                     }
                 ]
             }
+        },
+        '403': {
+            'description': '권한 없음'
+        }
+    }
+}
+
+FACILITY_REPORT_DELETE = {
+    'tags': ['신고 관리'],
+    'description': '시설고장신고 정보 삭제',
+    'parameters': [
+        {
+            'name': 'Authorization',
+            'description': 'JWT Token',
+            'in': 'header',
+            'type': 'str',
+            'required': True
+        },
+        {
+            'name': 'report_id',
+            'description': '시설고장신고 ID',
+            'in': 'formData',
+            'type': 'str',
+            'required': True
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': '시설고장신고 삭제 성공'
+        },
+        '204': {
+            'description': '존재하지 않는 시설고장신고 ID'
         },
         '403': {
             'description': '권한 없음'

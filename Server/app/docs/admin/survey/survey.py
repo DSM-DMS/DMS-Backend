@@ -116,7 +116,7 @@ SURVEY_MANAGING_DELETE = {
         {
             'name': 'survey_id',
             'description': '설문지 ID',
-            'in': 'query',
+            'in': 'formData',
             'type': 'str',
             'required': True
         }
