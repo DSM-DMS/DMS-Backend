@@ -29,16 +29,12 @@ class GoingoutDownload(BaseResource):
 
         for student in StudentModel.objects:
             number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
-            print('이새끼 엑셀 준비 중임 : {}'.format(student.name))
-            print('근데 그 전에 셀에 있던 데이터 이거임 : {}, {}'.format(ws[number_cell].value, ws[name_cell].value))
 
             if student.stay_apply.value < 3:
-                print('{} 이새끼 외출 무시'.format(student.name))
                 ws[number_cell] = None
                 ws[name_cell] = None
                 continue
 
-            print('{} 이새끼 외출 인정'.format(student.name))
 
             ws[number_cell] = student.number
             ws[name_cell] = student.name
@@ -60,7 +56,7 @@ class GoingoutDownload(BaseResource):
 
             ws[status_cell] = status
 
-        wb.save('goingout.xlsx')
+        wb.save('./Server/goingout.xlsx')
         wb.close()
 
         return send_from_directory('../', 'goingout.xlsx')

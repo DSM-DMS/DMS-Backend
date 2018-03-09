@@ -41,7 +41,7 @@ class Extension11Download(BaseResource):
             ws[name_cell] = student.name
             ws[status_cell] = EXTENSION_CLASSES[extension_apply.class_ - 1]
 
-        wb.save('11.xlsx')
+        wb.save('./Server/11.xlsx')
         wb.close()
 
         return send_from_directory('../', '11.xlsx')
@@ -72,7 +72,7 @@ class Extension12Download(BaseResource):
             ws[name_cell] = student.name
             ws[status_cell] = EXTENSION_CLASSES[extension_apply.class_ - 1]
 
-        wb.save('12.xlsx')
+        wb.save('./Server/12.xlsx')
         wb.close()
 
         return send_from_directory('../', '12.xlsx')

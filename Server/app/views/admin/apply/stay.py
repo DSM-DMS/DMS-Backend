@@ -46,7 +46,7 @@ class StayDownload(BaseResource):
 
             ws[status_cell] = status
 
-        wb.save('stay.xlsx')
+        wb.save('./Server/stay.xlsx')
         wb.close()
 
         return send_from_directory('../', 'stay.xlsx')
