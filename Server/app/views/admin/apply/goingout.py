@@ -1,3 +1,4 @@
+from datetime import datetime
 from openpyxl import Workbook
 
 from flask import Blueprint, send_from_directory
@@ -35,7 +36,6 @@ class GoingoutDownload(BaseResource):
                 ws[name_cell] = None
                 continue
 
-
             ws[number_cell] = student.number
             ws[name_cell] = student.name
 
@@ -56,7 +56,9 @@ class GoingoutDownload(BaseResource):
 
             ws[status_cell] = status
 
-        wb.save('./Server/goingout.xlsx')
+        filename = 'goingout-{}.xlsx'.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+        wb.save('./Server/{}'.format(filename))
         wb.close()
 
-        return send_from_directory('../', 'goingout.xlsx')
+        return send_from_directory('../', filename)

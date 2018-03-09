@@ -1,3 +1,4 @@
+from datetime import datetime
 from openpyxl import Workbook
 
 from flask import Blueprint, send_from_directory
@@ -41,10 +42,12 @@ class Extension11Download(BaseResource):
             ws[name_cell] = student.name
             ws[status_cell] = EXTENSION_CLASSES[extension_apply.class_ - 1]
 
-        wb.save('./Server/11.xlsx')
+        filename = '11-{}.xlsx'.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+        wb.save('./Server/{}'.format(filename))
         wb.close()
 
-        return send_from_directory('../', '11.xlsx')
+        return send_from_directory('../', filename)
 
 
 @api.resource('/12')
@@ -72,7 +75,9 @@ class Extension12Download(BaseResource):
             ws[name_cell] = student.name
             ws[status_cell] = EXTENSION_CLASSES[extension_apply.class_ - 1]
 
-        wb.save('./Server/12.xlsx')
+        filename = '12-{}.xlsx'.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+        wb.save('./Server/{}'.format(filename))
         wb.close()
 
-        return send_from_directory('../', '12.xlsx')
+        return send_from_directory('../', filename)

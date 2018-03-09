@@ -1,4 +1,5 @@
 from openpyxl import Workbook
+from datetime import datetime
 
 from flask import Blueprint, send_from_directory
 from flask_restful import Api
@@ -46,7 +47,9 @@ class StayDownload(BaseResource):
 
             ws[status_cell] = status
 
-        wb.save('./Server/stay.xlsx')
+        filename = 'stay-{}.xlsx'.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+        wb.save('./Server/{}'.format(filename))
         wb.close()
 
-        return send_from_directory('../', 'stay.xlsx')
+        return send_from_directory('../', filename)
