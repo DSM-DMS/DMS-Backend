@@ -19,6 +19,7 @@ class FacilityReport(BaseResource):
         시설고장신고 정보 조회
         """
         response = [{
+            'id': facility_report.id,
             'author': facility_report.author,
             'title': facility_report.title,
             'content': facility_report.content,

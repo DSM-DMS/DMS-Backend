@@ -16,18 +16,21 @@ FACILITY_REPORT_GET = {
             'examples': {
                 'application/json': [
                     {
+                        'id': '13211265df16ads',
                         'author': '이병찬',
                         'title': '방에서 냄새가 나요',
                         'content': '내 발냄새인거같기도 하고',
                         'room': 415
                     },
                     {
+                        'id': '13211265df16ads',
                         'author': '조민규',
                         'title': '계엄령을 선포한다',
                         'content': '치킨먹고싶어',
                         'room': 415
                     },
                     {
+                        'id': '13211265df16ads',
                         'author': '김동규',
                         'title': '피카츄가 포켓볼에서 안나와요',
                         'content': '내가 이걸 얼마주고 샀는데',
