@@ -24,7 +24,7 @@ class StudentManaging(BaseResource):
             'number': student.number,
             'good_point': student.good_point,
             'bad_point': student.bad_point,
-            'bad_point_status': (student.bad_point - 5) // 5,
+            'bad_point_status': student.bad_point_status,
             'point_histories': [{
                 'time': str(history.time)[:-7],
                 'reason': history.reason,
