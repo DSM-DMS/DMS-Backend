@@ -49,7 +49,7 @@ class StayDownload(BaseResource):
 
         filename = 'stay.xlsx'
 
-        wb.save('./Server/{}'.format(filename))
+        wb.save('{}'.format(filename))
         wb.close()
 
         return send_from_directory('../', filename)
