@@ -1,14 +1,15 @@
 from bson import ObjectId
 from datetime import datetime
 
-from flask import Blueprint, Response
-from flask_restful import Api, request
+from flask import Blueprint, Response, request
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.admin.point.point import *
 from app.models.account import StudentModel
 from app.models.point import PointRuleModel, PointHistoryModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
 
 api = Api(Blueprint('admin-point-api', __name__))
 api.prefix = '/admin/managing'
@@ -17,7 +18,7 @@ api.prefix = '/admin/managing'
 @api.resource('/point')
 class PointManaging(BaseResource):
     @swag_from(POINT_MANAGING_GET)
-    @BaseResource.admin_only
+    @admin_only
     def get(self):
         """
         특정 학생의 상벌점 내역 조회
@@ -37,7 +38,7 @@ class PointManaging(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(POINT_MANAGING_POST)
-    @BaseResource.admin_only
+    @admin_only
     def post(self):
         """
         특정 학생에 대한 상벌점 부여
@@ -75,7 +76,7 @@ class PointManaging(BaseResource):
         return Response('', 201)
 
     @swag_from(POINT_MANAGING_DELETE)
-    @BaseResource.admin_only
+    @admin_only
     def delete(self):
         """
         상벌점 내역 삭제

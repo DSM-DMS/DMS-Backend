@@ -1,14 +1,13 @@
 from datetime import datetime
 
-from flask import Blueprint, Response
-from flask_jwt_extended import get_jwt_identity
-from flask_restful import Api, request
+from flask import Blueprint, Response, g, request
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.admin.post.faq import *
-from app.models.account import AdminModel
 from app.models.post import FAQModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
 
 api = Api(Blueprint('admin-faq-api', __name__))
 api.prefix = '/admin'
@@ -17,7 +16,7 @@ api.prefix = '/admin'
 @api.resource('/faq')
 class FAQManaging(BaseResource):
     @swag_from(FAQ_MANAGING_POST)
-    @BaseResource.admin_only
+    @admin_only
     def post(self):
         """
         FAQ 업로드
@@ -25,7 +24,7 @@ class FAQManaging(BaseResource):
         title = request.form['title']
         content = request.form['content']
 
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        admin = g.user
         faq = FAQModel(author=admin.name, title=title, content=content, write_time=datetime.now()).save()
 
         return self.unicode_safe_json_response({
@@ -33,7 +32,7 @@ class FAQManaging(BaseResource):
         }, 201)
 
     @swag_from(FAQ_MANAGING_PATCH)
-    @BaseResource.admin_only
+    @admin_only
     def patch(self):
         """
         FAQ 수정
@@ -54,7 +53,7 @@ class FAQManaging(BaseResource):
         return Response('', 200)
 
     @swag_from(FAQ_MANAGING_DELETE)
-    @BaseResource.admin_only
+    @admin_only
     def delete(self):
         """
         FAQ 제거

@@ -1,12 +1,13 @@
 from uuid import uuid4
 
-from flask import Blueprint, Response
-from flask_restful import Api, request
+from flask import Blueprint, Response, g, request
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.admin.account.account_control import *
 from app.models.account import SignupWaitingModel, StudentModel, AdminModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
 
 api = Api(Blueprint('admin-account-control-api', __name__))
 api.prefix = '/admin'
@@ -15,13 +16,13 @@ api.prefix = '/admin'
 @api.resource('/account-control')
 class AccountControl(BaseResource):
     @swag_from(ACCOUNT_CONTROL_POST)
-    @BaseResource.admin_only
+    @admin_only
     def post(self):
         """
         학생 계정 제거 후 새로운 UUID 생성
         """
         number = int(request.form['number'])
-        student = StudentModel.objects(number=number).first()
+        student = g.user
 
         if student:
             name = student.name
@@ -51,7 +52,7 @@ class AccountControl(BaseResource):
         }, 201)
 
     @swag_from(ACCOUNT_CONTROL_DELETE)
-    @BaseResource.admin_only
+    @admin_only
     def delete(self):
         """
         관리자 계정 삭제 
@@ -69,7 +70,7 @@ class AccountControl(BaseResource):
 @api.resource('/student-sign-status')
 class StudentSignStatus(BaseResource):
     @swag_from(STUDENT_SIGN_STATUS_GET)
-    @BaseResource.admin_only
+    @admin_only
     def get(self):
         """
         학생 계정 회원가입 상태 확인

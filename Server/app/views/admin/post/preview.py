@@ -1,10 +1,11 @@
-from flask import Blueprint, Response
-from flask_restful import Api, request
+from flask import Blueprint, Response, request
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.admin.post.preview import *
 from app.models.post import FAQModel, NoticeModel, RuleModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
 
 api = Api(Blueprint('admin-preview-api', __name__))
 api.prefix = '/admin/preview'
@@ -13,7 +14,7 @@ api.prefix = '/admin/preview'
 @api.resource('/faq')
 class FAQPreviewManaging(BaseResource):
     @swag_from(FAQ_PREVIEW_MANAGING_POST)
-    @BaseResource.admin_only
+    @admin_only
     def post(self):
         """
         FAQ 프리뷰 설정
@@ -38,7 +39,7 @@ class FAQPreviewManaging(BaseResource):
 @api.resource('/notice')
 class NoticePreviewManaging(BaseResource):
     @swag_from(NOTICE_PREVIEW_MANAGING_POST)
-    @BaseResource.admin_only
+    @admin_only
     def post(self):
         """
         공지사항 프리뷰 설정
@@ -63,7 +64,7 @@ class NoticePreviewManaging(BaseResource):
 @api.resource('/rule')
 class RulePreviewManaging(BaseResource):
     @swag_from(RULE_PREVIEW_MANAGING_POST)
-    @BaseResource.admin_only
+    @admin_only
     def post(self):
         """
         기숙사규정 프리뷰 설정

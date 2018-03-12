@@ -1,14 +1,13 @@
 from datetime import datetime
 
-from flask import Blueprint, Response
-from flask_jwt_extended import get_jwt_identity
-from flask_restful import Api, request
+from flask import Blueprint, Response, g, request
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.admin.post.rule import *
-from app.models.account import AdminModel
 from app.models.post import RuleModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
 
 api = Api(Blueprint('admin-rule-api', __name__))
 api.prefix = '/admin'
@@ -17,7 +16,7 @@ api.prefix = '/admin'
 @api.resource('/rule')
 class RuleManaging(BaseResource):
     @swag_from(RULE_MANAGING_POST)
-    @BaseResource.admin_only
+    @admin_only
     def post(self):
         """
         기숙사규정 업로드
@@ -25,7 +24,7 @@ class RuleManaging(BaseResource):
         title = request.form['title']
         content = request.form['content']
 
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        admin = g.user
         rule = RuleModel(author=admin.name, title=title, content=content, write_time=datetime.now()).save()
 
         return self.unicode_safe_json_response({
@@ -33,7 +32,7 @@ class RuleManaging(BaseResource):
         }, 201)
 
     @swag_from(RULE_MANAGING_PATCH)
-    @BaseResource.admin_only
+    @admin_only
     def patch(self):
         """
         기숙사규정 수정
@@ -54,7 +53,7 @@ class RuleManaging(BaseResource):
         return Response('', 200)
 
     @swag_from(RULE_MANAGING_DELETE)
-    @BaseResource.admin_only
+    @admin_only
     def delete(self):
         """
         기숙사규정 제거

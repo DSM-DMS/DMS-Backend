@@ -1,13 +1,14 @@
 from datetime import datetime
 import json
 
-from flask import Blueprint, Response
-from flask_restful import Api, request
+from flask import Blueprint, Response, request
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.admin.survey.survey import *
 from app.models.survey import QuestionModel, SurveyModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
 
 api = Api(Blueprint('admin-survey-api', __name__))
 api.prefix = '/admin'
@@ -16,7 +17,7 @@ api.prefix = '/admin'
 @api.resource('/survey')
 class SurveyManaging(BaseResource):
     @swag_from(SURVEY_MANAGING_GET)
-    @BaseResource.admin_only
+    @admin_only
     def get(self):
         """
         설문지 리스트 조회
@@ -33,7 +34,7 @@ class SurveyManaging(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(SURVEY_MANAGING_POST)
-    @BaseResource.admin_only
+    @admin_only
     def post(self):
         """
         설문지 등록
@@ -58,7 +59,7 @@ class SurveyManaging(BaseResource):
         }, 201)
 
     @swag_from(SURVEY_MANAGING_DELETE)
-    @BaseResource.admin_only
+    @admin_only
     def delete(self):
         """
         설문지 제거
@@ -79,7 +80,7 @@ class SurveyManaging(BaseResource):
 @api.resource('/survey/question')
 class QuestionManaging(BaseResource):
     @swag_from(QUESTION_MANAGING_GET)
-    @BaseResource.admin_only
+    @admin_only
     def get(self):
         """
         설문지의 질문 리스트 조회
@@ -102,7 +103,7 @@ class QuestionManaging(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(QUESTION_MANAGING_POST)
-    @BaseResource.admin_only
+    @admin_only
     def post(self):
         """
         설문지에 질문 등록

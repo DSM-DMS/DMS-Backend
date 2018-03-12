@@ -1,10 +1,11 @@
-from flask import Blueprint, Response
-from flask_restful import Api, request
+from flask import Blueprint, Response, request
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.admin.point.rule import *
 from app.models.point import PointRuleModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
 
 api = Api(Blueprint('admin-point-rule-api', __name__))
 api.prefix = '/admin/managing'
@@ -13,7 +14,7 @@ api.prefix = '/admin/managing'
 @api.resource('/rule')
 class PointRuleManaging(BaseResource):
     @swag_from(POINT_RULE_MANAGING_GET)
-    @BaseResource.admin_only
+    @admin_only
     def get(self):
         """
         상벌점 규칙 목록 조회
@@ -28,7 +29,7 @@ class PointRuleManaging(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(POINT_RULE_MANAGING_POST)
-    @BaseResource.admin_only
+    @admin_only
     def post(self):
         """
         상벌점 규칙 추가
@@ -48,7 +49,7 @@ class PointRuleManaging(BaseResource):
         }, 201
 
     @swag_from(POINT_RULE_MANAGING_PATCH)
-    @BaseResource.admin_only
+    @admin_only
     def patch(self):
         """
         상벌점 규칙 수정
@@ -74,7 +75,7 @@ class PointRuleManaging(BaseResource):
         return Response('', 200)
 
     @swag_from(POINT_RULE_MANAGING_DELETE)
-    @BaseResource.admin_only
+    @admin_only
     def delete(self):
         """
         상벌점 규칙 삭제

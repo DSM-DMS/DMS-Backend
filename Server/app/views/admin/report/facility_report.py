@@ -4,7 +4,8 @@ from flasgger import swag_from
 
 from app.docs.admin.report.facility_report import *
 from app.models.report import FacilityReportModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
 
 api = Api(Blueprint('admin-facility-report-api', __name__))
 api.prefix = '/admin'
@@ -13,7 +14,7 @@ api.prefix = '/admin'
 @api.resource('/report/facility')
 class FacilityReport(BaseResource):
     @swag_from(FACILITY_REPORT_GET)
-    @BaseResource.admin_only
+    @admin_only
     def get(self):
         """
         시설고장신고 정보 조회
@@ -29,7 +30,7 @@ class FacilityReport(BaseResource):
         return self.unicode_safe_json_response(response)
 
     @swag_from(FACILITY_REPORT_DELETE)
-    @BaseResource.admin_only
+    @admin_only
     def delete(self):
         """
         시설고장신고 삭제(해결 완료)

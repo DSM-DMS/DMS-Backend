@@ -1,13 +1,13 @@
 from datetime import datetime
-from flask import Blueprint, Response
-from flask_jwt_extended import get_jwt_identity
-from flask_restful import Api, request
+
+from flask import Blueprint, Response, g, request
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.admin.post.notice import *
-from app.models.account import AdminModel
 from app.models.post import NoticeModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
 
 api = Api(Blueprint('admin-notice-api', __name__))
 api.prefix = '/admin'
@@ -16,7 +16,7 @@ api.prefix = '/admin'
 @api.resource('/notice')
 class NoticeManaging(BaseResource):
     @swag_from(NOTICE_MANAGING_POST)
-    @BaseResource.admin_only
+    @admin_only
     def post(self):
         """
         공지사항 업로드
@@ -24,7 +24,7 @@ class NoticeManaging(BaseResource):
         title = request.form['title']
         content = request.form['content']
 
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
+        admin = g.user
         notice = NoticeModel(author=admin.name, title=title, content=content, write_time=datetime.now()).save()
 
         return self.unicode_safe_json_response({
@@ -32,7 +32,7 @@ class NoticeManaging(BaseResource):
         }, 201)
 
     @swag_from(NOTICE_MANAGING_PATCH)
-    @BaseResource.admin_only
+    @admin_only
     def patch(self):
         """
         공지사항 수정
@@ -53,7 +53,7 @@ class NoticeManaging(BaseResource):
         return Response('', 200)
 
     @swag_from(NOTICE_MANAGING_DELETE)
-    @BaseResource.admin_only
+    @admin_only
     def delete(self):
         """
         공지사항 제거

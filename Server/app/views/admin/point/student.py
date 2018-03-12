@@ -4,7 +4,8 @@ from flasgger import swag_from
 
 from app.docs.admin.point.student import *
 from app.models.account import StudentModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
 
 api = Api(Blueprint('admin-student-point-api', __name__))
 api.prefix = '/admin/managing'
@@ -13,7 +14,7 @@ api.prefix = '/admin/managing'
 @api.resource('/student')
 class StudentManaging(BaseResource):
     @swag_from(STUDENT_MANAGING_GET)
-    @BaseResource.admin_only
+    @admin_only
     def get(self):
         """
         학생 목록 조회
@@ -39,7 +40,7 @@ class StudentManaging(BaseResource):
 @api.resource('/student/penalty')
 class StudentPenaltyManaging(BaseResource):
     @swag_from(STUDENT_PENALTY_MANAGING_PATCH)
-    @BaseResource.admin_only
+    @admin_only
     def patch(self):
         """
         학생 벌점 교육 상태 변경

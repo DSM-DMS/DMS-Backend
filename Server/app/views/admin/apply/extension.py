@@ -1,4 +1,3 @@
-from datetime import datetime
 from openpyxl import Workbook
 
 from flask import Blueprint, send_from_directory
@@ -7,7 +6,8 @@ from flasgger import swag_from
 
 from app.docs.admin.apply.extension import *
 from app.models.account import StudentModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
 
 from utils.excel_style_manager import get_cell_positions_from_student_number, ready_applyment_worksheet
 
@@ -20,7 +20,7 @@ api.prefix = '/admin/extension'
 @api.resource('/11')
 class Extension11Download(BaseResource):
     @swag_from(EXTENSION_DOWNLOAD_GET)
-    @BaseResource.admin_only
+    @admin_only
     def get(self):
         """
         11시 연장신청 엑셀 다운로드
@@ -53,7 +53,7 @@ class Extension11Download(BaseResource):
 @api.resource('/12')
 class Extension12Download(BaseResource):
     @swag_from(EXTENSION_DOWNLOAD_GET)
-    @BaseResource.admin_only
+    @admin_only
     def get(self):
         """
         12시 연장신청 엑셀 다운로드

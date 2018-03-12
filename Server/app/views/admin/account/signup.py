@@ -2,13 +2,14 @@ from binascii import hexlify
 from datetime import datetime
 from hashlib import pbkdf2_hmac
 
-from flask import Blueprint, Response, current_app
-from flask_restful import Api, request
+from flask import Blueprint, Response, current_app, request
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.admin.account.signup import NEW_ACCOUNT_POST
 from app.models.account import StudentModel, AdminModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
 
 api = Api(Blueprint('admin-signup-api', __name__))
 api.prefix = '/admin'
@@ -17,7 +18,7 @@ api.prefix = '/admin'
 @api.resource('/new-account')
 class NewAccount(BaseResource):
     @swag_from(NEW_ACCOUNT_POST)
-    @BaseResource.admin_only
+    @admin_only
     def post(self):
         """
         새로운 관리자 계정 생성

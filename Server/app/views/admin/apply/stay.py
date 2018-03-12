@@ -1,5 +1,4 @@
 from openpyxl import Workbook
-from datetime import datetime
 
 from flask import Blueprint, send_from_directory
 from flask_restful import Api
@@ -7,7 +6,8 @@ from flasgger import swag_from
 
 from app.docs.admin.apply.stay import *
 from app.models.account import StudentModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
 
 from utils.excel_style_manager import get_cell_positions_from_student_number, ready_applyment_worksheet
 
@@ -18,7 +18,7 @@ api.prefix = '/admin'
 @api.resource('/stay')
 class StayDownload(BaseResource):
     @swag_from(STAY_DOWNLOAD_GET)
-    @BaseResource.admin_only
+    @admin_only
     def get(self):
         """
         잔류신청 엑셀 다운로드
