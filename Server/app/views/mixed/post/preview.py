@@ -4,7 +4,8 @@ from flask_restful import Api
 
 from app.docs.mixed.post.preview import *
 from app.models.post import FAQModel, NoticeModel, RuleModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import auth_required
 
 api = Api(Blueprint('preview-api', __name__))
 
@@ -12,7 +13,7 @@ api = Api(Blueprint('preview-api', __name__))
 @api.resource('/preview/faq')
 class FAQPreview(BaseResource):
     @swag_from(FAQ_PREVIEW_GET)
-    @BaseResource.signed_account_only
+    @auth_required
     def get(self):
         """
         FAQ 프리뷰 조회
@@ -37,7 +38,7 @@ class FAQPreview(BaseResource):
 @api.resource('/preview/notice')
 class NoticePreview(BaseResource):
     @swag_from(NOTICE_PREVIEW_GET)
-    @BaseResource.signed_account_only
+    @auth_required
     def get(self):
         """
         공지사항 프리뷰 조회
@@ -62,7 +63,7 @@ class NoticePreview(BaseResource):
 @api.resource('/preview/rule')
 class RulePreview(BaseResource):
     @swag_from(RULE_PREVIEW_GET)
-    @BaseResource.signed_account_only
+    @auth_required
     def get(self):
         """
         기숙사규정 프리뷰 조회

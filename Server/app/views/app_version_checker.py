@@ -1,10 +1,11 @@
-from flask import Blueprint, Response
-from flask_restful import Api, request
+from flask import Blueprint, Response, request
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.etc.version import *
 from app.models.version import VersionModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+
 
 api = Api(Blueprint('version-check-api', __name__))
 

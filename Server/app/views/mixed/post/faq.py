@@ -4,7 +4,8 @@ from flask_restful import Api
 
 from app.docs.mixed.post.faq import *
 from app.models.post import FAQModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import auth_required
 
 api = Api(Blueprint('faq-api', __name__))
 
@@ -12,7 +13,7 @@ api = Api(Blueprint('faq-api', __name__))
 @api.resource('/faq')
 class FAQList(BaseResource):
     @swag_from(FAQ_LIST_GET)
-    @BaseResource.signed_account_only
+    @auth_required
     def get(self):
         """
         FAQ 리스트 조회
@@ -31,7 +32,7 @@ class FAQList(BaseResource):
 @api.resource('/faq/<post_id>')
 class FAQItem(BaseResource):
     @swag_from(FAQ_ITEM_GET)
-    @BaseResource.signed_account_only
+    @auth_required
     def get(self, post_id):
         """
         FAQ 내용 조회

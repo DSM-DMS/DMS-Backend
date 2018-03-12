@@ -4,7 +4,8 @@ from flask_restful import Api
 
 from app.docs.mixed.post.rule import *
 from app.models.post import RuleModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import auth_required
 
 api = Api(Blueprint('rule-api', __name__))
 
@@ -12,7 +13,7 @@ api = Api(Blueprint('rule-api', __name__))
 @api.resource('/rule')
 class RuleList(BaseResource):
     @swag_from(RULE_LIST_GET)
-    @BaseResource.signed_account_only
+    @auth_required
     def get(self):
         """
         기숙사규칙 리스트 조회
@@ -31,7 +32,7 @@ class RuleList(BaseResource):
 @api.resource('/rule/<post_id>')
 class RuleItem(BaseResource):
     @swag_from(RULE_ITEM_GET)
-    @BaseResource.signed_account_only
+    @auth_required
     def get(self, post_id):
         """
         기숙사규칙 내용 조회

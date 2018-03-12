@@ -4,7 +4,7 @@ from flask_restful import Api
 
 from app.docs.mixed.school_data.meal import *
 from app.models.meal import MealModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
 
 api = Api(Blueprint('meal-api', __name__))
 
