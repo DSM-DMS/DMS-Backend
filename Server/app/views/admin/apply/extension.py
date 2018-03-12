@@ -44,7 +44,7 @@ class Extension11Download(BaseResource):
 
         filename = '11.xlsx'
 
-        wb.save('{}'.format(filename))
+        wb.save('./Server/{}'.format(filename))
         wb.close()
 
         return send_from_directory('../', filename)
@@ -77,7 +77,7 @@ class Extension12Download(BaseResource):
 
         filename = '12.xlsx'
 
-        wb.save('{}'.format(filename))
+        wb.save('./Server/{}'.format(filename))
         wb.close()
 
         return send_from_directory('../', filename)
