@@ -51,6 +51,7 @@ def system_only(fn):
 
 def auth_required(fn):
     @wraps(fn)
+    @jwt_required
     def wrapper(*args, **kwargs):
         admin = AdminModel.objects(id=get_jwt_identity()).first()
         student = StudentModel.objects(id=get_jwt_identity()).first()

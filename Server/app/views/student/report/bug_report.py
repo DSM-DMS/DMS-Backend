@@ -2,7 +2,7 @@ from datetime import datetime
 import os
 from slacker import Slacker
 
-from flask import Blueprint, request
+from flask import Blueprint, g, request
 from flask_restful import Api
 from flasgger import swag_from
 

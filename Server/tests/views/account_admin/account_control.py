@@ -1,6 +1,7 @@
 import json
 import unittest
 
+from app.models.account import SignupWaitingModel
 from tests.views import account_admin, account_student
 
 from server import app
@@ -18,6 +19,7 @@ class TestAccountControl(unittest.TestCase):
     def tearDown(self):
         account_admin.remove_fake_account()
         account_student.remove_fake_account()
+        SignupWaitingModel.objects.delete()
 
     def testA_deleteAccount(self):
         """
@@ -43,7 +45,7 @@ class TestAccountControl(unittest.TestCase):
         # -- Preparations --
 
         # -- Exception Tests --
-        rv = self.client.post('/admin/account-control', headers={'Authorization': self.admin_access_token}, data={'number': 0000})
+        rv = self.client.post('/admin/account-control', headers={'Authorization': self.admin_access_token}, data={'number': 1999})
         self.assertEqual(rv.status_code, 204)
 
         rv = self.client.post('/admin/account-control', headers={'Authorization': self.student_access_token})

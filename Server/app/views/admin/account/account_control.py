@@ -22,9 +22,10 @@ class AccountControl(BaseResource):
         학생 계정 제거 후 새로운 UUID 생성
         """
         number = int(request.form['number'])
-        student = g.user
+        student = StudentModel.objects(number=number).first()
 
         if student:
+            # Signed student number
             name = student.name
             student.delete()
 

@@ -5,6 +5,7 @@ from flasgger import swag_from
 from app.docs.etc.version import *
 from app.models.version import VersionModel
 from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
 
 
 api = Api(Blueprint('version-check-api', __name__))
@@ -26,7 +27,7 @@ class Version(BaseResource):
             return Response('', 204)
 
     @swag_from(VERSION_POST)
-    @BaseResource.admin_only
+    @admin_only
     def post(self):
         """
         플랫폼의 최신 버전 등록
