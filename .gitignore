@@ -168,3 +168,4 @@ venv.bak/
 *.xlsx
 *.log.*
 .DS_Store
+Server/config/secret_config.py
