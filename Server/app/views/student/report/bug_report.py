@@ -2,15 +2,14 @@ from datetime import datetime
 import os
 from slacker import Slacker
 
-from flask import Blueprint
-from flask_jwt_extended import get_jwt_identity
-from flask_restful import Api, request
+from flask import Blueprint, request
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.student.report.bug_report import *
-from app.models.account import StudentModel
 from app.models.report import BugReportModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import student_only
 
 api = Api(Blueprint('student-bug-report-api', __name__))
 
@@ -18,12 +17,12 @@ api = Api(Blueprint('student-bug-report-api', __name__))
 @api.resource('/report/bug')
 class BugReport(BaseResource):
     @swag_from(BUG_REPORT_POST)
-    @BaseResource.student_only
+    @student_only
     def post(self):
         """
         버그 신고
         """
-        student = StudentModel.objects(id=get_jwt_identity()).first()
+        student = g.user
 
         title = request.form['title']
         content = request.form['content']

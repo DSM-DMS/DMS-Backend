@@ -4,11 +4,12 @@ from hashlib import pbkdf2_hmac
 from openpyxl import Workbook, load_workbook
 from uuid import uuid4
 
-from flask import Blueprint, Response, current_app
-from flask_restful import Api, abort, request
+from flask import Blueprint, Response, current_app, request
+from flask_restful import Api, abort
 
 from app.models.account import AdminModel, SignupWaitingModel, StudentModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import system_only
 
 from utils.excel_style_manager import ready_uuid_worksheet
 
@@ -18,7 +19,7 @@ api.prefix = '/system'
 
 @api.resource('/account/admin')
 class AdminAccount(BaseResource):
-    @BaseResource.system_only
+    @system_only
     def post(self):
         """
         관리자 계정 생성
@@ -40,7 +41,7 @@ class AdminAccount(BaseResource):
 
         return Response('', 201)
 
-    @BaseResource.system_only
+    @system_only
     def delete(self):
         """
         관리자 계정 제거
@@ -61,7 +62,7 @@ class AdminAccount(BaseResource):
 
 @api.resource('/uuid-generate/new')
 class NewUUIDGeneration(BaseResource):
-    @BaseResource.system_only
+    @system_only
     def post(self):
         """
         가입되어 있지 않은 학생을 대상으로 UUID Generation
@@ -127,7 +128,7 @@ class ExcelUUIDToDB(BaseResource):
                             number=int(wb['B{0}'.format(k)].value)
                         ).save()
 
-    @BaseResource.system_only
+    @system_only
     def post(self):
         self._uuid_excel_save()
         return Response('', 201)

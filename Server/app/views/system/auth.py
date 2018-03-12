@@ -2,13 +2,13 @@ from binascii import hexlify
 from hashlib import pbkdf2_hmac
 from uuid import uuid4
 
-from flask import Blueprint, current_app
+from flask import Blueprint, current_app, request
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity, jwt_refresh_token_required
-from flask_restful import Api, abort, request
+from flask_restful import Api, abort
 
 from app.models.account import SystemModel, RefreshTokenModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
 
 api = Api(Blueprint('system-auth-api', __name__))
 api.prefix = '/system'

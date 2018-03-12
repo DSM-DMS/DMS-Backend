@@ -5,7 +5,8 @@ from flasgger import swag_from
 
 from app.docs.student.account.info import MYPAGE_GET
 from app.models.account import StudentModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import student_only
 
 api = Api(Blueprint('student-info-api', __name__))
 
@@ -13,7 +14,7 @@ api = Api(Blueprint('student-info-api', __name__))
 @api.resource('/mypage')
 class MyPage(BaseResource):
     @swag_from(MYPAGE_GET)
-    @BaseResource.student_only
+    @student_only
     def get(self):
         """
         마이페이지에 해당하는 정보 조회

@@ -1,14 +1,14 @@
 from datetime import datetime
 
-from flask import Blueprint, Response, current_app
-from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Api, request
+from flask import Blueprint, Response, current_app, g, request
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.student.apply.extension import *
 from app.models.account import StudentModel
 from app.models.apply import ExtensionApplyModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import student_only
 
 from utils.extension_meta import *
 
@@ -18,13 +18,12 @@ api = Api(Blueprint('student-extension-api', __name__))
 @api.resource('/extension/11')
 class Extension11(BaseResource):
     @swag_from(EXTENSION_GET)
-    @jwt_required
-    @BaseResource.student_only
+    @student_only
     def get(self):
         """
         11시 연장신청 정보 조회
         """
-        student = StudentModel.objects(id=get_jwt_identity()).first()
+        student = g.user
 
         return ({
             'class_num': student.extension_apply_11.class_,
@@ -32,13 +31,12 @@ class Extension11(BaseResource):
         }, 200) if student.extension_apply_11 else ('', 204)
 
     @swag_from(EXTENSION_POST)
-    @jwt_required
-    @BaseResource.student_only
+    @student_only
     def post(self):
         """
         11시 연장신청
         """
-        student = StudentModel.objects(id=get_jwt_identity()).first()
+        student = g.user
 
         now = datetime.now().time()
 
@@ -54,13 +52,12 @@ class Extension11(BaseResource):
         return Response('', 201)
 
     @swag_from(EXTENSION_DELETE)
-    @jwt_required
-    @BaseResource.student_only
+    @student_only
     def delete(self):
         """
         11시 연장신청 취소
         """
-        student = StudentModel.objects(id=get_jwt_identity()).first()
+        student = g.user
 
         student.update(extension_apply_11=None)
 
@@ -70,13 +67,12 @@ class Extension11(BaseResource):
 @api.resource('/extension/12')
 class Extension12(BaseResource):
     @swag_from(EXTENSION_GET)
-    @jwt_required
-    @BaseResource.student_only
+    @student_only
     def get(self):
         """
         12시 연장신청 정보 조회
         """
-        student = StudentModel.objects(id=get_jwt_identity()).first()
+        student = g.user
 
         return ({
             'class_num': student.extension_apply_12.class_,
@@ -84,13 +80,12 @@ class Extension12(BaseResource):
         }, 200) if student.extension_apply_12 else ('', 204)
 
     @swag_from(EXTENSION_POST)
-    @jwt_required
-    @BaseResource.student_only
+    @student_only
     def post(self):
         """
         12시 연장신청
         """
-        student = StudentModel.objects(id=get_jwt_identity()).first()
+        student = g.user
 
         now = datetime.now().time()
 
@@ -106,13 +101,12 @@ class Extension12(BaseResource):
         return Response('', 201)
 
     @swag_from(EXTENSION_DELETE)
-    @jwt_required
-    @BaseResource.student_only
+    @student_only
     def delete(self):
         """
         12시 연장신청 취소
         """
-        student = StudentModel.objects(id=get_jwt_identity()).first()
+        student = g.user
 
         student.update(extension_apply_12=None)
 

@@ -1,14 +1,13 @@
 from datetime import datetime, time
 
-from flask import Blueprint, Response, current_app
-from flask_jwt_extended import get_jwt_identity
-from flask_restful import Api, request
+from flask import Blueprint, Response, current_app, g, request
+from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.student.apply.stay import *
-from app.models.account import StudentModel
 from app.models.apply import StayApplyModel
-from app.views import BaseResource
+from app.support.resources import BaseResource
+from app.support.view_decorators import student_only
 
 api = Api(Blueprint('student-stay-api', __name__))
 
@@ -16,24 +15,24 @@ api = Api(Blueprint('student-stay-api', __name__))
 @api.resource('/stay')
 class Stay(BaseResource):
     @swag_from(STAY_GET)
-    @BaseResource.student_only
+    @student_only
     def get(self):
         """
         잔류신청 정보 조회
         """
-        student = StudentModel.objects(id=get_jwt_identity()).first()
+        student = g.user
 
         return self.unicode_safe_json_response({
             'value': student.stay_apply.value
         }, 200)
 
     @swag_from(STAY_POST)
-    @BaseResource.student_only
+    @student_only
     def post(self):
         """
         잔류신청
         """
-        student = StudentModel.objects(id=get_jwt_identity()).first()
+        student = g.user
 
         now = datetime.now()
 
