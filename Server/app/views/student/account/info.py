@@ -1,10 +1,8 @@
-from flask import Blueprint
-from flask_jwt_extended import get_jwt_identity
+from flask import Blueprint, g
 from flask_restful import Api
 from flasgger import swag_from
 
-from app.docs.student.account.info import MYPAGE_GET
-from app.models.account import StudentModel
+from app.docs.student.account.info import *
 from app.support.resources import BaseResource
 from app.support.view_decorators import student_only
 
@@ -19,7 +17,7 @@ class MyPage(BaseResource):
         """
         마이페이지에 해당하는 정보 조회
         """
-        student = StudentModel.objects(id=get_jwt_identity()).first()
+        student = g.user
 
         response = {
             'name': student.name,
@@ -43,5 +41,24 @@ class MyPage(BaseResource):
             'good_point': student.good_point,
             'bad_point': student.bad_point
         }
+
+        return self.unicode_safe_json_response(response)
+
+
+@api.resource('/point/history')
+class PointHistory(BaseResource):
+    @swag_from(POINT_HISTORY_GET)
+    @student_only
+    def get(self):
+        """
+        자신의 상벌점 부여 내역 조회
+        """
+        student = g.user
+
+        response = [{
+            'time': str(history.time)[:10],
+            'reason': history.reason,
+            'point': history.point
+        } for history in student.point_histories]
 
         return self.unicode_safe_json_response(response)

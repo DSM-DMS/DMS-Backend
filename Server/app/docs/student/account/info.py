@@ -1,4 +1,4 @@
-MYPAGE_GET = MYPAGE_GET = {
+MYPAGE_GET = {
     'tags': ['계정'],
     'description': '마이페이지 정보 조회',
     'parameters': [
@@ -34,6 +34,45 @@ MYPAGE_GET = MYPAGE_GET = {
         },
         '403': {
             'description': '권한 없음(재로그인 필요)'
+        }
+    }
+}
+
+POINT_HISTORY_GET = {
+    'tags': ['계정'],
+    'description': '상벌점 기록 조회',
+    'parameters': [
+        {
+            'name': 'Authorization',
+            'description': 'JWT Token(JWT ***)',
+            'in': 'header',
+            'type': 'str',
+            'required': True
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': '내역 조회 성공',
+            'examples': {
+                'application/json': [
+                    {
+                        'time': '2017-12-17',
+                        'reason': '치킨 먹음',
+                        'point': -3
+                    },
+                    {
+                        'time': '2017-12-19',
+                        'reason': '치킨 맛있음',
+                        'point': 2
+                    }
+                ]
+            }
+        },
+        '204': {
+            'description': '존재하지 않는 학생 ID'
+        },
+        '403': {
+            'description': '권한 없음'
         }
     }
 }
