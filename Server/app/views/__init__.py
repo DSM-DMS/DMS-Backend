@@ -157,5 +157,5 @@ class Router(object):
         app.register_blueprint(apply_management.api.blueprint)
         app.register_blueprint(auth.api.blueprint)
 
-        from app.views.etc import version
-        app.register_blueprint(version.api.blueprint)
+        from app.views import app_version_checker
+        app.register_blueprint(app_version_checker.api.blueprint)
