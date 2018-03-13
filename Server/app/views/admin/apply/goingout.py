@@ -1,6 +1,6 @@
 from openpyxl import Workbook
 
-from flask import Blueprint, send_from_directory
+from flask import Blueprint, make_response, send_from_directory
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -61,4 +61,7 @@ class GoingoutDownload(BaseResource):
         wb.save('{}'.format(filename))
         wb.close()
 
-        return send_from_directory('../', filename)
+        resp = make_response(send_from_directory('../', filename))
+        resp.headers.extend({'Cache-Control': 'no-cache'})
+
+        return resp
