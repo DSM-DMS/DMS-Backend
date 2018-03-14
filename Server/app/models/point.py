@@ -13,6 +13,10 @@ class PointRuleModel(Document):
         required=True
     )
 
+    point_type = BooleanField(
+        required=True
+    )
+
     min_point = IntField(
         required=True
     )
@@ -39,6 +43,9 @@ class PointHistoryModel(EmbeddedDocument):
     )
 
     reason = StringField(
+        required=True
+    )
+    point_type = BooleanField(
         required=True
     )
     point = IntField(

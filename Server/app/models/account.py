@@ -89,8 +89,7 @@ class StudentModel(AccountBase):
     )
 
     # -- Deprecated
-    penalty_training_status = IntField(required=False)
-    bad_point_status = IntField(
+    penalty_level = IntField(
         required=True,
         default=0
     )
