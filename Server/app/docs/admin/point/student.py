@@ -21,19 +21,17 @@ STUDENT_MANAGING_GET = {
                         'number': 2120,
                         'good_point': 1,
                         'bad_point': 15,
-                        'penalty_level': 2,
+                        'bad_point_status': 2,
                         'point_histories': [
                             {
                                 'time': '2018-01-01 12:34:12',
-                                'reason': '깔끔한 청소',
-                                'point_type': True,
+                                'reason': '치킨 먹음',
                                 'point': 4
                             },
                             {
                                 'time': '2018-01-02 12:34:12',
-                                'reason': '치킨 냠냠',
-                                'point_type': False,
-                                'point': 3
+                                'reason': '이유 없음',
+                                'point': -3
                             }
                         ],
                         'penalty_trained': False
@@ -44,19 +42,17 @@ STUDENT_MANAGING_GET = {
                         'number': 2117,
                         'good_point': 0,
                         'bad_point': 0,
-                        'penalty_level': 0,
+                        'bad_point_status': 0,
                         'point_histories': [
                             {
                                 'time': '2018-01-01 12:34:12',
-                                'reason': '기타 잘침',
-                                'point_type': True,
-                                'point': 5
+                                'reason': '치킨 먹음',
+                                'point': 4
                             },
                             {
                                 'time': '2018-01-02 12:34:12',
-                                'reason': '기타 줄 자습실에 버림',
-                                'point_type': False,
-                                'point': 4
+                                'reason': '이유 없음',
+                                'point': -3
                             }
                         ],
                         'penalty_trained': False

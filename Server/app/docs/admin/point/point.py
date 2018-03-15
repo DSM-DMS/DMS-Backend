@@ -25,13 +25,11 @@ POINT_MANAGING_GET = {
                     {
                         'time': '2017-12-17',
                         'reason': '치킨 먹음',
-                        'point_type': False,
-                        'point': 3
+                        'point': -3
                     },
                     {
                         'time': '2017-12-19',
                         'reason': '치킨 맛있음',
-                        'point_type': False,
                         'point': 2
                     }
                 ]
@@ -73,7 +71,7 @@ POINT_MANAGING_POST = {
         },
         {
             'name': 'point',
-            'description': '상벌점',
+            'description': '상벌점(상점은 양수, 벌점은 음수)',
             'in': 'formData',
             'type': 'int',
             'required': True
