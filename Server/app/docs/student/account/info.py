@@ -58,11 +58,13 @@ POINT_HISTORY_GET = {
                     {
                         'time': '2017-12-17',
                         'reason': '치킨 먹음',
-                        'point': -3
+                        'point_type': False,
+                        'point': 3
                     },
                     {
                         'time': '2017-12-19',
                         'reason': '치킨 맛있음',
+                        'point_type': True,
                         'point': 2
                     }
                 ]
