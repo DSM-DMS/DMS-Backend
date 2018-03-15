@@ -1,13 +1,9 @@
-from datetime import datetime
-from bson import ObjectId
-
 from flask import Blueprint, Response, request
 from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.admin.point.student import *
 from app.models.account import StudentModel
-from app.models.point import PointHistoryModel
 from app.support.resources import BaseResource
 from app.support.view_decorators import admin_only
 
@@ -29,12 +25,11 @@ class StudentManaging(BaseResource):
             'number': student.number,
             'good_point': student.good_point,
             'bad_point': student.bad_point,
-            'penalty_level': student.penalty_level,
+            'bad_point_status': student.bad_point_status,
             'point_histories': [{
                 'time': str(history.time)[:-7],
                 'reason': history.reason,
-                'point_type': history.point_type,
-                'point': history.point,
+                'point': history.point
             } for history in student.point_histories],
             'penalty_trained': student.penalty_trained
         } for student in StudentModel.objects.order_by('number')]
@@ -48,44 +43,26 @@ class StudentPenaltyManaging(BaseResource):
     @admin_only
     def patch(self):
         """
-        학생 벌점 교육 완료
+        학생 벌점 교육 상태 변경
         """
         id = request.form['id']
         student = StudentModel.objects(id=id).first()
         if not student:
             return Response('', 204)
 
-        if not student.penalty_trained:
-            return Response('', 205)
+        status = request.form['status'].upper() == 'TRUE'
 
-        good_point = student.good_point
-        bad_point = student.bad_point
-        penalty_level = student.penalty_level
+        student.update(penalty_trained=status)
 
-        bad_point_decrease = [5, 6, 7, 7, 7]
+        if not status:
+            good_point = student.good_point
+            if good_point > 4:
+                bad_point = student.bad_point - 5
+                good_point -= 5
+            else:
+                bad_point = student.bad_point - good_point
+                good_point = 0
 
-        if good_point > bad_point_decrease[penalty_level]:
-            deleted_bad_point = bad_point_decrease[penalty_level]
-            deleted_good_point = bad_point_decrease[penalty_level]
-        else:
-            deleted_bad_point = good_point
-            deleted_good_point = good_point
-
-        student.update(bad_point=bad_point-deleted_bad_point, good_point=good_point-deleted_good_point)
-
-        student.point_histories.append(PointHistoryModel(
-            reason='벌점 봉사 수료 상점 삭감',
-            point_type=True,
-            point=-deleted_good_point,
-            time=datetime.now(),
-            id=ObjectId()
-        ))
-        student.point_histories.append(PointHistoryModel(
-            reason='벌점 봉사 수료 벌점 삭감',
-            point_type=False,
-            point=-deleted_bad_point,
-            time=datetime.now(),
-            id=ObjectId()
-        ))
+            student.update(bad_point=bad_point, good_point=good_point)
 
         return Response('', 200)

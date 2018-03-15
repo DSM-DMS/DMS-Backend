@@ -22,7 +22,6 @@ class PointRuleManaging(BaseResource):
         response = [{
             'id': str(rule.id),
             'name': rule.name,
-            'point_type': rule.point_type,
             'min_point': rule.min_point,
             'max_point': rule.max_point
         } for rule in PointRuleModel.objects]
@@ -36,13 +35,11 @@ class PointRuleManaging(BaseResource):
         상벌점 규칙 추가
         """
         name = request.form['name']
-        point_type = request.form['point_type'].upper() == 'TRUE'
         min_point = int(request.form['min_point'])
         max_point = int(request.form['max_point'])
 
         rule = PointRuleModel(
             name=name,
-            point_type=point_type,
             min_point=min_point,
             max_point=max_point
         ).save()
@@ -66,13 +63,11 @@ class PointRuleManaging(BaseResource):
             return Response('', 204)
 
         name = request.form['name']
-        point_type = request.form['point_type'].upper() == 'TRUE'
         min_point = int(request.form['min_point'])
         max_point = int(request.form['max_point'])
 
         rule.update(
             name=name,
-            point_type=point_type,
             min_point=min_point,
             max_point=max_point
         )
