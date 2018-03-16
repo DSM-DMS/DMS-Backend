@@ -1,13 +1,3 @@
-build:
-    tests:
-        override:
-            -
-                command: 'coverage run --source=Server/app Server/run_test.py'
-                coverage:
-                    file: '.coverage'
-                    config_file: '.coveragerc'
-                    format: 'py-cc'
-
 checks:
     python:
         code_rating: true
