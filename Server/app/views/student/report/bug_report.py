@@ -1,11 +1,10 @@
 from datetime import datetime
 from slacker import Slacker
 
-from flask import Blueprint, g, request
+from flask import Blueprint, current_app, g, request
 from flask_restful import Api
 from flasgger import swag_from
 
-from config.secret_config import slack_bot_token
 from app.docs.student.report.bug_report import *
 from app.models.report import BugReportModel
 from app.support.resources import BaseResource
@@ -30,7 +29,7 @@ class BugReport(BaseResource):
 
         report = BugReportModel(author=student.name, title=title, content=content, report_time=time).save()
 
-        slack_bot = Slacker(slack_bot_token)
+        slack_bot = Slacker(current_app.config['SLACK_BOT_TOKEN'])
         slack_bot.chat.post_message(channel='#bug-report', text='제보자: {0}\n제보시간: {1}\n제목: {2}\n내용: {3}'
                                     .format(student.name, str(time)[:-7], title, content))
 

@@ -29,3 +29,5 @@ class Config(object):
         'host': '{}:{}'.format(REPRESENTATIVE_HOST, PORT) if REPRESENTATIVE_HOST else None,
         'basePath': '/'
     }
+
+    SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN')
