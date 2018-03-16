@@ -113,7 +113,16 @@ class Extension12(BaseResource):
         return Response('', 200)
 
 
-def create_extension_map(class_, hour):
+def _get_applied_students(hour):
+    if hour == 11:
+        return {student.extension_apply_11.seat: student.name for student in StudentModel.objects() if
+                student.extension_apply_11 and student.extension_apply_11.class_ == class_}
+    else:
+        return {student.extension_apply_12.seat: student.name for student in StudentModel.objects() if
+                student.extension_apply_12 and student.extension_apply_12.class_ == class_}
+
+
+def _create_extension_map(class_, hour):
     """
     Creates extension map including applied student names
 
@@ -125,15 +134,7 @@ def create_extension_map(class_, hour):
     :return: Generated extension map
     :rtype: list
     """
-    def _get_applied_students():
-        if hour == 11:
-            return {student.extension_apply_11.seat: student.name for student in StudentModel.objects() if
-                    student.extension_apply_11 and student.extension_apply_11.class_ == class_}
-        else:
-            return {student.extension_apply_12.seat: student.name for student in StudentModel.objects() if
-                    student.extension_apply_12 and student.extension_apply_12.class_ == class_}
-
-    applied_students = _get_applied_students()
+    applied_students = _get_applied_students(hour)
     seat_count = 1
 
     map_ = MAPS[class_]
@@ -159,7 +160,7 @@ class ExtensionMap11(BaseResource):
         """
         class_ = int(request.args['class_num'])
 
-        return self.unicode_safe_json_response(create_extension_map(class_, 11))
+        return self.unicode_safe_json_response(_create_extension_map(class_, 11))
 
 
 @api.resource('/extension/map/12')
@@ -171,4 +172,4 @@ class ExtensionMap12(BaseResource):
         """
         class_ = int(request.args['class_num'])
 
-        return self.unicode_safe_json_response(create_extension_map(class_, 12))
+        return self.unicode_safe_json_response(_create_extension_map(class_, 12))
