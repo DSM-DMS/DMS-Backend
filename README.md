@@ -1,6 +1,6 @@
 # DMS for DSM
 
-### Backend [![Build Status](https://travis-ci.org/DSM-DMS/DMS-Backend.svg?branch=master)](https://travis-ci.org/DSM-DMS/DMS-Backend) [![Coverage Status](https://coveralls.io/repos/github/DSM-DMS/DMS-Backend/badge.svg?branch=master)](https://coveralls.io/github/DSM-DMS/DMS-Backend?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DSM-DMS/DMS-Backend/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DSM-DMS/DMS-Backend/?branch=master)
+### Backend [![Build Status](https://travis-ci.org/DSM-DMS/DMS-Backend.svg?branch=master)](https://travis-ci.org/DSM-DMS/DMS-Backend) [![Coverage Status](https://coveralls.io/repos/github/DSM-DMS/DMS-Backend/badge.svg?branch=master)](https://coveralls.io/github/DSM-DMS/DMS-Backend?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DSM-DMS/DMS-Backend/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DSM-DMS/DMS-Backend/?branch=master) [![Code Intelligence Status](https://scrutinizer-ci.com/g/DSM-DMS/DMS-Backend/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 
 사용 기술 및 언어 : Python, Flask, MongoDB, JWT, ODM, Swagger, Cafe24 등
 
