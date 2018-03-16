@@ -38,7 +38,7 @@ class AccountBase(Document):
     signup_time = DateTimeField()
 
     id = StringField(
-        primary_key=True,
+        primary_key=True
     )
     pw = StringField(
         required=True
