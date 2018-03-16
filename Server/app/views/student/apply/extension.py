@@ -10,7 +10,7 @@ from app.models.apply import ExtensionApplyModel
 from app.support.resources import BaseResource
 from app.support.view_decorators import student_only
 
-from utils.extension_meta import *
+from utils.extension_meta import APPLY_START, APPLY_END_11, APPLY_END_12, MAPS
 
 api = Api(Blueprint('student-extension-api', __name__))
 
@@ -132,7 +132,7 @@ def create_extension_map(class_, hour):
     if hour == 11:
         applied_students = {student.extension_apply_11.seat: student.name for student in StudentModel.objects() if
                             student.extension_apply_11 and student.extension_apply_11.class_ == class_}
-    elif hour == 12:
+    else:
         applied_students = {student.extension_apply_12.seat: student.name for student in StudentModel.objects() if
                             student.extension_apply_12 and student.extension_apply_12.class_ == class_}
     # Dictionary comprehension generates 'seat: name' pair
