@@ -125,20 +125,18 @@ def create_extension_map(class_, hour):
     :return: Generated extension map
     :rtype: list
     """
-    map_ = MAPS[class_]
+    def _get_applied_students():
+        if hour == 11:
+            return {student.extension_apply_11.seat: student.name for student in StudentModel.objects() if
+                    student.extension_apply_11 and student.extension_apply_11.class_ == class_}
+        else:
+            return {student.extension_apply_12.seat: student.name for student in StudentModel.objects() if
+                    student.extension_apply_12 and student.extension_apply_12.class_ == class_}
 
-    assert hour == 11 or hour == 12
-
-    if hour == 11:
-        applied_students = {student.extension_apply_11.seat: student.name for student in StudentModel.objects() if
-                            student.extension_apply_11 and student.extension_apply_11.class_ == class_}
-    else:
-        applied_students = {student.extension_apply_12.seat: student.name for student in StudentModel.objects() if
-                            student.extension_apply_12 and student.extension_apply_12.class_ == class_}
-    # Dictionary comprehension generates 'seat: name' pair
-
+    applied_students = _get_applied_students()
     seat_count = 1
 
+    map_ = MAPS[class_]
     for i, row in enumerate(map_):
         for j, seat in enumerate(row):
             if map_[i][j]:
