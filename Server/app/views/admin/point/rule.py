@@ -35,11 +35,13 @@ class PointRuleManaging(BaseResource):
         상벌점 규칙 추가
         """
         name = request.form['name']
+        point_type = request.form['point_type'].upper() == 'TRUE'
         min_point = int(request.form['min_point'])
         max_point = int(request.form['max_point'])
 
         rule = PointRuleModel(
             name=name,
+            point_type=point_type,
             min_point=min_point,
             max_point=max_point
         ).save()
@@ -62,12 +64,14 @@ class PointRuleManaging(BaseResource):
         if not rule:
             return Response('', 204)
 
-        name = request.form['name']
+        name = request.form['name'],
+        point_type = request.form['point_type'].upper() == 'TRUE'
         min_point = int(request.form['min_point'])
         max_point = int(request.form['max_point'])
 
         rule.update(
             name=name,
+            point_type=point_type,
             min_point=min_point,
             max_point=max_point
         )

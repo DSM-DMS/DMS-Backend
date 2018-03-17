@@ -36,7 +36,7 @@ STUDENT_MANAGING_GET = {
                                 'point': 3
                             }
                         ],
-                        'penalty_trained': False
+                        'penalty_training_status': False
                     },
                     {
                         'id': 'geni429',
@@ -59,7 +59,7 @@ STUDENT_MANAGING_GET = {
                                 'point': 4
                             }
                         ],
-                        'penalty_trained': False
+                        'penalty_training_status': False
                     }
                 ]
             }

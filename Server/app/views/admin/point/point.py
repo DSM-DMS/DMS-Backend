@@ -31,6 +31,7 @@ class PointManaging(BaseResource):
         response = [{
             'time': str(history.time)[:10],
             'reason': history.reason,
+            'point_type': history.point_type,
             'point': history.point,
             'id': str(history.id)
         } for history in student.point_histories]
@@ -60,16 +61,16 @@ class PointManaging(BaseResource):
 
         student.point_histories.append(PointHistoryModel(
             reason=rule.name,
+            point_type=rule.point_type,
             point=point,
             time=datetime.now(),
             id=ObjectId()
         ))
         # Append history
 
-        if point < 0:
-            student.bad_point += abs(point)
-        else:
-            student.good_point += point
+        if (student.bad_point - 10) // 5 > student.penalty_level and not student.penalty_training_status:
+            student.penalty_level = student.penalty_level + 1
+            student.penalty_training_status = True
 
         student.save()
 
@@ -94,10 +95,10 @@ class PointManaging(BaseResource):
 
         student.point_histories = student.point_histories.exclude(id=point_id)
 
-        if point.point < 0:
-            student.bad_point -= abs(point.point)
+        if point.point_type:
+            student.update(good_point=student.good_point - point.point)
         else:
-            student.good_point -= abs(point.point)
+            student.update(bad_point=student.bad_point - point.point)
         student.save()
 
         return Response('', 200)
