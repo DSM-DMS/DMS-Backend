@@ -69,7 +69,11 @@ class StudentPenaltyManaging(BaseResource):
         else:
             deleted_point = good_point
 
-        student.update(good_point=student.good_point - deleted_point, bad_point= student.bad_point - deleted_point)
+        student.update(
+            good_point=student.good_point - deleted_point,
+            bad_point=student.bad_point - deleted_point,
+            penalty_training_status=False
+        )
 
         # 상벌점 삭감
 
