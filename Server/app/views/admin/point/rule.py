@@ -64,7 +64,7 @@ class PointRuleManaging(BaseResource):
         if not rule:
             return Response('', 204)
 
-        name = request.form['name'],
+        name = request.form['name']
         point_type = request.form['point_type'].upper() == 'TRUE'
         min_point = int(request.form['min_point'])
         max_point = int(request.form['max_point'])
