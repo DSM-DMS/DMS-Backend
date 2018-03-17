@@ -113,7 +113,7 @@ class Extension12(BaseResource):
         return Response('', 200)
 
 
-def _get_applied_students(hour):
+def _get_applied_students(class_, hour):
     if hour == 11:
         return {student.extension_apply_11.seat: student.name for student in StudentModel.objects() if
                 student.extension_apply_11 and student.extension_apply_11.class_ == class_}
@@ -134,7 +134,7 @@ def _create_extension_map(class_, hour):
     :return: Generated extension map
     :rtype: list
     """
-    applied_students = _get_applied_students(hour)
+    applied_students = _get_applied_students(class_, hour)
     seat_count = 1
 
     map_ = MAPS[class_]
