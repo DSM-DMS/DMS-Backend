@@ -79,18 +79,15 @@ class StudentModel(AccountBase):
         default=0
     )
 
-    penalty_trained = BooleanField(
-        default=False
-    )
-    # 다벌점 교육이 수행되었는지
-
     point_histories = EmbeddedDocumentListField(
         document_type=PointHistoryModel
     )
 
-    # -- Deprecated
-    penalty_training_status = IntField(required=False)
-    bad_point_status = IntField(
+    penalty_training_status = BooleanField(
+        required=True,
+        default=False
+    )
+    penalty_level = IntField(
         required=True,
         default=0
     )
