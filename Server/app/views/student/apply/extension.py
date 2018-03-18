@@ -59,6 +59,12 @@ class Extension11(BaseResource):
         """
         student = g.user
 
+        now = datetime.now().time()
+
+        if not current_app.testing and not APPLY_START < now < APPLY_END_11:
+            # Not testing, can't apply
+            return Response('', 204)
+
         student.update(extension_apply_11=None)
 
         return Response('', 200)
@@ -107,6 +113,12 @@ class Extension12(BaseResource):
         12시 연장신청 취소
         """
         student = g.user
+
+        now = datetime.now().time()
+
+        if not current_app.testing and not APPLY_START < now < APPLY_END_12:
+            # Not testing, can't apply
+            return Response('', 204)
 
         student.update(extension_apply_12=None)
 
