@@ -79,4 +79,4 @@ class StudentSignStatus(BaseResource):
         return self.unicode_safe_json_response({
             'unsigned_student_count': SignupWaitingModel.objects.count(),
             'signed_student_count': StudentModel.objects.count()
-        })
+        }, 200)
