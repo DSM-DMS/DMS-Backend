@@ -65,7 +65,7 @@ class AccountControl(BaseResource):
             return Response('', 204)
 
         admin.delete()
-        return Response('', 201)
+        return Response('', 200)
 
 
 @api.resource('/student-sign-status')
