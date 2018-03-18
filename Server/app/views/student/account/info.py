@@ -58,6 +58,7 @@ class PointHistory(BaseResource):
         response = [{
             'time': str(history.time)[:10],
             'reason': history.reason,
+            'point_type': history.point_type,
             'point': history.point
         } for history in student.point_histories]
 
