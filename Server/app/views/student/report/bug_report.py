@@ -1,7 +1,7 @@
 from datetime import datetime
 from slacker import Slacker
 
-from flask import Blueprint, current_app, g, request
+from flask import Blueprint, current_app, g, request, abort
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -26,6 +26,9 @@ class BugReport(BaseResource):
         title = request.form['title']
         content = request.form['content']
         time = datetime.now()
+
+        if not all((title, content)):
+            abort(400)
 
         report = BugReportModel(author=student.name, title=title, content=content, report_time=time).save()
 

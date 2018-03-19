@@ -33,6 +33,9 @@ BUG_REPORT_POST = {
                 }
             }
         },
+        '400': {
+            'description': 'title이나 content가 빈칸'
+        },
         '403': {
             'description': '권한 없음'
         }
