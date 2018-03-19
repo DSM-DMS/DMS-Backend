@@ -5,6 +5,8 @@ class TestAccountControl(TCBase):
     def deleteStudentAccount(self):
         """
         TC about student account deletion
+        * This TC tests
+        POST /admin/account-control
 
         - Before Test
         None
@@ -85,6 +87,8 @@ class TestAccountControl(TCBase):
     def deleteAdminAccount(self):
         """
         TC about admin account deletion
+        * This TC tests
+        DELETE /admin/account-control
 
         - Before Test
         Create new admin account of id 'deleteme'
@@ -101,12 +105,33 @@ class TestAccountControl(TCBase):
         (1) status code : 204
         """
         # -- Before Test --
+        resp = self.request(
+            self.client.post,
+            '/admin/new-account',
+            {'id': 'deleteme', 'pw': 'pw'},
+            self.admin_access_token
+        )
+        self.assertEqual(resp.status_code, 201)
         # -- Before Test --
 
         # -- Test --
+        resp = self.request(
+            self.client.delete,
+            '/admin/account-control',
+            {'id': 'deleteme'},
+            self.admin_access_token
+        )
+        self.assertEqual(resp.status_code, 200)
         # -- Test --
 
         # -- Exception Test --
+        resp = self.request(
+            self.client.delete,
+            '/admin/account-control',
+            {'id': 'deleteme'},
+            self.admin_access_token
+        )
+        self.assertEqual(resp.status_code, 204)
         # -- Exception Test --
 
     def loadStudentSignStatus(self):
