@@ -34,9 +34,52 @@ class TestAccountControl(TCBase):
         (1) status code : 204
         """
         # -- Test --
+        resp = self.request(
+            self.client.post,
+            '/admin/account-control',
+            {'number': 1111},
+            self.admin_access_token
+        )
+
+        self.assertEqual(resp.status_code, 201)
+
+        data = self.get_response_data(resp)
+        self.assertEqual(len(data), 1)
+        self.assertIn('uuid', data)
+
+        uuid = data['uuid']
+        self.assertIsInstance(uuid, str)
+        self.assertEqual(len(uuid), 4)
         # -- Test --
 
         # -- Exception Test --
+        resp = self.request(
+            self.client.post,
+            '/admin/account-control',
+            {'number': 1111},
+            self.admin_access_token
+        )
+
+        self.assertEqual(resp.status_code, 201)
+
+        data = self.get_response_data(resp)
+        self.assertEqual(len(data), 1)
+        self.assertIn('uuid', data)
+
+        uuid = data['uuid']
+        self.assertIsInstance(uuid, str)
+        self.assertEqual(len(uuid), 4)
+
+        # ---
+
+        resp = self.request(
+            self.client.post,
+            '/admin/account-control',
+            {'number': 9999},
+            self.admin_access_token
+        )
+
+        self.assertEqual(resp.status_code, 204)
         # -- Exception Test --
 
     def deleteAdminAccount(self):
