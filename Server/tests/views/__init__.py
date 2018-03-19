@@ -89,3 +89,19 @@ class TCBase(TC):
             *args,
             **kwargs
         )
+
+    def json_request(self, method, target_url_rule, data, token=None, *args, **kwargs):
+        if token is None:
+            token = self.student_access_token
+
+        return method(
+            target_url_rule,
+            data=ujson.dumps(data),
+            content_type='application/json',
+            headers={'Authorization': token},
+            *args,
+            **kwargs
+        )
+
+    def get_response_data(self, resp):
+        return ujson.loads(resp.data.decode())
