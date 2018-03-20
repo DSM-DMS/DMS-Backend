@@ -3,6 +3,7 @@ from flask import Blueprint, Response
 from flask_restful import Api
 
 from app.docs.mixed.post.faq import *
+from app.models.support.mongo_helper import mongo_to_dict
 from app.models.post import FAQModel
 from app.support.resources import BaseResource
 from app.support.view_decorators import auth_required
@@ -18,13 +19,7 @@ class FAQList(BaseResource):
         """
         FAQ 리스트 조회
         """
-        response = [{
-            'id': str(faq.id),
-            'write_time': str(faq.write_time)[:10],
-            'author': faq.author,
-            'title': faq.title,
-            'pinned': faq.pinned
-        } for faq in FAQModel.objects]
+        response = [mongo_to_dict(faq, ['content']) for faq in FAQModel.objects]
 
         return self.unicode_safe_json_response(response)
 
@@ -44,12 +39,6 @@ class FAQItem(BaseResource):
         if not faq:
             return Response('', 204)
 
-        response = {
-            'write_time': str(faq.write_time)[:10],
-            'author': faq.author,
-            'title': faq.title,
-            'content': faq.content,
-            'pinned': faq.pinned
-        }
+        response = mongo_to_dict(faq, ['id'])
 
         return self.unicode_safe_json_response(response)
