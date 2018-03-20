@@ -1,8 +1,15 @@
 from tests.views import TCBase
 
+from app.models.account import SignupWaitingModel
+
 
 class TestAccountControl(TCBase):
-    def deleteStudentAccount(self):
+    def tearDown(self):
+        SignupWaitingModel.objects.delete()
+
+        TCBase.tearDown(self)
+
+    def testDeleteStudentAccount(self):
         """
         TC about student account deletion
         * This TC tests
@@ -84,7 +91,7 @@ class TestAccountControl(TCBase):
         self.assertEqual(resp.status_code, 204)
         # -- Exception Test --
 
-    def deleteAdminAccount(self):
+    def testDeleteAdminAccount(self):
         """
         TC about admin account deletion
         * This TC tests
@@ -108,7 +115,7 @@ class TestAccountControl(TCBase):
         resp = self.request(
             self.client.post,
             '/admin/new-account',
-            {'id': 'deleteme', 'pw': 'pw'},
+            {'id': 'deleteme', 'pw': 'pw', 'name': 'test'},
             self.admin_access_token
         )
         self.assertEqual(resp.status_code, 201)
@@ -134,9 +141,11 @@ class TestAccountControl(TCBase):
         self.assertEqual(resp.status_code, 204)
         # -- Exception Test --
 
-    def loadStudentSignStatus(self):
+    def testLoadStudentSignStatus(self):
         """
         TC about student's sign status loading
+        * This TC tests
+        GET /student-sign-status
 
         - Before Test
         None
@@ -156,4 +165,26 @@ class TestAccountControl(TCBase):
         None
         """
         # -- Test --
+        resp = self.request(
+            self.client.get,
+            '/admin/student-sign-status',
+            {},
+            self.admin_access_token
+        )
+        self.assertEqual(resp.status_code, 200)
+
+        data = self.get_response_data(resp)
+        self.assertEqual(len(data), 2)
+
+        self.assertIn('unsigned_student_count', data)
+        self.assertIn('signed_student_count', data)
+
+        unsigned_student_count = data['unsigned_student_count']
+        signed_student_count = data['signed_student_count']
+
+        self.assertIsInstance(unsigned_student_count, int)
+        self.assertIsInstance(signed_student_count, int)
+
+        self.assertEqual(unsigned_student_count, 0)
+        self.assertEqual(signed_student_count, 1)
         # -- Test --

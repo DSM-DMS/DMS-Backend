@@ -32,7 +32,7 @@ class AccountControl(BaseResource):
             while True:
                 uuid = str(uuid4())[:4]
 
-                if not SignupWaitingModel.objects(uuid=str(uuid)):
+                if not SignupWaitingModel.objects(uuid=uuid):
                     SignupWaitingModel(
                         uuid=uuid,
                         name=name,

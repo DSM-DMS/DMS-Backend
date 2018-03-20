@@ -61,7 +61,7 @@ class TCBase(TC):
         AdminModel.objects.delete()
         StudentModel.objects.delete()
 
-    def request(self, method, target_url_rule, data, token=None, *args, **kwargs):
+    def request(self, method, target_url_rule, data=None, token=None, *args, **kwargs):
         """
         Helper for request
 
@@ -90,7 +90,7 @@ class TCBase(TC):
             **kwargs
         )
 
-    def json_request(self, method, target_url_rule, data, token=None, *args, **kwargs):
+    def json_request(self, method, target_url_rule, data=None, token=None, *args, **kwargs):
         if token is None:
             token = self.student_access_token
 
