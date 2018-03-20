@@ -15,14 +15,14 @@ def _list_field_to_dict(list_field):
         if isinstance(item, EmbeddedDocument):
             return_data.append(mongo_to_dict(item, []))
         else:
-            return_data.append(_field_value_to_python_type(item))
+            return_data.append(_field_value_to_python_type(item, True))
 
     return return_data
 
 
-def _field_value_to_python_type(data):
+def _field_value_to_python_type(data, escape_datetime=False):
     if isinstance(data, datetime):
-        return str(data)
+        return str(data)[:10] if escape_datetime else str(data)
     elif isinstance(data, ObjectId):
         return str(data)
     elif isinstance(data, Decimal):
@@ -40,7 +40,7 @@ def _extract_field_data(field_value):
     if field_value is None:
         return None
     else:
-        return _field_value_to_python_type(field_value)
+        return _field_value_to_python_type(field_value, True)
 
 
 def mongo_to_dict(obj, exclude_fields=list()):
@@ -49,6 +49,7 @@ def mongo_to_dict(obj, exclude_fields=list()):
     :param obj: Document of MongoEngine
     :param exclude_fields: field names for exclude
     """
+    exclude_fields.append('_cls')
     return_data = {}
 
     if obj is None:
@@ -56,7 +57,7 @@ def mongo_to_dict(obj, exclude_fields=list()):
 
     document_data_dict = obj._data
 
-    if 'id' in document_data_dict:
+    if 'id' not in exclude_fields and 'id' in document_data_dict:
         # EmbeddedDocument doesn't have _id
         return_data['id'] = str(obj.id)
 
