@@ -2,31 +2,42 @@ from tests.views import TCBase
 
 
 class TestAuth(TCBase):
-    def testAuth(self):
+    """
+    TC about admin account authentication
+
+    This TC tests
+        * POST /admin/auth
+    """
+    def setUp(self):
         """
-        TC about admin account authentication
-        * This TC tests
-        POST /admin/auth
-
         - Before Test
-        None
+        """
+        TCBase.setUp(self)
 
+    def tearDown(self):
+        """
+        - After Test
+        """
+        TCBase.tearDown(self)
+
+    def test(self):
+        """
         - Test
         Auth with id 'admin', pw 'pw'
-        * Validation
-        (1) status code : 200
-        (2) response data type : dictionary
-        (3) length of resource : 2
-        (4) response data format
-        {
-            'access_token': str,
-            'refresh_token': str
-        }
+            * Validation
+            (1) status code : 200
+            (2) response data type : dictionary
+            (3) length of resource : 2
+            (4) response data format
+            {
+                'access_token': str,
+                'refresh_token': str
+            }
 
         - Exception Test
         Auth with incorrect id or pw
-        * Validation
-        (1) status code : 401
+            * Validation
+            (1) status code : 401
         """
         # -- Test --
         resp = self.request(
@@ -69,25 +80,38 @@ class TestAuth(TCBase):
         self.assertEqual(resp.status_code, 401)
         # -- Exception Test --
 
+
+class TestRefresh(TCBase):
+    """
+    TC about admin access token refreshing
+
+    This TC tests
+        * POST /admin/refresh
+    """
+    def setUp(self):
+        """
+        - Before Test
+        """
+        TCBase.setUp(self)
+
+    def tearDown(self):
+        """
+        - After Test
+        """
+        TCBase.tearDown(self)
+
     def testRefresh(self):
         """
-        TC about admin access token refreshing
-        * This TC tests
-        POST /admin/refresh
-
-        - Before Test
-        None
-
         - Test
         Refresh with admin's refresh token
-        * Validation
-        (1) status code : 200
-        (2) response data type : dictionary
-        (3) length of resource : 1
-        (4) response data format
-        {
-            'access_token': str
-        }
+            * Validation
+            (1) status code : 200
+            (2) response data type : dictionary
+            (3) length of resource : 1
+            (4) response data format
+            {
+                'access_token': str
+            }
 
         - Exception Test
         None

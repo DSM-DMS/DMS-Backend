@@ -3,46 +3,54 @@ from tests.views import TCBase
 from app.models.account import SignupWaitingModel
 
 
-class TestAccountControl(TCBase):
+class TestDeleteStudentAccount(TCBase):
+    """
+    TC about student account deletion
+
+    * This TC tests
+        POST /admin/account-control
+    """
+    def setUp(self):
+        """
+        - Before Test
+        """
+        TCBase.setUp(self)
+
     def tearDown(self):
+        """
+        - After Test
+        """
         SignupWaitingModel.objects.delete()
 
         TCBase.tearDown(self)
 
-    def testDeleteStudentAccount(self):
+    def test(self):
         """
-        TC about student account deletion
-        * This TC tests
-        POST /admin/account-control
-
-        - Before Test
-        None
-
         - Test
         Delete student account of number '1111'
-        * Validation
-        (1) status code : 201
-        (2) response data type : dictionary
-        (3) length of resource : 1
-        (4) response data format
-        {
-            'uuid': str(length: 4)
-        }
+            * Validation
+            (1) status code : 201
+            (2) response data type : dictionary
+            (3) length of resource : 1
+            (4) response data format
+            {
+                'uuid': str(length: 4)
+            }
 
         - Exception Test
         Delete already initialized student account of number '1111'
-        * Validation
-        (1) status code : 201
-        (2) response data type : dictionary
-        (3) length of resource : 1
-        (4) response data format
-        {
-            'uuid': str(length: 4)
-        }
+            * Validation
+            (1) status code : 201
+            (2) response data type : dictionary
+            (3) length of resource : 1
+            (4) response data format
+            {
+                'uuid': str(length: 4)
+            }
 
         Delete student account of number '9999'
-        * Validation
-        (1) status code : 204
+            * Validation
+            (1) status code : 204
         """
         # -- Test --
         resp = self.request(
@@ -110,38 +118,50 @@ class TestAccountControl(TCBase):
         self.assertEqual(resp.status_code, 204)
         # -- Exception Test --
 
-    def testDeleteAdminAccount(self):
-        """
-        TC about admin account deletion
-        * This TC tests
-        DELETE /admin/account-control
 
+class TestDeleteAdminAccount(TCBase):
+    """
+    TC about admin account deletion
+
+    This TC tests
+        * DELETE /admin/account-control
+    """
+    def setUp(self):
+        """
         - Before Test
+
         Create new admin account of id 'deleteme'
-        * POST /admin/new-account
-
-        - Test
-        Delete admin account of id 'deleteme'
-        * Validation
-        (1) status code : 200
-
-        - Exception Test
-        Delete already deleted admin account of id 'deleteme'
-        * Validation
-        (1) status code : 204
+            * POST /admin/new-account
         """
-        # -- Before Test --
-        resp = self.request(
+        TCBase.setUp(self)
+
+        self.request(
             self.client.post,
             '/admin/new-account',
             {'id': 'deleteme', 'pw': 'pw', 'name': 'test'},
             self.admin_access_token
         )
 
-        # (1)
-        self.assertEqual(resp.status_code, 201)
-        # -- Before Test --
+    def tearDown(self):
+        """
+        - After Test
+        """
+        SignupWaitingModel.objects.delete()
 
+        TCBase.tearDown(self)
+
+    def test(self):
+        """
+        - Test
+        Delete admin account of id 'deleteme'
+            * Validation
+            (1) status code : 200
+
+        - Exception Test
+        Delete already deleted admin account of id 'deleteme'
+            * Validation
+            (1) status code : 204
+        """
         # -- Test --
         resp = self.request(
             self.client.delete,
@@ -166,26 +186,41 @@ class TestAccountControl(TCBase):
         self.assertEqual(resp.status_code, 204)
         # -- Exception Test --
 
-    def testLoadStudentSignStatus(self):
+
+class TestLoadStudentSignStatus(TCBase):
+    """
+    TC about student's sign status loading
+
+    This TC tests
+        * GET /student-sign-status
+    """
+    def setUp(self):
         """
-        TC about student's sign status loading
-        * This TC tests
-        GET /student-sign-status
-
         - Before Test
-        None
+        """
+        TCBase.setUp(self)
 
+    def tearDown(self):
+        """
+        - After Test
+        """
+        SignupWaitingModel.objects.delete()
+
+        TCBase.tearDown(self)
+
+    def test(self):
+        """
         - Test
         Load student sign status
-        * Validation
-        (1) status code : 200
-        (2) response data type : dictionary
-        (3) length of resource : 2
-        (4) response data format
-        {
-            'unsigned_student_count': int(value: 0),
-            'signed_student_count': int(value: 1)
-        }
+            * Validation
+            (1) status code : 200
+            (2) response data type : dictionary
+            (3) length of resource : 2
+            (4) response data format
+            {
+                'unsigned_student_count': int(value: 0),
+                'signed_student_count': int(value: 1)
+            }
 
         - Exception Test
         None

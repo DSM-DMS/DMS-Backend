@@ -1,35 +1,46 @@
 from tests.views import TCBase
 
 
-class TestSignup(TCBase):
-    def testNewAdminAccount(self):
+class TestNewAdminAccount(TCBase):
+    """
+    TC about admin account creation
+
+    This TC tests
+        * POST /admin/new-account
+    """
+    def setUp(self):
         """
-        TC about admin account creation
-        * This TC tests
-        POST /admin/new-account
-
         - Before Test
-        None
+        """
+        TCBase.setUp(self)
 
+    def tearDown(self):
+        """
+        - After Test
+        """
+        TCBase.tearDown(self)
+
+    def test(self):
+        """
         - Test
         Create new admin account with id 'admin-new', pw 'pw'
-        * Validation
-        (1) status code : 201
-        (2) auth with created admin account
             * Validation
-            1. status code: 200
-            2. response data type : dictionary
-            3. length of resource : 2
-            4. response data format
-            {
-                'access_token': str,
-                'refresh_token': str
-            }
+            (1) status code : 201
+            (2) auth with created admin account
+                * Validation
+                1. status code: 200
+                2. response data type : dictionary
+                3. length of resource : 2
+                4. response data format
+                {
+                    'access_token': str,
+                    'refresh_token': str
+                }
 
         - Exception Test
         Create new admin account with already existing id 'admin-new'
-        * Validation
-        (1) status code : 204
+            * Validation
+            (1) status code : 204
         """
         # -- Test --
         resp = self.request(

@@ -3,52 +3,60 @@ from tests.views import TCBase
 from app.models.post import FAQModel
 
 
-class TestFAQ(TCBase):
-    def tearDown(self):
-        FAQModel.objects.delete()
+class TestLoadFAQList(TCBase):
+    """
+    TC about FAQ list inquiring
 
-        TCBase.tearDown(self)
-
-    def testLoadFAQList(self):
+    This TC tests
+        * GET /faq
+    """
+    def setUp(self):
         """
-        TC about FAQ list inquiring
-        * This TC tests
-        GET /faq
-
         - Before Test
+
         Upload FAQ
-        * POST /admin/faq
-
-        - Test
-        Load FAQ list
-        * Validation
-        (1) status code : 200
-        (2) response data type : list
-        (3) length of resource : 1
-        (4) response data format
-        [
-            {
-                'id': str(length: 24),
-                'write_time': str(format: YYYY-MM-DD),
-                'author': str(value: 'fake_admin'),
-                'title': str(value: 'title'),
-                'pinned': bool(value: False)
-            },
-            ...
-        ]
-
-        - Exception Test
-        None
+            * POST /admin/faq
         """
-        # -- Before Test --
+        TCBase.setUp(self)
+
         self.request(
             self.client.post,
             '/admin/faq',
             {'title': 'title', 'content': 'content'},
             self.admin_access_token
         )
-        # -- Before Test --
 
+    def tearDown(self):
+        """
+        - After Test
+        """
+        FAQModel.objects.delete()
+
+        TCBase.tearDown(self)
+
+    def test(self):
+        """
+        - Test
+        Load FAQ list
+            * Validation
+            (1) status code : 200
+            (2) response data type : list
+            (3) length of resource : 1
+            (4) response data format
+            [
+                {
+                    'id': str(length: 24),
+                    'write_time': str(format: YYYY-MM-DD),
+                    'author': str(value: 'fake_admin'),
+                    'title': str(value: 'title'),
+                    'pinned': bool(value: False)
+                },
+                ...
+            ]
+
+        - Exception Test
+        None
+        """
         # -- Test --
         resp = self.request(
             self.client.get,
@@ -97,38 +105,25 @@ class TestFAQ(TCBase):
         self.assertFalse(pinned)
         # -- Test --
 
-    def testLoadFAQContent(self):
-        """
-        TC about FAQ content inquiring
-        * This TC tests
-        GET /faq/<post_id>
 
+class TestLoadFAQContent(TCBase):
+    """
+    TC about FAQ content inquiring
+
+    * This TC tests
+        GET /faq/<post_id>
+    """
+
+    def setUp(self):
+        """
         - Before Test
+
         Upload FAQ
         Get uploaded FAQ ID
         * POST /admin/faq
-
-        - Test
-        Load FAQ content with uploaded FAQ ID
-        * Validation
-        (1) status code : 200
-        (2) response data type : dict
-        (3) length of resource : 5
-        (4) response data format
-        {
-            'write_time': str(format: YYYY-MM-DD),
-            'author': str(value: 'fake_admin'),
-            'title': str(value: 'title'),
-            'content': str(value: 'content'),
-            'pinned': bool(value: False)
-        }
-
-        - Exception Test
-        Load with nonexistent post id '1234'
-        * Validation
-        (1) status code : 204
         """
-        # -- Before Test --
+        TCBase.setUp(self)
+
         resp = self.request(
             self.client.post,
             '/admin/faq',
@@ -137,13 +132,42 @@ class TestFAQ(TCBase):
         )
 
         data = self.get_response_data(resp)
-        id = data['id']
-        # -- Before Test --
+        self.id = data['id']
 
+    def tearDown(self):
+        """
+        - After Test
+        """
+        FAQModel.objects.delete()
+
+        TCBase.tearDown(self)
+
+    def test(self):
+        """
+        - Test
+        Load FAQ content with uploaded FAQ ID
+            * Validation
+            (1) status code : 200
+            (2) response data type : dict
+            (3) length of resource : 5
+            (4) response data format
+            {
+                'write_time': str(format: YYYY-MM-DD),
+                'author': str(value: 'fake_admin'),
+                'title': str(value: 'title'),
+                'content': str(value: 'content'),
+                'pinned': bool(value: False)
+            }
+
+        - Exception Test
+        Load with nonexistent post id '1234'
+            * Validation
+            (1) status code : 204
+        """
         # -- Test --
         resp = self.request(
             self.client.get,
-            '/faq/{}'.format(id)
+            '/faq/{}'.format(self.id)
         )
 
         # (1)
