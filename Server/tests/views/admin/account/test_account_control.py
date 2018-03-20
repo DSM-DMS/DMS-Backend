@@ -22,18 +22,20 @@ class TestAccountControl(TCBase):
         Delete student account of number '1111'
         * Validation
         (1) status code : 201
-        (2) length of resource : 1
-        (3) response format(dictionary)
+        (2) response data type : dictionary
+        (3) length of resource : 1
+        (4) response data format
         {
-            'uuid': 'xxxx'
+            'uuid': 'xxxx'(str)
         }
 
         - Exception Test
         Delete already initialized student account of number '1111'
         * Validation
         (1) status code : 201
-        (2) length of resource : 1
-        (3) response format(dictionary)
+        (2) response data type : dictionary
+        (3) length of resource : 1
+        (4) response data format
         {
             'uuid': 'xxxx'(str)
         }
@@ -50,10 +52,18 @@ class TestAccountControl(TCBase):
             self.admin_access_token
         )
 
+        # (1)
         self.assertEqual(resp.status_code, 201)
 
         data = self.get_response_data(resp)
+
+        # (2)
+        self.assertIsInstance(data, dict)
+
+        # (3)
         self.assertEqual(len(data), 1)
+
+        # (4)
         self.assertIn('uuid', data)
 
         uuid = data['uuid']
@@ -69,10 +79,18 @@ class TestAccountControl(TCBase):
             self.admin_access_token
         )
 
+        # (1)
         self.assertEqual(resp.status_code, 201)
 
         data = self.get_response_data(resp)
+
+        # (2)
+        self.assertIsInstance(data, dict)
+
+        # (3)
         self.assertEqual(len(data), 1)
+
+        # (4)
         self.assertIn('uuid', data)
 
         uuid = data['uuid']
@@ -88,6 +106,7 @@ class TestAccountControl(TCBase):
             self.admin_access_token
         )
 
+        # (1)
         self.assertEqual(resp.status_code, 204)
         # -- Exception Test --
 
@@ -118,6 +137,8 @@ class TestAccountControl(TCBase):
             {'id': 'deleteme', 'pw': 'pw', 'name': 'test'},
             self.admin_access_token
         )
+
+        # (1)
         self.assertEqual(resp.status_code, 201)
         # -- Before Test --
 
@@ -128,6 +149,8 @@ class TestAccountControl(TCBase):
             {'id': 'deleteme'},
             self.admin_access_token
         )
+
+        # (1)
         self.assertEqual(resp.status_code, 200)
         # -- Test --
 
@@ -138,6 +161,8 @@ class TestAccountControl(TCBase):
             {'id': 'deleteme'},
             self.admin_access_token
         )
+
+        # (1)
         self.assertEqual(resp.status_code, 204)
         # -- Exception Test --
 
@@ -154,8 +179,9 @@ class TestAccountControl(TCBase):
         Load student sign status
         * Validation
         (1) status code : 200
-        (2) length of resource : 2
-        (3) response format(dictionary)
+        (2) response data type : dictionary
+        (3) length of resource : 2
+        (4) response data format
         {
             'unsigned_student_count': int,
             'signed_student_count': int
@@ -171,11 +197,19 @@ class TestAccountControl(TCBase):
             {},
             self.admin_access_token
         )
+
+        # (1)
         self.assertEqual(resp.status_code, 200)
 
         data = self.get_response_data(resp)
+
+        # (2)
+        self.assertIsInstance(data, dict)
+
+        # (3)
         self.assertEqual(len(data), 2)
 
+        # (4)
         self.assertIn('unsigned_student_count', data)
         self.assertIn('signed_student_count', data)
 
