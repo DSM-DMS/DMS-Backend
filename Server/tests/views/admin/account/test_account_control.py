@@ -26,7 +26,7 @@ class TestAccountControl(TCBase):
         (3) length of resource : 1
         (4) response data format
         {
-            'uuid': 'xxxx'(str)
+            'uuid': str(length: 4)
         }
 
         - Exception Test
@@ -37,7 +37,7 @@ class TestAccountControl(TCBase):
         (3) length of resource : 1
         (4) response data format
         {
-            'uuid': 'xxxx'(str)
+            'uuid': str(length: 4)
         }
 
         Delete student account of number '9999'
@@ -183,8 +183,8 @@ class TestAccountControl(TCBase):
         (3) length of resource : 2
         (4) response data format
         {
-            'unsigned_student_count': int,
-            'signed_student_count': int
+            'unsigned_student_count': int(value: 0),
+            'signed_student_count': int(value: 1)
         }
 
         - Exception Test
