@@ -21,7 +21,7 @@ class FacilityReport(BaseResource):
         """
         시설고장신고 정보 조회
         """
-        response = [mongo_to_dict(obj, ['report_time']) for obj in FacilityReportModel.objects]
+        response = [mongo_to_dict(report, ['report_time']) for report in FacilityReportModel.objects]
 
         return self.unicode_safe_json_response(response)
 

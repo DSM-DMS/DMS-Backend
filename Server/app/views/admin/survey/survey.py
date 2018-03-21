@@ -10,6 +10,7 @@ from app.views import admin_only
 
 from app.docs.admin.survey.survey import *
 from app.models.survey import QuestionModel, SurveyModel
+from app.models.support.mongo_helper import mongo_to_dict
 
 api = Api(Blueprint('admin-survey-api', __name__))
 api.prefix = '/admin'
@@ -23,14 +24,7 @@ class SurveyManaging(BaseResource):
         """
         설문지 리스트 조회
         """
-        response = [{
-            'id': str(survey.id),
-            'creation_time': str(survey.creation_time)[:10],
-            'title': survey.title,
-            'description': survey.description,
-            'start_date': str(survey.start_date),
-            'end_date': str(survey.end_date)
-        } for survey in SurveyModel.objects if QuestionModel.objects(survey=survey).count()]
+        response = [mongo_to_dict(survey, ['target']) for survey in SurveyModel.objects if QuestionModel.objects(survey=survey).count()]
 
         return self.unicode_safe_json_response(response)
 
@@ -94,12 +88,7 @@ class QuestionManaging(BaseResource):
         if not survey:
             return Response('', 204)
 
-        response = [{
-            'id': str(question.id),
-            'title': question.title,
-            'is_objective': question.is_objective,
-            'choice_paper': question.choice_paper if question.is_objective else None
-        } for question in QuestionModel.objects(survey=survey)]
+        response = [mongo_to_dict(question, ['survey']) for question in QuestionModel.objects(survey=survey)]
 
         return self.unicode_safe_json_response(response)
 

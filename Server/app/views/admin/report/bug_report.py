@@ -21,6 +21,6 @@ class BugReportDownload(BaseResource):
         """
         버그신고 리스트 조회
         """
-        response = [mongo_to_dict(obj, ['id', 'room', 'report_time']) for obj in BugReportModel.objects]
+        response = [mongo_to_dict(report, ['id', 'report_time']) for report in BugReportModel.objects]
 
         return self.unicode_safe_json_response(response)
