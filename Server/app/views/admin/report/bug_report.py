@@ -7,6 +7,7 @@ from app.views import admin_only
 
 from app.docs.admin.report.bug_report import *
 from app.models.report import BugReportModel
+from app.models.support.mongo_helper import mongo_to_dict
 
 api = Api(Blueprint('admin-bug-report-api', __name__))
 api.prefix = '/admin'
@@ -20,10 +21,6 @@ class BugReportDownload(BaseResource):
         """
         버그신고 리스트 조회
         """
-        response = [{
-            'author': bug_report.author,
-            'title': bug_report.title,
-            'content': bug_report.content
-        } for bug_report in BugReportModel.objects]
+        response = [mongo_to_dict(obj, ['id', 'room', 'report_time']) for obj in BugReportModel.objects]
 
         return self.unicode_safe_json_response(response)

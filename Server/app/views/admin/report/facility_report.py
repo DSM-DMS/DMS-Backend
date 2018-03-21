@@ -7,6 +7,7 @@ from app.views import admin_only
 
 from app.docs.admin.report.facility_report import *
 from app.models.report import FacilityReportModel
+from app.models.support.mongo_helper import mongo_to_dict
 
 api = Api(Blueprint('admin-facility-report-api', __name__))
 api.prefix = '/admin'
@@ -20,13 +21,7 @@ class FacilityReport(BaseResource):
         """
         시설고장신고 정보 조회
         """
-        response = [{
-            'id': str(facility_report.id),
-            'author': facility_report.author,
-            'title': facility_report.title,
-            'content': facility_report.content,
-            'room': facility_report.room
-        } for facility_report in FacilityReportModel.objects]
+        response = [mongo_to_dict(obj, ['report_time']) for obj in FacilityReportModel.objects]
 
         return self.unicode_safe_json_response(response)
 
