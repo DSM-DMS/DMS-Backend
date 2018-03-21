@@ -63,9 +63,8 @@ class TestDeleteStudentAccount(TCBase):
         # (1)
         self.assertEqual(resp.status_code, 201)
 
-        data = self.get_response_data(resp)
-
         # (2)
+        data = self.get_response_data(resp)
         self.assertIsInstance(data, dict)
 
         # (3)
@@ -90,9 +89,8 @@ class TestDeleteStudentAccount(TCBase):
         # (1)
         self.assertEqual(resp.status_code, 201)
 
-        data = self.get_response_data(resp)
-
         # (2)
+        data = self.get_response_data(resp)
         self.assertIsInstance(data, dict)
 
         # (3)
@@ -236,9 +234,8 @@ class TestLoadStudentSignStatus(TCBase):
         # (1)
         self.assertEqual(resp.status_code, 200)
 
-        data = self.get_response_data(resp)
-
         # (2)
+        data = self.get_response_data(resp)
         self.assertIsInstance(data, dict)
 
         # (3)

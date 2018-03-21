@@ -66,9 +66,8 @@ class TestLoadFAQList(TCBase):
         # (1)
         self.assertEqual(resp.status_code, 200)
 
-        data = self.get_response_data(resp)
-
         # (2)
+        data = self.get_response_data(resp)
         self.assertIsInstance(data, list)
 
         # (3)
@@ -173,9 +172,8 @@ class TestLoadFAQContent(TCBase):
         # (1)
         self.assertEqual(resp.status_code, 200)
 
-        data = self.get_response_data(resp)
-
         # (2)
+        data = self.get_response_data(resp)
         self.assertIsInstance(data, dict)
 
         # (3)
