@@ -5,10 +5,11 @@ from flask import Blueprint, Response, request
 from flask_restful import Api
 from flasgger import swag_from
 
-from app.docs.admin.survey.survey import *
-from app.models.survey import QuestionModel, SurveyModel
 from app.support.resources import BaseResource
 from app.support.view_decorators import admin_only
+
+from app.docs.admin.survey.survey import *
+from app.models.survey import QuestionModel, SurveyModel
 
 api = Api(Blueprint('admin-survey-api', __name__))
 api.prefix = '/admin'

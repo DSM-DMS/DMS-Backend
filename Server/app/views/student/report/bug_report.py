@@ -5,10 +5,11 @@ from flask import Blueprint, current_app, g, request, abort
 from flask_restful import Api
 from flasgger import swag_from
 
-from app.docs.student.report.bug_report import *
-from app.models.report import BugReportModel
 from app.support.resources import BaseResource
 from app.support.view_decorators import student_only
+
+from app.docs.student.report.bug_report import *
+from app.models.report import BugReportModel
 
 api = Api(Blueprint('student-bug-report-api', __name__))
 

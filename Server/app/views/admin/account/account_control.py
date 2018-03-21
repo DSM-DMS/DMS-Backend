@@ -4,10 +4,11 @@ from flask import Blueprint, Response, g, request
 from flask_restful import Api
 from flasgger import swag_from
 
-from app.docs.admin.account.account_control import *
-from app.models.account import SignupWaitingModel, StudentModel, AdminModel
 from app.support.resources import BaseResource
 from app.support.view_decorators import admin_only
+
+from app.docs.admin.account.account_control import *
+from app.models.account import SignupWaitingModel, StudentModel, AdminModel
 
 api = Api(Blueprint('admin-account-control-api', __name__))
 api.prefix = '/admin'

@@ -4,11 +4,12 @@ from flask import Blueprint, Response, current_app, g, request
 from flask_restful import Api
 from flasgger import swag_from
 
+from app.support.resources import BaseResource
+from app.support.view_decorators import student_only
+
 from app.docs.student.apply.extension import *
 from app.models.account import StudentModel
 from app.models.apply import ExtensionApplyModel
-from app.support.resources import BaseResource
-from app.support.view_decorators import student_only
 
 from utils.extension_meta import APPLY_START, APPLY_END_11, APPLY_END_12, MAPS
 

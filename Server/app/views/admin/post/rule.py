@@ -4,10 +4,11 @@ from flask import Blueprint, Response, g, request
 from flask_restful import Api
 from flasgger import swag_from
 
-from app.docs.admin.post.rule import *
-from app.models.post import RuleModel
 from app.support.resources import BaseResource
 from app.support.view_decorators import admin_only
+
+from app.docs.admin.post.rule import *
+from app.models.post import RuleModel
 
 api = Api(Blueprint('admin-rule-api', __name__))
 api.prefix = '/admin'

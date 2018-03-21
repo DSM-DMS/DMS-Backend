@@ -4,10 +4,11 @@ from flask import Blueprint, Response, current_app, g, request
 from flask_restful import Api
 from flasgger import swag_from
 
-from app.docs.student.apply.goingout import *
-from app.models.apply import GoingoutApplyModel
 from app.support.resources import BaseResource
 from app.support.view_decorators import student_only
+
+from app.docs.student.apply.goingout import *
+from app.models.apply import GoingoutApplyModel
 
 api = Api(Blueprint('student-goingout-api', __name__))
 

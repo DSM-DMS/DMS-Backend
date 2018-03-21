@@ -5,11 +5,12 @@ from flask import Blueprint, Response, request
 from flask_restful import Api
 from flasgger import swag_from
 
+from app.support.resources import BaseResource
+from app.support.view_decorators import admin_only
+
 from app.docs.admin.point.point import *
 from app.models.account import StudentModel
 from app.models.point import PointRuleModel, PointHistoryModel
-from app.support.resources import BaseResource
-from app.support.view_decorators import admin_only
 
 api = Api(Blueprint('admin-point-api', __name__))
 api.prefix = '/admin/managing'

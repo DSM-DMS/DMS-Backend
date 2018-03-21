@@ -2,10 +2,11 @@ from flask import Blueprint, Response, request
 from flask_restful import Api
 from flasgger import swag_from
 
-from app.docs.admin.post.preview import *
-from app.models.post import FAQModel, NoticeModel, RuleModel
 from app.support.resources import BaseResource
 from app.support.view_decorators import admin_only
+
+from app.docs.admin.post.preview import *
+from app.models.post import FAQModel, NoticeModel, RuleModel
 
 api = Api(Blueprint('admin-preview-api', __name__))
 api.prefix = '/admin/preview'

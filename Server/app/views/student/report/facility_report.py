@@ -4,10 +4,11 @@ from flask import Blueprint, g, request
 from flask_restful import Api, abort
 from flasgger import swag_from
 
-from app.docs.student.report.facility_report import *
-from app.models.report import FacilityReportModel
 from app.support.resources import BaseResource
 from app.support.view_decorators import student_only
+
+from app.docs.student.report.facility_report import *
+from app.models.report import FacilityReportModel
 
 api = Api(Blueprint('student-facility-report-api', __name__))
 

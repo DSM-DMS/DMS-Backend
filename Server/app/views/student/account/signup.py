@@ -6,9 +6,10 @@ from flask import Blueprint, Response, current_app, request
 from flask_restful import Api
 from flasgger import swag_from
 
-from app.docs.student.account.signup import *
 from app.models.account import SignupWaitingModel, StudentModel, AdminModel
 from app.models.apply import GoingoutApplyModel, StayApplyModel
+
+from app.docs.student.account.signup import *
 from app.support.resources import BaseResource
 
 api = Api(Blueprint('student-signup-api', __name__))

@@ -2,9 +2,10 @@ from flask import Blueprint, g
 from flask_restful import Api
 from flasgger import swag_from
 
-from app.docs.student.account.info import *
 from app.support.resources import BaseResource
 from app.support.view_decorators import student_only
+
+from app.docs.student.account.info import *
 
 api = Api(Blueprint('student-info-api', __name__))
 
