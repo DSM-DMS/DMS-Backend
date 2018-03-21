@@ -33,9 +33,10 @@ class BugReport(BaseResource):
 
         report = BugReportModel(author=student.name, title=title, content=content, report_time=time).save()
 
-        slack_bot = Slacker(current_app.config['SLACK_BOT_TOKEN'])
-        slack_bot.chat.post_message(channel='#bug-report', text='제보자: {0}\n제보시간: {1}\n제목: {2}\n내용: {3}'
-                                    .format(student.name, str(time)[:-7], title, content))
+        if not current_app.testing:
+            slack_bot = Slacker(current_app.config['SLACK_BOT_TOKEN'])
+            slack_bot.chat.post_message(channel='#bug-report', text='제보자: {0}\n제보시간: {1}\n제목: {2}\n내용: {3}'
+                                        .format(student.name, str(time)[:-7], title, content))
 
         return self.unicode_safe_json_response({
             'id': str(report.id)
