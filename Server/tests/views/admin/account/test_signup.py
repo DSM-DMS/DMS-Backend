@@ -61,19 +61,17 @@ class TestNewAdminAccount(TCBase):
             self.admin_access_token
         )
 
-        # ---
-
-        # (1)
+        # 1
         self.assertEqual(resp.status_code, 200)
 
-        # (2)
+        # 2
         data = self.get_response_data(resp)
         self.assertIsInstance(data, dict)
 
-        # (3)
+        # 3
         self.assertEqual(len(data), 2)
 
-        # (4)
+        # 4
         self.assertIn('access_token', data)
         self.assertIn('refresh_token', data)
 

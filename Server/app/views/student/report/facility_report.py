@@ -27,7 +27,7 @@ class FacilityReport(BaseResource):
         content = request.form['content']
         room = int(request.form['room'])
 
-        if not 200 < room < 519:
+        if not 200 <= room < 519:
             abort(400)
 
         report = FacilityReportModel(author=student.name, title=title, content=content, room=room, report_time=datetime.now()).save()

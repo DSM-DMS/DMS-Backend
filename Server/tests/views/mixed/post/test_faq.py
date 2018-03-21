@@ -147,7 +147,7 @@ class TestLoadFAQContent(TCBase):
         Load FAQ content with uploaded FAQ ID
             * Validation
             (1) status code : 200
-            (2) response data type : dict
+            (2) response data type : dictionary
             (3) length of resource : 5
             (4) response data format
             {
