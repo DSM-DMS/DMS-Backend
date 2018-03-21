@@ -10,7 +10,7 @@ from app.models.account import SignupWaitingModel, StudentModel, AdminModel
 from app.models.apply import GoingoutApplyModel, StayApplyModel
 
 from app.docs.student.account.signup import *
-from app.support.resources import BaseResource
+from app.views import BaseResource
 
 api = Api(Blueprint('student-signup-api', __name__))
 

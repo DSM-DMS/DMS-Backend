@@ -3,8 +3,8 @@ from datetime import datetime
 from flask import Blueprint, Response, request
 from flask_restful import Api, abort
 
-from app.support.resources import BaseResource
-from app.support.view_decorators import system_only
+from app.views import BaseResource
+from app.views import system_only
 
 from app.models.account import StudentModel
 from app.models.apply import ExtensionApplyModel, GoingoutApplyModel, StayApplyModel

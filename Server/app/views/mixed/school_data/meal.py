@@ -2,7 +2,7 @@ from flasgger import swag_from
 from flask import Blueprint, Response
 from flask_restful import Api
 
-from app.support.resources import BaseResource
+from app.views import BaseResource
 
 from app.docs.mixed.school_data.meal import *
 from app.models.meal import MealModel

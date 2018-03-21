@@ -6,8 +6,8 @@ from flask import Blueprint, Response, current_app, request
 from flask_restful import Api
 from flasgger import swag_from
 
-from app.support.resources import BaseResource
-from app.support.view_decorators import admin_only
+from app.views import BaseResource
+from app.views import admin_only
 
 from app.docs.admin.account.signup import NEW_ACCOUNT_POST
 from app.models.account import StudentModel, AdminModel

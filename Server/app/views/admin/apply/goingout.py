@@ -4,8 +4,8 @@ from flask import Blueprint, make_response, send_from_directory
 from flask_restful import Api
 from flasgger import swag_from
 
-from app.support.resources import BaseResource
-from app.support.view_decorators import admin_only
+from app.views import BaseResource
+from app.views import admin_only
 
 from app.docs.admin.apply.goingout import *
 from app.models.account import StudentModel

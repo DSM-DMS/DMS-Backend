@@ -1,7 +1,7 @@
 from flask import Response
 
 from app.models.support.mongo_helper import mongo_to_dict
-from app.support.resources import BaseResource
+from app.views import BaseResource
 
 
 class PostAPIResource(BaseResource):

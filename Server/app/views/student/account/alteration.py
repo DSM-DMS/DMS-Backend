@@ -5,8 +5,8 @@ from flask import Blueprint, Response, current_app, g, request
 from flask_restful import Api, abort
 from flasgger import swag_from
 
-from app.support.resources import BaseResource
-from app.support.view_decorators import student_only
+from app.views import BaseResource
+from app.views import student_only
 
 from app.docs.student.account.alteration import *
 

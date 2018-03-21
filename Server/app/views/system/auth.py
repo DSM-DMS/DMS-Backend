@@ -7,7 +7,7 @@ from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity, jwt_refresh_token_required
 from flask_restful import Api, abort
 
-from app.support.resources import BaseResource
+from app.views import BaseResource
 
 from app.models.account import SystemModel, RefreshTokenModel
 

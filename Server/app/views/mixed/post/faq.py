@@ -2,7 +2,7 @@ from flasgger import swag_from
 from flask import Blueprint
 from flask_restful import Api
 
-from app.support.view_decorators import auth_required
+from app.views import auth_required
 
 from app.docs.mixed.post.faq import *
 from app.models.post import FAQModel
