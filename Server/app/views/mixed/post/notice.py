@@ -1,55 +1,33 @@
 from flasgger import swag_from
-from flask import Blueprint, Response
+from flask import Blueprint
 from flask_restful import Api
+
+from app.support.view_decorators import auth_required
 
 from app.docs.mixed.post.notice import *
 from app.models.post import NoticeModel
-from app.support.resources import BaseResource
-from app.support.view_decorators import auth_required
+from app.views.mixed.post import PostAPIResource
 
 api = Api(Blueprint('notice-api', __name__))
 
 
 @api.resource('/notice')
-class NoticeList(BaseResource):
+class NoticeList(PostAPIResource):
     @swag_from(NOTICE_LIST_GET)
     @auth_required
     def get(self):
         """
         공지사항 리스트 조회
         """
-        response = [{
-            'id': str(notice.id),
-            'write_time': str(notice.write_time)[:10],
-            'author': notice.author,
-            'title': notice.title,
-            'pinned': notice.pinned
-        } for notice in NoticeModel.objects]
-
-        return self.unicode_safe_json_response(response)
+        return self.get_list_as_response(NoticeModel)
 
 
 @api.resource('/notice/<post_id>')
-class NoticeItem(BaseResource):
+class NoticeItem(PostAPIResource):
     @swag_from(NOTICE_ITEM_GET)
     @auth_required
     def get(self, post_id):
         """
         공지사항 내용 조회
         """
-        if len(post_id) != 24:
-            return Response('', 204)
-
-        notice = NoticeModel.objects(id=post_id).first()
-        if not notice:
-            return Response('', 204)
-
-        response = {
-            'write_time': str(notice.write_time)[:10],
-            'author': notice.author,
-            'title': notice.title,
-            'content': notice.content,
-            'pinned': notice.pinned
-        }
-
-        return self.unicode_safe_json_response(response)
+        return self.get_item_as_response(NoticeModel, post_id)
