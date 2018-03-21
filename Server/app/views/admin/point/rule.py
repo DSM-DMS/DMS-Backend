@@ -6,6 +6,8 @@ from app.views import BaseResource
 from app.views import admin_only
 
 from app.docs.admin.point.rule import *
+
+from app.models.support.mongo_helper import mongo_to_dict
 from app.models.point import PointRuleModel
 
 api = Api(Blueprint('admin-point-rule-api', __name__))
@@ -20,12 +22,7 @@ class PointRuleManaging(BaseResource):
         """
         상벌점 규칙 목록 조회
         """
-        response = [{
-            'id': str(rule.id),
-            'name': rule.name,
-            'min_point': rule.min_point,
-            'max_point': rule.max_point
-        } for rule in PointRuleModel.objects]
+        response = [mongo_to_dict(rule) for rule in PointRuleModel.objects]
 
         return self.unicode_safe_json_response(response)
 

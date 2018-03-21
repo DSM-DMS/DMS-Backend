@@ -11,6 +11,7 @@ from app.views import admin_only
 from app.docs.admin.point.point import *
 from app.models.account import StudentModel
 from app.models.point import PointRuleModel, PointHistoryModel
+from app.models.support.mongo_helper import mongo_to_dict
 
 api = Api(Blueprint('admin-point-api', __name__))
 api.prefix = '/admin/managing'
@@ -29,13 +30,7 @@ class PointManaging(BaseResource):
         if not student:
             return Response('', 204)
 
-        response = [{
-            'time': str(history.time)[:10],
-            'reason': history.reason,
-            'point_type': history.point_type,
-            'point': history.point,
-            'id': str(history.id)
-        } for history in student.point_histories]
+        response = [mongo_to_dict(history) for history in student.point_histories]
 
         return self.unicode_safe_json_response(response)
 
