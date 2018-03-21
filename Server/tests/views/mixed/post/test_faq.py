@@ -47,9 +47,9 @@ class TestLoadFAQList(TCBase):
                 {
                     'id': str(length: 24),
                     'write_time': str(format: YYYY-MM-DD),
-                    'author': str(value: 'fake_admin'),
-                    'title': str(value: 'title'),
-                    'pinned': bool(value: False)
+                    'author': 'fake_admin',
+                    'title': 'title',
+                    'pinned': False
                 },
                 ...
             ]
@@ -78,15 +78,9 @@ class TestLoadFAQList(TCBase):
 
         self.assertIn('id', faq)
         self.assertIn('write_time', faq)
-        self.assertIn('author', faq)
-        self.assertIn('title', faq)
-        self.assertIn('pinned', faq)
 
         id = faq['id']
         write_time = faq['write_time']
-        author = faq['author']
-        title = faq['title']
-        pinned = faq['pinned']
 
         self.assertIsInstance(id, str)
         self.assertEqual(len(id), 24)
@@ -94,14 +88,13 @@ class TestLoadFAQList(TCBase):
         self.assertIsInstance(write_time, str)
         self.assertRegex(write_time, '\d\d\d\d-\d\d-\d\d')
 
-        self.assertIsInstance(author, str)
-        self.assertEqual(author, 'fake_admin')
+        del faq['id'], faq['write_time']
 
-        self.assertIsInstance(title, str)
-        self.assertEqual(title, 'title')
-
-        self.assertIsInstance(pinned, bool)
-        self.assertFalse(pinned)
+        self.assertDictEqual(faq, {
+            'author': 'fake_admin',
+            'title': 'title',
+            'pinned': False
+        })
         # -- Test --
 
 

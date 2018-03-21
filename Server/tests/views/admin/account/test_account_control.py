@@ -216,8 +216,8 @@ class TestLoadStudentSignStatus(TCBase):
             (3) length of resource : 2
             (4) response data format
             {
-                'unsigned_student_count': int(value: 0),
-                'signed_student_count': int(value: 1)
+                'unsigned_student_count': 0,
+                'signed_student_count': 1
             }
 
         - Exception Test
@@ -242,15 +242,8 @@ class TestLoadStudentSignStatus(TCBase):
         self.assertEqual(len(data), 2)
 
         # (4)
-        self.assertIn('unsigned_student_count', data)
-        self.assertIn('signed_student_count', data)
-
-        unsigned_student_count = data['unsigned_student_count']
-        signed_student_count = data['signed_student_count']
-
-        self.assertIsInstance(unsigned_student_count, int)
-        self.assertIsInstance(signed_student_count, int)
-
-        self.assertEqual(unsigned_student_count, 0)
-        self.assertEqual(signed_student_count, 1)
+        self.assertDictEqual(data, {
+            'unsigned_student_count': 0,
+            'signed_student_count': 1
+        })
         # -- Test --
