@@ -20,11 +20,11 @@ def create_app(dev=True):
     app_ = Flask(__name__)
     app_.config.from_object(DevConfig if dev else ProductionConfig)
 
-    JWTManager(app_)
-    CORS(app_)
-    Swagger(app_, template=TEMPLATE)
-    Mongo(app_)
-    Router(app_)
+    JWTManager().init_app(app_)
+    CORS().init_app(app_)
+    # Swagger(app_, template=TEMPLATE)
+    Mongo().init_app(app_)
+    Router().init_app(app_)
 
     return app_
 
