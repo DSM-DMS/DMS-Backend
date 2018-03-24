@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Blueprint, Response, g, request
 from flask_restful import Api
 from flasgger import swag_from
@@ -30,7 +32,7 @@ class Survey(BaseResource):
             'title': survey.title,
             'start_date': str(survey.start_date)[:10],
             'end_date': str(survey.end_date)[:10]
-        } for survey in SurveyModel.objects if int(student_number / 1000) in survey.target]
+        } for survey in SurveyModel.objects if int(student_number / 1000) in survey.target and survey.end_date > datetime.now()]
 
         return self.unicode_safe_json_response(response)
         # Filter by student number
