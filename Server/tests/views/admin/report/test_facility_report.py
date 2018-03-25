@@ -21,10 +21,16 @@ class TestFacilityReport(TCBase):
 
         # ---
 
+        self.report = {
+            'title': 'title',
+            'content': 'content',
+            'room': 200
+        }
+
         self.request(
             self.client.post,
             '/report/facility',
-            {'title': 'title', 'content': 'content', 'room': 200}
+            self.report
         )
 
     def tearDown(self):
@@ -84,10 +90,6 @@ class TestFacilityReport(TCBase):
 
         del report['id']
 
-        self.assertDictEqual(report, {
-            'author': 'fake_student',
-            'title': 'title',
-            'content': 'content',
-            'room': 200
-        })
+        self.report.update({'author': 'fake_student'})
+        self.assertDictEqual(report, self.report)
         # -- Test --
