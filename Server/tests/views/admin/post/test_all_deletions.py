@@ -27,10 +27,15 @@ class TestPostDelete(TCBase):
 
         # ---
 
+        self.post = {
+            'title': 'title',
+            'content': 'content'
+        }
+
         resp = self.request(
             self.client.post,
             '/admin/faq',
-            {'title': 'title', 'content': 'content'},
+            self.post,
             self.admin_access_token
         )
         self.faq_id = self.get_response_data(resp)['id']
@@ -38,7 +43,7 @@ class TestPostDelete(TCBase):
         resp = self.request(
             self.client.post,
             '/admin/notice',
-            {'title': 'title', 'content': 'content'},
+            self.post,
             self.admin_access_token
         )
         self.notice_id = self.get_response_data(resp)['id']
@@ -46,7 +51,7 @@ class TestPostDelete(TCBase):
         resp = self.request(
             self.client.post,
             '/admin/rule',
-            {'title': 'title', 'content': 'content'},
+            self.post,
             self.admin_access_token
         )
         self.rule_id = self.get_response_data(resp)['id']

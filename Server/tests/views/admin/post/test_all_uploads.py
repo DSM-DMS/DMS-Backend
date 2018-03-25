@@ -53,10 +53,15 @@ class TestPostUpload(TCBase):
         :param post_type: faq or notice or rule
         :type post_type: str
         """
+        post = {
+            'title': 'title_modified',
+            'content': 'content_modified'
+        }
+
         resp = self.request(
             self.client.post,
             '/admin/{}'.format(post_type),
-            {'title': 'title', 'content': 'content'},
+            post,
             self.admin_access_token
         )
 
@@ -95,26 +100,15 @@ class TestPostUpload(TCBase):
         self.assertEqual(len(data), 5)
 
         # 4
+        self.assertIn('write_time', data)
         write_time = data['write_time']
-        author = data['author']
-        title = data['title']
-        content = data['content']
-        pinned = data['pinned']
-
         self.assertIsInstance(write_time, str)
         self.assertRegex(write_time, '\d\d\d\d-\d\d-\d\d')
 
-        self.assertIsInstance(author, str)
-        self.assertEqual(author, 'fake_admin')
+        del data['write_time']
 
-        self.assertIsInstance(title, str)
-        self.assertEqual(title, 'title')
-
-        self.assertIsInstance(content, str)
-        self.assertEqual(content, 'content')
-
-        self.assertIsInstance(pinned, bool)
-        self.assertFalse(pinned)
+        post.update({'author': 'fake_admin', 'pinned': False})
+        self.assertDictEqual(data, post)
 
     def test(self):
         """
