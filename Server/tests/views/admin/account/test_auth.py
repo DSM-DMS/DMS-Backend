@@ -8,22 +8,6 @@ class TestAuth(TCBase):
     This TC tests
         * POST /admin/auth
     """
-    def setUp(self):
-        """
-        - Before Test
-        """
-        TCBase.setUp(self)
-
-        # ---
-
-    def tearDown(self):
-        """
-        - After Test
-        """
-        # ---
-
-        TCBase.tearDown(self)
-
     def test(self):
         """
         - Test
@@ -91,22 +75,6 @@ class TestRefresh(TCBase):
     This TC tests
         * POST /admin/refresh
     """
-    def setUp(self):
-        """
-        - Before Test
-        """
-        TCBase.setUp(self)
-
-        # ---
-
-    def tearDown(self):
-        """
-        - After Test
-        """
-        # ---
-
-        TCBase.tearDown(self)
-
     def testRefresh(self):
         """
         - Test

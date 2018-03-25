@@ -10,14 +10,6 @@ class TestDeleteStudentAccount(TCBase):
     * This TC tests
         POST /admin/account-control
     """
-    def setUp(self):
-        """
-        - Before Test
-        """
-        TCBase.setUp(self)
-
-        # ---
-
     def tearDown(self):
         """
         - After Test
@@ -202,14 +194,6 @@ class TestLoadStudentSignStatus(TCBase):
     This TC tests
         * GET /student-sign-status
     """
-    def setUp(self):
-        """
-        - Before Test
-        """
-        TCBase.setUp(self)
-
-        # ---
-
     def tearDown(self):
         """
         - After Test

@@ -22,14 +22,6 @@ class TestNewAdminAccount(TCBase):
             'name': 'name'
         }
 
-    def tearDown(self):
-        """
-        - After Test
-        """
-        # ---
-
-        TCBase.tearDown(self)
-
     def test(self):
         """
         - Test
