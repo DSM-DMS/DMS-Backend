@@ -14,10 +14,14 @@ class TestAuth(TCBase):
         """
         TCBase.setUp(self)
 
+        # ---
+
     def tearDown(self):
         """
         - After Test
         """
+        # ---
+
         TCBase.tearDown(self)
 
     def test(self):
@@ -93,10 +97,14 @@ class TestRefresh(TCBase):
         """
         TCBase.setUp(self)
 
+        # ---
+
     def tearDown(self):
         """
         - After Test
         """
+        # ---
+
         TCBase.tearDown(self)
 
     def testRefresh(self):

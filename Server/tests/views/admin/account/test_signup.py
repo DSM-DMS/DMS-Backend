@@ -14,10 +14,20 @@ class TestNewAdminAccount(TCBase):
         """
         TCBase.setUp(self)
 
+        # ---
+
+        self.new_admin = {
+            'id': 'admin_new',
+            'pw': 'pw',
+            'name': 'name'
+        }
+
     def tearDown(self):
         """
         - After Test
         """
+        # ---
+
         TCBase.tearDown(self)
 
     def test(self):
@@ -46,7 +56,7 @@ class TestNewAdminAccount(TCBase):
         resp = self.request(
             self.client.post,
             '/admin/new-account',
-            {'id': 'admin-new', 'pw': 'pw', 'name': 'test'},
+            self.new_admin,
             self.admin_access_token
         )
 
@@ -57,7 +67,7 @@ class TestNewAdminAccount(TCBase):
         resp = self.request(
             self.client.post,
             '/admin/auth',
-            {'id': 'admin', 'pw': 'pw'},
+            {'id': self.new_admin['id'], 'pw': self.new_admin['pw']},
             self.admin_access_token
         )
 
@@ -86,7 +96,7 @@ class TestNewAdminAccount(TCBase):
         resp = self.request(
             self.client.post,
             '/admin/new-account',
-            {'id': 'admin-new', 'pw': 'pw', 'name': 'test'},
+            self.new_admin,
             self.admin_access_token
         )
 

@@ -16,11 +16,15 @@ class TestDeleteStudentAccount(TCBase):
         """
         TCBase.setUp(self)
 
+        # ---
+
     def tearDown(self):
         """
         - After Test
         """
         SignupWaitingModel.objects.delete()
+
+        # ---
 
         TCBase.tearDown(self)
 
@@ -133,10 +137,14 @@ class TestDeleteAdminAccount(TCBase):
         """
         TCBase.setUp(self)
 
+        # ---
+
+        self.id_for_delete = 'deleteme'
+
         self.request(
             self.client.post,
             '/admin/new-account',
-            {'id': 'deleteme', 'pw': 'pw', 'name': 'test'},
+            {'id': self.id_for_delete, 'pw': 'pw', 'name': 'test'},
             self.admin_access_token
         )
 
@@ -145,6 +153,8 @@ class TestDeleteAdminAccount(TCBase):
         - After Test
         """
         SignupWaitingModel.objects.delete()
+
+        # ---
 
         TCBase.tearDown(self)
 
@@ -164,7 +174,7 @@ class TestDeleteAdminAccount(TCBase):
         resp = self.request(
             self.client.delete,
             '/admin/account-control',
-            {'id': 'deleteme'},
+            {'id': self.id_for_delete},
             self.admin_access_token
         )
 
@@ -176,7 +186,7 @@ class TestDeleteAdminAccount(TCBase):
         resp = self.request(
             self.client.delete,
             '/admin/account-control',
-            {'id': 'deleteme'},
+            {'id': self.id_for_delete},
             self.admin_access_token
         )
 
@@ -198,11 +208,15 @@ class TestLoadStudentSignStatus(TCBase):
         """
         TCBase.setUp(self)
 
+        # ---
+
     def tearDown(self):
         """
         - After Test
         """
         SignupWaitingModel.objects.delete()
+
+        # ---
 
         TCBase.tearDown(self)
 
