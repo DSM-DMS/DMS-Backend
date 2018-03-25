@@ -19,10 +19,15 @@ class TestLoadFAQList(TCBase):
         """
         TCBase.setUp(self)
 
+        self.faq = {
+            'title': 'title',
+            'content': 'content'
+        }
+
         self.request(
             self.client.post,
             '/admin/faq',
-            {'title': 'title', 'content': 'content'},
+            self.faq,
             self.admin_access_token
         )
 
@@ -90,11 +95,9 @@ class TestLoadFAQList(TCBase):
 
         del faq['id'], faq['write_time']
 
-        self.assertDictEqual(faq, {
-            'author': 'fake_admin',
-            'title': 'title',
-            'pinned': False
-        })
+        self.faq.update({'author': 'fake_admin', 'pinned': False})
+        del self.faq['content']
+        self.assertDictEqual(faq, self.faq)
         # -- Test --
 
 
@@ -116,10 +119,17 @@ class TestLoadFAQContent(TCBase):
         """
         TCBase.setUp(self)
 
+        # ---
+
+        self.faq = {
+            'title': 'title',
+            'content': 'content'
+        }
+
         resp = self.request(
             self.client.post,
             '/admin/faq',
-            {'title': 'title', 'content': 'content'},
+            self.faq,
             self.admin_access_token
         )
 
@@ -131,6 +141,8 @@ class TestLoadFAQContent(TCBase):
         - After Test
         """
         FAQModel.objects.delete()
+
+        # ---
 
         TCBase.tearDown(self)
 
@@ -173,26 +185,15 @@ class TestLoadFAQContent(TCBase):
         self.assertEqual(len(data), 5)
 
         # (4)
+        self.assertIn('write_time', data)
         write_time = data['write_time']
-        author = data['author']
-        title = data['title']
-        content = data['content']
-        pinned = data['pinned']
-
         self.assertIsInstance(write_time, str)
         self.assertRegex(write_time, '\d\d\d\d-\d\d-\d\d')
 
-        self.assertIsInstance(author, str)
-        self.assertEqual(author, 'fake_admin')
+        del data['write_time']
 
-        self.assertIsInstance(title, str)
-        self.assertEqual(title, 'title')
-
-        self.assertIsInstance(content, str)
-        self.assertEqual(content, 'content')
-
-        self.assertIsInstance(pinned, bool)
-        self.assertFalse(pinned)
+        self.faq.update({'author': 'fake_admin', 'pinned': False})
+        self.assertDictEqual(data, self.faq)
         # -- Test --
 
         # -- Exception Test --
