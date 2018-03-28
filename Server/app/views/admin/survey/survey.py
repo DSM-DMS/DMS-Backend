@@ -24,7 +24,7 @@ class SurveyManaging(BaseResource):
         """
         설문지 리스트 조회
         """
-        response = [mongo_to_dict(survey, ['target']) for survey in SurveyModel.objects if QuestionModel.objects(survey=survey).count()]
+        response = [mongo_to_dict(survey, ['target']) for survey in SurveyModel.objects]
 
         return self.unicode_safe_json_response(response)
 
