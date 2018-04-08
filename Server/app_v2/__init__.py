@@ -32,11 +32,3 @@ def create_app(dev=True):
 
 
 app = create_app(False)
-
-
-@app.after_request
-def after_request(response):
-    response.headers['X-Content-Type-Options'] = 'nosniff'
-    response.headers['X-Frame-Options'] = 'deny'
-
-    return response
