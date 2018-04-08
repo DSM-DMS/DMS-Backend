@@ -1,0 +1,21 @@
+from tests_v1.views.admin.apply import ExcelDownloadTCBase
+
+
+class TestGoingoutDownload(ExcelDownloadTCBase):
+    """
+    TC about goingout excel download
+
+    This TC tests_v1
+        * GET /admin/goingout
+    """
+    def test(self):
+        """
+        - Test
+        self.test_real()
+
+        - Exception Test
+        None
+        """
+        # -- Test --
+        self._test('/admin/goingout')
+        # -- Test --

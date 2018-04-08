@@ -3,9 +3,9 @@
 # import pymysql
 # from pymysql.cursors import DictCursor
 #
-# from app.models.account import StudentModel
-# from app.models.apply import GoingoutApplyModel, StayApplyModel
-# from app.models.post import FAQModel, NoticeModel, RuleModel
+# from app_v1.models.account import StudentModel
+# from app_v1.models.apply import GoingoutApplyModel, StayApplyModel
+# from app_v1.models.post import FAQModel, NoticeModel, RuleModel
 #
 # connection = pymysql.connect(
 #     host='localhost',

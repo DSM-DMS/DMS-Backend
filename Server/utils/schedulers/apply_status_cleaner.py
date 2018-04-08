@@ -2,7 +2,7 @@ from datetime import datetime
 from multiprocessing import Process
 from time import sleep
 
-from app.models.account import StudentModel
+from app_v1.models.account import StudentModel
 
 
 def clean_extension_apply(sleep_seconds):

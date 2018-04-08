@@ -2,7 +2,7 @@ from datetime import date
 
 from schapi import DAEJEON, SchoolAPI
 
-from app.models.meal import MealModel
+from app_v1.models.meal import MealModel
 
 api = SchoolAPI(DAEJEON, 'G100000170')
 
