@@ -15,7 +15,7 @@ if __name__ == '__main__':
     from utils.schedulers import apply_status_cleaner
     apply_status_cleaner.run()
 
-    from utils.meal_parser import parse
-    parse()
+    # from utils.meal_parser import parse
+    # parse()
 
     app.run(host=app.config['HOST'], port=int(args.port) if args.port else app.config['PORT'], debug=app.debug, threaded=True)
