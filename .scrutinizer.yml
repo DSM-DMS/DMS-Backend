@@ -5,7 +5,7 @@ checks:
 
 filter:
     excluded_paths:
-        - "Server/app_v1/views/static/*"
-        - "Server/app_v1/views/templates/*"
-        - "Server/app_v2/views/static/*"
-        - "Server/app_v2/views/templates/*"
+        - "Server/app_v1/static/*"
+        - "Server/app_v1/templates/*"
+        - "Server/app_v2/static/*"
+        - "Server/app_v2/templates/*"
