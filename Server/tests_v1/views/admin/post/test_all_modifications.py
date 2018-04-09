@@ -1,4 +1,4 @@
-from app_v1.models.post import FAQModel, NoticeModel, RuleModel
+from app_v2.models.post import FAQModel, NoticeModel, RuleModel
 
 from tests_v1.views import TCBase
 

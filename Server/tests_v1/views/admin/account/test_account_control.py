@@ -1,6 +1,6 @@
 from tests_v1.views import TCBase
 
-from app_v1.models.account import SignupWaitingModel
+from app_v2.models.account import SignupWaitingModel
 
 
 class TestDeleteStudentAccount(TCBase):

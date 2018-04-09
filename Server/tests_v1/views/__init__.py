@@ -5,8 +5,7 @@ from hashlib import pbkdf2_hmac
 from unittest import TestCase as TC
 
 from app_v1 import app
-from app_v1.models.account import AdminModel, StudentModel
-from app_v1.models.apply import GoingoutApplyModel, StayApplyModel
+from app_v2.models.account import AdminModel, StudentModel
 
 
 class TCBase(TC):
@@ -37,9 +36,7 @@ class TCBase(TC):
             id='student',
             pw=pw,
             name='fake_student',
-            number=1111,
-            goingout_apply=GoingoutApplyModel(apply_date=datetime.now()),
-            stay_apply=StayApplyModel(apply_date=datetime.now())
+            number=1111
         ).save()
 
     def _get_tokens(self):

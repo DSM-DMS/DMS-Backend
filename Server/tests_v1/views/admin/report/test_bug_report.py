@@ -1,6 +1,6 @@
 from tests_v1.views import TCBase
 
-from app_v1.models.report import BugReportModel
+from app_v2.models.report import BugReportModel
 
 
 class TestBugReport(TCBase):
@@ -22,8 +22,8 @@ class TestBugReport(TCBase):
         # ---
 
         self.report = {
-            'title': 'title',
-            'content': 'content'
+            'content': 'content',
+            'platform_type': 1
         }
 
         self.request(

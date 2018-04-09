@@ -1,6 +1,6 @@
 from tests_v1.views import TCBase
 
-from app_v1.models.report import FacilityReportModel
+from app_v2.models.report import FacilityReportModel
 
 
 class TestFacilityReport(TCBase):
@@ -22,7 +22,6 @@ class TestFacilityReport(TCBase):
         # ---
 
         self.report = {
-            'title': 'title',
             'content': 'content',
             'room': 200
         }
