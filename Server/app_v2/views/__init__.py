@@ -115,7 +115,7 @@ class BaseResource(Resource):
         self.now = time.strftime('%Y-%m-%d %H:%M:%S')
 
     @classmethod
-    def unicode_safe_json_dumps(cls, data, status_code=200, *args, **kwargs):
+    def unicode_safe_json_dumps(cls, data, status_code=200, **kwargs):
         """
         Helper function which processes json response with unicode using ujson
 
@@ -130,7 +130,6 @@ class BaseResource(Resource):
             ujson.dumps(data, ensure_ascii=False),
             status_code,
             content_type='application/json; charset=utf8',
-            *args,
             **kwargs
         )
 
