@@ -26,28 +26,6 @@ class ReportBase(Document):
     )
 
 
-class BugReportModel(ReportBase):
-    """
-    Bug report document
-    
-    platform
-    1 : Web
-    2 : Android
-    3 : IOS
-    """
-    meta = {
-        'collection': 'report_bug'
-    }
-    # collection name 변경
-
-    platform_type = IntField(
-        required=True,
-        min_value=1,
-        max_value=3
-    )
-    # platform_type 추가
-
-
 class FacilityReportModel(ReportBase):
     """
     Facility report document
