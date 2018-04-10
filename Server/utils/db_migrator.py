@@ -113,4 +113,4 @@ def migration():
     _migration_point_rule()
     _migration_post()
     _migration_report()
-    _migration_version()
+    # _migration_version()
