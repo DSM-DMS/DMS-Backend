@@ -8,7 +8,7 @@ from app_v1.views import BaseResource
 from app_v1.views import admin_only
 
 from app_v1.docs.admin.apply.extension import *
-from app_v1.models.account import StudentModel
+from app_v2.models.apply import ExtensionApply11Model, ExtensionApply12Model
 
 from utils.excel_style_manager import get_cell_positions_from_student_number, ready_applyment_worksheet
 
@@ -31,24 +31,24 @@ class Extension11Download(BaseResource):
 
         ready_applyment_worksheet(ws)
 
-        for student in StudentModel.objects:
-            extension_apply = student.extension_apply_11
-
-            if not extension_apply:
-                continue
+        for apply in ExtensionApply11Model.objects:
+            student = apply.student
 
             number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
 
             ws[number_cell] = student.number
             ws[name_cell] = student.name
-            ws[status_cell] = EXTENSION_CLASSES[extension_apply.class_ - 1]
+            ws[status_cell] = EXTENSION_CLASSES[apply.class_ - 1]
 
         filename = '11.xlsx'
 
         wb.save('{}'.format(filename))
         wb.close()
 
-        return send_from_directory('../', filename)
+        resp = make_response(send_from_directory('../', filename))
+        resp.headers.extend({'Cache-Control': 'no-cache'})
+
+        return resp
 
 
 @api.resource('/12')
@@ -64,17 +64,14 @@ class Extension12Download(BaseResource):
 
         ready_applyment_worksheet(ws)
 
-        for student in StudentModel.objects:
-            extension_apply = student.extension_apply_12
-
-            if not extension_apply:
-                continue
+        for apply in ExtensionApply12Model.objects:
+            student = apply.student
 
             number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
 
             ws[number_cell] = student.number
             ws[name_cell] = student.name
-            ws[status_cell] = EXTENSION_CLASSES[extension_apply.class_ - 1]
+            ws[status_cell] = EXTENSION_CLASSES[apply.class_ - 1]
 
         filename = '12.xlsx'
 

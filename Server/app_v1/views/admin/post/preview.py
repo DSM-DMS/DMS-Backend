@@ -6,7 +6,7 @@ from app_v1.views import BaseResource
 from app_v1.views import admin_only
 
 from app_v1.docs.admin.post.preview import *
-from app_v1.models.post import FAQModel, NoticeModel, RuleModel
+from app_v2.models.post import FAQModel, NoticeModel, RuleModel
 
 api = Api(Blueprint('admin-preview-api', __name__))
 api.prefix = '/admin/preview'

@@ -6,7 +6,7 @@ from flask import Response, abort, g, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 
-from app_v1.models.account import AdminModel, StudentModel, SystemModel
+from app_v2.models.account import AdminModel, StudentModel, SystemModel
 
 
 def admin_only(fn):

@@ -5,7 +5,7 @@ from flask_restful import Api
 from app_v1.views import auth_required
 
 from app_v1.docs.mixed.post.faq import *
-from app_v1.models.post import FAQModel
+from app_v2.models.post import FAQModel
 from app_v1.views.mixed.post import PostAPIResource
 
 api = Api(Blueprint('faq-api', __name__))

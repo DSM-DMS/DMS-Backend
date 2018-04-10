@@ -8,7 +8,7 @@ from app_v1.views import BaseResource
 from app_v1.views import student_only
 
 from app_v1.docs.student.apply.goingout import *
-from app_v1.models.apply import GoingoutApplyModel
+from app_v2.models.apply import GoingoutApplyModel
 
 api = Api(Blueprint('student-goingout-api', __name__))
 
@@ -23,9 +23,11 @@ class Goingout(BaseResource):
         """
         student = g.user
 
+        apply = GoingoutApplyModel.objects(student=student).first()
+
         return self.unicode_safe_json_response({
-            'sat': student.goingout_apply.on_saturday,
-            'sun': student.goingout_apply.on_sunday
+            'sat': apply.on_saturday,
+            'sun': apply.on_sunday
         }, 200)
 
     @swag_from(GOINGOUT_POST)
@@ -42,7 +44,8 @@ class Goingout(BaseResource):
             sat = request.form['sat'].upper() == 'TRUE'
             sun = request.form['sun'].upper() == 'TRUE'
 
-            student.update(goingout_apply=GoingoutApplyModel(on_saturday=sat, on_sunday=sun, apply_date=datetime.now()))
+            GoingoutApplyModel(student=student, on_saturday=sat, on_sunday=sun, apply_date=datetime.now()).save()
+
             return Response('', 201)
         else:
             return Response('', 204)

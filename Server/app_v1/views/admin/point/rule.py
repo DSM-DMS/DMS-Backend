@@ -7,8 +7,8 @@ from app_v1.views import admin_only
 
 from app_v1.docs.admin.point.rule import *
 
-from app_v1.models.support.mongo_helper import mongo_to_dict
-from app_v1.models.point import PointRuleModel
+from app_v2.models.support.mongo_helper import mongo_to_dict
+from app_v2.models.point import PointRuleModel
 
 api = Api(Blueprint('admin-point-rule-api', __name__))
 api.prefix = '/admin/managing'

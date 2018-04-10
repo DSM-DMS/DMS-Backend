@@ -9,9 +9,9 @@ from app_v1.views import BaseResource
 from app_v1.views import admin_only
 
 from app_v1.docs.admin.point.point import *
-from app_v1.models.account import StudentModel
-from app_v1.models.point import PointRuleModel, PointHistoryModel
-from app_v1.models.support.mongo_helper import mongo_to_dict
+from app_v2.models.account import StudentModel
+from app_v2.models.point import PointRuleModel, PointHistoryModel
+from app_v2.models.support.mongo_helper import mongo_to_dict
 
 api = Api(Blueprint('admin-point-api', __name__))
 api.prefix = '/admin/managing'

@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask import Response, g, request
 
-from app_v1.models.support.mongo_helper import mongo_to_dict
+from app_v2.models.support.mongo_helper import mongo_to_dict
 from app_v1.views import BaseResource
 
 

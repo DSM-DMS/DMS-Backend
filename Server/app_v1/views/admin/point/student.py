@@ -9,8 +9,8 @@ from app_v1.views import BaseResource
 from app_v1.views import admin_only
 
 from app_v1.docs.admin.point.student import *
-from app_v1.models.account import StudentModel
-from app_v1.models.point import PointHistoryModel
+from app_v2.models.account import StudentModel
+from app_v2.models.point import PointHistoryModel
 
 api = Api(Blueprint('admin-student-point-api', __name__))
 api.prefix = '/admin/managing'

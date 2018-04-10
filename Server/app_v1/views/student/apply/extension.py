@@ -8,8 +8,8 @@ from app_v1.views import BaseResource
 from app_v1.views import student_only
 
 from app_v1.docs.student.apply.extension import *
-from app_v1.models.account import StudentModel
-from app_v1.models.apply import ExtensionApplyModel
+from app_v2.models.account import StudentModel
+from app_v2.models.apply import ExtensionApply11Model, ExtensionApply12Model
 
 from utils.extension_meta import APPLY_START, APPLY_END_11, APPLY_END_12, MAPS
 
@@ -26,10 +26,12 @@ class Extension11(BaseResource):
         """
         student = g.user
 
+        apply = ExtensionApply11Model.objects(student=student)
+
         return ({
-            'class_num': student.extension_apply_11.class_,
-            'seat_num': student.extension_apply_11.seat
-        }, 200) if student.extension_apply_11 else ('', 204)
+            'class_num': apply.class_,
+            'seat_num': apply.seat
+        }, 200) if apply else ('', 204)
 
     @swag_from(EXTENSION_POST)
     @student_only
@@ -48,7 +50,7 @@ class Extension11(BaseResource):
         class_ = int(request.form['class_num'])
         seat = int(request.form['seat_num'])
 
-        student.update(extension_apply_11=ExtensionApplyModel(class_=class_, seat=seat, apply_date=datetime.now()))
+        ExtensionApply11Model(student=student, class_=class_, seat=seat, apply_date=datetime.now()).save()
 
         return Response('', 201)
 
@@ -66,7 +68,7 @@ class Extension11(BaseResource):
             # Not testing, can't apply
             return Response('', 204)
 
-        student.update(extension_apply_11=None)
+        ExtensionApply11Model.objects(student=student).delete()
 
         return Response('', 200)
 
@@ -81,10 +83,12 @@ class Extension12(BaseResource):
         """
         student = g.user
 
+        apply = ExtensionApply12Model.objects(student=student)
+
         return ({
-            'class_num': student.extension_apply_12.class_,
-            'seat_num': student.extension_apply_12.seat
-        }, 200) if student.extension_apply_12 else ('', 204)
+            'class_num': apply.class_,
+            'seat_num': apply.seat
+        }, 200) if apply else ('', 204)
 
     @swag_from(EXTENSION_POST)
     @student_only
@@ -103,7 +107,7 @@ class Extension12(BaseResource):
         class_ = int(request.form['class_num'])
         seat = int(request.form['seat_num'])
 
-        student.update(extension_apply_12=ExtensionApplyModel(class_=class_, seat=seat, apply_date=datetime.now()))
+        ExtensionApply12Model(student=student, class_=class_, seat=seat, apply_date=datetime.now()).save()
 
         return Response('', 201)
 
@@ -121,41 +125,23 @@ class Extension12(BaseResource):
             # Not testing, can't apply
             return Response('', 204)
 
-        student.update(extension_apply_12=None)
+        ExtensionApply12Model.objects(student=student).delete()
 
         return Response('', 200)
 
 
-def _get_applied_students(class_, hour):
-    if hour == 11:
-        return {student.extension_apply_11.seat: student.name for student in StudentModel.objects() if
-                student.extension_apply_11 and student.extension_apply_11.class_ == class_}
-    else:
-        return {student.extension_apply_12.seat: student.name for student in StudentModel.objects() if
-                student.extension_apply_12 and student.extension_apply_12.class_ == class_}
-
-
 def _create_extension_map(class_, hour):
-    """
-    Creates extension map including applied student names
-
-    :param class_: class number which to create the map
-    :type class_: int
-    :param hour: 11/12
-    :type hour: int
-
-    :return: Generated extension map
-    :rtype: list
-    """
-    applied_students = _get_applied_students(class_, hour)
     seat_count = 1
 
     map_ = MAPS[class_]
     for i, row in enumerate(map_):
         for j, seat in enumerate(row):
             if map_[i][j]:
-                if seat_count in applied_students:
-                    map_[i][j] = applied_students[seat_count]
+                apply = ExtensionApply11Model.objects(class_=class_, seat=seat).first() if hour == 11 \
+                    else ExtensionApply12Model.objects(class_=class_, seat=seat).first()
+
+                if apply:
+                    map_[i][j] = apply.student.name
                 else:
                     map_[i][j] = seat_count
 

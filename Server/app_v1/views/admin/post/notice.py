@@ -6,7 +6,7 @@ from app_v1.views import admin_only
 from app_v1.views.admin.post import PostAPIResource
 
 from app_v1.docs.admin.post.notice import *
-from app_v1.models.post import NoticeModel
+from app_v2.models.post import NoticeModel
 
 api = Api(Blueprint('admin-notice-api', __name__))
 api.prefix = '/admin'

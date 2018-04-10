@@ -8,7 +8,7 @@ from app_v1.views import BaseResource
 from app_v1.views import admin_only
 
 from app_v1.docs.admin.account.account_control import *
-from app_v1.models.account import SignupWaitingModel, StudentModel, AdminModel
+from app_v2.models.account import SignupWaitingModel, StudentModel, AdminModel
 
 api = Api(Blueprint('admin-account-control-api', __name__))
 api.prefix = '/admin'

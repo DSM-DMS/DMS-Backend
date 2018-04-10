@@ -8,7 +8,7 @@ from app_v1.views import BaseResource
 from app_v1.views import student_only
 
 from app_v1.docs.student.apply.stay import *
-from app_v1.models.apply import StayApplyModel
+from app_v2.models.apply import StayApplyModel
 
 api = Api(Blueprint('student-stay-api', __name__))
 
@@ -23,8 +23,10 @@ class Stay(BaseResource):
         """
         student = g.user
 
+        apply = StayApplyModel.objects(student=student).first()
+
         return self.unicode_safe_json_response({
-            'value': student.stay_apply.value
+            'value': apply.value
         }, 200)
 
     @swag_from(STAY_POST)
@@ -43,7 +45,7 @@ class Stay(BaseResource):
             # weekday는 월요일이 0, 일요일이 6
             value = int(request.form['value'])
 
-            student.update(stay_apply=StayApplyModel(value=value, apply_date=datetime.now()))
+            StayApplyModel(student=student, value=value, apply_date=datetime.now()).save()
 
             return Response('', 201)
         else:

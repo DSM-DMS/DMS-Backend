@@ -6,8 +6,8 @@ from app_v1.views import BaseResource
 from app_v1.views import admin_only
 
 from app_v1.docs.admin.report.facility_report import *
-from app_v1.models.report import FacilityReportModel
-from app_v1.models.support.mongo_helper import mongo_to_dict
+from app_v2.models.report import FacilityReportModel
+from app_v2.models.support.mongo_helper import mongo_to_dict
 
 api = Api(Blueprint('admin-facility-report-api', __name__))
 api.prefix = '/admin'

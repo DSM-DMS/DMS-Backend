@@ -8,7 +8,8 @@ from app_v1.views import BaseResource
 from app_v1.views import admin_only
 
 from app_v1.docs.admin.apply.stay import *
-from app_v1.models.account import StudentModel
+from app_v2.models.account import StudentModel
+from app_v2.models.apply import StayApplyModel
 
 from utils.excel_style_manager import get_cell_positions_from_student_number, ready_applyment_worksheet
 
@@ -35,13 +36,15 @@ class StayDownload(BaseResource):
             ws[number_cell] = student.number
             ws[name_cell] = student.name
 
-            stay_value = student.stay_apply.value
+            apply = StayApplyModel.objects(student=student).first()
 
-            if stay_value == 1:
+            if not apply or apply.value == 4:
+                status = '잔류'
+            elif apply.value == 1:
                 status = '금요 귀가'
-            elif stay_value == 2:
+            elif apply.value == 2:
                 status = '토요 귀가'
-            elif stay_value == 3:
+            elif apply.value == 3:
                 status = '토요 귀사'
             else:
                 status = '잔류'

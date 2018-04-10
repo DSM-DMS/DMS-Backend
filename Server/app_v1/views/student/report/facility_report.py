@@ -8,7 +8,7 @@ from app_v1.views import BaseResource
 from app_v1.views import student_only
 
 from app_v1.docs.student.report.facility_report import *
-from app_v1.models.report import FacilityReportModel
+from app_v2.models.report import FacilityReportModel
 
 api = Api(Blueprint('student-facility-report-api', __name__))
 
@@ -23,14 +23,13 @@ class FacilityReport(BaseResource):
         """
         student = g.user
 
-        title = request.form['title']
         content = request.form['content']
         room = int(request.form['room'])
 
         if not 200 <= room < 519:
             abort(400)
 
-        report = FacilityReportModel(author=student.name, title=title, content=content, room=room, report_time=datetime.now()).save()
+        report = FacilityReportModel(author=student.name, content=content, room=room, report_time=datetime.now()).save()
 
         return self.unicode_safe_json_response({
             'id': str(report.id)
