@@ -152,8 +152,7 @@ class Router(object):
         app.register_blueprint(preview.api.blueprint)
         app.register_blueprint(rule.api.blueprint)
 
-        from app_v1.views.admin.report import bug_report, facility_report
-        app.register_blueprint(bug_report.api.blueprint)
+        from app_v1.views.admin.report import facility_report
         app.register_blueprint(facility_report.api.blueprint)
 
         from app_v1.views.admin.survey import survey
