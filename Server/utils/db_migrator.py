@@ -22,15 +22,7 @@ def _migration_account():
             number=student_account['number'],
             good_point=student_account['good_point'],
             bad_point=student_account['bad_point'],
-            point_histories=[
-                PointHistoryModel(
-                    id=history['id'],
-                    time=history['time'],
-                    reason=history['reason'],
-                    point_type=history['point'],
-                    point=history['point']
-                ) for history in student_account['point_history']
-            ],
+            point_histories=student_account['point_history'],
             penalty_training_status=student_account['penalty_training_status'],
             penalty_level=student_account['penalty_level']
         ).save()
@@ -47,7 +39,7 @@ def _migration_account():
 
 def _migration_point_rule():
     point_rules = db['point_rule']
-    for rule in point_rules:
+    for rule in point_rules.find():
         PointRuleModel(
             name=rule['name'],
             point_type=rule['point_type'],
@@ -61,7 +53,7 @@ def _migration_post():
     notices = db['notice']
     rules = db['rule']
 
-    for FAQ in FAQs:
+    for FAQ in FAQs.find():
         FAQModel(
             write_time=FAQ['write_time'],
             author=FAQ['author'],
@@ -70,7 +62,7 @@ def _migration_post():
             pinned=FAQ['pinned']
         ).save()
 
-    for notice in notices:
+    for notice in notices.find():
         NoticeModel(
             write_time=notice['write_time'],
             author=notice['author'],
@@ -79,7 +71,7 @@ def _migration_post():
             pinned=notice['pinned']
         ).save()
 
-    for rule in rules:
+    for rule in rules.find():
         RuleModel(
             write_time=rule['write_time'],
             author=rule['author'],
@@ -91,11 +83,10 @@ def _migration_post():
 
 def _migration_report():
     facilities = db['facility_report']
-    for facility in facilities:
+    for facility in facilities.find():
         FacilityReportModel(
             report_time=facility['report_time'],
             author=facility['author'],
-            title=facility['title'],
             content=facility['content'],
             room=facility['room']
         ).save()
@@ -104,9 +95,9 @@ def _migration_report():
 def _migration_version():
     versions = db['version']
     for version in versions:
-        if version['platform'] == 'Android':
+        if version['platform'].upper == 'ANDROID':
             platform = 2
-        elif version['platform'] == 'IOS':
+        elif version['platform'].upper == 'IOS':
             platform = 3
         else:
             platform = 1
