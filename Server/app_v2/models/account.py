@@ -81,9 +81,10 @@ class StudentModel(AccountBase):
         default=0
     )
 
-    point_histories = EmbeddedDocumentListField(
-        document_type=PointHistoryModel
-    )
+    # point_histories = EmbeddedDocumentListField(
+    #     document_type=PointHistoryModel,
+    #     required=False
+    # )
 
     penalty_training_status = BooleanField(
         required=True,

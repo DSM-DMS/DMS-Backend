@@ -26,10 +26,15 @@ def _migration_account():
                 number=account['number'],
                 good_point=account['good_point'],
                 bad_point=account['bad_point'],
-                point_histories=[PointHistoryModel(time=history['time'], reason=history['reason'], point_type=history['point_type'], point=history['point']) for history in account['point_histories']],
+                # point_histories=[PointHistoryModel(time=history['time'], reason=history['reason'], point_type=history['point_type'], point=history['point']) for history in account['point_histories']],
                 penalty_training_status=account['penalty_training_status'],
                 penalty_level=account['penalty_level']
-            ).save()
+            )
+
+            # print(student.point_histories)
+            # print(student.point_histories[0].reason)
+
+            student.save()
 
             stay_apply = student['stay_apply']
 
