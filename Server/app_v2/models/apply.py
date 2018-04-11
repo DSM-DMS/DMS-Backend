@@ -60,12 +60,10 @@ class GoingoutApplyModel(ApplyBase):
     }
 
     on_saturday = BooleanField(
-        required=True,
-        default=False
+        required=True
     )
     on_sunday = BooleanField(
-        required=True,
-        default=False
+        required=True
     )
 
 
@@ -82,6 +80,5 @@ class StayApplyModel(ApplyBase):
     }
 
     value = IntField(
-        required=True,
-        default=4
+        required=True
     )
