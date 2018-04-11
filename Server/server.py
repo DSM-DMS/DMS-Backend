@@ -15,7 +15,7 @@ if __name__ == '__main__':
     # from utils.meal_parser import parse
     # parse()
 
-    from utils.db_migrator import _migration_refresh_tokens
-    _migration_refresh_tokens()
+    # from utils.db_migrator import _migration_refresh_tokens
+    # _migration_refresh_tokens()
 
     app.run(host=app.config['HOST'], port=int(args.port) if args.port else app.config['PORT'], debug=app.debug, threaded=True)
