@@ -6,6 +6,7 @@ from app_v1.views import BaseResource
 from app_v1.views import student_only
 
 from app_v1.docs.student.account.info import *
+from app_v2.models.apply import *
 
 api = Api(Blueprint('student-info-api', __name__))
 
@@ -20,25 +21,30 @@ class MyPage(BaseResource):
         """
         student = g.user
 
+        extension_11 = ExtensionApply11Model.objects(student=student).first()
+        extension_12 = ExtensionApply12Model.objects(student=student).first()
+        goingout = GoingoutApplyModel.objects(student=student).first()
+        stay = StayApplyModel.objects(student=student).first()
+
         response = {
             'name': student.name,
             'number': student.number,
 
             'extension_11': {
-                'class_num': student.extension_apply_11.class_,
-                'seat_num': student.extension_apply_11.seat
-            } if student.extension_apply_11 else None,
+                'class_num': extension_11.class_,
+                'seat_num': extension_11.seat
+            } if extension_11 else None,
 
             'extension_12': {
-                'class_num': student.extension_apply_12.class_,
-                'seat_num': student.extension_apply_12.seat
-            } if student.extension_apply_12 else None,
+                'class_num': extension_12.class_,
+                'seat_num': extension_12.seat
+            } if extension_12 else None,
 
             'goingout': {
-                'sat': student.goingout_apply.on_saturday,
-                'sun': student.goingout_apply.on_sunday
+                'sat': goingout.on_saturday,
+                'sun': goingout.on_sunday
             },
-            'stay_value': student.stay_apply.value,
+            'stay_value': stay.value,
             'good_point': student.good_point,
             'bad_point': student.bad_point
         }
