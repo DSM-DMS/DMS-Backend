@@ -1,5 +1,4 @@
-from app_v1 import app as app_v1
-from app_v2 import app as app_v2
+from app import app
 
 
 if __name__ == '__main__':
@@ -19,5 +18,4 @@ if __name__ == '__main__':
     # from utils.db_migrator import migration
     # migration()
 
-    app_v1.run(host=app_v1.config['HOST'], port=int(args.port) if args.port else app_v1.config['PORT'], debug=app_v1.debug, threaded=True)
-    # app_v2.run(host=app_v2.config['HOST'], port=int(args.port) if args.port else app_v2.config['PORT'], debug=app_v2.debug, threaded=True)
+    app.run(host=app.config['HOST'], port=int(args.port) if args.port else app.config['PORT'], debug=app.debug, threaded=True)

@@ -1,6 +1,6 @@
 from tests_v1.views import TCBase
 
-from app_v2.models.report import BugReportModel
+from app_v2.models import BugReportModel
 
 
 class TestBugReport(TCBase):

@@ -3,14 +3,6 @@ from datetime import datetime
 
 from pymongo import MongoClient
 
-from app_v2.models.account import *
-from app_v2.models.apply import *
-from app_v2.models.meal import *
-from app_v2.models.point import *
-from app_v2.models.post import *
-from app_v2.models.report import *
-from app_v2.models.version import *
-
 client = MongoClient()
 db = client['dms']
 
@@ -157,7 +149,7 @@ def _migration_version():
 def _migration_meal():
     meal = db['meal']
     for m in meal.find():
-        MealModel(date=m['_id'], breakfast=m['breakfast'], lunch=m['lunch'], dinner=m['lunch']).save()
+        MealModel(date=m['_id'], breakfast=m['breakfast'], lunch=m['lunch'], dinner=m['dinner']).save()
 
 
 def migration():

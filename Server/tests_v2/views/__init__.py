@@ -6,7 +6,7 @@ from unittest import TestCase as TC
 import ujson
 
 from app_v2 import app
-from app_v2.models.account import AdminModel, StudentModel
+from app_v2.models import AdminModel, StudentModel
 
 
 class TCBase(TC):
