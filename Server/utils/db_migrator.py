@@ -1,3 +1,4 @@
+from bson.objectid import ObjectId
 from datetime import datetime
 
 from pymongo import MongoClient
@@ -27,7 +28,7 @@ def _migration_account():
                 number=account['number'],
                 good_point=account['good_point'],
                 bad_point=account['bad_point'],
-                # point_histories=[PointHistoryModel(time=history['time'], reason=history['reason'], point_type=history['point_type'], point=history['point']) for history in account['point_histories']],
+                point_histories=[PointHistoryModel(id=ObjectId(), time=history['time'], reason=history['reason'], point_type=history['point_type'], point=history['point']) for history in account['point_histories']],
                 penalty_training_status=account['penalty_training_status'],
                 penalty_level=account['penalty_level']
             )

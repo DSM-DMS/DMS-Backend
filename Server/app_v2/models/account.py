@@ -1,4 +1,5 @@
 from app_v2.models import *
+from app_v2.models.point import PointHistoryModel
 
 
 class SignupWaitingModel(Document):
@@ -79,10 +80,10 @@ class StudentModel(AccountBase):
         default=0
     )
 
-    # point_histories = EmbeddedDocumentListField(
-    #     document_type=PointHistoryModel,
-    #     required=False
-    # )
+    point_histories = EmbeddedDocumentListField(
+        document_type=PointHistoryModel,
+        required=False
+    )
 
     penalty_training_status = BooleanField(
         required=True,
