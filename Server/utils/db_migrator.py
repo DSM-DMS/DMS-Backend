@@ -47,13 +47,22 @@ def _migration_account():
 
             StayApplyModel(student=student, apply_date=apply_date, value=value).save()
 
-            goingout_apply = student['goingout_apply']
+            if 'goingout_apply' in student:
+                goingout_apply = student['goingout_apply']
+
+                apply_date = goingout_apply['apply_date']
+                on_saturday = goingout_apply['on_saturday']
+                on_sunday = goingout_apply['on_sunday']
+            else:
+                apply_date = datetime.now()
+                on_saturday = False
+                on_sunday = False
 
             GoingoutApplyModel(
                 student=student,
-                apply_date=goingout_apply['apply_date'],
-                on_saturday=goingout_apply['on_saturday'],
-                on_sunday=goingout_apply['on_sunday']
+                apply_date=apply_date,
+                on_saturday=on_saturday,
+                on_sunday=on_sunday
             ).save()
 
         elif account['_cls'] == 'AdminModel':
