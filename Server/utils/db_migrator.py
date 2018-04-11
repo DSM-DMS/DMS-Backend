@@ -11,30 +11,30 @@ db = client['dms']
 
 
 def _migration_account():
-    student = db['student_model']
-    for student_account in student.find():
-        StudentModel(
-            signup_time=student_account['signup_time'],
-            id=student_account['id'],
-            pw=student_account['pw'],
-            name=student_account['name'],
+    account = db['account_base']
+    for account in account.find():
+        if account['_cls'] == 'StudentModel':
+            StudentModel(
+                signup_time=account['signup_time'],
+                id=account['id'],
+                pw=account['pw'],
+                name=account['name'],
 
-            number=student_account['number'],
-            good_point=student_account['good_point'],
-            bad_point=student_account['bad_point'],
-            point_histories=student_account['point_history'],
-            penalty_training_status=student_account['penalty_training_status'],
-            penalty_level=student_account['penalty_level']
-        ).save()
+                number=account['number'],
+                good_point=account['good_point'],
+                bad_point=account['bad_point'],
+                point_histories=account['point_history'],
+                penalty_training_status=account['penalty_training_status'],
+                penalty_level=account['penalty_level']
+            ).save()
 
-    admin = db['admin_model']
-    for admin_account in admin.find():
-        AdminModel(
-            signup_time=admin_account['signup_time'],
-            id=admin_account['id'],
-            pw=admin_account['pw'],
-            name=admin_account['name']
-        ).save()
+        else:
+            AdminModel(
+                signup_time=account['signup_time'],
+                id=account['id'],
+                pw=account['pw'],
+                name=account['name']
+            ).save()
 
 
 def _migration_point_rule():
