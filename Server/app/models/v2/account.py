@@ -1,10 +1,12 @@
+from datetime import datetime
+
 from app.models.v2 import *
 from app.models.v2.point import PointHistoryModel
 
 
 class SignupWaitingModel(Document):
     """
-    Data before the student's signup
+    학생 회원가입을 위한 UUID-학생 정보 매핑 collection
     """
     meta = {
         'collection': 'signup_waiting'
@@ -15,32 +17,35 @@ class SignupWaitingModel(Document):
         min_length=4,
         max_length=4
     )
-    # length limit 추가
+    # 회원가입 시 사용할 UUID
 
     name = StringField(
         required=True
     )
+    # 학생 이름
+
     number = IntField(
         required=True,
         min_value=1101,
         max_value=3421
     )
+    # 학번
 
 
 class AccountBase(Document):
     """
-    DMS account_admin Base Document
+    계정에 대한 상위 collection
     """
     meta = {
         'abstract': True,
         'allow_inheritance': True
     }
-    # collection claim 제거
 
     signup_time = DateTimeField(
-        required=True
+        required=True,
+        default=datetime.now()
     )
-    # required 추가
+    # 회원가입 시간
 
     id = StringField(
         primary_key=True
@@ -55,16 +60,11 @@ class AccountBase(Document):
 
 class StudentModel(AccountBase):
     """
-    Student account model
+    학생 계정
     """
     meta = {
         'collection': 'account_student'
     }
-    # meta 추가
-
-    # --
-    # apply 관련 EmbeddedDocumentField 제거
-    # --
 
     number = IntField(
         required=True,
@@ -73,52 +73,58 @@ class StudentModel(AccountBase):
     )
 
     good_point = IntField(
+        required=True,
         default=0
     )
+    # 상점
 
     bad_point = IntField(
+        required=True,
         default=0
     )
+    # 벌점
 
     point_histories = EmbeddedDocumentListField(
         document_type=PointHistoryModel,
-        required=False
+        required=True
+        # default=[]
     )
+    # 상벌점 내역
 
     penalty_training_status = BooleanField(
         required=True,
         default=False
     )
+    # 벌점 교육 중인지의 여부
 
     penalty_level = IntField(
         required=True,
         default=0
     )
+    # 벌점 교육 단계
 
 
 class AdminModel(AccountBase):
     """
-    Admin account model
+    관리자 계정
     """
     meta = {
         'collection': 'account_admin'
     }
-    # meta 추가
 
 
 class SystemModel(AccountBase):
     """
-    System account model
+    시스템 계정
     """
     meta = {
         'collection': 'account_system'
     }
-    # meta 추가
 
 
 class RefreshTokenModel(Document):
     """
-    Manages JWT refresh token
+    JWT refresh token을 관리하기 위한 collection
     """
     meta = {
         'collection': 'refresh_token'
@@ -127,12 +133,16 @@ class RefreshTokenModel(Document):
     token = UUIDField(
         primary_key=True
     )
+    # Refresh token의 claim에 사용된 UUID
+
     token_owner = ReferenceField(
         document_type=AccountBase,
         required=True,
         reverse_delete_rule=CASCADE
     )
-    # reverse_delete_rule 추가
+    # Refresh token의 발급 대상자
+
     pw_snapshot = StringField(
         required=True
     )
+    # Refresh token 발급 당시의 비밀번호

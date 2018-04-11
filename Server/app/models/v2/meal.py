@@ -3,7 +3,7 @@ from app.models.v2 import *
 
 class MealModel(Document):
     """
-    School's meal document
+    급식 정보
     """
     meta = {
         'collection': 'meal'

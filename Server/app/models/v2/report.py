@@ -1,21 +1,21 @@
+from datetime import datetime
+
 from app.models.v2 import *
 
 
 class ReportBase(Document):
     """
-    Report document base
+    신고 정보에 대한 상위 collection
     """
     meta = {
         'abstract': True,
         'allow_inheritance': True
     }
-    # collection claim 제거
 
     report_time = DateTimeField(
-        required=True
+        required=True,
+        default=datetime.now()
     )
-
-    # title 제거
 
     author = StringField(
         required=True
@@ -28,15 +28,15 @@ class ReportBase(Document):
 
 class FacilityReportModel(ReportBase):
     """
-    Facility report document
+    시설 고장 신고
     """
     meta = {
         'collection': 'report_facility'
     }
-    # collection name 변경
 
     room = IntField(
         required=True,
         min_value=200,
         max_value=519
     )
+    # 호실

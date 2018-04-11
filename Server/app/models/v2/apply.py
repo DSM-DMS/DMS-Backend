@@ -1,31 +1,36 @@
+from datetime import datetime
+
 from app.models.v2 import *
 from app.models.v2.account import StudentModel
 
 
 class ApplyBase(Document):
-    # EmbeddedDocument -> Document
     """
-    Apply data of student base document
+    신청 정보에 대한 상위 collection
     """
     meta = {
         'allow_inheritance': True,
         'abstract': True
     }
-    # abstract: True 추가
+
+    apply_time = DateTimeField(
+        required=True,
+        default=datetime.now()
+    )
+    # 신청 시간
 
     student = ReferenceField(
         document_type=StudentModel,
         required=True
     )
-    # EmbeddedDocument를 Document로 변경했으므로 ReferenceField 추가
-
-    apply_date = DateTimeField(
-        required=True
-    )
+    # 신청 학생
 
 
 class ExtensionApplyBase(ApplyBase):
-    # Extension Apply 11, 12를 분리하기 위한 클래스
+    """
+    연장 신청 정보에 대한 상위 collection
+    의도적으로 11시 연장신청과 12시 연장신청을 구분하기 위해 사용
+    """
     meta = {
         'allow_inheritance': True,
         'abstract': True
@@ -34,18 +39,27 @@ class ExtensionApplyBase(ApplyBase):
     class_ = IntField(
         required=True
     )
+    # 연장신청 교실
+
     seat = IntField(
         required=True
     )
+    # 자리
 
 
 class ExtensionApply11Model(ExtensionApplyBase):
+    """
+    11시 연장 신청 정보
+    """
     meta = {
         'collection': 'apply_extension_11'
     }
 
 
 class ExtensionApply12Model(ExtensionApplyBase):
+    """
+    12시 연장 신청 정보
+    """
     meta = {
         'collection': 'apply_extension_12'
     }
@@ -53,7 +67,7 @@ class ExtensionApply12Model(ExtensionApplyBase):
 
 class GoingoutApplyModel(ApplyBase):
     """
-    Goingout apply data of student document
+    외출 신청 정보
     """
     meta = {
         'collection': 'apply_goingout'
@@ -69,11 +83,11 @@ class GoingoutApplyModel(ApplyBase):
 
 class StayApplyModel(ApplyBase):
     """
-    Stay apply data of student document
-    1 : Friday homecoming
-    2 : Saturday homecoming
-    3 : Saturday dormitory coming
-    4 : Stay
+    잔류 신청 정보
+    1 : 금요귀가
+    2 : 토요귀가
+    3 : 토요귀사
+    4 : 잔류
     """
     meta = {
         'collection': 'apply_stay'

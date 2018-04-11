@@ -1,19 +1,22 @@
+from datetime import datetime
+
 from app.models.v2 import *
 
 
 class PostBase(Document):
     """
-    Post data base document
+    게시글에 대한 상위 collection
     """
     meta = {
         'abstract': True,
         'allow_inheritance': True
     }
-    # collection claim 제거
 
     write_time = DateTimeField(
-        required=True
+        required=True,
+        default=datetime.now()
     )
+    # 게시글 작성 시간
 
     author = StringField(
         required=True,
@@ -31,24 +34,22 @@ class PostBase(Document):
         required=True,
         default=False
     )
+    # 고정 게시글 여부
 
 
 class FAQModel(PostBase):
     meta = {
         'collection': 'post_faq'
     }
-    # collection name 변경
 
 
 class NoticeModel(PostBase):
     meta = {
         'collection': 'post_notice'
     }
-    # collection name 변경
 
 
 class RuleModel(PostBase):
     meta = {
         'collection': 'post_rule'
     }
-    # collection name 변경

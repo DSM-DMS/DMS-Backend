@@ -1,9 +1,11 @@
+from datetime import datetime
+
 from app.models.v2 import *
 
 
 class PointRuleModel(Document):
     """
-    Point rules
+    상벌점 규칙
     """
     meta = {
         'collection': 'point_rule'
@@ -12,47 +14,57 @@ class PointRuleModel(Document):
     name = StringField(
         required=True
     )
+    # 규칙 이름
 
     point_type = BooleanField(
         required=True
     )
-    # required 추가
+    # True : 상점, False : 벌점
 
     min_point = IntField(
-        required=True
+        required=True,
+        min_value=0
     )
+    # 최소 점수
 
     max_point = IntField(
-        required=True
+        required=True,
+        min_value=0
     )
+    # 최대 점수
 
 
 class PointHistoryModel(EmbeddedDocument):
     """
-    Good/bad point in dormitory of each students
+    각 학생에게 속해 있는(Embedded) 상벌점 내역
     """
     meta = {
         'collection': 'point_history'
     }
 
     id = ObjectIdField(
-        primary_key=True
+        primary_key=True,
+        # default=ObjectId()
+        # TODO 계정과 apply의 time에 대한 default 관련 이슈가 생기지 않으면 주석 제거
     )
 
-    # 필드 명을 다른 도큐먼트의 DateTimeField 처럼 ooo_time으로 네이밍 하는 것이 좋을 듯 ex) point_time, get_point_time
-    time = DateTimeField(
-        required=True
+    creation_time = DateTimeField(
+        required=True,
+        default=datetime.now()
     )
+    # 상벌점을 부과한 시간
 
     reason = StringField(
         required=True
     )
+    # 벌점 부과 사유
 
     point_type = BooleanField(
         required=True
     )
-    # required 추가
+    # True : 상점, False : 벌점
 
     point = IntField(
         required=True
     )
+    # 부과한 점수
