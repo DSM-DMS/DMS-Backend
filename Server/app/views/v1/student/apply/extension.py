@@ -144,8 +144,8 @@ def _create_extension_map(class_, hour):
     for i, row in enumerate(map_):
         for j, seat in enumerate(row):
             if map_[i][j]:
-                apply = ExtensionApply11Model.objects(class_=class_, seat=seat).first() if hour == 11 \
-                    else ExtensionApply12Model.objects(class_=class_, seat=seat).first()
+                apply = ExtensionApply11Model.objects(class_=class_, seat=seat_count).first() if hour == 11 \
+                    else ExtensionApply12Model.objects(class_=class_, seat=seat_count).first()
 
                 if apply:
                     map_[i][j] = apply.student.name
