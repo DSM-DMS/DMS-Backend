@@ -1,7 +1,5 @@
 from app_v2.models import *
 
-from app_v2.models.point import PointHistoryModel
-
 
 class SignupWaitingModel(Document):
     """

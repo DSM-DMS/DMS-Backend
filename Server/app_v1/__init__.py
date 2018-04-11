@@ -4,7 +4,7 @@ from flask_cors import CORS
 from flasgger import Swagger
 
 from app_v1.docs import TEMPLATE
-from app_v1.models import Mongo
+from app_v2.models import Mongo
 from app_v1.views import Router
 
 from config_v1.dev import DevConfig
