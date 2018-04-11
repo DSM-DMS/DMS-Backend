@@ -13,12 +13,21 @@ api = Api(Blueprint('version-check-api', __name__))
 
 @api.resource('/version')
 class Version(BaseResource):
+    def __init__(self):
+        self.PLATFORM_TYPES = {
+            'web': 1,
+            'android': 2,
+            'ios': 3
+        }
+        
+        super(Version, self).__init__()
+
     @swag_from(VERSION_GET)
     def get(self):
         """
         플랫폼의 최신 버전 확인 
         """
-        platform = request.args['platform']
+        platform = self.PLATFORM_TYPES[request.args['platform']]
 
         newest = VersionModel.objects(platform=platform).first().version
         if newest:
