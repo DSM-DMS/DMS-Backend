@@ -13,9 +13,6 @@ if __name__ == '__main__':
     if 'SECRET_KEY' not in os.environ:
         print('[WARN] SECRET KEY is not set in the environment variable !!')
 
-    from utils.schedulers import apply_status_cleaner
-    apply_status_cleaner.run()
-
     # from utils.meal_parser import parse
     # parse()
 
