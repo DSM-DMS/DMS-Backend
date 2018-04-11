@@ -36,9 +36,16 @@ def _migration_account():
 
             student.save()
 
-            stay_apply = student['stay_apply']
+            if 'stay_apply' in student:
+                stay_apply = student['stay_apply']
 
-            StayApplyModel(student=student, apply_date=stay_apply['apply_date'], value=stay_apply['value']).save()
+                apply_date = stay_apply['apply_date']
+                value = stay_apply['value']
+            else:
+                apply_date = datetime.now()
+                value = 4
+
+            StayApplyModel(student=student, apply_date=apply_date, value=value).save()
 
             goingout_apply = student['goingout_apply']
 
