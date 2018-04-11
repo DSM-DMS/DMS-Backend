@@ -37,8 +37,8 @@ def _migration_account():
 
             student.save()
 
-            if 'stay_apply' in student:
-                stay_apply = student['stay_apply']
+            if 'stay_apply' in account:
+                stay_apply = account['stay_apply']
 
                 apply_date = stay_apply['apply_date']
                 value = stay_apply['value']
@@ -48,8 +48,8 @@ def _migration_account():
 
             StayApplyModel(student=student, apply_date=apply_date, value=value).save()
 
-            if 'goingout_apply' in student:
-                goingout_apply = student['goingout_apply']
+            if 'goingout_apply' in account:
+                goingout_apply = account['goingout_apply']
 
                 apply_date = goingout_apply['apply_date']
                 on_saturday = goingout_apply['on_saturday']
