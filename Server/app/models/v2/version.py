@@ -11,7 +11,7 @@ class VersionModel(Document):
     3 : IOS
     """
     meta = {
-        'collection': 'version'
+        'collection': 'versions'
     }
 
     platform = IntField(
