@@ -48,7 +48,7 @@ class PointHistoryModel(EmbeddedDocument):
         # TODO 계정과 apply의 time에 대한 default 관련 이슈가 생기지 않으면 주석 제거
     )
 
-    creation_time = DateTimeField(
+    time = DateTimeField(
         required=True,
         default=datetime.now()
     )
