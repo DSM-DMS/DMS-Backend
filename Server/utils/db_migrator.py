@@ -19,7 +19,7 @@ def _migration_account():
         if account['_cls'] == 'StudentModel':
             student = StudentModel(
                 signup_time=account['signup_time'] if 'signup_time' in account else datetime.now(),
-                id=account['id'],
+                id=account['_id'],
                 pw=account['pw'],
                 name=account['name'],
 
@@ -47,14 +47,14 @@ def _migration_account():
         elif account['_cls'] == 'AdminModel':
             AdminModel(
                 signup_time=account['signup_time'] if 'signup_time' in account else datetime.now(),
-                id=account['id'],
+                id=account['_id'],
                 pw=account['pw'],
                 name=account['name']
             ).save()
         else:
             SystemModel(
                 signup_time=account['signup_time'] if 'signup_time' in account else datetime.now(),
-                id=account['id'],
+                id=account['_id'],
                 pw=account['pw'],
                 name=account['name']
             ).save()
