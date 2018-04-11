@@ -44,6 +44,7 @@ class Goingout(BaseResource):
             sat = request.form['sat'].upper() == 'TRUE'
             sun = request.form['sun'].upper() == 'TRUE'
 
+            GoingoutApplyModel.objects(student=student).first().delete()
             GoingoutApplyModel(student=student, on_saturday=sat, on_sunday=sun, apply_date=datetime.now()).save()
 
             return Response('', 201)

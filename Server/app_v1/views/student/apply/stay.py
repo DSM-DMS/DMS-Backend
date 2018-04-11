@@ -45,6 +45,7 @@ class Stay(BaseResource):
             # weekday는 월요일이 0, 일요일이 6
             value = int(request.form['value'])
 
+            StayApplyModel.objects(student=student).first().delete()
             StayApplyModel(student=student, value=value, apply_date=datetime.now()).save()
 
             return Response('', 201)
