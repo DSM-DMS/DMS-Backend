@@ -49,7 +49,10 @@ class Extension11(BaseResource):
         class_ = int(request.form['class_num'])
         seat = int(request.form['seat_num'])
 
-        ExtensionApply11Model.objects(student=student).first().delete()
+        apply = ExtensionApply11Model.objects(student=student).first()
+        if apply:
+            apply.delete()
+
         ExtensionApply11Model(student=student, class_=class_, seat=seat, apply_date=datetime.now()).save()
 
         return Response('', 201)
@@ -107,7 +110,10 @@ class Extension12(BaseResource):
         class_ = int(request.form['class_num'])
         seat = int(request.form['seat_num'])
 
-        ExtensionApply12Model.objects(student=student).first().delete()
+        apply = ExtensionApply12Model.objects(student=student).first()
+        if apply:
+            apply.delete()
+
         ExtensionApply12Model(student=student, class_=class_, seat=seat, apply_date=datetime.now()).save()
 
         return Response('', 201)
