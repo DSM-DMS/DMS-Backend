@@ -19,8 +19,8 @@ if __name__ == '__main__':
     # from utils.meal_parser import parse
     # parse()
 
-    from utils.db_migrator import migration
-    migration()
+    # from utils.db_migrator import migration
+    # migration()
 
     app_v1.run(host=app_v1.config['HOST'], port=int(args.port) if args.port else app_v1.config['PORT'], debug=app_v1.debug, threaded=True)
     # app_v2.run(host=app_v2.config['HOST'], port=int(args.port) if args.port else app_v2.config['PORT'], debug=app_v2.debug, threaded=True)
