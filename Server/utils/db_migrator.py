@@ -139,7 +139,7 @@ def _migration_report():
 
 def _migration_version():
     versions = db['version']
-    for version in versions:
+    for version in versions.find():
         if version['platform'].upper == 'ANDROID':
             platform = 2
         elif version['platform'].upper == 'IOS':
@@ -155,7 +155,7 @@ def _migration_version():
 
 def _migration_meal():
     meal = db['meal']
-    for m in meal:
+    for m in meal.find():
         MealModel(date=m['_id'], breakfast=m['breakfast'], lunch=m['lunch'], dinner=m['lunch']).save()
 
 
@@ -164,4 +164,5 @@ def migration():
     _migration_point_rule()
     _migration_post()
     _migration_report()
-    # _migration_version()
+    _migration_version()
+    _migration_meal()
