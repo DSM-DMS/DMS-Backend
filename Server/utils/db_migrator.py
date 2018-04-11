@@ -4,6 +4,7 @@ from pymongo import MongoClient
 
 from app_v2.models.account import *
 from app_v2.models.apply import *
+from app_v2.models.meal import *
 from app_v2.models.point import *
 from app_v2.models.post import *
 from app_v2.models.report import *
@@ -150,6 +151,12 @@ def _migration_version():
             platform=platform,
             version=version['version']
         ).save()
+
+
+def _migration_meal():
+    meal = db['meal']
+    for m in meal:
+        MealModel(date=m['_id'], breakfast=m['breakfast'], lunch=m['lunch'], dinner=m['lunch']).save()
 
 
 def migration():
