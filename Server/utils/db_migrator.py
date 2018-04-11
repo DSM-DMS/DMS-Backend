@@ -1,6 +1,9 @@
+from datetime import datetime
+
 from pymongo import MongoClient
 
 from app_v2.models.account import *
+from app_v2.models.apply import *
 from app_v2.models.point import *
 from app_v2.models.post import *
 from app_v2.models.report import *
@@ -14,8 +17,8 @@ def _migration_account():
     account = db['account_base']
     for account in account.find():
         if account['_cls'] == 'StudentModel':
-            StudentModel(
-                signup_time=account['signup_time'],
+            student = StudentModel(
+                signup_time=account['signup_time'] if 'signup_time' in account else datetime.now(),
                 id=account['id'],
                 pw=account['pw'],
                 name=account['name'],
@@ -28,9 +31,29 @@ def _migration_account():
                 penalty_level=account['penalty_level']
             ).save()
 
-        else:
+            stay_apply = student['stay_apply']
+
+            StayApplyModel(student=student, apply_date=stay_apply['apply_date'], value=stay_apply['value']).save()
+
+            goingout_apply = student['goingout_apply']
+
+            GoingoutApplyModel(
+                student=student,
+                apply_date=goingout_apply['apply_date'],
+                on_saturday=goingout_apply['on_saturday'],
+                on_sunday=goingout_apply['on_sunday']
+            ).save()
+
+        elif account['_cls'] == 'AdminModel':
             AdminModel(
-                signup_time=account['signup_time'],
+                signup_time=account['signup_time'] if 'signup_time' in account else datetime.now(),
+                id=account['id'],
+                pw=account['pw'],
+                name=account['name']
+            ).save()
+        else:
+            SystemModel(
+                signup_time=account['signup_time'] if 'signup_time' in account else datetime.now(),
                 id=account['id'],
                 pw=account['pw'],
                 name=account['name']
