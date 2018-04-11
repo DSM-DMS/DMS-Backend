@@ -3,6 +3,8 @@ from datetime import datetime
 
 from pymongo import MongoClient
 
+from app.models.v2.account import *
+
 client = MongoClient()
 db = client['dms']
 
@@ -152,6 +154,19 @@ def _migration_meal():
         MealModel(date=m['_id'], breakfast=m['breakfast'], lunch=m['lunch'], dinner=m['dinner']).save()
 
 
+def _migration_refresh_tokens():
+    token = db['refresh_token']
+    for t in token.find():
+        token_owner = StudentModel.objects(id=t['token_owner'].id).first() or\
+            AdminModel.objects(id=t['token_owner'].id).first() or\
+            SystemModel.objects(id=t['token_owner'].id).first()
+
+        if not token_owner:
+            continue
+
+        RefreshTokenModel(token=t['_id'], token_owner=token_owner, pw_snapshot=t['pw_snapshot']).save()
+
+
 def migration():
     _migration_account()
     _migration_point_rule()
@@ -159,3 +174,4 @@ def migration():
     _migration_report()
     _migration_version()
     _migration_meal()
+    _migration_refresh_tokens()
