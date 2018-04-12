@@ -1,3 +1,5 @@
+from multiprocessing import Process
+
 from app import app
 
 
@@ -19,6 +21,6 @@ if __name__ == '__main__':
     # migration()
 
     from utils import extension_apply_cleaner
-    extension_apply_cleaner.run()
+    Process(target=extension_apply_cleaner.run).start()
 
     app.run(host=app.config['HOST'], port=int(args.port) if args.port else app.config['PORT'], debug=app.debug, threaded=True)
