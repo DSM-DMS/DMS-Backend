@@ -18,4 +18,7 @@ if __name__ == '__main__':
     # from utils.db_migrator import migration
     # migration()
 
+    from utils import extension_apply_cleaner
+    extension_apply_cleaner.run()
+
     app.run(host=app.config['HOST'], port=int(args.port) if args.port else app.config['PORT'], debug=app.debug, threaded=True)
