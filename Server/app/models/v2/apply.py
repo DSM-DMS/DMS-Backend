@@ -13,7 +13,12 @@ class ApplyBase(Document):
         'abstract': True
     }
 
-    apply_time = DateTimeField(
+    # apply_time = DateTimeField(
+    #     required=True,
+    #     default=datetime.now()
+    # )
+    # 신청 시간
+    apply_date = DateTimeField(
         required=True,
         default=datetime.now()
     )
