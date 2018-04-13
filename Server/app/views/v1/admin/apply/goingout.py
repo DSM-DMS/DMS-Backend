@@ -40,6 +40,9 @@ class GoingoutDownload(BaseResource):
                 ws[number_cell] = None
                 ws[name_cell] = None
                 continue
+            else:
+                ws[number_cell] = student.number
+                ws[name_cell] = student.name
 
             if apply.on_saturday and apply.on_sunday:
                 status = '토요일, 일요일 외출'
