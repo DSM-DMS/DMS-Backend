@@ -29,12 +29,12 @@ class GoingoutDownload(BaseResource):
 
         ready_applyment_worksheet(ws)
 
-        for apply in GoingoutApplyModel.objects:
+        for apply in GoingoutApplyMgitodel.objects:
             student = apply.student
 
             number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
 
-            stay_apply = StayApplyModel.objects(student=student)
+            stay_apply = StayApplyModel.objects(student=student).first()
 
             if stay_apply.value < 3:
                 ws[number_cell] = None
