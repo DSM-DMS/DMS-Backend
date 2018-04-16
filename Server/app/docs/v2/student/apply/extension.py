@@ -15,8 +15,8 @@ EXTENSION_GET = {
             'description': '연장신청 정보 조회 성공',
             'examples': {
                 'application/json': {
-                    'class_num': 1,
-                    'seat_num': 16
+                    'classNum': 1,
+                    'seatNum': 16
                 }
             }
         },
@@ -45,7 +45,7 @@ EXTENSION_POST = {
             'required': True
         },
         {
-            'name': 'class_num',
+            'name': 'classNum',
             'description': '''
             연장 학습실 번호
             1: 가온실
@@ -61,7 +61,7 @@ EXTENSION_POST = {
             'required': True
         },
         {
-            'name': 'seat_num',
+            'name': 'seatNum',
             'description': '연장 학습실 자리 번호',
             'in': 'json',
             'type': 'int',
@@ -125,7 +125,7 @@ EXTENSION_MAP_GET = {
             'required': True
         },
         {
-            'name': 'class_num',
+            'name': 'classNum',
             'description': '지도를 조회할 학습실 번호',
             'in': 'json',
             'type': 'int',
@@ -145,8 +145,8 @@ EXTENSION_MAP_GET = {
                         [13, 14, 0, 15, 16],
                         [17, 18, 0, 19, 20]
                     ],
-                    'applied_this_class': True,
-                    'applied_seat': 7
+                    'appliedThisClass': True,
+                    'appliedSeat': 7
                 }
             }
         },

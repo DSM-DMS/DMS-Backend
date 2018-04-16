@@ -22,20 +22,20 @@ SURVEY_GET = {
                 'application/json': [
                     {
                         'id': 's3qldmc13opeflds',
-                        'creation_time': '2018-04-15',
+                        'creationTime': '2018-04-15',
                         'title': '인상민 생일 선물 뭐 줄까?',
                         'description': '4월 20일은 인상민 생일인데 인상민한테 생일 선물 뭐 줄거예요?',
-                        'start_date': '2018-04-15',
-                        'end_date': '2018-04-20',
+                        'startDate': '2018-04-15',
+                        'endDate': '2018-04-20',
                         'answered': True
                     },
                     {
                         'id': '1fnfdj3391idkflds',
-                        'creation_time': '2018-03-02',
+                        'creationTime': '2018-03-02',
                         'title': '아침운동 시행 찬반 설문조사',
                         'description': '설명!',
-                        'start_date': '2018-03-02',
-                        'end_date': '2018-12-31',
+                        'startDate': '2018-03-02',
+                        'endDate': '2018-12-31',
                         'answered': False
                     }
                 ]
@@ -59,7 +59,7 @@ QUESTION_GET = {
             'required': True
         },
         {
-            'name': 'survey_id',
+            'name': 'surveyId',
             'description': '설문지 ID',
             'in': 'query',
             'type': 'str',
@@ -74,14 +74,14 @@ QUESTION_GET = {
                     {
                         'id': '13211265df16ads',
                         'title': '저녁에 치킨을 먹고 싶습니까?',
-                        'is_objective': True,
-                        'choice_paper': ['예', '아니오'],
+                        'isObjective': True,
+                        'choicePaper': ['예', '아니오'],
                         'answer': '예'
                     },
                     {
                         'id': '11265cd65432r9',
                         'title': '어디 치킨이 좋습니까?',
-                        'is_objective': False,
+                        'isObjective': False,
                         'answer': None
                     }
                 ]
@@ -108,7 +108,7 @@ QUESTION_POST = {
             'required': True
         },
         {
-            'name': 'question_id',
+            'name': 'questionId',
             'description': '질문 ID',
             'in': 'json',
             'type': 'str',

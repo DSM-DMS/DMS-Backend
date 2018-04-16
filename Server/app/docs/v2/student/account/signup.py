@@ -61,7 +61,7 @@ SIGNUP_POST = {
             'required': True
         },
         {
-            'name': 'pw',
+            'name': 'password',
             'description': '사용자 PW',
             'in': 'json',
             'type': 'str',

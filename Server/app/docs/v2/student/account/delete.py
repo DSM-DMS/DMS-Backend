@@ -17,7 +17,7 @@ DELETE_ACCOUNT_DELETE = {
             'required': True
         },
         {
-            'name': 'pw',
+            'name': 'password',
             'description': '현재 비밀번호',
             'in': 'json',
             'type': 'str',
