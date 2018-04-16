@@ -31,10 +31,9 @@ GOINGOUT_GET = {
 
 GOINGOUT_POST = {
     'tags': ['신청'],
-    'description': '''
-    외출신청
+    'description': '''외출신청
     신청 가능 시간: 월요일 - 금요일 22:00
-    금요귀가, 토요귀가 시 연장 신청 불가능
+    금요귀가, 토요귀가 시 외출 신청 불가능
     ''',
     'parameters': [
         {
@@ -64,7 +63,7 @@ GOINGOUT_POST = {
             'description': '외출신청 성공'
         },
         '204': {
-            'description': '잔류신청 실패(신청 가능 시간 아님)'
+            'description': '외출신청 실패(신청 가능 시간 아님)'
         },
         '403': {
             'description': '권한 없음'

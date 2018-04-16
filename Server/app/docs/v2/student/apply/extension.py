@@ -31,10 +31,10 @@ EXTENSION_GET = {
 
 EXTENSION_POST = {
     'tags': ['신청'],
-    'description': '''
-    연장신청
+    'description': '''연장신청
     11시 연장 신청 가능 시간: 17:30 - 20:30
     12시 연장 신청 가능 시간: 17:30 - 22:00
+    자리주인이 이미 있으면 reject
     ''',
     'parameters': [
         {
@@ -83,8 +83,7 @@ EXTENSION_POST = {
 
 EXTENSION_DELETE = {
     'tags': ['신청'],
-    'description': '''
-    연장 신청 취소
+    'description': '''연장 신청 취소
     
     11시 연장 신청 취소 가능 시간: 17:30 - 20:30
     12시 연장 신청 취소 가능 시간: 17:30 - 22:00
@@ -113,7 +112,10 @@ EXTENSION_DELETE = {
 
 EXTENSION_MAP_GET = {
     'tags': ['신청'],
-    'description': '연장신청 지도 조회',
+    'description': '''연장신청 지도 조회
+    조회한 class에 신청이 되어있으면
+    신청이 되어있는지와 신청이 되어있는 자리를 리스폰스
+    ''',
     'parameters': [
         {
             'name': 'Authorization',
@@ -134,50 +136,18 @@ EXTENSION_MAP_GET = {
         '200': {
             'description': '지도 조회 성공',
             'examples': {
-                'application/json(가온실)': [
-                    [
-                        -1,
-                        -1,
-                        -1,
-                        -1,
-                        -1,
+                'application/json(가온실)': {
+                    'map': [
+                        [1, 1, 1, 1, 1],
+                        [1, 2, 0, 3, 4],
+                        [5, 6, 0, '조민규', 8],
+                        [9, 10, 0, 11, 12],
+                        [13, 14, 0, 15, 16],
+                        [17, 18, 0, 19, 20]
                     ],
-                    [
-                        1,
-                        2,
-                        0,
-                        3,
-                        4
-                    ],
-                    [
-                        5,
-                        6,
-                        0,
-                        "조민규",
-                        8
-                    ],
-                    [
-                        9,
-                        10,
-                        0,
-                        11,
-                        12
-                    ],
-                    [
-                        13,
-                        14,
-                        0,
-                        15,
-                        16
-                    ],
-                    [
-                        17,
-                        18,
-                        0,
-                        19,
-                        20
-                    ]
-                ]
+                    'applied_this_class': True,
+                    'applied_seat': 7
+                }
             }
         },
         '403': {
