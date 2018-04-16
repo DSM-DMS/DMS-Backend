@@ -34,12 +34,15 @@ class GoingoutDownload(BaseResource):
 
             number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
 
-            stay_apply = StayApplyModel.objects(student=student)
+            stay_apply = StayApplyModel.objects(student=student).first()
 
             if stay_apply.value < 3:
                 ws[number_cell] = None
                 ws[name_cell] = None
                 continue
+            else:
+                ws[number_cell] = student.number
+                ws[name_cell] = student.name
 
             if apply.on_saturday and apply.on_sunday:
                 status = '토요일, 일요일 외출'
