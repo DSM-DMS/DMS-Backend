@@ -39,6 +39,10 @@ TEMPLATE = {
         {
             'name': '게시글 괸리',
             'description': '관리자 권한으로 접근 가능한 게시글 관리 API'
+        },
+        {
+            'name': '신고 정보 관리',
+            'description': '관리자 권한으로 접근 가능한 신고 정보 관리 API'
         }
     ]
 }
