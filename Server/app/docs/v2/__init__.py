@@ -27,6 +27,10 @@ TEMPLATE = {
         {
             'name': '관리자 계정',
             'description': '관리자 계정 관련 API'
+        },
+        {
+            'name': '신청 정보 다운로드',
+            'description': '관리자 권한으로 접근 가능한 신청 정보 엑셀 다운로드 API'
         }
     ]
 }
