@@ -21,7 +21,7 @@ AUTH_POST = {
     ],
     'responses': {
         '201': {
-            'description': '로그인에 성공하여 새로운 Access Token과 Refresh Token 발급',
+            'description': '로그인에 성공하여 Access Token과 Refresh Token을 반환합니다.',
             'examples': {
                 '': {
                     'accessToken': SAMPLE_ACCESS_TOKEN,

@@ -1,6 +1,6 @@
 from app.docs.v2 import SAMPLE_UUID
 
-STUDENT_ACCOUNT_MANAGEMENT_DELETE = {
+STUDENT_ACCOUNT_DELETE = {
     'tags': ['계정 관리'],
     'description': '학생 계정을 제거하고, 새로운 UUID를 생성해 반환합니다.',
     'parameters': [
@@ -21,7 +21,7 @@ STUDENT_ACCOUNT_MANAGEMENT_DELETE = {
     ],
     'responses': {
         '200': {
-            'description': '이미 제거되어 있었으며, 해당 학생에 대해 매핑되어 있던 UUID 반환',
+            'description': '이미 제거되어 있었으며, 해당 학생에 대해 매핑되어 있던 기존의 UUID를 반환합니다.',
             'examples': {
                 '': {
                     'uuid': SAMPLE_UUID
@@ -29,7 +29,7 @@ STUDENT_ACCOUNT_MANAGEMENT_DELETE = {
             }
         },
         '201': {
-            'description': '학생 계정이 제거되었으며, 새롭게 생성된 UUID 반환',
+            'description': '학생 계정이 제거되었으며, 새롭게 생성된 UUID를 반환합니다.',
             'examples': {
                 '': {
                     'uuid': SAMPLE_UUID
@@ -45,7 +45,7 @@ STUDENT_ACCOUNT_MANAGEMENT_DELETE = {
     }
 }
 
-ADMIN_ACCOUNT_MANAGEMENT_POST = {
+ADMIN_ACCOUNT_POST = {
     'tags': ['계정 관리'],
     'description': '새로운 관리자 계정을 생성합니다.',
     'parameters': [
@@ -91,7 +91,7 @@ ADMIN_ACCOUNT_MANAGEMENT_POST = {
     }
 }
 
-ADMIN_ACCOUNT_MANAGEMENT_DELETE = {
+ADMIN_ACCOUNT_DELETE = {
     'tags': ['계정 관리'],
     'description': '만들어진 관리자 계정을 제거합니다.',
     'parameters': [
