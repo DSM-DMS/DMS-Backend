@@ -1,7 +1,7 @@
 from app.docs.v2 import SAMPLE_OBJECT_IDS
 
 
-def get_post_doc(type):
+def generate_post_doc(type):
     return {
         'tags': ['게시글 관리'],
         'description': '{} 업로드'.format(type),
@@ -44,7 +44,7 @@ def get_post_doc(type):
     }
 
 
-def get_patch_doc(type):
+def generate_patch_doc(type):
     return {
         'tags': ['게시글 관리'],
         'description': '{} 수정'.format(type),
@@ -92,7 +92,7 @@ def get_patch_doc(type):
     }
 
 
-def get_delete_doc(type):
+def generate_delete_doc(type):
     return {
         'tags': ['게시글 관리'],
         'description': '{} 삭제'.format(type),

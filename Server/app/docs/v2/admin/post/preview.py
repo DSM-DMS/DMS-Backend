@@ -1,4 +1,4 @@
-def get_preview_post_doc(type):
+def generate_preview_post_doc(type):
     return {
         'tags': ['게시글 관리'],
         'description': '{} 프리뷰를 설정합니다.'.format(type),
@@ -32,6 +32,6 @@ def get_preview_post_doc(type):
     }
 
 
-FAQ_PREVIEW_POST = get_preview_post_doc('FAQ')
-NOTICE_PREVIEW_POST = get_preview_post_doc('공지사항')
-RULE_PREVIEW_POST = get_preview_post_doc('기숙사규정')
+FAQ_PREVIEW_POST = generate_preview_post_doc('FAQ')
+NOTICE_PREVIEW_POST = generate_preview_post_doc('공지사항')
+RULE_PREVIEW_POST = generate_preview_post_doc('기숙사규정')
