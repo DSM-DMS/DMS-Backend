@@ -9,8 +9,8 @@ from app.views.v1 import BaseResource
 from app.views.v1 import admin_only
 
 from app.docs.v1.admin.survey.survey import *
-from app.models.v2.survey import QuestionModel, SurveyModel
-from app.models.v2.support.mongo_helper import mongo_to_dict
+from app.models.survey import QuestionModel, SurveyModel
+from app.models.support.mongo_helper import mongo_to_dict
 
 api = Api(Blueprint('admin-survey-api', __name__))
 api.prefix = '/admin'

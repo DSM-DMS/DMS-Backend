@@ -6,8 +6,8 @@ from flask import Blueprint, Response, current_app, request
 from flask_restful import Api
 from flasgger import swag_from
 
-from app.models.v2.account import SignupWaitingModel, StudentModel, AdminModel
-from app.models.v2.apply import GoingoutApplyModel, StayApplyModel
+from app.models.account import SignupWaitingModel, StudentModel, AdminModel
+from app.models.apply import GoingoutApplyModel, StayApplyModel
 
 from app.docs.v1.student.account.signup import *
 from app.views.v1 import BaseResource

@@ -6,7 +6,7 @@ from app.views.v1 import admin_only
 from app.views.v1.admin.post import PostAPIResource
 
 from app.docs.v1.admin.post.rule import *
-from app.models.v2.post import RuleModel
+from app.models.post import RuleModel
 
 api = Api(Blueprint('admin-rule-api', __name__))
 api.prefix = '/admin'

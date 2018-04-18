@@ -8,7 +8,7 @@ from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
 from app.docs.v1.student.apply.stay import *
-from app.models.v2.apply import StayApplyModel
+from app.models.apply import StayApplyModel
 
 api = Api(Blueprint('student-stay-api', __name__))
 

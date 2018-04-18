@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from app.models.v2 import *
-from app.models.v2.point import PointHistoryModel
+from app.models import *
+from app.models.point import PointHistoryModel
 
 
 class SignupWaitingModel(Document):

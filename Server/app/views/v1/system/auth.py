@@ -9,7 +9,7 @@ from flask_restful import Api, abort
 
 from app.views.v1 import BaseResource
 
-from app.models.v2.account import SystemModel, RefreshTokenModel
+from app.models.account import SystemModel, RefreshTokenModel
 
 api = Api(Blueprint('system-auth-api', __name__))
 api.prefix = '/system'

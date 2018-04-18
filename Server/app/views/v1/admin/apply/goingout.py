@@ -8,7 +8,7 @@ from app.views.v1 import BaseResource
 from app.views.v1 import admin_only
 
 from app.docs.v1.admin.apply.goingout import *
-from app.models.v2.apply import GoingoutApplyModel, StayApplyModel
+from app.models.apply import GoingoutApplyModel, StayApplyModel
 
 from utils.excel_style_manager import get_cell_positions_from_student_number, ready_applyment_worksheet
 

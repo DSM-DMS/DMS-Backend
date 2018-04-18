@@ -1,6 +1,6 @@
 from flask import Response
 
-from app.models.v2.support.mongo_helper import mongo_to_dict
+from app.models.support.mongo_helper import mongo_to_dict
 from app.views.v1 import BaseResource
 
 

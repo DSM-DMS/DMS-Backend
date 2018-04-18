@@ -3,7 +3,7 @@ from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
 from app.docs import TEMPLATE
-from app.models.v2 import Mongo
+from app.models import Mongo
 from app.views.v1 import Router
 
 from config.v2.dev import DevConfig

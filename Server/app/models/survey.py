@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from app.models.v2 import *
-from app.models.v2.account import StudentModel
+from app.models import *
+from app.models.account import StudentModel
 
 
 class SurveyModel(Document):

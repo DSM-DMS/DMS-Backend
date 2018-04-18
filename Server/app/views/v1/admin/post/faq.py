@@ -6,7 +6,7 @@ from app.views.v1 import admin_only
 from app.views.v1.admin.post import PostAPIResource
 
 from app.docs.v1.admin.post.faq import *
-from app.models.v2.post import FAQModel
+from app.models.post import FAQModel
 
 api = Api(Blueprint('admin-faq-api', __name__))
 api.prefix = '/admin'

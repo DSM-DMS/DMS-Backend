@@ -2,7 +2,7 @@ from bson.objectid import ObjectId
 from datetime import datetime
 from decimal import Decimal
 
-from app.models.v2 import *
+from app.models import *
 
 
 def _list_field_to_dict(list_field):

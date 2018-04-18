@@ -3,7 +3,7 @@ from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.v1.etc.version import *
-from app.models.v2.version import VersionModel
+from app.models.version import VersionModel
 from app.views.v1 import BaseResource
 from app.views.v1 import admin_only
 

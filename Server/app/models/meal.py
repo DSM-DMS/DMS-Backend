@@ -1,4 +1,4 @@
-from app.models.v2 import *
+from app.models import *
 
 
 class MealModel(Document):

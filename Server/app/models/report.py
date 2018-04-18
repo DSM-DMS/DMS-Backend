@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from app.models.v2 import *
+from app.models import *
 
 
 class ReportBase(Document):

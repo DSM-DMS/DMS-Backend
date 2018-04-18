@@ -8,7 +8,7 @@ from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
 from app.docs.v1.student.apply.extension import *
-from app.models.v2.apply import ExtensionApply11Model, ExtensionApply12Model
+from app.models.apply import ExtensionApply11Model, ExtensionApply12Model
 
 from utils.extension_meta import APPLY_START, APPLY_END_11, APPLY_END_12, MAPS
 

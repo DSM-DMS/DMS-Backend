@@ -8,7 +8,7 @@ from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
 from app.docs.v1.student.apply.goingout import *
-from app.models.v2.apply import GoingoutApplyModel
+from app.models.apply import GoingoutApplyModel
 
 api = Api(Blueprint('student-goingout-api', __name__))
 

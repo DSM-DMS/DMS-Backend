@@ -10,7 +10,7 @@ from app.views.v1 import BaseResource
 from app.views.v1 import admin_only
 
 from app.docs.v1.admin.account.signup import NEW_ACCOUNT_POST
-from app.models.v2.account import StudentModel, AdminModel
+from app.models.account import StudentModel, AdminModel
 
 api = Api(Blueprint('admin-signup-api', __name__))
 api.prefix = '/admin'

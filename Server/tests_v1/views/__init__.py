@@ -5,7 +5,7 @@ from hashlib import pbkdf2_hmac
 from unittest import TestCase as TC
 
 from app import app
-from app.models.v2.account import AdminModel, StudentModel
+from app.models.account import AdminModel, StudentModel
 
 
 class TCBase(TC):

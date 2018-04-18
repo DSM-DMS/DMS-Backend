@@ -8,7 +8,7 @@ from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
 from app.docs.v1.student.survey.survey import *
-from app.models.v2.survey import AnswerModel, QuestionModel, SurveyModel
+from app.models.survey import AnswerModel, QuestionModel, SurveyModel
 
 api = Api(Blueprint('student-survey-api', __name__))
 

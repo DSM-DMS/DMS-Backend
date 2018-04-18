@@ -8,7 +8,7 @@ from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
 from app.docs.v1.student.report.facility_report import *
-from app.models.v2.report import FacilityReportModel
+from app.models.report import FacilityReportModel
 
 api = Api(Blueprint('student-facility-report-api', __name__))
 

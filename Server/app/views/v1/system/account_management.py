@@ -10,7 +10,7 @@ from flask_restful import Api, abort
 from app.views.v1 import BaseResource
 from app.views.v1 import system_only
 
-from app.models.v2.account import AdminModel, SignupWaitingModel, StudentModel
+from app.models.account import AdminModel, SignupWaitingModel, StudentModel
 
 from utils.excel_style_manager import ready_uuid_worksheet
 

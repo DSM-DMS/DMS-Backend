@@ -6,7 +6,7 @@ from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
 from app.docs.v1.student.account.info import *
-from app.models.v2.apply import *
+from app.models.apply import *
 
 api = Api(Blueprint('student-info-api', __name__))
 

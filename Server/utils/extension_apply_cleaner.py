@@ -1,7 +1,7 @@
 from datetime import datetime
 import time
 
-from app.models.v2.apply import ExtensionApply11Model, ExtensionApply12Model
+from app.models.apply import ExtensionApply11Model, ExtensionApply12Model
 
 
 def run():

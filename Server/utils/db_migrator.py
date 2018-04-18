@@ -1,15 +1,13 @@
 from bson.objectid import ObjectId
-from datetime import datetime
 
 from pymongo import MongoClient
 
-from app.models.v2.account import *
-from app.models.v2.apply import *
-from app.models.v2.meal import *
-from app.models.v2.point import *
-from app.models.v2.post import *
-from app.models.v2.report import *
-from app.models.v2.version import *
+from app.models.account import *
+from app.models.apply import *
+from app.models.meal import *
+from app.models.point import *
+from app.models.post import *
+from app.models.report import *
 
 client = MongoClient()
 db = client['dms']

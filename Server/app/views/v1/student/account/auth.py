@@ -12,7 +12,7 @@ from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
 from app.docs.v1.student.account.auth import *
-from app.models.v2.account import StudentModel, RefreshTokenModel
+from app.models.account import StudentModel, RefreshTokenModel
 
 api = Api(Blueprint('student-auth-api', __name__))
 
