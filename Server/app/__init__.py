@@ -1,13 +1,13 @@
 from flask import Flask, render_template
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
+from flasgger import Swagger
 
-from app.docs import TEMPLATE
 from app.models import Mongo
 from app.views.v1 import Router
 
-from config.v2.dev import DevConfig
-from config.v2.production import ProductionConfig
+from config.dev import DevConfig
+from config.production import ProductionConfig
 
 
 def create_app(dev=True):
@@ -21,14 +21,14 @@ def create_app(dev=True):
 
     JWTManager().init_app(app_)
     CORS().init_app(app_)
-    # Swagger(app_, template=TEMPLATE)
+    # Swagger().init_app(app_)
     Mongo().init_app(app_)
     Router().init_app(app_)
 
     return app_
 
 
-app = create_app(False)
+app = create_app()
 
 
 @app.route('/')
