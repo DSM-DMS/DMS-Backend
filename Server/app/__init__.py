@@ -9,6 +9,8 @@ from app.views.v1 import Router
 from config.dev import DevConfig
 from config.production import ProductionConfig
 
+WEB_FILE_ROOT_DIR = '../web_files'
+
 
 def create_app(dev=True):
     """
@@ -16,7 +18,14 @@ def create_app(dev=True):
 
     :rtype: Flask
     """
-    app_ = Flask(__name__)
+    print('[INFO] Flask application initialized with {} mode.'.format('DEV' if dev else 'PRODUCTION'))
+
+    app_ = Flask(
+        __name__,
+        static_folder='{}/static'.format(WEB_FILE_ROOT_DIR),
+        template_folder='{}/templates'.format(WEB_FILE_ROOT_DIR)
+    )
+
     app_.config.from_object(DevConfig if dev else ProductionConfig)
 
     JWTManager().init_app(app_)
