@@ -6,7 +6,13 @@ from flask import Response, abort, g, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 
-from app_v2.models import AdminModel, StudentModel, SystemModel
+from app.models.account import AdminModel, StudentModel, SystemModel
+
+MODEL_DOCSTRING_MAPPING = {
+    AdminModel: ' *관리자 권한',
+    StudentModel: ' *학생 권한',
+    SystemModel: ' *시스템 권한'
+}
 
 
 def after_request(response):
@@ -19,63 +25,22 @@ def after_request(response):
     return response
 
 
-def admin_only(fn):
-    @wraps(fn)
-    @jwt_required
-    def wrapper(*args, **kwargs):
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
-            abort(403)
+def auth_required(model):
+    def decorator(fn):
+        fn.__doc__ = fn.__doc__[:-9] + MODEL_DOCSTRING_MAPPING[model] + fn.__doc__[-9:]
 
-        g.user = admin
-        return fn(*args, **kwargs)
+        @wraps(fn)
+        @jwt_required
+        def wrapper(*args, **kwargs):
+            user = model.objects(id=get_jwt_identity()).first()
+            if not user:
+                abort(403)
 
-    return wrapper
+            g.user = user
+            return fn(*args, **kwargs)
 
-
-def student_only(fn):
-    @wraps(fn)
-    @jwt_required
-    def wrapper(*args, **kwargs):
-        student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not student:
-            abort(403)
-
-        g.user = student
-        return fn(*args, **kwargs)
-
-    return wrapper
-
-
-def system_only(fn):
-    @wraps(fn)
-    @jwt_required
-    def wrapper(*args, **kwargs):
-        system = SystemModel.objects(id=get_jwt_identity()).first()
-        if not system:
-            abort(403)
-
-        g.user = system
-        return fn(*args, **kwargs)
-
-    return wrapper
-
-
-def auth_required(fn):
-    @wraps(fn)
-    @jwt_required
-    def wrapper(*args, **kwargs):
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        student = StudentModel.objects(id=get_jwt_identity()).first()
-        system = SystemModel.objects(id=get_jwt_identity()).first()
-
-        if not any((admin, student, system)):
-            abort(403)
-
-        g.user = admin or student or system
-        return fn(*args, **kwargs)
-
-    return wrapper
+        return wrapper
+    return decorator
 
 
 def json_required(*required_keys):
