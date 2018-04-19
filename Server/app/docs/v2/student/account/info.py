@@ -1,6 +1,6 @@
 APPLY_INFO_GET = {
     'tags': ['계정'],
-    'description': '신청 정보 조회',
+    'description': '학생 자신의 신청 정보를 조회합니다.',
     'parameters': [
         {
             'name': 'Authorization',
@@ -14,29 +14,29 @@ APPLY_INFO_GET = {
         '200': {
             'description': '신청 정보 조회 성공',
             'examples': {
-                'application/json': {
-                    'extension_11': {
+                '': {
+                    'extension11': {
                         'class': 2,
                         'seat': 13
                     },
-                    'extension_12': None,
+                    'extension12': None,
                     'goingout': {
                         'sat': True,
                         'sun': False
                     },
-                    'stay_value': 4
+                    'stay': 4
                 }
             }
         },
         '403': {
-            'description': '권한 없음(재로그인 필요)'
+            'description': '권한 없음'
         }
     }
 }
 
 MYPAGE_GET = {
     'tags': ['계정'],
-    'description': '마이페이지 정보 조회',
+    'description': '학생 자신의 마이페이지 정보(이름, 학번, 상벌점 상태)를 조회합니다.',
     'parameters': [
         {
             'name': 'Authorization',
@@ -50,7 +50,7 @@ MYPAGE_GET = {
         '200': {
             'description': '마이페이지 조회 성공',
             'examples': {
-                'application/json': {
+                '': {
                     'name': '조민규',
                     'number': 20120,
                     'goodPoint': 1,
@@ -59,14 +59,14 @@ MYPAGE_GET = {
             }
         },
         '403': {
-            'description': '권한 없음(재로그인 필요)'
+            'description': '권한 없음'
         }
     }
 }
 
 POINT_HISTORY_GET = {
     'tags': ['계정'],
-    'description': '상벌점 기록 조회',
+    'description': '학생 자신의 상벌점 기록을 조회합니다.',
     'parameters': [
         {
             'name': 'Authorization',
@@ -80,7 +80,7 @@ POINT_HISTORY_GET = {
         '200': {
             'description': '내역 조회 성공',
             'examples': {
-                'application/json': [
+                '': [
                     {
                         'time': '2017-12-17',
                         'reason': '치킨 먹음',

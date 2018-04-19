@@ -1,3 +1,5 @@
+from app.docs.v2 import SAMPLE_OBJECT_IDS
+
 FACILITY_REPORT_POST = {
     'tags': ['신고'],
     'description': '시설고장신고',
@@ -26,10 +28,10 @@ FACILITY_REPORT_POST = {
     ],
     'responses': {
         '201': {
-            'description': '시설고장 신고 성공. 업로드된 시설고장 신고의 ID 응답',
+            'description': '시설고장 신고에 성공했으며, 업로드된 시설고장 신고의 ID를 응답합니다.',
             'examples': {
-                'application/json': {
-                    'id': '13211265df16ads'
+                '': {
+                    'id': SAMPLE_OBJECT_IDS[0]
                 }
             }
         },

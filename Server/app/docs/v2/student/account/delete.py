@@ -1,6 +1,6 @@
 DELETE_ACCOUNT_DELETE = {
     'tags': ['계정'],
-    'description': '계정 삭제',
+    'description': '학생 자신의 계정을 삭제합니다.',
     'parameters': [
         {
             'name': 'Authorization',
@@ -25,11 +25,11 @@ DELETE_ACCOUNT_DELETE = {
         }
     ],
     'responses': {
-        '201': {
+        '200': {
             'description': '계정 삭제 성공'
         },
         '403': {
-            'description': '비밀번호 변경 실패(틀린 id or 틀린 pw) or 권한 없음'
+            'description': '비밀번호 변경 실패(틀린 ID나 비밀번호), 또는 권한 없음'
         }
     }
 }

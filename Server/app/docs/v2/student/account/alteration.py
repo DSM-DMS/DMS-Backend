@@ -1,6 +1,6 @@
 CHANGE_PW_POST = {
     'tags': ['계정'],
-    'description': '비밀번호 변경',
+    'description': '비밀번호를 변경합니다.',
     'parameters': [
         {
             'name': 'Authorization',

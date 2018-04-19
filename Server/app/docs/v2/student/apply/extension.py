@@ -1,6 +1,6 @@
 EXTENSION_GET = {
     'tags': ['신청'],
-    'description': '연장신청 정보 조회',
+    'description': '학생 자신의 연장신청 정보를 조회합니다.',
     'parameters': [
         {
             'name': 'Authorization',
@@ -14,7 +14,7 @@ EXTENSION_GET = {
         '200': {
             'description': '연장신청 정보 조회 성공',
             'examples': {
-                'application/json': {
+                '': {
                     'classNum': 1,
                     'seatNum': 16
                 }
@@ -34,7 +34,6 @@ EXTENSION_POST = {
     'description': '''연장신청
     11시 연장 신청 가능 시간: 17:30 - 20:30
     12시 연장 신청 가능 시간: 17:30 - 22:00
-    자리주인이 이미 있으면 reject
     ''',
     'parameters': [
         {
@@ -75,6 +74,9 @@ EXTENSION_POST = {
         '204': {
             'description': '연장신청 실패(신청 가능 시간 아님)'
         },
+        '205': {
+            'description': '이미 신청된 자리'
+        },
         '403': {
             'description': '권한 없음'
         }
@@ -83,7 +85,7 @@ EXTENSION_POST = {
 
 EXTENSION_DELETE = {
     'tags': ['신청'],
-    'description': '''연장 신청 취소
+    'description': '''연장 신청을 취소합니다.
     
     11시 연장 신청 취소 가능 시간: 17:30 - 20:30
     12시 연장 신청 취소 가능 시간: 17:30 - 22:00
@@ -112,10 +114,7 @@ EXTENSION_DELETE = {
 
 EXTENSION_MAP_GET = {
     'tags': ['신청'],
-    'description': '''연장신청 지도 조회
-    조회한 class에 신청이 되어있으면
-    신청이 되어있는지와 신청이 되어있는 자리를 리스폰스
-    ''',
+    'description': '연장신청 지도를 조회합니다. 해당 class에 대한 신청 여부, 신청되어 있다면 자리까지 response합니다. 신청되어 있지 않으면 자리는 0입니다.',
     'parameters': [
         {
             'name': 'Authorization',
@@ -136,7 +135,7 @@ EXTENSION_MAP_GET = {
         '200': {
             'description': '지도 조회 성공',
             'examples': {
-                'application/json(가온실)': {
+                '': {
                     'map': [
                         [1, 1, 1, 1, 1],
                         [1, 2, 0, 3, 4],
