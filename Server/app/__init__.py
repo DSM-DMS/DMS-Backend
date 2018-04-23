@@ -1,4 +1,6 @@
-from flask import Blueprint, Flask, render_template
+import os
+
+from flask import Flask, render_template
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from flasgger import Swagger
@@ -40,7 +42,7 @@ def merge_v2_api(app_):
     from app.views.v2 import Router
     from app.docs.v2 import TEMPLATE
 
-    app_.config['SWAGGER']['specs_route'] = '/v2/docs'
+    app_.config['SWAGGER']['specs_route'] = os.getenv('SWAGGER_URI_V2', '/v2/docs')
     app_.config['SWAGGER']['basePath'] = '/v2'
 
     Swagger(template=TEMPLATE).init_app(app_)
