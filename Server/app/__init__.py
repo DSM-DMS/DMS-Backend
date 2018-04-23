@@ -41,6 +41,7 @@ def merge_v2_api(app_):
     from app.docs.v2 import TEMPLATE
 
     app_.config['SWAGGER']['specs_route'] = '/v2/docs'
+    app_.config['basePath'] = '/v2'
 
     Swagger(template=TEMPLATE).init_app(app_)
     Router().init_app(app_)
