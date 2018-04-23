@@ -1,7 +1,7 @@
 from app.docs.v2 import SAMPLE_OBJECT_IDS
 
 POINT_GET = {
-    'tags': ['상벌점 관리'],
+    'tags': ['[Admin] 상벌점 관리'],
     'description': '특정 학생의 상벌점 내역을 조회합니다.',
     'parameters': [
         {
@@ -51,7 +51,7 @@ POINT_GET = {
 }
 
 POINT_POST = {
-    'tags': ['상벌점 관리'],
+    'tags': ['[Admin] 상벌점 관리'],
     'description': '특정 학생에 대해 상벌점을 부여합니다.',
     'parameters': [
         {
@@ -105,7 +105,7 @@ POINT_POST = {
 }
 
 POINT_DELETE = {
-    'tags': ['상벌점 관리'],
+    'tags': ['[Admin] 상벌점 관리'],
     'description': '특정 학생의 상벌점 기록을 삭제합니다.',
     'parameters': [
         {

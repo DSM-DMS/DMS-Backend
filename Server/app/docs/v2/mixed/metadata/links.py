@@ -1,5 +1,5 @@
 LINKS_GET = {
-    'tags': ['메타데이터'],
+    'tags': ['[Mixed] 메타데이터'],
     'description': 'DMS에 관련된 링크 정보를 조회합니다.',
     'parameters': [
         {

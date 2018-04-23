@@ -1,7 +1,7 @@
 from app.docs.v2 import SAMPLE_OBJECT_IDS
 
 QUESTION_MANAGING_GET = {
-    'tags': ['설문지 관리'],
+    'tags': ['[Admin] 설문지 관리'],
     'description': '설문지 질문 리스트를 불러옵니다.',
     'parameters': [
         {
@@ -48,7 +48,7 @@ QUESTION_MANAGING_GET = {
 }
 
 QUESTION_MANAGING_POST = {
-    'tags': ['설문지 관리'],
+    'tags': ['[Admin] 설문지 관리'],
     'description': '설문지에 1개 이상의 질문을 등록합니다. 각 질문 데이터(title, isObjective, choicePaper)는 "questions"에 array로 묶어 전송합니다.',
     'parameters': [
         {

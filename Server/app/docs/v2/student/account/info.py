@@ -1,5 +1,5 @@
 APPLY_INFO_GET = {
-    'tags': ['계정'],
+    'tags': ['[Student] 계정 관리'],
     'description': '학생 자신의 신청 정보를 조회합니다.',
     'parameters': [
         {
@@ -35,7 +35,7 @@ APPLY_INFO_GET = {
 }
 
 MYPAGE_GET = {
-    'tags': ['계정'],
+    'tags': ['[Student] 계정 관리'],
     'description': '학생 자신의 마이페이지 정보(이름, 학번, 상벌점 상태)를 조회합니다.',
     'parameters': [
         {
@@ -65,7 +65,7 @@ MYPAGE_GET = {
 }
 
 POINT_HISTORY_GET = {
-    'tags': ['계정'],
+    'tags': ['[Student] 계정 관리'],
     'description': '학생 자신의 상벌점 기록을 조회합니다.',
     'parameters': [
         {

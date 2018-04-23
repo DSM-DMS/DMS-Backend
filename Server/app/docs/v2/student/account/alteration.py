@@ -1,5 +1,5 @@
 CHANGE_PW_POST = {
-    'tags': ['계정'],
+    'tags': ['[Student] 계정 관리'],
     'description': '비밀번호를 변경합니다.',
     'parameters': [
         {
@@ -35,7 +35,7 @@ CHANGE_PW_POST = {
 }
 
 ACCOUNT_DELETE = {
-    'tags': ['계정'],
+    'tags': ['[Student] 계정 관리'],
     'description': '학생 자신의 계정을 삭제합니다.',
     'parameters': [
         {

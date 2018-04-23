@@ -1,6 +1,6 @@
 def generate_preview_get_doc(type):
     return {
-        'tags': ['게시글', '게시글 관리'],
+        'tags': ['[Mixed] 게시글'],
         'description': '{} 프리뷰를 조회합니다. 별도로 프리뷰로 설정된 게시글이 없으면 가장 최신 글을 불러옵니다.'.format(type),
         'responses': {
             '200': {

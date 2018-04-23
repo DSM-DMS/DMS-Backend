@@ -1,7 +1,7 @@
 from app.docs.v2 import SAMPLE_ACCESS_TOKEN
 
 REFRESH_GET = {
-    'tags': ['JWT'],
+    'tags': ['[Mixed] JWT 관련'],
     'description': 'JWT Refresh Token을 이용해 Access Token을 새로 발급합니다.',
     'parameters': [
         {

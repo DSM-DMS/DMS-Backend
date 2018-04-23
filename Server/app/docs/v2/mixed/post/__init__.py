@@ -3,7 +3,7 @@ from app.docs.v2 import SAMPLE_OBJECT_IDS
 
 def generate_post_list_doc(type):
     return {
-        'tags': ['게시글', '게시글 관리'],
+        'tags': ['[Mixed] 게시글'],
         'description': '{} 리스트를 조회합니다.'.format(type),
         'responses': {
             '200': {
@@ -43,7 +43,7 @@ def generate_post_list_doc(type):
 
 def generate_post_item_doc(type):
     return {
-        'tags': ['게시글', '게시글 관리'],
+        'tags': ['[Mixed] 게시글'],
         'description': '특정 {}의 내용을 조회합니다.',
         'parameters': [
             {

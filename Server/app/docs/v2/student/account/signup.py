@@ -1,5 +1,5 @@
 ID_VERIFICATION_POST = {
-    'tags': ['계정'],
+    'tags': ['[Student] 계정'],
     'description': 'ID 중복체크',
     'parameters': [
         {
@@ -21,7 +21,7 @@ ID_VERIFICATION_POST = {
 }
 
 UUID_VERIFICATION_POST = {
-    'tags': ['계정'],
+    'tags': ['[Student] 계정'],
     'description': 'UUID 유효성 검사',
     'parameters': [
         {
@@ -43,7 +43,7 @@ UUID_VERIFICATION_POST = {
 }
 
 SIGNUP_POST = {
-    'tags': ['계정'],
+    'tags': ['[Student] 계정'],
     'description': '회원가입',
     'parameters': [
         {

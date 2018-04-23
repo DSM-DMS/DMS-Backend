@@ -1,7 +1,7 @@
 from app.docs.v2 import SAMPLE_ACCESS_TOKEN, SAMPLE_REFRESH_TOKEN
 
 ADD_SOCIAL_ACCOUNT_POST = {
-    'tags': ['소셜 계정'],
+    'tags': ['[Student] 소셜 계정'],
     'description': '소셜 계정 연동',
     'parameters': [
         {
@@ -37,7 +37,7 @@ ADD_SOCIAL_ACCOUNT_POST = {
 }
 
 SOCIAL_AUTH_POST = {
-    'tags': ['소셜 계정'],
+    'tags': ['[Student] 소셜 계정'],
     'description': '소셜 계정 로그인',
     'parameters': [
         {

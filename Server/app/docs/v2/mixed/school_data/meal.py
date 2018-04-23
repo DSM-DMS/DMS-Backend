@@ -1,5 +1,5 @@
 MEAL_GET = {
-    'tags': ['학교 정보'],
+    'tags': ['[Mixed] 학교 정보'],
     'description': '특정 날짜에 대한 급식 정보를 조회합니다.',
     'parameters': [
         {

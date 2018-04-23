@@ -1,7 +1,7 @@
 from app.docs.v2 import SAMPLE_OBJECT_IDS
 
 SURVEY_MANAGING_GET = {
-    'tags': ['설문지 관리'],
+    'tags': ['[Admin] 설문지 관리'],
     'description': '설문지 리스트를 불러옵니다.',
     'parameters': [
         {
@@ -43,7 +43,7 @@ SURVEY_MANAGING_GET = {
 }
 
 SURVEY_MANAGING_POST = {
-    'tags': ['설문지 관리'],
+    'tags': ['[Admin] 설문지 관리'],
     'description': '설문지를 등록합니다.',
     'parameters': [
         {
@@ -105,7 +105,7 @@ SURVEY_MANAGING_POST = {
 }
 
 SURVEY_MANAGING_DELETE = {
-    'tags': ['설문지 관리'],
+    'tags': ['[Admin] 설문지 관리'],
     'description': '설문지를 삭제합니다.',
     'parameters': [
         {

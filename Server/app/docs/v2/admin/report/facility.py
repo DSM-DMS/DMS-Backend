@@ -2,7 +2,7 @@ from app.docs.v2 import SAMPLE_OBJECT_IDS
 
 
 FACILITY_REPORT_GET = {
-    'tags': ['신고 정보 관리'],
+    'tags': ['[Admin] 신고 정보 관리'],
     'description': '시설고장 신고 정보를 조회합니다.',
     'parameters': [
         {
@@ -50,7 +50,7 @@ FACILITY_REPORT_GET = {
 
 
 FACILITY_REPORT_DELETE = {
-    'tags': ['신고 정보 관리'],
+    'tags': ['[Admin] 신고 정보 관리'],
     'description': '시설고장 신고 정보를 삭제합니다.',
     'parameters': [
         {

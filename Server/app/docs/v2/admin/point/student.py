@@ -1,5 +1,5 @@
 STUDENT_GET = {
-    'tags': ['상벌점 관리'],
+    'tags': ['[Admin] 상벌점 관리'],
     'description': '학생 목록을 조회합니다. 벌점 교육 단계는 9점 이하가 0, 10점 이상이 1, 15점 이상 2, 20점 이상 3, ...',
     'parameters': [
         {
@@ -71,7 +71,7 @@ STUDENT_GET = {
 }
 
 STUDENT_PENALTY_PATCH = {
-    'tags': ['상벌점 관리'],
+    'tags': ['[Admin] 상벌점 관리'],
     'description': '특정 학생의 벌점 교육 상태를 변경합니다.',
     'parameters': [
         {

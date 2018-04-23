@@ -1,6 +1,6 @@
 def generate_preview_post_doc(type):
     return {
-        'tags': ['게시글 관리'],
+        'tags': ['[Admin] 게시글 관리'],
         'description': '{} 프리뷰를 설정합니다.'.format(type),
         'parameters': [
             {

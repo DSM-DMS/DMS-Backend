@@ -1,5 +1,5 @@
 DEVELOPER_INFO_GET = {
-    'tags': ['메타데이터'],
+    'tags': ['[Mixed] 메타데이터'],
     'description': 'DMS 개발자 정보를 조회합니다.',
     'parameters': [
         {

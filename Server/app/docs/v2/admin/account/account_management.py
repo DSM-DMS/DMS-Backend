@@ -1,7 +1,7 @@
 from app.docs.v2 import SAMPLE_UUID
 
 STUDENT_ACCOUNT_DELETE = {
-    'tags': ['계정 관리'],
+    'tags': ['[Admin] 계정 관리'],
     'description': '학생 계정을 제거하고, 새로운 UUID를 생성해 반환합니다.',
     'parameters': [
         {
@@ -46,7 +46,7 @@ STUDENT_ACCOUNT_DELETE = {
 }
 
 ADMIN_ACCOUNT_POST = {
-    'tags': ['계정 관리'],
+    'tags': ['[Admin] 계정 관리'],
     'description': '새로운 관리자 계정을 생성합니다.',
     'parameters': [
         {
@@ -92,7 +92,7 @@ ADMIN_ACCOUNT_POST = {
 }
 
 ADMIN_ACCOUNT_DELETE = {
-    'tags': ['계정 관리'],
+    'tags': ['[Admin] 계정 관리'],
     'description': '만들어진 관리자 계정을 제거합니다.',
     'parameters': [
         {

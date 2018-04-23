@@ -1,7 +1,7 @@
 from app.docs.v2 import SAMPLE_OBJECT_IDS
 
 POINT_RULE_GET = {
-    'tags': ['상벌점 관리'],
+    'tags': ['[Admin] 상벌점 관리'],
     'description': '상벌점 규칙 목록을 조회합니다.',
     'parameters': [
         {
@@ -41,7 +41,7 @@ POINT_RULE_GET = {
 }
 
 POINT_RULE_POST = {
-    'tags': ['상벌점 관리'],
+    'tags': ['[Admin] 상벌점 관리'],
     'description': '상벌점 규칙을 추가합니다.',
     'parameters': [
         {
@@ -96,7 +96,7 @@ POINT_RULE_POST = {
 }
 
 POINT_RULE_PATCH = {
-    'tags': ['상벌점 관리'],
+    'tags': ['[Admin] 상벌점 관리'],
     'description': '상벌점 규칙의 내용을 수정합니다.',
     'parameters': [
         {
@@ -156,7 +156,7 @@ POINT_RULE_PATCH = {
 }
 
 POINT_RULE_DELETE = {
-    'tags': ['상벌점 관리'],
+    'tags': ['[Admin] 상벌점 관리'],
     'description': '상벌점 규칙을 삭제합니다.',
     'parameters': [
         {

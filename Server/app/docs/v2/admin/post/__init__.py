@@ -3,7 +3,7 @@ from app.docs.v2 import SAMPLE_OBJECT_IDS
 
 def generate_post_doc(type):
     return {
-        'tags': ['게시글 관리'],
+        'tags': ['[Admin] 게시글 관리'],
         'description': '{} 업로드'.format(type),
         'parameters': [
             {
@@ -46,7 +46,7 @@ def generate_post_doc(type):
 
 def generate_patch_doc(type):
     return {
-        'tags': ['게시글 관리'],
+        'tags': ['[Admin] 게시글 관리'],
         'description': '{} 수정'.format(type),
         'parameters': [
             {
@@ -94,7 +94,7 @@ def generate_patch_doc(type):
 
 def generate_delete_doc(type):
     return {
-        'tags': ['게시글 관리'],
+        'tags': ['[Admin] 게시글 관리'],
         'description': '{} 삭제'.format(type),
         'parameters': [
             {

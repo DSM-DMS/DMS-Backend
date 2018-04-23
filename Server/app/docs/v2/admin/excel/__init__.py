@@ -1,6 +1,6 @@
 def generate_excel_doc(type):
     return {
-        'tags': ['신청 정보 다운로드'],
+        'tags': ['[Admin] 신청 정보'],
         'description': '{}신청 정보를 다운로드합니다.'.format(type),
         'parameters': [
             {

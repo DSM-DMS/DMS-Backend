@@ -1,5 +1,5 @@
 STAY_GET = {
-    'tags': ['신청'],
+    'tags': ['[Student] 신청'],
     'description': '학생 자신의 잔류신청 정보를 조회합니다.',
     'parameters': [
         {
@@ -26,7 +26,7 @@ STAY_GET = {
 }
 
 STAY_POST = {
-    'tags': ['신청'],
+    'tags': ['[Student] 신청'],
     'description': '''잔류신청
     
     신청 가능 시간: 일요일 20:30 - 목요일 22:00

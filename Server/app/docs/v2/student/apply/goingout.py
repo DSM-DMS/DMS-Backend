@@ -1,5 +1,5 @@
 GOINGOUT_GET = {
-    'tags': ['신청'],
+    'tags': ['[Student] 신청'],
     'description': '학생 자신의 외출신청 정보를 조회합니다.',
     'parameters': [
         {
@@ -30,7 +30,7 @@ GOINGOUT_GET = {
 }
 
 GOINGOUT_POST = {
-    'tags': ['신청'],
+    'tags': ['[Student] 신청'],
     'description': '''외출신청
     
     신청 가능 시간: 월요일 00:00 - 금요일 22:00
