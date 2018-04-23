@@ -3,7 +3,9 @@ from config import Config
 
 class DevConfig(Config):
     HOST = 'localhost'
-    Config.SWAGGER['host'] = '{}:{}'.format(Config.REPRESENTATIVE_HOST or HOST, Config.PORT)
+    PORT = 8000
+
+    Config.SWAGGER['host'] = '{}:{}'.format(Config.REPRESENTATIVE_HOST or HOST, PORT)
 
     DEBUG = True
 
