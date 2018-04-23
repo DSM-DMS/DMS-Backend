@@ -2,33 +2,28 @@ os: linux
 sudo: false
 language: python
 cache: pip
-
 matrix:
   include:
-    - python: "3.5"
-    - python: "3.5-dev"
-    - python: "3.6"
-    - python: "3.6-dev"
-    - python: "pypy3.5"
+  - python: '3.5'
+  - python: 3.5-dev
+  - python: '3.6'
+  - python: 3.6-dev
+  - python: pypy3.5
   allow_failures:
-    - python: "nightly"
+  - python: nightly
   fast_finish: true
-
 services: mongodb
-
 install:
-  - pip3 install -r requirements.txt
-  - pip3 install coveralls
-
+- pip3 install -r requirements.txt
+- pip3 install coveralls
 before_script:
-  - cd Server
-
+- cd Server
 script:
-  - coverage run --source=app run_test.py
-
+- coverage run --source=app run_test.py
 after_success:
-  - coverage report
-  - coveralls
-
+- coverage report
+- coveralls
 notifications:
   email: false
+  slack:
+    secure: P90kSwqflgWqlSCBI69IqIoGyVxxffAzvnmQmJFlUUrhL+ydJ4ZjUT2qJQsId3i8nozTYEmy3sVWzn7FEYeL77SNiufelMfYJxiren4i634oUHQk0EI2DMN0ngVbHzjYB7+QvofTyEZCHhF+Js5TNFdRruQD9MtENzD4AvNLNQABc2U4RCrJF5Fr6AbpPO/pdyVWGLHfHIvQd/hEHx0u6jiBKvHqcqBXbZ2/jg4b3sO+PzllIcnG9hZTWfjheeoQ8ipmxFkIRqL5sSLTLb5ImPI/zkBpFiDQE1uvc35FKsmiILPd7i25MRUiw40eAWvZ8Ohok43jRTeYMKdshzmSK9OdLcJeUq79lNwBeMxkqxFQ2+uJ/kiz14luYxUbuS5N/1xYBuAA8cj+LZkF40DzI1JQ8Pq5cWRolQFph9LU2rgD9NpEfV17E/LFAUNPTSUXC1Uuukp3ToSKaDxbiGEu5OCqJyYE3HZBaMsyB6ZyAEJ/fyRGIAFaJXvqPwFSfbt2x5OqgppGTTPCJQw07VMkQodiFINFbM26f2X8uGsmE/3q9jANck7tYcGXA7UQNK6yALploXr7Q44AbIhR+YoevZ2qyZX3omD/pxEzwDTqdHjVouOIvv696Roj369Vi3YyEEj6tg1mUix2P6kf9a64PymdDUtYBrmYR+o+Gu9SHVg=
