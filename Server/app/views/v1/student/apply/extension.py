@@ -53,6 +53,9 @@ class Extension11(BaseResource):
         if apply:
             apply.delete()
 
+        if ExtensionApply11Model.objects(class_=class_, seat=seat):
+            return Response('', 204)
+
         ExtensionApply11Model(student=student, class_=class_, seat=seat, apply_date=datetime.now()).save()
 
         return Response('', 201)
@@ -113,6 +116,9 @@ class Extension12(BaseResource):
         apply = ExtensionApply12Model.objects(student=student).first()
         if apply:
             apply.delete()
+
+        if ExtensionApply12Model.objects(class_=class_, seat=seat):
+            return Response('', 204)
 
         ExtensionApply12Model(student=student, class_=class_, seat=seat, apply_date=datetime.now()).save()
 
