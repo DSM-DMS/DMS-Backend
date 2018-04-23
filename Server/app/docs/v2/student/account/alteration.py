@@ -34,7 +34,7 @@ CHANGE_PW_POST = {
     }
 }
 
-DELETE_ACCOUNT_DELETE = {
+ACCOUNT_DELETE = {
     'tags': ['계정'],
     'description': '학생 자신의 계정을 삭제합니다.',
     'parameters': [
