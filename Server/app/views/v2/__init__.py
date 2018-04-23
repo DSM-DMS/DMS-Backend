@@ -161,5 +161,14 @@ class Router(object):
         app.register_blueprint(self.add_v2_prefix(signup.api.blueprint))
         app.register_blueprint(self.add_v2_prefix(social_auth.api.blueprint))
 
-        from .student.apply import extension
+        from .student.apply import extension, goingout, stay
         app.register_blueprint(self.add_v2_prefix(extension.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(goingout.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(stay.api.blueprint))
+
+        from .student.report import facility_report, bug_report
+        app.register_blueprint(self.add_v2_prefix(facility_report.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(bug_report.api.blueprint))
+
+        from .student.survey import survey
+        app.register_blueprint(self.add_v2_prefix(survey.api.blueprint))
