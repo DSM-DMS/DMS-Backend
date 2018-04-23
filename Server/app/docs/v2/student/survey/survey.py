@@ -1,7 +1,7 @@
 from app.docs.v2 import SAMPLE_OBJECT_IDS
 
 SURVEY_GET = {
-    'tags': ['설문지'],
+    'tags': ['[Student] 설문 조사'],
     'description': '''설문지 리스트를 불러옵니다.
     아래의 조건 중 하나 이상에 맞는 설문조사는 response되지 않습니다.
     
@@ -51,7 +51,7 @@ SURVEY_GET = {
 }
 
 QUESTION_GET = {
-    'tags': ['설문지'],
+    'tags': ['[Student] 설문 조사'],
     'description': '설문지 질문 리스트를 불러옵니다.',
     'parameters': [
         {
@@ -100,7 +100,7 @@ QUESTION_GET = {
 }
 
 QUESTION_POST = {
-    'tags': ['설문지'],
+    'tags': ['[Student] 설문 조사'],
     'description': '질문에 답변을 남깁니다. 이미 답변을 남겼을 경우, 덮어씌웁니다.',
     'parameters': [
         {

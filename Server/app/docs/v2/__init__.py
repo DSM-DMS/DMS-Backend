@@ -86,6 +86,14 @@ TEMPLATE = {
         {
             'name': '[Student] 신청',
             'description': '학생 신청 관련 API'
+        },
+        {
+            'name': '[Student] 신고',
+            'description': '학생 신고 관련 API'
+        },
+        {
+            'name': '[Student] 설문 조사',
+            'description': '학생 설문조사 관련 API'
         }
         # --- Student
     ]

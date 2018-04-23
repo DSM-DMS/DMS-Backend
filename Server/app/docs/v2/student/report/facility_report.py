@@ -1,7 +1,7 @@
 from app.docs.v2 import SAMPLE_OBJECT_IDS
 
 FACILITY_REPORT_POST = {
-    'tags': ['신고'],
+    'tags': ['[Student] 신고'],
     'description': '시설고장신고',
     'parameters': [
         {

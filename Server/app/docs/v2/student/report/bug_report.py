@@ -1,5 +1,5 @@
 BUG_REPORT_POST = {
-    'tags': ['신고'],
+    'tags': ['[Student] 신고'],
     'description': '버그를 신고하며, Slackbot이 Slack의 #bug-report 채널로 메시지를 전송합니다.',
     'parameters': [
         {
