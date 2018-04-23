@@ -5,7 +5,7 @@ from flasgger import swag_from
 from app.docs.v2.admin.point.rule import *
 from app.views.v2 import BaseResource, auth_required, json_required
 
-api = Api(Blueprint('/admin/point/rule', __name__, url_prefix='/admin/point'))
+api = Api(Blueprint(__name__, __name__, url_prefix='/admin/point'))
 
 
 @api.resource('/rule')

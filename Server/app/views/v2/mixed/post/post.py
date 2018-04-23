@@ -7,7 +7,7 @@ from app.docs.v2.mixed.post.notice import *
 from app.docs.v2.mixed.post.rule import *
 from app.views.v2 import BaseResource, auth_required, json_required
 
-api = Api(Blueprint('mixed/post/post', __name__, url_prefix=''))
+api = Api(Blueprint(__name__, __name__, url_prefix=''))
 
 
 @api.resource('/faq')

@@ -5,7 +5,7 @@ from flasgger import swag_from
 from app.docs.v2.admin.excel.extension import *
 from app.views.v2 import BaseResource, auth_required, json_required
 
-api = Api(Blueprint('/admin/excel/extension', __name__, url_prefix='/admin'))
+api = Api(Blueprint(__name__, __name__, url_prefix='/admin'))
 
 
 @api.resource('/extension')

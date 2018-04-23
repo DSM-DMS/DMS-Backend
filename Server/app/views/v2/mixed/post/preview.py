@@ -5,7 +5,7 @@ from flasgger import swag_from
 from app.docs.v2.mixed.post.preview import *
 from app.views.v2 import BaseResource, auth_required, json_required
 
-api = Api(Blueprint('mixed/post/preview', __name__, url_prefix='/preview'))
+api = Api(Blueprint(__name__, __name__, url_prefix='/preview'))
 
 
 @api.resource('/faq')

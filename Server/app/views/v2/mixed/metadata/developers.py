@@ -5,7 +5,7 @@ from flasgger import swag_from
 from app.docs.v2.mixed.metadata.developers import *
 from app.views.v2 import BaseResource, auth_required, json_required
 
-api = Api(Blueprint('mixed/metadata/developers', __name__, url_prefix='/metadata'))
+api = Api(Blueprint(__name__, __name__, url_prefix='/metadata'))
 
 
 @api.resource('/developer-info')

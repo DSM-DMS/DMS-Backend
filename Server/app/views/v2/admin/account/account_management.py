@@ -5,7 +5,7 @@ from flasgger import swag_from
 from app.docs.v2.admin.account.account_management import *
 from app.views.v2 import BaseResource, auth_required, json_required
 
-api = Api(Blueprint('/admin/account/account-management', __name__, url_prefix='/account-management'))
+api = Api(Blueprint(__name__, __name__, url_prefix='/account-management'))
 
 
 @api.resource('/student')
