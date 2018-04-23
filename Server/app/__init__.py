@@ -1,10 +1,12 @@
 from flask import Flask, render_template
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
-from flasgger import Swagger
+# from flasgger import Swagger
 
+# from app.docs.v2 import TEMPLATE
 from app.models import Mongo
 from app.views.v1 import Router
+# from app.views.v2 import Router
 
 from config.dev import DevConfig
 from config.production import ProductionConfig
@@ -30,7 +32,7 @@ def create_app(dev=True):
 
     JWTManager().init_app(app_)
     CORS().init_app(app_)
-    # Swagger().init_app(app_)
+    # Swagger(template=TEMPLATE).init_app(app_)
     Mongo().init_app(app_)
     Router().init_app(app_)
 

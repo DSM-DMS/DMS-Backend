@@ -106,3 +106,55 @@ class Router(object):
 
     def init_app(self, app):
         app.after_request(after_request)
+
+        from .admin.account import account_management, auth
+        app.register_blueprint(account_management.api.blueprint)
+        app.register_blueprint(auth.api.blueprint)
+
+        from .admin.excel import extension, goingout, stay
+        app.register_blueprint(extension.api.blueprint)
+        app.register_blueprint(goingout.api.blueprint)
+        app.register_blueprint(stay.api.blueprint)
+
+        from .admin.point import point, rule, student
+        app.register_blueprint(point.api.blueprint)
+        app.register_blueprint(rule.api.blueprint)
+        app.register_blueprint(student.api.blueprint)
+
+        from .admin.post import faq, notice, preview, rule
+        app.register_blueprint(faq.api.blueprint)
+        app.register_blueprint(notice.api.blueprint)
+        app.register_blueprint(preview.api.blueprint)
+        app.register_blueprint(rule.api.blueprint)
+
+        from .admin.report import facility
+        app.register_blueprint(facility.api.blueprint)
+
+        from .admin.survey import question, survey
+        app.register_blueprint(question.api.blueprint)
+        app.register_blueprint(survey.api.blueprint)
+
+        from .mixed.jwt import checker, refresh
+        app.register_blueprint(checker.api.blueprint)
+        app.register_blueprint(refresh.api.blueprint)
+
+        from .mixed.metadata import developers, links
+        app.register_blueprint(developers.api.blueprint)
+        app.register_blueprint(links.api.blueprint)
+
+        from .mixed.post import post, preview
+        app.register_blueprint(post.api.blueprint)
+        app.register_blueprint(preview.api.blueprint)
+
+        from .mixed.school_data import meal
+        app.register_blueprint(meal.api.blueprint)
+
+        from .student.account import alteration, auth, info, signup, social_auth
+        app.register_blueprint(alteration.api.blueprint)
+        app.register_blueprint(auth.api.blueprint)
+        app.register_blueprint(info.api.blueprint)
+        app.register_blueprint(signup.api.blueprint)
+        app.register_blueprint(social_auth.api.blueprint)
+
+        from .student.apply import extension
+        app.register_blueprint(extension.api.blueprint)
