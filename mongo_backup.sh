@@ -30,6 +30,6 @@ tar -zcvf $BACKUPS_DIR/$BACKUP_NAME.tgz $BACKUP_NAME
 # Delete uncompressed backup
 rm -rf $BACKUP_NAME
 # Delete backups older than retention period
-find $BACKUPS_DIR -type f -mtime +$DAYSTORETAINBACKUP -exec rm {} +
+find $BACKUPS_DIR -type f -amin +5 -exec rm {} +
 echo "--------------------------------------------"
 echo "Database backup complete!"
