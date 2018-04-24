@@ -26,6 +26,7 @@ if __name__ == '__main__':
     Process(target=extension_apply_cleaner.run).start()
 
     if not app.testing:
-        monitor(app, port=9090)
+        print('monitor start')
+        # monitor(app, port=9090)
 
     app.run(host=app.config['HOST'], port=int(args.port) if args.port else app.config['PORT'], debug=app.debug, threaded=True)
