@@ -7,8 +7,6 @@
 MONGO_DATABASE="dms-v2"
 # Backup directory
 BACKUPS_DIR="/var/backups/$MONGO_DATABASE"
-# Days to keep the backup
-DAYSTORETAINBACKUP="14"
 #=====================================================================
 
 TIMESTAMP=`date +%F-%H%M`
@@ -30,6 +28,6 @@ tar -zcvf $BACKUPS_DIR/$BACKUP_NAME.tgz $BACKUP_NAME
 # Delete uncompressed backup
 rm -rf $BACKUP_NAME
 # Delete backups older than retention period
-find $BACKUPS_DIR -type f -amin +5 -exec rm {} +
+find $BACKUPS_DIR -type f -amin +2880 -exec rm {} +
 echo "--------------------------------------------"
 echo "Database backup complete!"
