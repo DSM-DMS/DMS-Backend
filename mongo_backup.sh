@@ -5,18 +5,8 @@
 #=====================================================================
 # Database Name to backup
 MONGO_DATABASE="dms-v2"
-# Database host name
-MONGO_HOST="127.0.0.1"
-# Database port
-MONGO_PORT="27017"
 # Backup directory
 BACKUPS_DIR="/var/backups/$MONGO_DATABASE"
-# Database user name
-DBUSERNAME=""
-# Database password
-DBPASSWORD=""
-# Authentication database name
-DBAUTHDB="admin"
 # Days to keep the backup
 DAYSTORETAINBACKUP="14"
 #=====================================================================
@@ -32,7 +22,7 @@ if ! mkdir -p $BACKUPS_DIR; then
   exit 1;
 fi;
 # Create dump
-mongodump -d $MONGO_DATABASE --username $DBUSERNAME --password $DBPASSWORD --authenticationDatabase $DBAUTHDB
+mongodump -d $MONGO_DATABASE
 # Rename dump directory to backup name
 mv dump $BACKUP_NAME
 # Compress backup
