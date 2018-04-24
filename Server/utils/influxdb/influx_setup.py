@@ -49,7 +49,7 @@ def _setup_extension_apply_data():
                 }
             ]
 
-            c.write(payload)
+            c.write_points(payload)
 
     _setup('extension_apply_11', ExtensionApply11Model)
     _setup('extension_apply_12', ExtensionApply12Model)
@@ -70,12 +70,7 @@ def _setup_goingout_apply_data():
                 'fields': {
                     'value': apply.on_saturday
                 }
-            }
-        ]
-
-        c.write(payload)
-
-        payload = [
+            },
             {
                 'measurement': measurement,
                 'tags': {
@@ -87,7 +82,7 @@ def _setup_goingout_apply_data():
             }
         ]
 
-        c.write(payload)
+        c.write_points(payload)
 
 
 def setup():
