@@ -166,5 +166,6 @@ venv.bak/
 # End of https://www.gitignore.io/api/python,pycharm+all
 
 *.log.*
+*.xlsx
 .DS_Store
 Server/config/secret_config.py
