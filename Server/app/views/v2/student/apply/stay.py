@@ -5,10 +5,10 @@ from flasgger import swag_from
 from app.docs.v2.student.apply.stay import *
 from app.views.v2 import BaseResource, auth_required, json_required
 
-api = Api(Blueprint(__name__, __name__, url_prefix='/student/apply'))
+api = Api(Blueprint(__name__, __name__, url_prefix='/student/apply/stay'))
 
 
-@api.resource('/stay')
+@api.resource('/')
 class Stay(BaseResource):
     @swag_from(STAY_GET)
     def get(self):

@@ -8,7 +8,7 @@ from app.views.v2 import BaseResource, auth_required, json_required
 api = Api(Blueprint(__name__, __name__, url_prefix='/student/survey'))
 
 
-@api.resource('/survey')
+@api.resource('/list')
 class Survey(BaseResource):
     @swag_from(SURVEY_GET)
     def get(self):
