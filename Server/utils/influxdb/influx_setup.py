@@ -91,4 +91,4 @@ def setup():
         _setup_extension_apply_data()
         _setup_goingout_apply_data()
 
-        time.sleep(3600)
+        time.sleep(60)
