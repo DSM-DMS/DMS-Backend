@@ -1,1 +1,0 @@
-{ "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "dms.account_base", "name" : "_id_" }, { "v" : 1, "key" : { "_cls" : 1 }, "ns" : "dms.account_base", "name" : "_cls_1", "background" : false } ] }

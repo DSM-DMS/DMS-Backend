@@ -19,8 +19,8 @@ if __name__ == '__main__':
     # from utils.meal_parser import parse
     # parse()
 
-    from utils.db_migrator import migration
-    migration()
+    # from utils.db_migrator import migration
+    # migration()
 
     from utils import extension_apply_cleaner
     Process(target=extension_apply_cleaner.run).start()
