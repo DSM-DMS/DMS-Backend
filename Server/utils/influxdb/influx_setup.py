@@ -65,19 +65,21 @@ def _setup_goingout_apply_data():
             {
                 'measurement': measurement,
                 'tags': {
-                    'on': 'saturday'
+                    'on': 'saturday',
+                    'status': apply.on_saturday
                 },
                 'fields': {
-                    'value': apply.on_saturday
+                    'value': 1
                 }
             },
             {
                 'measurement': measurement,
                 'tags': {
-                    'on': 'sunday'
+                    'on': 'sunday',
+                    'status': apply.on_sunday
                 },
                 'fields': {
-                    'value': apply.on_sunday
+                    'value': 1
                 }
             }
         ]
