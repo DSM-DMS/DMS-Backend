@@ -29,9 +29,9 @@ class Version(BaseResource):
         """
         platform = self.PLATFORM_TYPES[request.args['platform']]
 
-        newest = VersionModel.objects(platform=platform).first().version
+        newest = VersionModel.objects(platform=platform).first()
         if newest:
-            return self.unicode_safe_json_response({'newest_version': newest})
+            return self.unicode_safe_json_response({'newest_version': newest.version})
         else:
             return Response('', 204)
 

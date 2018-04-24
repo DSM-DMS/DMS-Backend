@@ -1,7 +1,5 @@
 from multiprocessing import Process
 
-from flask_prometheus import monitor
-
 from app import app
 
 
@@ -22,11 +20,10 @@ if __name__ == '__main__':
     # from utils.db_migrator import migration
     # migration()
 
+    from utils.influx_setup import setup
+    Process(target=setup).start()
+
     from utils import extension_apply_cleaner
     Process(target=extension_apply_cleaner.run).start()
-
-    if not app.testing:
-        print('monitor start')
-        # monitor(app, port=9090)
 
     app.run(host=app.config['HOST'], port=int(args.port) if args.port else app.config['PORT'], debug=app.debug, threaded=True)
