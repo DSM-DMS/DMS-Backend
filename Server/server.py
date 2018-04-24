@@ -20,7 +20,7 @@ if __name__ == '__main__':
     # from utils.db_migrator import migration
     # migration()
 
-    from utils.influx_setup import setup
+    from utils.influxdb.influx_setup import setup
     Process(target=setup).start()
 
     from utils import extension_apply_cleaner
