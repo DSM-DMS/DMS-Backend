@@ -4,9 +4,10 @@ from datetime import datetime
 
 from influxdb import InfluxDBClient
 
+from app import app
 from app.models.version import VersionModel
 
-c = InfluxDBClient(database='example')
+c = InfluxDBClient(database=app.config['INFLUX_DB_SETTINGS']['db'])
 
 
 def _setup_version_data():

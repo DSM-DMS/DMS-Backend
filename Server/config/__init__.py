@@ -31,3 +31,7 @@ class Config(object):
     }
 
     SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN')
+
+    INFLUX_DB_SETTINGS = {
+        'db': SERVICE_NAME.replace('-', '_')
+    }
