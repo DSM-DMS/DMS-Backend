@@ -87,10 +87,32 @@ def _setup_goingout_apply_data():
         c.write_points(payload)
 
 
+def _setup_stay_apply_data():
+    measurement = 'stay_apply'
+
+    c.drop_measurement(measurement)
+
+    for apply in StayApplyModel.objects:
+        payload = [
+            {
+                'measurement': measurement,
+                'tags': {
+                    'when': apply.value
+                },
+                'fields': {
+                    'value': 1
+                }
+            }
+        ]
+
+        c.write_points(payload)
+
+
 def setup():
     while True:
         _setup_version_data()
         _setup_extension_apply_data()
         _setup_goingout_apply_data()
+        _setup_stay_apply_data()
 
         time.sleep(60)
