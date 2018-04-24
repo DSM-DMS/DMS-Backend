@@ -8,8 +8,13 @@ import re
 
 from openpyxl import load_workbook
 
+from app import app
+from app.models import Mongo
 from app.models.account import StudentModel
 from app.models.point import PointHistoryModel, PointRuleModel
+
+
+Mongo(app)
 
 
 def extract_point_history_data(history):
@@ -20,41 +25,47 @@ def extract_point_history_data(history):
     return date, reason, point
 
 
-wb = load_workbook('2018년 우정관 상벌점 현황.xlsx')
+def do():
+    # start_migration = input('Start point insert? (Y/N)')
+    #
+    # if start_migration.upper() == 'N':
+    #     return
 
-for ws in wb.worksheets:
-    for row in range(2, 90):
-        if not ws['A{}'.format(row)].value:
-            break
+    wb = load_workbook('asdf.xlsx')
 
-        student_number = int(ws['A{}'.format(row)].value)
-        student = StudentModel.objects(number=student_number).first()
+    for ws in wb.worksheets:
+        for row in range(2, 90):
+            if not ws['A{}'.format(row)].value:
+                break
 
-        bad_point_histories = ws['F{}'.format(row)].value
-        if bad_point_histories:
-            b_p_history_list = bad_point_histories.split('\n')
+            student_number = int(ws['A{}'.format(row)].value)
+            student = StudentModel.objects(number=student_number).first()
 
-            for history in b_p_history_list:
-                date, reason, point = extract_point_history_data(history)
+            bad_point_histories = ws['F{}'.format(row)].value
+            if bad_point_histories:
+                b_p_history_list = bad_point_histories.split('\n')
 
-                if date <= '2018-04-11':
-                    continue
+                for history in b_p_history_list:
+                    date, reason, point = extract_point_history_data(history)
 
-                rule = PointRuleModel.objects(name=reason).first()
-                student.point_histories.append(
-                    PointHistoryModel(
-                        reason=rule.name,
-                        point_type=rule.point_type,
-                        point=point,
-                        time=datetime.now(),
-                        id=ObjectId()
+                    if date <= '2018-04-11':
+                        continue
+
+                    rule = PointRuleModel.objects(name=reason).first()
+                    student.point_histories.append(
+                        PointHistoryModel(
+                            reason=rule.name,
+                            point_type=rule.point_type,
+                            point=point,
+                            time=datetime.now(),
+                            id=ObjectId()
+                        )
                     )
-                )
 
-                student.bad_point += point
+                    student.bad_point += point
 
-                if (student.bad_point - 10) // 5 > student.penalty_level and not student.penalty_training_status:
-                    student.penalty_level = student.penalty_level + 1
-                    student.penalty_training_status = True
+                    if (student.bad_point - 10) // 5 > student.penalty_level and not student.penalty_training_status:
+                        student.penalty_level = student.penalty_level + 1
+                        student.penalty_training_status = True
 
-                student.save()
+                    student.save()
