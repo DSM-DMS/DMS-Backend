@@ -23,13 +23,13 @@ class PointRuleModel(Document):
 
     min_point = IntField(
         required=True,
-        min_value=0
+        # min_value=0
     )
     # 최소 점수
 
     max_point = IntField(
         required=True,
-        min_value=0
+        # min_value=0
     )
     # 최대 점수
 
