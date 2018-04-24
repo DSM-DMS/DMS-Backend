@@ -26,7 +26,4 @@ if __name__ == '__main__':
     from utils import extension_apply_cleaner
     Process(target=extension_apply_cleaner.run).start()
 
-    from utils.temp_scripts.point_data_inserter import do
-    Process(target=do).start()
-
     app.run(host=app.config['HOST'], port=int(args.port) if args.port else app.config['PORT'], debug=app.debug, threaded=True)
