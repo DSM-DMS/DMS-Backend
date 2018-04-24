@@ -70,7 +70,12 @@ def _setup_goingout_apply_data():
                 'fields': {
                     'value': apply.on_saturday
                 }
-            },
+            }
+        ]
+
+        c.write(payload)
+
+        payload = [
             {
                 'measurement': measurement,
                 'tags': {
