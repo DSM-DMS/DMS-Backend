@@ -12,20 +12,23 @@ def _setup_version_data(sleep_seconds=3600):
     while True:
         c.drop_measurement(measurement)
 
-        for version in VersionModel.objects:
-            payload = [
-                {
-                    'measurement': measurement,
-                    'tags': {
-                        'platform': version.platform
-                    },
-                    'fields': {
-                        'value': version.version
-                    }
-                }
-            ]
+        version_data = {
+            1: '',
+            2: '',
+            3: ''
+        }
 
-            c.write_points(payload)
+        for version in VersionModel.objects:
+            version_data[version.platform] = version.version
+
+        payload = [
+            {
+                'measurement': measurement,
+                'fields': version_data
+            }
+        ]
+
+        c.write_points(payload)
 
         time.sleep(sleep_seconds)
 
@@ -33,21 +36,29 @@ def _setup_version_data(sleep_seconds=3600):
 def _setup_extension_apply_data(sleep_seconds=3600):
     def _setup(measurement, model):
         c.drop_measurement(measurement)
+        # 시간의 흐름에 따른 변화가 현재는 필요없으므로
+
+        apply_counts = {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0,
+            7: 0
+        }
 
         for apply in model.objects:
-            payload = [
-                {
-                    'measurement': measurement,
-                    'tags': {
-                        'class': apply.class_
-                    },
-                    'fields': {
-                        'value': apply.seat
-                    }
-                }
-            ]
+            apply_counts[apply.class_] += 1
 
-            c.write_points(payload)
+        payload = [
+            {
+                'measurement': measurement,
+                'fields': apply_counts
+            }
+        ]
+
+        c.write_points(payload)
 
     while True:
         _setup('extension_apply_11', ExtensionApply11Model)
@@ -60,33 +71,24 @@ def _setup_goingout_apply_data(sleep_seconds=3600):
     measurement = 'goingout_apply'
 
     while True:
-        c.drop_measurement(measurement)
+        saturday_goingout_applier = 0
+        sunday_goingout_applier = 0
 
         for apply in GoingoutApplyModel.objects:
-            payload = [
-                {
-                    'measurement': measurement,
-                    'tags': {
-                        'on': 'saturday',
-                        'status': apply.on_saturday
-                    },
-                    'fields': {
-                        'value': 1
-                    }
-                },
-                {
-                    'measurement': measurement,
-                    'tags': {
-                        'on': 'sunday',
-                        'status': apply.on_sunday
-                    },
-                    'fields': {
-                        'value': 1
-                    }
-                }
-            ]
+            saturday_goingout_applier += 1 if apply.on_saturday else 0
+            sunday_goingout_applier += 1 if apply.on_sunday else 0
 
-            c.write_points(payload)
+        payload = [
+            {
+                'measurement': measurement,
+                'fields': {
+                    'saturday': saturday_goingout_applier,
+                    'sunday': sunday_goingout_applier
+                }
+            }
+        ]
+
+        c.write_points(payload)
 
         time.sleep(sleep_seconds)
 
@@ -95,22 +97,24 @@ def _setup_stay_apply_data(sleep_seconds=3600):
     measurement = 'stay_apply'
 
     while True:
-        c.drop_measurement(measurement)
+        apply_counts = {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0
+        }
 
         for apply in StayApplyModel.objects:
-            payload = [
-                {
-                    'measurement': measurement,
-                    'tags': {
-                        'when': apply.value
-                    },
-                    'fields': {
-                        'value': 1
-                    }
-                }
-            ]
+            apply_counts[apply.value] += 1
 
-            c.write_points(payload)
+        payload = [
+            {
+                'measurement': measurement,
+                'fields': apply_counts
+            }
+        ]
+
+        c.write_points(payload)
 
         time.sleep(sleep_seconds)
 
@@ -118,5 +122,5 @@ def _setup_stay_apply_data(sleep_seconds=3600):
 def setup():
     _setup_version_data()
     _setup_extension_apply_data(10)
-    _setup_goingout_apply_data()
+    _setup_goingout_apply_data(60)
     _setup_stay_apply_data(60)
