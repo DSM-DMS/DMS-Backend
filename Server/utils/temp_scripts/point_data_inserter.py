@@ -8,13 +8,8 @@ import re
 
 from openpyxl import load_workbook
 
-from app import app
-from app.models import Mongo
 from app.models.account import StudentModel
 from app.models.point import PointHistoryModel, PointRuleModel
-
-
-Mongo(app)
 
 
 def extract_point_history_data(history):
@@ -25,13 +20,16 @@ def extract_point_history_data(history):
     return date, reason, point
 
 
-def do():
-    # start_migration = input('Start point insert? (Y/N)')
-    #
-    # if start_migration.upper() == 'N':
-    #     return
+def insert():
+    start_migration = input('벌점 정보 insert 할거임? (Y/N)')
 
-    wb = load_workbook('asdf.xlsx')
+    if start_migration.upper() == 'N':
+        return
+
+    filename = input('Filename > ')
+    wb = load_workbook(filename)
+
+    date_criteria = input('어느 날짜부터?')
 
     for ws in wb.worksheets:
         for row in range(2, 90):
@@ -48,7 +46,7 @@ def do():
                 for history in b_p_history_list:
                     date, reason, point = extract_point_history_data(history)
 
-                    if date <= '2018-04-11':
+                    if date <= date_criteria:
                         continue
 
                     rule = PointRuleModel.objects(name=reason).first()
