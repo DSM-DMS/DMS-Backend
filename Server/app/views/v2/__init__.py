@@ -134,7 +134,8 @@ class Router(object):
         return blueprint
 
     def init_app(self, app):
-        app.after_request(after_request)
+        if not app.testing:
+            app.after_request(after_request)
 
         from .admin.account import account_management, auth
         app.register_blueprint(self.add_v2_prefix(account_management.api.blueprint))
