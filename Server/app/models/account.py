@@ -85,8 +85,7 @@ class StudentModel(AccountBase):
     # 벌점
 
     point_histories = EmbeddedDocumentListField(
-        document_type=PointHistoryModel,
-        required=True
+        document_type=PointHistoryModel
         # default=[]
     )
     # 상벌점 내역
