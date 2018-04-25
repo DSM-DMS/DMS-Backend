@@ -58,7 +58,7 @@ class TCBase(TC):
         AdminModel.objects.delete()
         StudentModel.objects.delete()
 
-    def json_request(self, method, target_url_rule, token, *args, **kwargs):
+    def json_request(self, method, target_url_rule, token=None, *args, **kwargs):
         """
         Helper for json request
 
