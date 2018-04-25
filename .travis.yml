@@ -12,7 +12,9 @@ matrix:
   allow_failures:
   - python: nightly
   fast_finish: true
-services: mongodb
+services:
+- mongodb
+- influxdb
 install:
 - pip3 install -r requirements.txt
 - pip3 install coveralls
