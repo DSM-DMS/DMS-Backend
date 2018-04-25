@@ -7,7 +7,6 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 
 from app.models.account import AdminModel, StudentModel, SystemModel
-from utils.influxdb import c as influx_client
 
 MODEL_DOCSTRING_MAPPING = {
     AdminModel: ' *관리자 권한',
@@ -20,6 +19,8 @@ def after_request(response):
     """
     Set header - X-Content-Type-Options=nosniff, X-Frame-Options=deny before response
     """
+    from utils.influxdb import c as influx_client
+
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'deny'
 
