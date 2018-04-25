@@ -22,6 +22,20 @@ def after_request(response):
     """
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'deny'
+
+    # influx_client.write_points([
+    #     {
+    #         'measurement': 'req_res_data',
+    #         'tags': {
+    #             'status': response.status,
+    #             'uri': request.path
+    #         },
+    #         'fields': {
+    #             'value': 1
+    #         }
+    #     }
+    # ])
+
     influx_client.write_points([
         {
             'measurement': 'response_status',
