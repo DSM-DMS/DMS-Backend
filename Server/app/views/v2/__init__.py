@@ -34,7 +34,7 @@ def after_request(response):
         }
     ])
 
-    influx_client.write([
+    influx_client.write_points([
         {
             'measurement': 'request_data',
             'tags': {
