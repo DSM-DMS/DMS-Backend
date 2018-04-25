@@ -1,5 +1,5 @@
 import time
-from multiprocessing import Process
+from threading import Thread
 
 from app.models.apply import ExtensionApply11Model, ExtensionApply12Model, GoingoutApplyModel, StayApplyModel
 from app.models.version import VersionModel
@@ -121,12 +121,12 @@ def _setup_stay_apply_data(sleep_seconds=3600):
 
 
 def start_setup():
-    processes = [
-        Process(target=_setup_version_data),
-        Process(target=_setup_extension_apply_data, args=(10,)),
-        Process(target=_setup_goingout_apply_data, args=(60,)),
-        Process(target=_setup_stay_apply_data, args=(60,))
+    threads = [
+        Thread(target=_setup_version_data),
+        Thread(target=_setup_extension_apply_data, args=(10,)),
+        Thread(target=_setup_goingout_apply_data, args=(60,)),
+        Thread(target=_setup_stay_apply_data, args=(60,))
     ]
 
-    for process in processes:
-        process.start()
+    for thread in threads:
+        thread.start()
