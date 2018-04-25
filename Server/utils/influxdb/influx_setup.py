@@ -130,4 +130,3 @@ def start_setup():
 
     for process in processes:
         process.start()
-        process.join()
