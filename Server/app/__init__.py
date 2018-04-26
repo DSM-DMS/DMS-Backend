@@ -41,12 +41,11 @@ def create_app(dev=True):
 
 def merge_v2_api(app_):
     from app.views.v2 import Router
-    from app.docs.v2 import TEMPLATE
 
     app_.config['SWAGGER']['specs_route'] = os.getenv('SWAGGER_URI_V2', '/v2/docs')
     app_.config['SWAGGER']['basePath'] = '/v2'
 
-    Swagger(template=TEMPLATE).init_app(app_)
+    Swagger(template=app_.config['SWAGGER_TEMPLATE']).init_app(app_)
     Router().init_app(app_)
 
 

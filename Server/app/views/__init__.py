@@ -24,30 +24,6 @@ def after_request(response):
         }
     ])
 
-    # influx_client.write_points([
-    #     {
-    #         'measurement': 'response_status',
-    #         'tags': {
-    #             'status': response.status
-    #         },
-    #         'fields': {
-    #             'value': 1
-    #         }
-    #     }
-    # ])
-    #
-    # influx_client.write_points([
-    #     {
-    #         'measurement': 'request_data',
-    #         'tags': {
-    #             'uri': request.path
-    #         },
-    #         'fields': {
-    #             'value': 1
-    #         }
-    #     }
-    # ])
-
     return response
 
 
