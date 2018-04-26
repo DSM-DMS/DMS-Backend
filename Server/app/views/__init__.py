@@ -10,11 +10,36 @@ def after_request(response):
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'deny'
 
+    influx_client.write_points([
+        {
+            'measurement': 'api_process_data',
+            'tags': {
+                'status': response.status,
+                'method': request.method,
+                'uri': request.path
+            },
+            'fields': {
+                'count': 1
+            }
+        }
+    ])
+
     # influx_client.write_points([
     #     {
-    #         'measurement': 'req_res_data',
+    #         'measurement': 'response_status',
     #         'tags': {
-    #             'status': response.status,
+    #             'status': response.status
+    #         },
+    #         'fields': {
+    #             'value': 1
+    #         }
+    #     }
+    # ])
+    #
+    # influx_client.write_points([
+    #     {
+    #         'measurement': 'request_data',
+    #         'tags': {
     #             'uri': request.path
     #         },
     #         'fields': {
@@ -22,30 +47,6 @@ def after_request(response):
     #         }
     #     }
     # ])
-
-    influx_client.write_points([
-        {
-            'measurement': 'response_status',
-            'tags': {
-                'status': response.status
-            },
-            'fields': {
-                'value': 1
-            }
-        }
-    ])
-
-    influx_client.write_points([
-        {
-            'measurement': 'request_data',
-            'tags': {
-                'uri': request.path
-            },
-            'fields': {
-                'value': 1
-            }
-        }
-    ])
 
     return response
 
