@@ -46,7 +46,8 @@ def _setup_extension_apply_data(sleep_seconds=3600):
             4: 0,
             5: 0,
             6: 0,
-            7: 0
+            7: 0,
+            8: 0
         }
 
         for apply in model.objects:
