@@ -1,6 +1,6 @@
 from tests_v1.views import TCBase
 
-from app_v2.models import FacilityReportModel
+from app.models.report import FacilityReportModel
 
 
 class TestFacilityReport(TCBase):

@@ -53,7 +53,6 @@ def merge_v2_api(app_):
 app = create_app(False)
 merge_v2_api(app)
 
-if not app.testing:
-    app.after_request(after_request)
-    app.add_url_rule('/', view_func=index_student)
-    app.route('/admin', view_func=index_admin)
+app.after_request(after_request)
+app.add_url_rule('/', view_func=index_student)
+app.route('/admin', view_func=index_admin)

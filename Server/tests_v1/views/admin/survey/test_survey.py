@@ -2,7 +2,7 @@ import ujson
 
 from tests_v1.views import TCBase
 
-from app_v2.models import SurveyModel
+from app.models.survey import SurveyModel
 
 
 class TestSurveyLoad(TCBase):
