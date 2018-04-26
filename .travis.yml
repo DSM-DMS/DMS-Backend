@@ -13,7 +13,7 @@ matrix:
   - python: nightly
   fast_finish: true
 before_install:
-- apt-get install influxdb
+- apt-get install -y influxdb
 - service influxdb start
 services:
 - mongodb
