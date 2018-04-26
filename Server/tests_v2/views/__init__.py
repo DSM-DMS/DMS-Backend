@@ -5,6 +5,7 @@ from unittest import TestCase as TC
 
 from flask import Response
 from flask_jwt_extended import create_access_token, create_refresh_token
+import pymongo
 
 from app import app
 from app.models.account import AdminModel, StudentModel
@@ -55,8 +56,10 @@ class TCBase(TC):
         self._get_tokens()
 
     def tearDown(self):
-        AdminModel.objects.delete()
-        StudentModel.objects.delete()
+        setting = app.config['MONGODB_SETTINGS']
+        del setting['db']
+
+        pymongo.MongoClient(**setting).drop_database('dms-v2')
 
     def json_request(self, method, target_url_rule, token=None, *args, **kwargs):
         """
@@ -73,7 +76,7 @@ class TCBase(TC):
         data = kwargs.pop('data')
 
         return method(
-            target_url_rule,
+            target_url_rule if target_url_rule.startswith('/v2') else '/v2' + target_url_rule,
             data=ujson.dumps(data) if data else None,
             content_type='application/json',
             headers={'Authorization': token or self.admin_access_token},
@@ -94,7 +97,7 @@ class TCBase(TC):
             Response
         """
         return method(
-            target_url_rule,
+            target_url_rule if target_url_rule.startswith('/v2') else '/v2' + target_url_rule,
             headers={'Authorization': token or self.admin_access_token},
             *args,
             **kwargs
