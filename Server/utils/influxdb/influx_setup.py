@@ -7,6 +7,10 @@ from app.models.version import VersionModel
 from utils.influxdb import c
 
 
+def _log(measurement, payload):
+    print('[InfluxDB] [{}] write points complete : {}'.format(measurement, payload))
+
+
 def _setup_version_data(sleep_seconds=3600):
     measurement = 'version'
 
@@ -30,6 +34,7 @@ def _setup_version_data(sleep_seconds=3600):
         ]
 
         c.write_points(payload)
+        _log(measurement, payload)
 
         time.sleep(sleep_seconds)
 
@@ -61,6 +66,7 @@ def _setup_extension_apply_data(sleep_seconds=3600):
         ]
 
         c.write_points(payload)
+        _log(measurement, payload)
 
     while True:
         _setup('extension_apply_11', ExtensionApply11Model)
@@ -91,6 +97,7 @@ def _setup_goingout_apply_data(sleep_seconds=3600):
         ]
 
         c.write_points(payload)
+        _log(measurement, payload)
 
         time.sleep(sleep_seconds)
 
@@ -117,6 +124,7 @@ def _setup_stay_apply_data(sleep_seconds=3600):
         ]
 
         c.write_points(payload)
+        _log(measurement, payload)
 
         time.sleep(sleep_seconds)
 
