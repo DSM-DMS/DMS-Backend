@@ -40,7 +40,7 @@ class Goingout(BaseResource):
 
         now = datetime.now()
 
-        if current_app.testing or (now.weekday() == 6 and now.time() > time(20, 30)) or (0 <= now.weekday() < 4) or (now.weekday() == 4 and now.time() < time(22, 00)):
+        if current_app.testing or (now.weekday() == 6 and now.time() > time(20, 30)) or (0 <= now.weekday() < 5) or (now.weekday() == 5 and now.time() < time(22, 00)):
             sat = request.form['sat'].upper() == 'TRUE'
             sun = request.form['sun'].upper() == 'TRUE'
 
