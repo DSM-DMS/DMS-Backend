@@ -20,7 +20,7 @@ if ! mkdir -p $BACKUPS_DIR; then
   exit 1;
 fi;
 # Create dump
-mongodump -d $MONGO_DATABASE
+mongodump -d $MONGO_DATABASE -u $MONGO_ID -p $MONGO_PW
 # Rename dump directory to backup name
 mv dump $BACKUP_NAME
 # Compress backup
