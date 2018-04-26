@@ -17,6 +17,7 @@ class Config(object):
     MONGODB_SETTINGS = {
         'host': 'localhost',
         'port': 27017,
+        'db': SERVICE_NAME,
         'username': os.getenv('MONGO_ID'),
         'password': os.getenv('MONGO_PW')
     }

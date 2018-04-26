@@ -9,5 +9,5 @@ class Mongo(object):
     def init_app(self, app):
         setting = app.config['MONGODB_SETTINGS']
 
-        print('MongoDB initializing with {}'.format(setting))
         connect(**setting)
+        print('[INFO] MongoEngine initialized with {}'.format(setting))

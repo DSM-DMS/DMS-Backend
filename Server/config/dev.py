@@ -8,7 +8,3 @@ class DevConfig(Config):
     Config.SWAGGER['host'] = '{}:{}'.format(Config.REPRESENTATIVE_HOST or HOST, PORT)
 
     DEBUG = True
-
-    Config.MONGODB_SETTINGS.update({
-        'db': '{}-dev'.format(Config.SERVICE_NAME)
-    })
