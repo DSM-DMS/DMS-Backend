@@ -14,12 +14,6 @@ if __name__ == '__main__':
     if 'SECRET_KEY' not in os.environ:
         print('[WARN] SECRET KEY is not set in the environment variable !!')
 
-    # from utils.meal_parser import parse
-    # parse()
-
-    # from utils.db_migrator import migration
-    # migration()
-
     from utils.influxdb.influx_setup import start_setup
     start_setup()
 

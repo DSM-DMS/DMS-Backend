@@ -15,55 +15,6 @@ MODEL_DOCSTRING_MAPPING = {
 }
 
 
-def after_request(response):
-    """
-    Set header - X-Content-Type-Options=nosniff, X-Frame-Options=deny before response
-    """
-    from utils.influxdb import c as influx_client
-
-    response.headers['X-Content-Type-Options'] = 'nosniff'
-    response.headers['X-Frame-Options'] = 'deny'
-
-    # influx_client.write_points([
-    #     {
-    #         'measurement': 'req_res_data',
-    #         'tags': {
-    #             'status': response.status,
-    #             'uri': request.path
-    #         },
-    #         'fields': {
-    #             'value': 1
-    #         }
-    #     }
-    # ])
-
-    influx_client.write_points([
-        {
-            'measurement': 'response_status',
-            'tags': {
-                'status': response.status
-            },
-            'fields': {
-                'value': 1
-            }
-        }
-    ])
-
-    influx_client.write_points([
-        {
-            'measurement': 'request_data',
-            'tags': {
-                'uri': request.path
-            },
-            'fields': {
-                'value': 1
-            }
-        }
-    ])
-
-    return response
-
-
 def auth_required(model):
     def decorator(fn):
         fn.__doc__ = fn.__doc__[:-9] + MODEL_DOCSTRING_MAPPING[model] + fn.__doc__[-9:]
@@ -149,9 +100,6 @@ class Router(object):
         return blueprint
 
     def init_app(self, app):
-        if not app.testing:
-            app.after_request(after_request)
-
         from .admin.account import account_management, auth
         app.register_blueprint(self.add_v2_prefix(account_management.api.blueprint))
         app.register_blueprint(self.add_v2_prefix(auth.api.blueprint))
