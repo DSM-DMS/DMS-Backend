@@ -1,11 +1,11 @@
-from tests_v1.views import TCBase
+from tests.v1.views import TCBase
 
 
 class TestNewAdminAccount(TCBase):
     """
     TC about admin account creation
 
-    This TC tests_v1
+    This TC tests
         * POST /admin/new-account
     """
     def setUp(self):

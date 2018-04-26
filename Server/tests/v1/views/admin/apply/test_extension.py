@@ -1,11 +1,11 @@
-from tests_v1.views.admin.apply import ExcelDownloadTCBase
+from tests.v1.views.admin.apply import ExcelDownloadTCBase
 
 
 class TestExtension11Download(ExcelDownloadTCBase):
     """
     TC about extension 11 excel download
 
-    This TC tests_v1
+    This TC tests
         * GET /admin/extension/11
     """
     def test(self):
@@ -25,7 +25,7 @@ class TestExtension12Download(ExcelDownloadTCBase):
     """
     TC about extension 12 excel download
 
-    This TC tests_v1
+    This TC tests
         * GET /admin/extension/12
     """
     def test(self):

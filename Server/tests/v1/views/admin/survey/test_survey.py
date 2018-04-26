@@ -1,6 +1,6 @@
 import ujson
 
-from tests_v1.views import TCBase
+from tests.v1.views import TCBase
 
 from app.models.survey import SurveyModel
 
@@ -9,7 +9,7 @@ class TestSurveyLoad(TCBase):
     """
     TC about survey list inquiring
 
-    This TC tests_v1
+    This TC tests
         * GET /admin/survey
     """
     def setUp(self):
@@ -137,7 +137,7 @@ class Test(TCBase):
     """
     TC about survey uploading
 
-    This TC tests_v1
+    This TC tests
         * POST /admin/survey
     """
     def setUp(self):

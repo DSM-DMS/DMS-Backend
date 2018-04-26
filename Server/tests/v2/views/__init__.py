@@ -57,9 +57,9 @@ class TCBase(TC):
 
     def tearDown(self):
         setting = app.config['MONGODB_SETTINGS']
-        del setting['db']
+        db_name = setting.pop('db')
 
-        pymongo.MongoClient(**setting).drop_database('dms-v2')
+        pymongo.MongoClient(**setting).drop_database(db_name)
 
     def json_request(self, method, target_url_rule, token=None, *args, **kwargs):
         """

@@ -1,13 +1,13 @@
 from app.models.post import FAQModel, NoticeModel, RuleModel
 
-from tests_v1.views import TCBase
+from tests.v1.views import TCBase
 
 
 class TestPostModify(TCBase):
     """
     TC about all of post modifications
 
-    This TC tests_v1
+    This TC tests
         * PATCH /admin/faq
         * PATCH /admin/notice
         * PATCH /admin/rule

@@ -1,4 +1,4 @@
-from tests_v1.views import TCBase
+from tests.v1.views import TCBase
 
 from app.models.account import SignupWaitingModel
 
@@ -7,7 +7,7 @@ class TestDeleteStudentAccount(TCBase):
     """
     TC about student account deletion
 
-    * This TC tests_v1
+    * This TC tests
         POST /admin/account-control
     """
     def tearDown(self):
@@ -117,7 +117,7 @@ class TestDeleteAdminAccount(TCBase):
     """
     TC about admin account deletion
 
-    This TC tests_v1
+    This TC tests
         * DELETE /admin/account-control
     """
     def setUp(self):
@@ -191,7 +191,7 @@ class TestLoadStudentSignStatus(TCBase):
     """
     TC about student's sign status loading
 
-    This TC tests_v1
+    This TC tests
         * GET /student-sign-status
     """
     def tearDown(self):

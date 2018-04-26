@@ -1,13 +1,13 @@
 from app.models.post import FAQModel, NoticeModel, RuleModel
 
-from tests_v1.views import TCBase
+from tests.v1.views import TCBase
 
 
 class TestPostDelete(TCBase):
     """
     TC about all of post deletions
 
-    This TC tests_v1
+    This TC tests
         * DELETE /admin/faq
         * DELETE /admin/notice
         * DELETE /admin/rule

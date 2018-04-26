@@ -1,4 +1,4 @@
-from tests_v1.views import TCBase
+from tests.v1.views import TCBase
 
 from app.models.report import BugReportModel
 
@@ -7,7 +7,7 @@ class TestBugReport(TCBase):
     """
     TC about bug report inquiring
 
-    This TC tests_v1
+    This TC tests
         * GET /admin/report/bug
     """
     def setUp(self):

@@ -1,4 +1,4 @@
-from tests_v1.views import TCBase
+from tests.v1.views import TCBase
 
 from app.models.post import FAQModel
 
@@ -7,7 +7,7 @@ class TestLoadFAQList(TCBase):
     """
     TC about FAQ list inquiring
 
-    This TC tests_v1
+    This TC tests
         * GET /faq
     """
     def setUp(self):
@@ -105,7 +105,7 @@ class TestLoadFAQContent(TCBase):
     """
     TC about FAQ content inquiring
 
-    * This TC tests_v1
+    * This TC tests
         GET /faq/<post_id>
     """
 

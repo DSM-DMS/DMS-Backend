@@ -1,11 +1,11 @@
-from tests_v1.views.admin.apply import ExcelDownloadTCBase
+from tests.v1.views.admin.apply import ExcelDownloadTCBase
 
 
 class TestGoingoutDownload(ExcelDownloadTCBase):
     """
     TC about goingout excel download
 
-    This TC tests_v1
+    This TC tests
         * GET /admin/goingout
     """
     def test(self):

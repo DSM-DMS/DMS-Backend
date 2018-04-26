@@ -1,11 +1,11 @@
-from tests_v1.views import TCBase
+from tests.v1.views import TCBase
 
 
 class TestAuth(TCBase):
     """
     TC about admin account authentication
 
-    This TC tests_v1
+    This TC tests
         * POST /admin/auth
     """
     def test(self):
@@ -72,7 +72,7 @@ class TestRefresh(TCBase):
     """
     TC about admin access token refreshing
 
-    This TC tests_v1
+    This TC tests
         * POST /admin/refresh
     """
     def testRefresh(self):

@@ -1,4 +1,4 @@
-from tests_v1.views import TCBase
+from tests.v1.views import TCBase
 
 
 class ExcelDownloadTCBase(TCBase):
