@@ -13,8 +13,7 @@ matrix:
   - python: nightly
   fast_finish: true
 before_install:
-- apt-get install -y influxdb
-- service influxdb start
+- docker run -d -p 8086:8086 influxdb
 services:
 - mongodb
 install:
