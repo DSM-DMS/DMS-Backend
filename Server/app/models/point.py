@@ -1,3 +1,4 @@
+from bson.objectid import ObjectId
 from datetime import datetime
 
 from app.models import *
@@ -29,7 +30,7 @@ class PointRuleModel(Document):
 
     max_point = IntField(
         required=True,
-        # min_value=0
+        min_value=0
     )
     # 최대 점수
 
@@ -44,8 +45,7 @@ class PointHistoryModel(EmbeddedDocument):
 
     id = ObjectIdField(
         primary_key=True,
-        # default=ObjectId()
-        # TODO 계정과 apply의 time에 대한 default 관련 이슈가 생기지 않으면 주석 제거
+        default=ObjectId()
     )
 
     time = DateTimeField(
