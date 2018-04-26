@@ -1,12 +1,13 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from flasgger import Swagger
 
 from app.models import Mongo
 from app.views.v1 import Router
+from app.views import after_request, index_admin, index_student
 
 from config.dev import DevConfig
 from config.production import ProductionConfig
@@ -52,12 +53,7 @@ def merge_v2_api(app_):
 app = create_app(False)
 merge_v2_api(app)
 
-
-@app.route('/')
-def student():
-    return render_template('student.html')
-
-
-@app.route('/admin')
-def admin():
-    return render_template('admin.html')
+if not app.testing:
+    app.after_request(after_request)
+    app.add_url_rule('/', view_func=index_student)
+    app.route('/admin', view_func=index_admin)
