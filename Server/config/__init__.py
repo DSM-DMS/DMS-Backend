@@ -5,6 +5,7 @@ import os
 class Config(object):
     REPRESENTATIVE_HOST = 'dsm2015.cafe24.com'
     PORT = 80
+    SERVICE_NAME = 'dms-v2'
 
     SECRET_KEY = os.getenv('SECRET_KEY', '85c145a16bd6f6e1f3e104ca78c6a102')
     # Secret key for any 3-rd party libraries
@@ -13,7 +14,18 @@ class Config(object):
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=365)
     JWT_HEADER_TYPE = 'JWT'
 
-    SERVICE_NAME = 'dms-v2'
+    MONGODB_SETTINGS = {
+        'host': 'localhost',
+        'port': 27017,
+        'username': os.getenv('MONGO_ID'),
+        'password': os.getenv('MONGO_PW')
+    }
+
+    INFLUX_DB_SETTINGS = {
+        'db': SERVICE_NAME.replace('-', '_')
+    }
+
+    SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN')
 
     SWAGGER = {
         'title': SERVICE_NAME,
@@ -25,13 +37,8 @@ class Config(object):
             'version': '1.0',
             'description': ''
         },
-
-        'host': '{}:{}'.format(REPRESENTATIVE_HOST, PORT) if REPRESENTATIVE_HOST else None,
         'basePath': '/'
     }
 
-    SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN')
 
-    INFLUX_DB_SETTINGS = {
-        'db': SERVICE_NAME.replace('-', '_')
     }

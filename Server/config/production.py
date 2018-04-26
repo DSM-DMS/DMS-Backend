@@ -1,19 +1,15 @@
 import socket
-import os
 
 from config import Config
 
 
 class ProductionConfig(Config):
     HOST = socket.gethostbyname(socket.gethostname())
+
     Config.SWAGGER['host'] = '{}:{}'.format(Config.REPRESENTATIVE_HOST or HOST, Config.PORT)
 
     DEBUG = False
 
-    MONGODB_SETTINGS = {
-        'host': 'localhost',
-        'port': 27017,
-        'db': Config.SERVICE_NAME,
-        'id': os.getenv('MONGO_ID'),
-        'pw': os.getenv('MONGO_PW')
-    }
+    Config.MONGODB_SETTINGS.update({
+        'db': Config.SERVICE_NAME
+    })
