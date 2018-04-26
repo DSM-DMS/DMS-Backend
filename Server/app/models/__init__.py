@@ -9,4 +9,4 @@ class Mongo(object):
     def init_app(self, app):
         setting = app.config['MONGODB_SETTINGS']
 
-        connect(setting['db'], host=setting['host'], port=setting['port'])
+        connect(setting['db'], host=setting['host'], port=setting['port'], username=setting['id'], password=setting['pw'])

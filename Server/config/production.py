@@ -1,4 +1,5 @@
 import socket
+import os
 
 from config import Config
 
@@ -12,5 +13,7 @@ class ProductionConfig(Config):
     MONGODB_SETTINGS = {
         'host': 'localhost',
         'port': 27017,
-        'db': Config.SERVICE_NAME
+        'db': Config.SERVICE_NAME,
+        'id': os.getenv('MONGO_ID'),
+        'pw': os.getenv('MONGO_PW')
     }
