@@ -54,4 +54,4 @@ merge_v2_api(app)
 
 app.after_request(after_request)
 app.add_url_rule('/', view_func=index_student)
-app.route('/admin', view_func=index_admin)
+app.add_url_rule('/admin', view_func=index_admin)
