@@ -2,12 +2,12 @@ from influxdb import InfluxDBClient
 
 from app import app
 
-influx_settings = app.config['INFLUX_DB_SETTINGS']
+db_name = app.config['INFLUX_DB_SETTINGS']['db']
 
-c = InfluxDBClient(database=influx_settings['db'], password=influx_settings['pw'])
+c = InfluxDBClient(database=db_name)
 
 for db in c.get_list_database():
-    if db['name'] == influx_settings['db']:
+    if db['name'] == db_name:
         break
 else:
-    c.create_database(influx_settings['db'])
+    c.create_database(db_name)
