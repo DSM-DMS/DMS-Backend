@@ -14,8 +14,7 @@ matrix:
   fast_finish: true
 before_install:
 - docker run -d -p 8086:8086 influxdb
-services:
-- mongodb
+- docker run -d -p 27017:27017 mongo
 install:
 - pip3 install -r requirements.txt
 - pip3 install coveralls
