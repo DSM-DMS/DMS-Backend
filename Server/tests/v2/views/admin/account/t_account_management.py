@@ -123,6 +123,7 @@ class TestAdminAccountDeletion(TCBase):
 
         # ---
 
+        self.new_admin_id = 'new_admin'
         self.json_request(
             self.client.post,
             '/account-management/admin',

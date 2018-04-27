@@ -10,9 +10,6 @@ from app.views.v1 import Router
 from app.views import *
 from app._influxdb import InfluxCronJob
 
-from config.dev import DevConfig
-from config.production import ProductionConfig
-
 WEB_FILE_ROOT_DIR = '../web_files'
 
 
@@ -40,6 +37,13 @@ def create_app(*config_cls):
     Router().init_app(app_)
     InfluxCronJob().init_app(app_)
 
+    merge_v2_api(app_)
+
+    app_.after_request(after_request)
+    app_.register_error_handler(Exception, exception_handler)
+    app_.add_url_rule('/', view_func=index_student)
+    app_.add_url_rule('/admin', view_func=index_admin)
+
     return app_
 
 
@@ -51,12 +55,3 @@ def merge_v2_api(app_):
 
     Swagger(template=app_.config['SWAGGER_TEMPLATE']).init_app(app_)
     Router().init_app(app_)
-
-
-app = create_app(ProductionConfig)
-merge_v2_api(app)
-
-app.after_request(after_request)
-app.register_error_handler(Exception, exception_handler)
-app.add_url_rule('/', view_func=index_student)
-app.add_url_rule('/admin', view_func=index_admin)

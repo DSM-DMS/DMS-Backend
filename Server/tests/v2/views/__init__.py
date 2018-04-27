@@ -7,8 +7,11 @@ from flask import Response
 from flask_jwt_extended import create_access_token, create_refresh_token
 import pymongo
 
-from app import app
+from app import create_app
+from config.test import TestConfig
 from app.models.account import AdminModel, StudentModel
+
+app = create_app(TestConfig)
 
 
 class TCBase(TC):
@@ -60,6 +63,8 @@ class TCBase(TC):
         db_name = setting.pop('db')
 
         pymongo.MongoClient(**setting).drop_database(db_name)
+
+        setting['db'] = db_name
 
     def json_request(self, method, target_url_rule, token=None, *args, **kwargs):
         """

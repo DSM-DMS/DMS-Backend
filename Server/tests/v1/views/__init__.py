@@ -4,8 +4,11 @@ from datetime import datetime
 from hashlib import pbkdf2_hmac
 from unittest import TestCase as TC
 
-from app import app
+from app import create_app
+from config.test import TestConfig
 from app.models.account import AdminModel, StudentModel
+
+app = create_app(TestConfig)
 
 
 class TCBase(TC):
