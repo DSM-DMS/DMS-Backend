@@ -95,7 +95,8 @@ class Router:
             self.init_app(app)
 
     def add_v2_prefix(self, blueprint):
-        blueprint.url_prefix = '/{}{}'.format('v2', blueprint.url_prefix)
+        if not blueprint.url_prefix.startswith('/v2'):
+            blueprint.url_prefix = '/{}{}'.format('v2', blueprint.url_prefix)
 
         return blueprint
 
