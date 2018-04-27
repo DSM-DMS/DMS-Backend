@@ -8,6 +8,7 @@ from flasgger import Swagger
 from app.models import Mongo
 from app.views.v1 import Router
 from app.views import after_request, index_admin, index_student
+from app._influxdb import Influx
 
 from config.dev import DevConfig
 from config.production import ProductionConfig
@@ -35,6 +36,7 @@ def create_app(dev=True):
     CORS().init_app(app_)
     Mongo().init_app(app_)
     Router().init_app(app_)
+    Influx().init_app(app_)
 
     return app_
 
