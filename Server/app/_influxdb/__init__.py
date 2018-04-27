@@ -32,8 +32,10 @@ class Influx:
         for thread in threads:
             thread.start()
 
-    def _log(self, measurement, payload):
-        print('[InfluxDB] [{}] write points complete : {}'.format(measurement, payload))
+    def _log(self, payload):
+        measurement = payload[0].pop('measurement')
+
+        print('[InfluxDB] [{}] write points complete : {}'.format(measurement, payload[0]))
 
     def _setup_version_data(self, sleep_seconds=3600):
         measurement = 'version'
@@ -58,7 +60,7 @@ class Influx:
             ]
 
             self.client.write_points(payload)
-            self._log(measurement, payload)
+            self._log(payload)
 
             time.sleep(sleep_seconds)
 
@@ -89,7 +91,7 @@ class Influx:
             ]
 
             self.client.write_points(payload)
-            self._log(measurement, payload)
+            self._log(payload)
 
         while True:
             _setup('extension_apply_11', ExtensionApply11Model)
@@ -119,7 +121,7 @@ class Influx:
             ]
 
             self.client.write_points(payload)
-            self._log(measurement, payload)
+            self._log(payload)
 
             time.sleep(sleep_seconds)
 
@@ -145,6 +147,6 @@ class Influx:
             ]
 
             self.client.write_points(payload)
-            self._log(measurement, payload)
+            self._log(payload)
 
             time.sleep(sleep_seconds)
