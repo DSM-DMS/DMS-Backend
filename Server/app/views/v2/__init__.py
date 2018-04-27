@@ -89,7 +89,7 @@ class BaseResource(Resource):
         )
 
 
-class Router(object):
+class Router:
     def __init__(self, app=None):
         if app is not None:
             self.init_app(app)

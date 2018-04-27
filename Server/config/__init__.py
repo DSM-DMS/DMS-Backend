@@ -2,7 +2,7 @@ from datetime import timedelta
 import os
 
 
-class Config(object):
+class Config:
     REPRESENTATIVE_HOST = 'dsm2015.cafe24.com'
     PORT = 80
     SERVICE_NAME = 'dms-v2'
