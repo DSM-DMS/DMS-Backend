@@ -8,7 +8,7 @@ from flasgger import Swagger
 from app.models import Mongo
 from app.views.v1 import Router
 from app.views import *
-from app._influxdb import Influx
+from app._influxdb import InfluxCronJob
 
 from config.dev import DevConfig
 from config.production import ProductionConfig
@@ -38,7 +38,7 @@ def create_app(*config_cls):
     CORS().init_app(app_)
     Mongo().init_app(app_)
     Router().init_app(app_)
-    Influx().init_app(app_)
+    InfluxCronJob().init_app(app_)
 
     return app_
 

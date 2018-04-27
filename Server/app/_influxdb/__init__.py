@@ -7,7 +7,7 @@ from app.models.apply import ExtensionApply11Model, ExtensionApply12Model, Going
 from app.models.version import VersionModel
 
 
-class Influx:
+class InfluxCronJob:
     def __init__(self, app=None):
         self.client = None
 
@@ -30,8 +30,9 @@ class Influx:
             Thread(target=self._setup_stay_apply_data, args=(60,))
         ]
 
-        for thread in threads:
-            thread.start()
+        if not app.testing:
+            for thread in threads:
+                thread.start()
 
     def _log(self, payload):
         measurement = payload[0].pop('measurement')
