@@ -25,6 +25,24 @@ def after_request(response):
     return response
 
 
+def exception_handler(e):
+    current_app.config['INFLUX_DB_CLIENT'].write_points([
+        {
+            'measurement': 'api_process_data',
+            'tags': {
+                'status': 500,
+                'method': request.method,
+                'uri': request.path
+            },
+            'fields': {
+                'count': 1
+            }
+        }
+    ])
+    
+    return e
+
+
 def index_student():
     return render_template('student.html')
 
