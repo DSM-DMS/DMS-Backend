@@ -11,9 +11,10 @@ class TestAdminAuth(TCBase):
 
         # ---
 
-        self._request = lambda id=self.admin_id, pw=self.pw: self.json_request(
+        self._request = lambda *, token=None, id=self.admin_id, pw=self.pw: self.json_request(
             self.client.post,
             '/admin/auth',
+            token,
             data={
                 'id': id,
                 'pw': pw
@@ -23,8 +24,6 @@ class TestAdminAuth(TCBase):
         self.token_regex = '(?:\w+\.){2}\w+'
 
     def tearDown(self):
-        # ---
-
         super(TestAdminAuth, self).tearDown()
 
     def _validate_response_data(self, resp):
@@ -41,9 +40,7 @@ class TestAdminAuth(TCBase):
         self.assertRegex(access_token, self.token_regex)
         self.assertRegex(refresh_token, self.token_regex)
 
-    def test(self):
-        # -- Test --
-
+    def testAuthSuccess(self):
         # (1) 관리자 계정으로 로그인
         resp = self._request()
 
@@ -53,22 +50,21 @@ class TestAdminAuth(TCBase):
         # (3) response data
         self._validate_response_data(resp)
 
-        # -- Test --
-
-        # -- Exception Test --
-
+    def testAuthFailure_id(self):
         # (1) 존재하지 않는 ID로 로그인
-        resp = self._request(self.student_id)
+        resp = self._request(id=self.student_id)
 
         # (2) status code 401
         self.assertEqual(resp.status_code, 401)
 
-        # ---
-
+    def testAuthFailure_pw(self):
         # (1) 틀린 비밀번호로 로그인
         resp = self._request(pw='1')
 
         # (2) status code 401
         self.assertEqual(resp.status_code, 401)
 
-        # -- Exception Test --
+    def testForbidden(self):
+        # (1) 403 체크
+        resp = self._request(token=self.student_access_token)
+        self.assertEqual(resp.status_code, 403)

@@ -11,9 +11,10 @@ class TestStudentAccountControl(TCBase):
 
         # ---
 
-        self._request = lambda number=self.student_number: self.json_request(
+        self._request = lambda *, token=None, number=self.student_number: self.json_request(
             self.client.delete,
             '/account-management/student',
+            token,
             data={
                 'number': number
             }
@@ -33,8 +34,7 @@ class TestStudentAccountControl(TCBase):
 
         self.assertRegex(uuid, self.uuid_regex)
 
-    def test(self):
-        # -- Test --
+    def testDeletionSuccess(self):
         # (1) 학생 계정 삭제
         resp = self._request()
 
@@ -44,9 +44,9 @@ class TestStudentAccountControl(TCBase):
         # (3) response data
         self._validate_response_data(resp)
 
-        # ---
-
+    def testDeletionSuccess_alreadyDeleted(self):
         # (1) 이미 제거된 학생 계정 삭제
+        self._request()
         resp = self._request()
 
         # (2) status code 200
@@ -55,15 +55,17 @@ class TestStudentAccountControl(TCBase):
         # (3) response data
         self._validate_response_data(resp)
 
-        # -- Test --
-
-        # -- Exception Test --
-
+    def testDeletionFailure_numberDoesNotExist(self):
         # (1) 존재하지 않는 학생 계정 삭제
-        resp = self._request(3119)
+        resp = self._request(number=3119)
 
         # (2) status code 204
         self.assertEqual(resp.status_code, 204)
+
+    def testForbidden(self):
+        # (1) 403 체크
+        resp = self._request(token=self.student_access_token)
+        self.assertEqual(resp.status_code, 403)
 
         # -- Exception Test --
 
@@ -80,37 +82,38 @@ class TestAdminAccountCreation(TCBase):
 
         self.new_admin_id = 'new_admin'
 
+        self._request = lambda *, token=None, id=self.new_admin_id, pw=self.pw, name=self.admin_name: self.json_request(
+            self.client.post,
+            '/account-management/admin',
+            token,
+            data={
+                'id': id,
+                'password': pw,
+                'name': name
+            }
+        )
+
     def tearDown(self):
         super(TestAdminAccountCreation, self).tearDown()
 
-    def test(self):
-        # -- Test --
-
+    def testCreationSuccess(self):
         # (1) 관리자 계정 생성
-        resp = self.json_request(
-            self.client.post,
-            '/account-management/admin',
-            data={
-                'id': self.new_admin_id,
-                'password': self.pw,
-                'name': self.admin_name
-            }
-        )
+        resp = self._request()
 
         # (2) status code 201
         self.assertEqual(resp.status_code, 201)
 
-        # -- Test --
-
-        # -- Exception Test --
-
+    def testCreationFailure_alreadyExists(self):
         # (1) 이미 존재하는 관리자 ID를 통해 계정 생성
-        resp = self.delete(self.new_admin_id)
+        resp = self._request(id=self.new_admin_id)
 
         # (2) status code 204
         self.assertEqual(resp.status_code, 204)
 
-        # -- Exception Test --
+    def testForbidden(self):
+        # (1) 403 체크
+        resp = self._request(token=self.student_access_token)
+        self.assertEqual(resp.status_code, 403)
 
 
 class TestAdminAccountDeletion(TCBase):
@@ -134,10 +137,10 @@ class TestAdminAccountDeletion(TCBase):
             }
         )
 
-        self.new_admin_id = 'new_admin'
-        self._request = lambda id=self.new_admin_id: self.json_request(
+        self._request = lambda *, token=None, id=self.new_admin_id: self.json_request(
             self.client.delete,
             '/account-management/admin',
+            token,
             data={
                 'id': id
             }
@@ -146,31 +149,29 @@ class TestAdminAccountDeletion(TCBase):
     def tearDown(self):
         super(TestAdminAccountDeletion, self).tearDown()
 
-    def test(self):
-        # -- Test --
-
+    def testDeletionSuccess(self):
         # (1) 관리자 계정 삭제
         resp = self._request()
 
         # (2) status code 200
         self.assertEqual(resp.status_code, 200)
 
-        # -- Test --
-
-        # -- Exception Test --
-
+    def testDeletionFailure_alreadyDeleted(self):
         # (1) 이미 삭제된 관리자 계정을 다시 삭제
+        self._request()
         resp = self._request()
 
         # (2) status code 204
         self.assertEqual(resp.status_code, 204)
 
-        # ---
-
+    def testDeletionFailure_idDoesNotExist(self):
         # (1) 애초에 존재하지 않았던 관리자 계정 삭제
-        resp = self._request('1')
+        resp = self._request(id='1')
 
         # (2) status code 204
         self.assertEqual(resp.status_code, 204)
 
-        # -- Exception Test --
+    def testForbidden(self):
+        # (1) 403 체크
+        resp = self._request(token=self.student_access_token)
+        self.assertEqual(resp.status_code, 403)
