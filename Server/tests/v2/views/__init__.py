@@ -21,13 +21,13 @@ class TCBase(TC):
         super(TCBase, self).__init__(*args, **kwargs)
 
     def _create_fake_account(self):
-        AdminModel(
+        self.admin = AdminModel(
             id=self.admin_id,
             pw=self.encrypted_pw,
             name=self.admin_name
         ).save()
 
-        StudentModel(
+        self.student = StudentModel(
             id=self.student_id,
             pw=self.encrypted_pw,
             name=self.student_name,
