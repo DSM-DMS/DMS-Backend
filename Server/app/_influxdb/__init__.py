@@ -18,6 +18,7 @@ class Influx:
         db_name = app.config['INFLUX_DB_SETTINGS']['db']
 
         self.client = InfluxDBClient(database=db_name)
+        app.config['INFLUX_DB_CLIENT'] = self.client
 
         if db_name not in self.client.get_list_database():
             self.client.create_database(db_name)
