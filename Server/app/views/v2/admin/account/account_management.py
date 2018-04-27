@@ -17,6 +17,10 @@ class StudentAccount(BaseResource):
 
 @api.resource('/admin')
 class AdminAccount(BaseResource):
+    @swag_from(ADMIN_ACCOUNT_POST)
+    def post(self):
+        pass
+
     @swag_from(ADMIN_ACCOUNT_DELETE)
     def delete(self):
         pass
