@@ -141,13 +141,13 @@ class TestRuleInquire(TCBase):
         self.assertEqual(resp.status_code, 403)
 
 
-class Test(TCBase):
+class TestRulePatch(TCBase):
     """
     상벌점 규칙 수정을 테스트합니다.
         * PATCH /admin/point/rule
     """
     def setUp(self):
-        super(Test, self).setUp()
+        super(TestRulePatch, self).setUp()
 
         # ---
 
@@ -184,6 +184,59 @@ class Test(TCBase):
 
     def testPatchFailure_ruleDoesNotExist(self):
         # (1) 존재하지 않는 규칙 ID를 통해 수정
+        resp = self._request(rule_id='123')
+
+        # (2) status code 204
+        self.assertEqual(resp.status_code, 204)
+
+    def testForbidden(self):
+        resp = self._request(token=self.student_access_token)
+        self.assertEqual(resp.status_code, 403)
+
+
+class TestRuleDeletion(TCBase):
+    """
+    상벌점 규칙 삭제를 테스트합니다.
+        * DELETE /admin/point/rule
+    """
+    def setUp(self):
+        super(TestRuleDeletion, self).setUp()
+
+        # ---
+
+        self.good_point_rule, self.bad_point_rule = add_point_rules()
+
+        self._request = lambda *, token=None, rule_id=self.good_point_rule.id: self.request(
+            self.client.delete,
+            '/admin/point/rule',
+            token,
+            json={
+                'ruleId': rule_id
+            }
+        )
+
+    def testDeletionSuccess(self):
+        # (1) 상점 규칙 삭제
+        resp = self._request()
+
+        # (2) status code 200
+        self.assertEqual(resp.status_code, 200)
+
+        # (3) 데이터베이스 확인
+        self.assertFalse(self.good_point_rule)
+
+        # (4) 벌점 규칙 삭제
+        resp = self._request(rule_id=self.bad_point_rule.id)
+
+        # (5) status code 200
+        self.assertEqual(resp.status_code, 200)
+
+        # (6) 데이터베이스 확인
+        self.assertFalse(self.bad_point_rule)
+        self.assertFalse(PointRuleModel.objects)
+
+    def testDeletionFailure_ruleDoesNotExist(self):
+        # (1) 존재하지 않는 규칙 ID를 통해 삭제
         resp = self._request(rule_id='123')
 
         # (2) status code 204
