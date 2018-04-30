@@ -23,9 +23,6 @@ class TestAdminAuth(TCBase):
 
         self.token_regex = '(?:\w+\.){2}\w+'
 
-    def tearDown(self):
-        super(TestAdminAuth, self).tearDown()
-
     def _validate_response_data(self, resp):
         data = self.get_response_data_as_json(resp)
         self.assertIsInstance(data, dict)

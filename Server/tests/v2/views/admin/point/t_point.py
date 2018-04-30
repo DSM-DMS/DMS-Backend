@@ -25,9 +25,6 @@ class TestPointGiving(TCBase):
             }
         )
 
-    def tearDown(self):
-        super(TestPointGiving, self).tearDown()
-
     def testGoodPointGivingSuccess(self):
         pass
 
@@ -75,11 +72,6 @@ class TestPointHistoryInquire(TCBase):
             }
         )
 
-    def tearDown(self):
-        # ---
-
-        super(TestPointHistoryInquire, self).tearDown()
-
     def testHistoryInquireSuccess(self):
         pass
 
@@ -123,11 +115,6 @@ class TestPointHistoryDeletion(TCBase):
                 'historyId': history_id
             }
         )
-
-    def tearDown(self):
-        # ---
-
-        super(TestPointHistoryDeletion, self).tearDown()
 
     def testDeleteSuccess(self):
         pass

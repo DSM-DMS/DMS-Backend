@@ -7,12 +7,6 @@ class TestExtensionExcelDownload(ExcelTCBase):
         * GET /admin/extension/11
         * GET /admin/extension/12
     """
-    def setUp(self):
-        super(TestExtensionExcelDownload, self).setUp()
-
-    def tearDown(self):
-        super(TestExtensionExcelDownload, self).tearDown()
-
     def test(self):
         self._test('/admin/extension/11')
         self._test('/admin/extension/12')
