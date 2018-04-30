@@ -1,20 +1,20 @@
-from tests_v2.views import TCBase
+from tests.v2.views import TCBase
 
 
-class TestStudentAccountSignup(TCBase):
+class TestStudentApplyStay(TCBase):
     """
     This TC tests
         * METHOD /
     """
     def setUp(self):
-        super(TestStudentAccountSignup, self).setUp()
+        super(TestStudentApplyStay, self).setUp()
 
         # ---
 
     def tearDown(self):
         # ---
 
-        super(TestStudentAccountSignup, self).tearDown()
+        super(TestStudentApplyStay, self).tearDown()
 
     def test(self):
         # -- Test --

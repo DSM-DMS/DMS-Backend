@@ -1,20 +1,20 @@
-from tests_v2.views import TCBase
+from tests.v2.views import TCBase
 
 
-class TestStudentApplyGoingout(TCBase):
+class TestStudentReportSurvey(TCBase):
     """
     This TC tests
         * METHOD /
     """
     def setUp(self):
-        super(TestStudentApplyGoingout, self).setUp()
+        super(TestStudentReportSurvey, self).setUp()
 
         # ---
 
     def tearDown(self):
         # ---
 
-        super(TestStudentApplyGoingout, self).tearDown()
+        super(TestStudentReportSurvey, self).tearDown()
 
     def test(self):
         # -- Test --

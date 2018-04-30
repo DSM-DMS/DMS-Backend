@@ -1,4 +1,4 @@
-from tests_v2.views import TCBase
+from tests.v2.views import TCBase
 
 
 class TestStudentAccountSocialAuth(TCBase):
