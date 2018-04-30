@@ -13,9 +13,6 @@ class ExcelTCBase(TCBase):
             token
         )
 
-    def tearDown(self):
-        super(ExcelTCBase, self).tearDown()
-
     def _testDownloadSuccess(self, uri):
         # (1) 엑셀 다운로드
         resp = self._request(uri)

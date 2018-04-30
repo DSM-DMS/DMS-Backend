@@ -22,9 +22,6 @@ class TestStudentAccountControl(TCBase):
 
         self.uuid_regex = '[0-9|a-f]{4}'
 
-    def tearDown(self):
-        super(TestStudentAccountControl, self).tearDown()
-
     def _validate_response_data(self, resp):
         data = self.get_response_data_as_json(resp)
         self.assertIsInstance(data, dict)
@@ -93,9 +90,6 @@ class TestAdminAccountCreation(TCBase):
             }
         )
 
-    def tearDown(self):
-        super(TestAdminAccountCreation, self).tearDown()
-
     def testCreationSuccess(self):
         # (1) 관리자 계정 생성
         resp = self._request()
@@ -145,9 +139,6 @@ class TestAdminAccountDeletion(TCBase):
                 'id': id
             }
         )
-
-    def tearDown(self):
-        super(TestAdminAccountDeletion, self).tearDown()
 
     def testDeletionSuccess(self):
         # (1) 관리자 계정 삭제
