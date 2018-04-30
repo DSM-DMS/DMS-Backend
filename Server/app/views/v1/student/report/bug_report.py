@@ -33,7 +33,10 @@ class BugReport(BaseResource):
         student = g.user
 
         content = request.form['content']
-        platform_type = int(request.form['platform_type'])
+        try:
+            platform_type = int(request.form['platform_type'])
+        except:
+            platform_type = 1
         time = datetime.now()
 
         if not current_app.testing:
