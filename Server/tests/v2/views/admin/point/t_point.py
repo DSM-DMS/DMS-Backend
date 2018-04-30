@@ -1,3 +1,5 @@
+from app.models.point import PointHistoryModel
+
 from tests.v2.views import TCBase
 from tests.v2.views.admin.point import add_point_rules
 
@@ -102,21 +104,23 @@ class TestPointHistoryInquire(TCBase):
 
         # ---
 
-        self.good_point_rule, self.bad_point_rule = add_point_rules()
-
-        self._request_temp = lambda *, token=None, id=self.student_id, rule_id=self.good_point_rule.id, point=1: self.request(
-            self.client.post,
-            '/admin/point',
-            token,
-            json={
-                'id': id,
-                'ruleId': rule_id,
-                'point': point
-            }
+        self.student.point_histories.append(
+            PointHistoryModel(
+                reason='상점 규칙',
+                point_type=True,
+                point=1
+            )
         )
 
-        self._request_temp()
-        self._request_temp(rule_id=self.bad_point_rule.id, point=3)
+        self.student.point_histories.append(
+            PointHistoryModel(
+                reason='벌점 규칙',
+                point_type=False,
+                point=1
+            )
+        )
+
+        self.student.save()
 
         self.expected_good_point_history = {
             'date': self.today,
@@ -129,7 +133,7 @@ class TestPointHistoryInquire(TCBase):
             'date': self.today,
             'reason': '벌점 규칙',
             'pointType': False,
-            'point': 3
+            'point': 1
         }
 
         self._request = lambda *, token=None, id=self.student_id: self.request(
@@ -189,24 +193,25 @@ class TestPointHistoryDeletion(TCBase):
 
         # ---
 
-        self.good_point_rule, self.bad_point_rule = add_point_rules()
-
-        self._request_temp = lambda *, token=None, id=self.student_id, rule_id=self.good_point_rule.id, point=1: self.request(
-            self.client.post,
-            '/admin/point',
-            token,
-            json={
-                'id': id,
-                'ruleId': rule_id,
-                'point': point
-            }
+        self.student.point_histories.append(
+            PointHistoryModel(
+                reason='상점 규칙',
+                point_type=True,
+                point=1
+            )
         )
 
-        resp = self._request_temp()
-        self.good_point_history_id = self.get_response_data_as_json(resp)['id']
+        self.student.point_histories.append(
+            PointHistoryModel(
+                reason='벌점 규칙',
+                point_type=False,
+                point=1
+            )
+        )
 
-        resp = self._request_temp(rule_id=self.bad_point_rule.id, point=3)
-        self.bad_point_history_id = self.get_response_data_as_json(resp)['id']
+        self.student.save()
+
+        self.good_point_history_id, self.bad_point_history_id = [history.id for history in self.student.point_histories]
 
         self._request = lambda *, token=None, id=self.student_id, history_id=self.good_point_history_id: self.request(
             self.client.delete,
