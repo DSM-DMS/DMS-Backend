@@ -39,12 +39,14 @@ class TestPointGiving(TCBase):
         self.assertIn('id', data)
         self.assertIsInstance(data['id'], str)
 
-        # (4) 내역 확인
+        # (4) 데이터베이스 확인
         self.assertEqual(len(self.student.point_histories), 1)
 
         history = self.student.point_histories[0]
         self.assertEqual(history.point_type, True)
         self.assertEqual(history.point, 1)
+
+        self.assertEqual(self.student.good_point, 1)
 
     def testBadPointGivingSuccess(self):
         # (1) 벌점 부여
@@ -61,12 +63,14 @@ class TestPointGiving(TCBase):
         self.assertIn('id', data)
         self.assertIsInstance(data['id'], str)
 
-        # (4) 내역 확인
+        # (4) 데이터베이스 확인
         self.assertEqual(len(self.student.point_histories), 1)
 
         history = self.student.point_histories[0]
         self.assertEqual(history.point_type, False)
         self.assertEqual(history.point, 1)
+
+        self.assertEqual(self.student.bad_point, 1)
 
     def testPointGivingFailure_studentDoesNotExist(self):
         # (1) 존재하지 않는 학생 ID를 통해 상점 부여
@@ -221,8 +225,9 @@ class TestPointHistoryDeletion(TCBase):
         # (2) status code 200
         self.assertEqual(resp.status_code, 200)
 
-        # (3) 내역 삭제 확인
+        # (3) 데이터베이스 확인
         self.assertEqual(len(self.student.point_histories), 1)
+        self.assertFalse(self.student.good_point)
 
         # (4) 벌점 내역 삭제
         resp = self._request(history_id=self.bad_point_history_id)
@@ -230,8 +235,9 @@ class TestPointHistoryDeletion(TCBase):
         # (5) status code 200
         self.assertEqual(resp.status_code, 200)
 
-        # (6) 내역 삭제 확인
+        # (6) 데이터베이스 확인
         self.assertFalse(self.student.point_histories)
+        self.assertFalse(self.student.bad_point)
 
     def testDeleteFailure_studentDoesNotExist(self):
         # (1) 존재하지 않는 학생 ID를 통해 내역 삭제

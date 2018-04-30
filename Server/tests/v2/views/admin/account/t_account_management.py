@@ -1,3 +1,5 @@
+from app.models.account import AdminModel, StudentModel
+
 from tests.v2.views import TCBase
 
 
@@ -42,6 +44,9 @@ class TestStudentAccountControl(TCBase):
 
         # (3) response data
         self._validate_response_data(resp)
+
+        # (4) 데이터베이스 확인
+        self.assertFalse(StudentModel.objects)
 
     def testDeletionSuccess_alreadyDeleted(self):
         # (1) 이미 제거된 학생 계정 삭제
@@ -97,6 +102,13 @@ class TestAdminAccountCreation(TCBase):
         # (2) status code 201
         self.assertEqual(resp.status_code, 201)
 
+        # (3) 데이터베이스 확인
+        admins = AdminModel.objects
+        self.assertEqual(admins.count(), 2)
+
+        admin = admins.filter(id=self.new_admin_id)
+        self.assertTrue(admin)
+
     def testCreationFailure_alreadyExists(self):
         # (1) 이미 존재하는 관리자 ID를 통해 계정 생성
         resp = self._request(id=self.new_admin_id)
@@ -146,6 +158,10 @@ class TestAdminAccountDeletion(TCBase):
 
         # (2) status code 200
         self.assertEqual(resp.status_code, 200)
+
+        # (3) 데이터베이스 확인
+        new_admin = AdminModel.objects(id=self.new_admin_id)
+        self.assertFalse(new_admin)
 
     def testDeletionFailure_alreadyDeleted(self):
         # (1) 이미 삭제된 관리자 계정을 다시 삭제
