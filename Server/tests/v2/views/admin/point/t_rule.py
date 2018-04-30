@@ -139,3 +139,56 @@ class TestRuleInquire(TCBase):
     def testForbidden(self):
         resp = self._request(token=self.student_access_token)
         self.assertEqual(resp.status_code, 403)
+
+
+class Test(TCBase):
+    """
+    상벌점 규칙 수정을 테스트합니다.
+        * PATCH /admin/point/rule
+    """
+    def setUp(self):
+        super(Test, self).setUp()
+
+        # ---
+
+        self.good_point_rule, self.bad_point_rule = add_point_rules()
+
+        self.new_rule_name = '새로운 규칙'
+        self.new_min_point = 2
+        self.new_max_point = 10
+
+        self._request = lambda *, token=None, rule_id=self.good_point_rule.id, name=self.new_rule_name, point_type=True, min_point=self.new_min_point, max_point=self.new_max_point: self.request(
+            self.client.patch,
+            '/admin/point/rule',
+            token,
+            json={
+                'ruleId': rule_id,
+                'name': name,
+                'pointType': point_type,
+                'minPoint': min_point,
+                'maxPoint': max_point
+            }
+        )
+
+    def testPatchSuccess(self):
+        # (1) 상벌점 규칙 수정
+        resp = self._request()
+
+        # (2) status code 200
+        self.assertEqual(resp.status_code, 200)
+
+        # (3) 데이터베이스 확인
+        self.assertEqual(self.good_point_rule.name, self.new_rule_name)
+        self.assertEqual(self.good_point_rule.min_point, self.new_min_point)
+        self.assertEqual(self.good_point_rule.max_point, self.new_max_point)
+
+    def testPatchFailure_ruleDoesNotExist(self):
+        # (1) 존재하지 않는 규칙 ID를 통해 수정
+        resp = self._request(rule_id='123')
+
+        # (2) status code 204
+        self.assertEqual(resp.status_code, 204)
+
+    def testForbidden(self):
+        resp = self._request(token=self.student_access_token)
+        self.assertEqual(resp.status_code, 403)
