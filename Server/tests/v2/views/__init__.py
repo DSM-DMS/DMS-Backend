@@ -1,5 +1,6 @@
 import ujson
 from binascii import hexlify
+from datetime import datetime
 from hashlib import pbkdf2_hmac
 from unittest import TestCase as TC
 
@@ -17,6 +18,7 @@ app = create_app(TestConfig)
 class TCBase(TC):
     def __init__(self, *args, **kwargs):
         self.client = app.test_client()
+        self.today = datetime.now().strftime('%Y-%m-%d')
 
         super(TCBase, self).__init__(*args, **kwargs)
 
