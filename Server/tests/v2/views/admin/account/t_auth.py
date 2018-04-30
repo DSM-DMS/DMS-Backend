@@ -11,11 +11,11 @@ class TestAdminAuth(TCBase):
 
         # ---
 
-        self._request = lambda *, token=None, id=self.admin_id, pw=self.pw: self.json_request(
+        self._request = lambda *, token=None, id=self.admin_id, pw=self.pw: self.request(
             self.client.post,
             '/admin/auth',
             token,
-            data={
+            json={
                 'id': id,
                 'pw': pw
             }
@@ -28,6 +28,8 @@ class TestAdminAuth(TCBase):
 
     def _validate_response_data(self, resp):
         data = self.get_response_data_as_json(resp)
+        self.assertIsInstance(data, dict)
+
         self.assertIn('accessToken', data)
         self.assertIn('refreshToken', data)
 

@@ -11,11 +11,11 @@ class TestStudentAccountControl(TCBase):
 
         # ---
 
-        self._request = lambda *, token=None, number=self.student_number: self.json_request(
+        self._request = lambda *, token=None, number=self.student_number: self.request(
             self.client.delete,
             '/account-management/student',
             token,
-            data={
+            json={
                 'number': number
             }
         )
@@ -27,6 +27,8 @@ class TestStudentAccountControl(TCBase):
 
     def _validate_response_data(self, resp):
         data = self.get_response_data_as_json(resp)
+        self.assertIsInstance(data, dict)
+
         self.assertIn('uuid', data)
 
         uuid = data['uuid']
@@ -67,8 +69,6 @@ class TestStudentAccountControl(TCBase):
         resp = self._request(token=self.student_access_token)
         self.assertEqual(resp.status_code, 403)
 
-        # -- Exception Test --
-
 
 class TestAdminAccountCreation(TCBase):
     """
@@ -82,11 +82,11 @@ class TestAdminAccountCreation(TCBase):
 
         self.new_admin_id = 'new_admin'
 
-        self._request = lambda *, token=None, id=self.new_admin_id, pw=self.pw, name=self.admin_name: self.json_request(
+        self._request = lambda *, token=None, id=self.new_admin_id, pw=self.pw, name=self.admin_name: self.request(
             self.client.post,
             '/account-management/admin',
             token,
-            data={
+            json={
                 'id': id,
                 'password': pw,
                 'name': name
@@ -127,21 +127,21 @@ class TestAdminAccountDeletion(TCBase):
         # ---
 
         self.new_admin_id = 'new_admin'
-        self.json_request(
+        self.request(
             self.client.post,
             '/account-management/admin',
-            data={
+            json={
                 'id': self.new_admin_id,
                 'password': self.pw,
                 'name': self.admin_name
             }
         )
 
-        self._request = lambda *, token=None, id=self.new_admin_id: self.json_request(
+        self._request = lambda *, token=None, id=self.new_admin_id: self.request(
             self.client.delete,
             '/account-management/admin',
             token,
-            data={
+            json={
                 'id': id
             }
         )
