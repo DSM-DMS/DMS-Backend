@@ -111,7 +111,8 @@ class TestAdminAccountCreation(TCBase):
 
     def testCreationFailure_alreadyExists(self):
         # (1) 이미 존재하는 관리자 ID를 통해 계정 생성
-        resp = self._request(id=self.new_admin_id)
+        self._request()
+        resp = self._request()
 
         # (2) status code 204
         self.assertEqual(resp.status_code, 204)
