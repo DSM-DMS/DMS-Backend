@@ -57,7 +57,7 @@ class StudentAccount(BaseResource):
                     'uuid': signup_waiting.uuid
                 }, 201
             else:
-                raise Exception
+                raise Exception()
 
 
 @api.resource('/admin')
@@ -92,8 +92,22 @@ class AdminAccount(BaseResource):
         if admin:
             return Response('', 201)
         else:
-            raise Exception
+            raise Exception()
 
+    @auth_required(AdminModel)
+    @json_required('id')
     @swag_from(ADMIN_ACCOUNT_DELETE)
     def delete(self):
-        pass
+        """
+        관리자 계정 제거
+        """
+        id = request.json['id']
+
+        admin = AdminModel.objects(id=id).first()
+
+        if not admin:
+            return Response('', 204)
+        else:
+            admin.delete()
+
+            return Response('', 200)
