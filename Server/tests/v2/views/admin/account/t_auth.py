@@ -17,7 +17,7 @@ class TestAdminAuth(TCBase):
             token,
             json={
                 'id': id,
-                'pw': pw
+                'password': pw
             }
         )
 
@@ -31,7 +31,7 @@ class TestAdminAuth(TCBase):
         self.assertIn('refreshToken', data)
 
         access_token = data['accessToken']
-        refresh_token = data['refresh_token']
+        refresh_token = data['refreshToken']
 
         self.assertIsInstance(access_token, str)
         self.assertIsInstance(refresh_token, str)
@@ -62,8 +62,3 @@ class TestAdminAuth(TCBase):
 
         # (2) status code 401
         self.assertEqual(resp.status_code, 401)
-
-    def testForbidden(self):
-        # (1) 403 체크
-        resp = self._request(token=self.student_access_token)
-        self.assertEqual(resp.status_code, 403)
