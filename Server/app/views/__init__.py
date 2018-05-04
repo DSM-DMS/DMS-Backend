@@ -40,7 +40,7 @@ def exception_handler(e):
         }
     ])
     
-    return e
+    return '', 500
 
 
 def index_student():
