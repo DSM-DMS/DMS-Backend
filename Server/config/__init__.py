@@ -3,9 +3,12 @@ import os
 
 
 class Config:
-    REPRESENTATIVE_HOST = 'dsm2015.cafe24.com'
-    PORT = 80
     SERVICE_NAME = 'dms-v2'
+    REPRESENTATIVE_HOST = 'dsm2015.cafe24.com'
+
+    RUN_SETTING = {
+        'threaded': True
+    }
 
     SECRET_KEY = os.getenv('SECRET_KEY', '85c145a16bd6f6e1f3e104ca78c6a102')
     # Secret key for any 3-rd party libraries
