@@ -12,7 +12,7 @@
 ### WAS
 - nginx
 ### Database
-- MongoDB(메인 데이터베이스)
+- MongoDB(메인 데이터베이스) with Sharded Cluster
 - Redis(Expire가 필요하거나 latency가 적어야 하는 캐싱 데이터)
 ### Monitoring
 - InfluxDB(로그 데이터 저장)
