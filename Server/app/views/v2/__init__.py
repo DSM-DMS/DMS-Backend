@@ -27,8 +27,8 @@ def auth_required(model):
                 abort(403)
 
             g.user = user
-            return fn(*args, **kwargs)
 
+            return fn(*args, **kwargs)
         return wrapper
     return decorator
 
@@ -58,7 +58,6 @@ def json_required(*required_keys):
 
             return fn(*args, **kwargs)
         return wrapper
-
     return decorator
 
 
