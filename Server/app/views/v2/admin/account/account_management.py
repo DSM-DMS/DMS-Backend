@@ -2,7 +2,7 @@ from binascii import hexlify
 from hashlib import pbkdf2_hmac
 from uuid import uuid4
 
-from flask import Blueprint, Response, abort, current_app, g, request
+from flask import Blueprint, Response, current_app, request
 from flask_restful import Api
 from flasgger import swag_from
 
