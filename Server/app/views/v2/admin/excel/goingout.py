@@ -21,10 +21,20 @@ class GoingoutExcelDownload(ExcelDownload):
 
         super(GoingoutExcelDownload, self).__init__(self.model, self.filename)
 
+    def get_status(self, apply):
+        if apply.on_saturday and apply.on_sunday:
+            return '토요일, 일요일 외출'
+        elif apply.on_saturday:
+            return '토요일 외출'
+        elif apply.on_sunday:
+            return '일요일 외출'
+        else:
+            return ''
+
     def generate_excel(self):
         wb, ws = self.ready_worksheet()
 
-        for apply in GoingoutApplyModel.objects:
+        for apply in self.model.objects:
             student = apply.student
 
             number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
@@ -39,20 +49,12 @@ class GoingoutExcelDownload(ExcelDownload):
                 ws[number_cell] = student.number
                 ws[name_cell] = student.name
 
-            if apply.on_saturday and apply.on_sunday:
-                status = '토요일, 일요일 외출'
-            elif apply.on_saturday:
-                status = '토요일 외출'
-            elif apply.on_sunday:
-                status = '일요일 외출'
-            else:
-                status = ''
             ws.column_dimensions['D'].width = 20
             ws.column_dimensions['H'].width = 20
             ws.column_dimensions['L'].width = 20
             ws.column_dimensions['P'].width = 20
 
-            ws[status_cell] = status
+            ws[status_cell] = self.get_status(apply)
 
         self.save_excel(wb)
 

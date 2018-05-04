@@ -19,6 +19,9 @@ class ExtensionExcelDownload(ExcelDownload):
 
         super(ExtensionExcelDownload, self).__init__(*args, **kwargs)
 
+    def get_status(self, apply):
+        return self.EXTENSION_CLASSES[apply.class_ - 1]
+
     def generate_excel(self):
         wb, ws = self.ready_worksheet()
 
@@ -29,7 +32,7 @@ class ExtensionExcelDownload(ExcelDownload):
 
             ws[number_cell] = student.number
             ws[name_cell] = student.name
-            ws[status_cell] = self.EXTENSION_CLASSES[apply.class_ - 1]
+            ws[status_cell] = self.get_status(apply)
 
         self.save_excel(wb)
 
