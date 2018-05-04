@@ -14,4 +14,4 @@ class ProductionConfig(Config):
         'debug': DEBUG
     })
 
-    Config.SWAGGER['host'] = '{}:{}'.format(Config.REPRESENTATIVE_HOST or HOST, Config.PORT)
+    Config.SWAGGER['host'] = '{}:{}'.format(Config.REPRESENTATIVE_HOST or HOST, PORT)
