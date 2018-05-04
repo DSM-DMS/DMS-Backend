@@ -1,6 +1,8 @@
+from binascii import hexlify
+from hashlib import pbkdf2_hmac
 from uuid import uuid4
 
-from flask import Blueprint, Response, abort, g, request
+from flask import Blueprint, Response, abort, current_app, g, request
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -60,9 +62,37 @@ class StudentAccount(BaseResource):
 
 @api.resource('/admin')
 class AdminAccount(BaseResource):
+    @auth_required(AdminModel)
+    @json_required('id', 'password', 'name')
     @swag_from(ADMIN_ACCOUNT_POST)
     def post(self):
-        pass
+        """
+        새로운 관리자 계정 생성
+        """
+        id = request.json['id']
+        password = request.json['password']
+        name = request.json['name']
+
+        if AdminModel.objects(id=id).first():
+            return Response('', 204)
+
+        encrypted_password = hexlify(pbkdf2_hmac(
+            hash_name='sha256',
+            password=password.encode(),
+            salt=current_app.secret_key.encode(),
+            iterations=100000
+        )).decode('utf-8')
+
+        admin = AdminModel(
+            id=id,
+            pw=encrypted_password,
+            name=name
+        ).save()
+
+        if admin:
+            return Response('', 201)
+        else:
+            raise Exception
 
     @swag_from(ADMIN_ACCOUNT_DELETE)
     def delete(self):
