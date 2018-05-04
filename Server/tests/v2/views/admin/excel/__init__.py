@@ -21,7 +21,7 @@ class ExcelTCBase(TCBase):
         self.assertEqual(resp.status_code, 200)
 
         # (3) response header
-        self.assertIn('application / vnd.openxmlformats - officedocument.spreadsheetml.sheet', resp.headers)
+        self.assertIn('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', resp.headers.values())
 
     def _testForbidden(self, uri):
         # (1) 403 체크
