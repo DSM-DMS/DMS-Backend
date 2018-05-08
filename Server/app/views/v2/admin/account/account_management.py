@@ -2,7 +2,7 @@ from binascii import hexlify
 from hashlib import pbkdf2_hmac
 from uuid import uuid4
 
-from flask import Blueprint, Response, current_app, request
+from flask import Blueprint, Response, abort, current_app, request
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -74,7 +74,7 @@ class AdminAccount(BaseResource):
         name = request.json['name']
 
         if AdminModel.objects(id=id).first():
-            return Response('', 204)
+            abort(409)
 
         encrypted_password = hexlify(pbkdf2_hmac(
             hash_name='sha256',

@@ -82,7 +82,7 @@ ADMIN_ACCOUNT_POST = {
         '201': {
             'description': '새로운 관리자 계정 생성 성공'
         },
-        '204': {
+        '409': {
             'description': '이미 존재하는 ID'
         },
         '403': {

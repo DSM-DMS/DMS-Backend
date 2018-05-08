@@ -114,8 +114,8 @@ class TestAdminAccountCreation(TCBase):
         self._request()
         resp = self._request()
 
-        # (2) status code 204
-        self.assertEqual(resp.status_code, 204)
+        # (2) status code 409
+        self.assertEqual(resp.status_code, 409)
 
     def testForbidden(self):
         # (1) 403 체크
