@@ -24,7 +24,7 @@ class TestAdminAuth(TCBase):
         self.token_regex = '(?:\w+\.){2}\w+'
 
     def _validate_response_data(self, resp):
-        data = self.get_response_data_as_json(resp)
+        data = resp.json
         self.assertIsInstance(data, dict)
 
         self.assertIn('accessToken', data)

@@ -25,7 +25,7 @@ class TestStudentAccountControl(TCBase):
         self.uuid_regex = '[0-9|a-f]{4}'
 
     def _validate_response_data(self, resp):
-        data = self.get_response_data_as_json(resp)
+        data = resp.json
         self.assertIsInstance(data, dict)
 
         self.assertIn('uuid', data)

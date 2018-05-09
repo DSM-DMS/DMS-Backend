@@ -39,7 +39,7 @@ class TestRuleAddition(TCBase):
         self.assertEqual(resp.status_code, 201)
 
         # (3) response data
-        data = self.get_response_data_as_json(resp)
+        data = resp.json
         self.assertIsInstance(data, dict)
 
         self.assertIn('id', data)
@@ -65,7 +65,7 @@ class TestRuleAddition(TCBase):
         self.assertEqual(resp.status_code, 201)
 
         # (3) response data
-        data = self.get_response_data_as_json(resp)
+        data = resp.json
         self.assertIsInstance(data, dict)
 
         self.assertIn('id', data)
@@ -128,7 +128,7 @@ class TestRuleInquire(TCBase):
         self.assertEqual(resp.status_code, 200)
 
         # (3) response data
-        data = self.get_response_data_as_json(resp)
+        data = resp.json
         self.assertIsInstance(data, list)
 
         good_point_rule, bad_point_rule = data
