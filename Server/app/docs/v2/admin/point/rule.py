@@ -1,6 +1,6 @@
 from app.docs.v2 import SAMPLE_OBJECT_IDS
 
-POINT_RULE_GET = {
+RULE_GET = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '상벌점 규칙 목록을 조회합니다.',
     'parameters': [
@@ -40,7 +40,7 @@ POINT_RULE_GET = {
     }
 }
 
-POINT_RULE_POST = {
+RULE_POST = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '상벌점 규칙을 추가합니다.',
     'parameters': [
@@ -95,7 +95,7 @@ POINT_RULE_POST = {
     }
 }
 
-POINT_RULE_PATCH = {
+RULE_ALTERATION_PATCH = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '상벌점 규칙의 내용을 수정합니다.',
     'parameters': [
@@ -107,9 +107,9 @@ POINT_RULE_PATCH = {
             'required': True
         },
         {
-            'name': 'ruleId',
+            'name': 'rule_id',
             'description': '수정할 상벌점 규칙 ID',
-            'in': 'json',
+            'in': 'path',
             'type': 'str',
             'required': True
         },
@@ -155,7 +155,7 @@ POINT_RULE_PATCH = {
     }
 }
 
-POINT_RULE_DELETE = {
+RULE_ALTERATION_DELETE = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '상벌점 규칙을 삭제합니다.',
     'parameters': [
@@ -169,7 +169,7 @@ POINT_RULE_DELETE = {
         {
             'name': 'ruleId',
             'description': '삭제할 상벌점 규칙 ID',
-            'in': 'json',
+            'in': 'path',
             'type': 'str',
             'required': True
         }

@@ -3,6 +3,7 @@ from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.v2.admin.point.rule import *
+from app.models.account import AdminModel
 from app.views.v2 import BaseResource, auth_required, json_required
 
 api = Api(Blueprint(__name__, __name__, url_prefix='/admin/point'))
@@ -10,18 +11,33 @@ api = Api(Blueprint(__name__, __name__, url_prefix='/admin/point'))
 
 @api.resource('/rule')
 class Rule(BaseResource):
-    @swag_from(POINT_RULE_GET)
+    @auth_required(AdminModel)
+    @swag_from(RULE_GET)
     def get(self):
-        pass
+        """
+        상벌점 규칙 목록 조회
+        """
 
-    @swag_from(POINT_RULE_POST)
-    def get(self):
-        pass
+    @auth_required(AdminModel)
+    @swag_from(RULE_POST)
+    def post(self):
+        """
+        상벌점 규칙 추가
+        """
 
-    @swag_from(POINT_RULE_PATCH)
+
+@api.resource('/rule/<rule_id>')
+class RuleAlteration(BaseResource):
+    @auth_required(AdminModel)
+    @swag_from(RULE_ALTERATION_PATCH)
     def patch(self):
-        pass
+        """
+        상벌점 규칙 내용 수정
+        """
 
-    @swag_from(POINT_RULE_DELETE)
+    @auth_required(AdminModel)
+    @swag_from(RULE_ALTERATION_DELETE)
     def delete(self):
-        pass
+        """
+        상벌점 규칙 삭제
+        """
