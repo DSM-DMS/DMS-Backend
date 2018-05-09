@@ -7,10 +7,10 @@ from app.models.account import AdminModel, StudentModel
 from app.models.point import PointRuleModel, PointHistoryModel
 from app.views.v2 import BaseResource, auth_required, json_required
 
-api = Api(Blueprint(__name__, __name__, url_prefix='/admin'))
+api = Api(Blueprint(__name__, __name__, url_prefix='/admin/point/point'))
 
 
-@api.resource('/point/<student_id>')
+@api.resource('/<student_id>')
 class Point(BaseResource):
     @auth_required(AdminModel)
     @swag_from(POINT_GET)

@@ -8,7 +8,7 @@ from tests.v2.views.admin.point import add_point_rules
 class TestPointGiving(TCBase):
     """
     상벌점 부여를 테스트합니다.
-        * POST /admin/point
+        * POST /admin/point/point
     """
     def setUp(self):
         super(TestPointGiving, self).setUp()
@@ -19,7 +19,7 @@ class TestPointGiving(TCBase):
 
         self._request = lambda *, token=None, id=self.student_id, rule_id=self.good_point_rule.id, point=1: self.request(
             self.client.post,
-            '/admin/point/{}'.format(id),
+            '/admin/point/point/{}'.format(id),
             token,
             json={
                 'ruleId': str(rule_id),
@@ -99,7 +99,7 @@ class TestPointGiving(TCBase):
 class TestPointHistoryInquire(TCBase):
     """
     상벌점 내역 조회를 테스트합니다.
-        * GET /admin/point
+        * GET /admin/point/point
     """
     def setUp(self):
         super(TestPointHistoryInquire, self).setUp()
@@ -140,7 +140,7 @@ class TestPointHistoryInquire(TCBase):
 
         self._request = lambda *, token=None, id=self.student_id: self.request(
             self.client.get,
-            '/admin/point/{}'.format(id),
+            '/admin/point/point/{}'.format(id),
             token
         )
 
@@ -169,23 +169,23 @@ class TestPointHistoryInquire(TCBase):
         self._validate_history_data(good_point_history, self.expected_good_point_history)
         self._validate_history_data(bad_point_history, self.expected_bad_point_history)
 
-    # def testHistoryInquireFailure_studentDoesNotExist(self):
-    #     # (1) 존재하지 않는 학생 ID를 통해 상벌점 내역 조회
-    #     resp = self._request(id=self.admin_id)
-    #
-    #     # (2) status code 204
-    #     self.assertEqual(resp.status_code, 204)
-    #
-    # def testForbidden(self):
-    #     # (1) 403 체크
-    #     resp = self._request(token=self.student_access_token)
-    #     self.assertEqual(resp.status_code, 403)
+    def testHistoryInquireFailure_studentDoesNotExist(self):
+        # (1) 존재하지 않는 학생 ID를 통해 상벌점 내역 조회
+        resp = self._request(id=self.admin_id)
+
+        # (2) status code 204
+        self.assertEqual(resp.status_code, 204)
+
+    def testForbidden(self):
+        # (1) 403 체크
+        resp = self._request(token=self.student_access_token)
+        self.assertEqual(resp.status_code, 403)
 
 
 class TestPointHistoryDeletion(TCBase):
     """
     상벌점 내역 제거를 테스트합니다.
-        * DELETE /admin/point
+        * DELETE /admin/point/point
     """
     def setUp(self):
         super(TestPointHistoryDeletion, self).setUp()
@@ -216,7 +216,7 @@ class TestPointHistoryDeletion(TCBase):
 
         self._request = lambda *, token=None, id=self.student_id, history_id=self.good_point_history_id: self.request(
             self.client.delete,
-            '/admin/point/{}'.format(id),
+            '/admin/point/point/{}'.format(id),
             token,
             json={
                 'historyId': str(history_id)
