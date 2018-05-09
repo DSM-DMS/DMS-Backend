@@ -178,6 +178,7 @@ class TestRulePatch(TCBase):
         self.assertEqual(resp.status_code, 200)
 
         # (3) 데이터베이스 확인
+        self.good_point_rule = PointRuleModel.objects(id=self.good_point_rule.id).first()
         self.assertEqual(self.good_point_rule.name, self.new_rule_name)
         self.assertEqual(self.good_point_rule.min_point, self.new_min_point)
         self.assertEqual(self.good_point_rule.max_point, self.new_max_point)
