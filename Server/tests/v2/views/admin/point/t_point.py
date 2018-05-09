@@ -1,3 +1,4 @@
+from app.models.account import StudentModel
 from app.models.point import PointHistoryModel
 
 from tests.v2.views import TCBase
@@ -22,7 +23,7 @@ class TestPointGiving(TCBase):
             token,
             json={
                 'id': id,
-                'ruleId': rule_id,
+                'ruleId': str(rule_id),
                 'point': point
             }
         )
@@ -42,13 +43,14 @@ class TestPointGiving(TCBase):
         self.assertIsInstance(data['id'], str)
 
         # (4) 데이터베이스 확인
-        self.assertEqual(len(self.student.point_histories), 1)
+        student = StudentModel.objects(id=self.student_id).first()
+        self.assertEqual(len(student.point_histories), 1)
 
-        history = self.student.point_histories[0]
+        history = student.point_histories[0]
         self.assertEqual(history.point_type, True)
         self.assertEqual(history.point, 1)
 
-        self.assertEqual(self.student.good_point, 1)
+        self.assertEqual(student.good_point, 1)
 
     def testBadPointGivingSuccess(self):
         # (1) 벌점 부여
@@ -66,13 +68,14 @@ class TestPointGiving(TCBase):
         self.assertIsInstance(data['id'], str)
 
         # (4) 데이터베이스 확인
-        self.assertEqual(len(self.student.point_histories), 1)
+        student = StudentModel.objects(id=self.student_id).first()
+        self.assertEqual(len(student.point_histories), 1)
 
-        history = self.student.point_histories[0]
+        history = student.point_histories[0]
         self.assertEqual(history.point_type, False)
         self.assertEqual(history.point, 1)
 
-        self.assertEqual(self.student.bad_point, 1)
+        self.assertEqual(student.bad_point, 1)
 
     def testPointGivingFailure_studentDoesNotExist(self):
         # (1) 존재하지 않는 학생 ID를 통해 상점 부여
@@ -209,6 +212,8 @@ class TestPointHistoryDeletion(TCBase):
             )
         )
 
+        self.student.good_point = self.student.bad_point = 1
+
         self.student.save()
 
         self.good_point_history_id, self.bad_point_history_id = [history.id for history in self.student.point_histories]
@@ -218,8 +223,8 @@ class TestPointHistoryDeletion(TCBase):
             '/admin/point',
             token,
             json={
-                'studentId': id,
-                'historyId': history_id
+                'id': id,
+                'historyId': str(history_id)
             }
         )
 
@@ -231,8 +236,9 @@ class TestPointHistoryDeletion(TCBase):
         self.assertEqual(resp.status_code, 200)
 
         # (3) 데이터베이스 확인
-        self.assertEqual(len(self.student.point_histories), 1)
-        self.assertFalse(self.student.good_point)
+        student = StudentModel.objects(id=self.student_id).first()
+        self.assertEqual(len(student.point_histories), 1)
+        self.assertFalse(student.good_point)
 
         # (4) 벌점 내역 삭제
         resp = self._request(history_id=self.bad_point_history_id)
@@ -241,8 +247,9 @@ class TestPointHistoryDeletion(TCBase):
         self.assertEqual(resp.status_code, 200)
 
         # (6) 데이터베이스 확인
-        self.assertFalse(self.student.point_histories)
-        self.assertFalse(self.student.bad_point)
+        student = StudentModel.objects(id=self.student_id).first()
+        self.assertFalse(student.point_histories)
+        self.assertFalse(student.bad_point)
 
     def testDeleteFailure_studentDoesNotExist(self):
         # (1) 존재하지 않는 학생 ID를 통해 내역 삭제

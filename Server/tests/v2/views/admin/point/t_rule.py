@@ -162,7 +162,7 @@ class TestRulePatch(TCBase):
             '/admin/point/rule',
             token,
             json={
-                'ruleId': rule_id,
+                'ruleId': str(rule_id),
                 'name': name,
                 'pointType': point_type,
                 'minPoint': min_point,
@@ -211,7 +211,7 @@ class TestRuleDeletion(TCBase):
             '/admin/point/rule',
             token,
             json={
-                'ruleId': rule_id
+                'ruleId': str(rule_id)
             }
         )
 

@@ -116,7 +116,7 @@ POINT_DELETE = {
             'required': True
         },
         {
-            'name': 'studentId',
+            'name': 'id',
             'description': '상벌점 데이터 삭제 대상 학생 ID',
             'in': 'json',
             'type': 'str',
