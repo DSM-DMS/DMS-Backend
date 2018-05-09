@@ -178,10 +178,10 @@ class TestRulePatch(TCBase):
         self.assertEqual(resp.status_code, 200)
 
         # (3) 데이터베이스 확인
-        self.good_point_rule = PointRuleModel.objects(id=self.good_point_rule.id).first()
-        self.assertEqual(self.good_point_rule.name, self.new_rule_name)
-        self.assertEqual(self.good_point_rule.min_point, self.new_min_point)
-        self.assertEqual(self.good_point_rule.max_point, self.new_max_point)
+        good_point_rule = PointRuleModel.objects(id=self.good_point_rule.id).first()
+        self.assertEqual(good_point_rule.name, self.new_rule_name)
+        self.assertEqual(good_point_rule.min_point, self.new_min_point)
+        self.assertEqual(good_point_rule.max_point, self.new_max_point)
 
     def testPatchFailure_ruleDoesNotExist(self):
         # (1) 존재하지 않는 규칙 ID를 통해 수정
@@ -221,7 +221,8 @@ class TestRuleDeletion(TCBase):
         self.assertEqual(resp.status_code, 200)
 
         # (3) 데이터베이스 확인
-        self.assertFalse(self.good_point_rule)
+        good_point_rule = PointRuleModel.objects(id=self.good_point_rule.id)
+        self.assertFalse(good_point_rule)
 
         # (4) 벌점 규칙 삭제
         resp = self._request(rule_id=self.bad_point_rule.id)
@@ -230,7 +231,8 @@ class TestRuleDeletion(TCBase):
         self.assertEqual(resp.status_code, 200)
 
         # (6) 데이터베이스 확인
-        self.assertFalse(self.bad_point_rule)
+        bad_point_rule = PointRuleModel.objects(id=self.bad_point_rule.id).first()
+        self.assertFalse(bad_point_rule)
         self.assertFalse(PointRuleModel.objects)
 
     def testDeletionFailure_ruleDoesNotExist(self):

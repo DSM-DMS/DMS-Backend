@@ -93,3 +93,14 @@ class RuleAlteration(BaseResource):
         """
         상벌점 규칙 삭제
         """
+        if len(rule_id) != 24:
+            return Response('', 204)
+
+        rule = PointRuleModel.objects(id=rule_id).first()
+
+        if not rule:
+            return Response('', 204)
+
+        rule.delete()
+
+        return Response('', 200)
