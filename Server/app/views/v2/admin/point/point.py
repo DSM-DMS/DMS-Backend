@@ -10,17 +10,15 @@ from app.views.v2 import BaseResource, auth_required, json_required
 api = Api(Blueprint(__name__, __name__, url_prefix='/admin'))
 
 
-@api.resource('/point')
+@api.resource('/point/<student_id>')
 class Point(BaseResource):
     @auth_required(AdminModel)
     @swag_from(POINT_GET)
-    def get(self):
+    def get(self, student_id):
         """
         특정 학생의 상벌점 내역 조회
         """
-        id = request.args['id']
-
-        student = StudentModel.objects(id=id).first()
+        student = StudentModel.objects(id=student_id).first()
 
         if not student:
             return Response('', 204)
@@ -34,17 +32,16 @@ class Point(BaseResource):
         } for history in student.point_histories])
 
     @auth_required(AdminModel)
-    @json_required('id', 'ruleId', 'point')
+    @json_required('ruleId', 'point')
     @swag_from(POINT_POST)
-    def post(self):
+    def post(self, student_id):
         """
         특정 학생에게 상벌점 부여
         """
-        id = request.json['id']
         rule_id = request.json['ruleId']
         point = request.json['point']
 
-        student = StudentModel.objects(id=id).first()
+        student = StudentModel.objects(id=student_id).first()
 
         if not student:
             return Response('', 204)
@@ -82,16 +79,15 @@ class Point(BaseResource):
         }, 201
 
     @auth_required(AdminModel)
-    @json_required('id', 'historyId')
+    @json_required('historyId')
     @swag_from(POINT_DELETE)
-    def delete(self):
+    def delete(self, student_id):
         """
         특정 학생의 상벌점 내역 삭제
         """
-        id = request.json['id']
         history_id = request.json['historyId']
 
-        student = StudentModel.objects(id=id).first()
+        student = StudentModel.objects(id=student_id).first()
 
         if not student:
             return Response('', 204)

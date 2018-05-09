@@ -1,4 +1,4 @@
-STUDENT_GET = {
+STUDENT_LIST_GET = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '학생 목록을 조회합니다. 벌점 교육 단계는 9점 이하가 0, 10점 이상이 1, 15점 이상 2, 20점 이상 3, ...',
     'parameters': [

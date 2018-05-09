@@ -5,17 +5,17 @@ from flasgger import swag_from
 from app.docs.v2.admin.point.student import *
 from app.views.v2 import BaseResource, auth_required, json_required
 
-api = Api(Blueprint(__name__, __name__, url_prefix='/admin/point'))
+api = Api(Blueprint(__name__, __name__, url_prefix='/admin/point/student'))
 
 
-@api.resource('/student')
-class Student(BaseResource):
-    @swag_from(STUDENT_GET)
+@api.resource('/list')
+class StudentList(BaseResource):
+    @swag_from(STUDENT_LIST_GET)
     def get(self):
         pass
 
 
-@api.resource('/student/penalty')
+@api.resource('/penalty')
 class StudentPenalty(BaseResource):
     @swag_from(STUDENT_PENALTY_PATCH)
     def patch(self):

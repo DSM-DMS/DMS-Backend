@@ -14,7 +14,7 @@ POINT_GET = {
         {
             'name': 'id',
             'description': '내역 조회 대상 학생 ID',
-            'in': 'query',
+            'in': 'path',
             'type': 'str',
             'required': True
         }
@@ -64,7 +64,7 @@ POINT_POST = {
         {
             'name': 'id',
             'description': '상벌점 데이터 등록 대상 학생 ID',
-            'in': 'json',
+            'in': 'path',
             'type': 'str',
             'required': True
         },
@@ -118,7 +118,7 @@ POINT_DELETE = {
         {
             'name': 'id',
             'description': '상벌점 데이터 삭제 대상 학생 ID',
-            'in': 'json',
+            'in': 'path',
             'type': 'str',
             'required': True
         },
