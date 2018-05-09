@@ -39,6 +39,8 @@ def exception_handler(e):
             }
         }
     ])
+
+    print(e)
     
     return '', 500
 

@@ -52,7 +52,7 @@ class TestRuleAddition(TCBase):
 
         rule = rules[0]
 
-        self.assertEqual(rule.name == self.good_point_rule_name)
+        self.assertEqual(rule.name, self.good_point_rule_name)
         self.assertTrue(rule.point_type)
         self.assertEqual(rule.min_point, self.min_point)
         self.assertEqual(rule.max_point, self.max_point)
@@ -78,7 +78,7 @@ class TestRuleAddition(TCBase):
 
         rule = rules[0]
 
-        self.assertEqual(rule.name == self.bad_point_rule_name)
+        self.assertEqual(rule.name, self.bad_point_rule_name)
         self.assertFalse(rule.point_type)
         self.assertEqual(rule.min_point, self.min_point)
         self.assertEqual(rule.max_point, self.max_point)
@@ -112,6 +112,7 @@ class TestRuleInquire(TCBase):
 
         self.assertIn('id', data)
         self.assertIsInstance(data['id'], str)
+        del data['id']
 
         self.assertDictEqual(data, {
             'name': rule_obj.name,
@@ -159,10 +160,9 @@ class TestRulePatch(TCBase):
 
         self._request = lambda *, token=None, rule_id=self.good_point_rule.id, name=self.new_rule_name, point_type=True, min_point=self.new_min_point, max_point=self.new_max_point: self.request(
             self.client.patch,
-            '/admin/point/rule',
+            '/admin/point/rule/{}'.format(str(rule_id)),
             token,
             json={
-                'ruleId': str(rule_id),
                 'name': name,
                 'pointType': point_type,
                 'minPoint': min_point,
@@ -208,11 +208,8 @@ class TestRuleDeletion(TCBase):
 
         self._request = lambda *, token=None, rule_id=self.good_point_rule.id: self.request(
             self.client.delete,
-            '/admin/point/rule',
-            token,
-            json={
-                'ruleId': str(rule_id)
-            }
+            '/admin/point/rule/{}'.format(str(rule_id)),
+            token
         )
 
     def testDeletionSuccess(self):
