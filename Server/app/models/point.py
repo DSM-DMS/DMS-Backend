@@ -45,12 +45,12 @@ class PointHistoryModel(EmbeddedDocument):
 
     id = ObjectIdField(
         primary_key=True,
-        default=ObjectId()
+        default=ObjectId
     )
 
     time = DateTimeField(
         required=True,
-        default=datetime.now()
+        default=datetime.now
     )
     # 상벌점을 부과한 시간
 

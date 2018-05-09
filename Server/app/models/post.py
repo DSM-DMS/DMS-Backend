@@ -14,7 +14,7 @@ class PostBase(Document):
 
     write_time = DateTimeField(
         required=True,
-        default=datetime.now()
+        default=datetime.now
     )
     # 게시글 작성 시간
 

@@ -43,7 +43,7 @@ class AccountBase(Document):
 
     signup_time = DateTimeField(
         required=True,
-        default=datetime.now()
+        default=datetime.now
     )
     # 회원가입 시간
 

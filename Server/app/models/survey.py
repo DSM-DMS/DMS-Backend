@@ -14,7 +14,7 @@ class SurveyModel(Document):
 
     creation_time = DateTimeField(
         required=True,
-        default=datetime.now()
+        default=datetime.now
     )
     # 설문지 생성 시간
 
