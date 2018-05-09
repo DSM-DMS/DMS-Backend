@@ -3,6 +3,7 @@
 ## Technical Stack
 ### Host
 - cafe24
+- ㅃ!
 ### API Architecture
 - REST
 - Swagger
