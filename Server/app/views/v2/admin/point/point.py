@@ -81,6 +81,34 @@ class Point(BaseResource):
             'id': str(point_history.id)
         }, 201
 
+    @auth_required(AdminModel)
+    @json_required('id', 'historyId')
     @swag_from(POINT_DELETE)
-    def patch(self):
-        pass
+    def delete(self):
+        """
+        특정 학생의 상벌점 내역 삭제
+        """
+        id = request.json['id']
+        history_id = request.json['historyId']
+
+        student = StudentModel.objects(id=id).first()
+
+        if not student:
+            return Response('', 204)
+
+        if len(history_id) != 24:
+            return Response('', 205)
+
+        history = student.point_histories.filter(id=history_id).first()
+        if not history:
+            return Response('', 205)
+
+        student.point_histories = student.point_histories.exclude(id=history_id)
+        if history.point_type:
+            student.update(good_point=student.good_point - history.point)
+        else:
+            student.update(bad_point=student.bad_point - history.point)
+
+        student.save()
+
+        return Response('', 200)
