@@ -14,6 +14,10 @@ from app.models.account import AdminModel, StudentModel
 
 app = create_app(TestConfig)
 
+mongo_setting = app.config['MONGODB_SETTINGS']
+db_name = mongo_setting.pop('db')
+mongo_client = pymongo.MongoClient(mongo_setting)
+
 
 class TCBase(TC):
     def __init__(self, *args, **kwargs):
@@ -61,12 +65,7 @@ class TCBase(TC):
         self._get_tokens()
 
     def tearDown(self):
-        setting = app.config['MONGODB_SETTINGS']
-        db_name = setting.pop('db')
-
-        pymongo.MongoClient(**setting).drop_database(db_name)
-
-        setting['db'] = db_name
+        mongo_client.drop_database(db_name)
 
     def request(self, method, target_url_rule, token=None, *args, **kwargs):
         """
