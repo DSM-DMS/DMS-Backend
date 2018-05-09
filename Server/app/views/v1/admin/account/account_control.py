@@ -1,6 +1,7 @@
-from uuid import uuid4
+from binascii import hexlify
+from hashlib import pbkdf2_hmac
 
-from flask import Blueprint, Response, request
+from flask import Blueprint, Response, request, current_app
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -20,38 +21,25 @@ class AccountControl(BaseResource):
     @admin_only
     def post(self):
         """
-        학생 계정 제거 후 새로운 UUID 생성
+        학생 계정 비밀번호 변경
         """
         number = int(request.form['number'])
         student = StudentModel.objects(number=number).first()
+        pw = request.form['pw']
 
-        if student:
-            # Signed student number
-            name = student.name
-            student.delete()
-
-            while True:
-                uuid = str(uuid4())[:4]
-
-                if not SignupWaitingModel.objects(uuid=uuid):
-                    SignupWaitingModel(
-                        uuid=uuid,
-                        name=name,
-                        number=number
-                    ).save()
-
-                    break
-
-        signup_waiting = SignupWaitingModel.objects(number=number).first()
-
-        if not signup_waiting:
+        if not student:
             return Response('', 204)
 
-        uuid = signup_waiting.uuid
+        pw = hexlify(pbkdf2_hmac(
+            hash_name='sha256',
+            password=pw.encode(),
+            salt=current_app.secret_key.encode(),
+            iterations=100000
+        )).decode('utf-8')
 
-        return self.unicode_safe_json_response({
-            'uuid': uuid
-        }, 201)
+        student.update(pw=pw)
+
+        return Response('', 201)
 
     @swag_from(ACCOUNT_CONTROL_DELETE)
     @admin_only
