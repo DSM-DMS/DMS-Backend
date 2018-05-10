@@ -18,7 +18,7 @@ if __name__ == '__main__':
         if request.headers['X-GitHub-Event'] == 'push':
             print('push!')
             subprocess.call(
-                ['git pull']
+                ['./hook.sh']
             )
 
         return 'hello'
