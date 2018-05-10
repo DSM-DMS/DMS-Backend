@@ -5,25 +5,11 @@ from flasgger import swag_from
 from app.docs.v2.admin.post.preview import *
 from app.views.v2 import BaseResource, auth_required, json_required
 
-api = Api(Blueprint(__name__, __name__, url_prefix='/admin/post/preview'))
+api = Api(Blueprint(__name__, __name__, url_prefix='/admin/post-preview'))
 
 
-@api.resource('/faq')
-class FAQ(BaseResource):
-    @swag_from(FAQ_PREVIEW_POST)
-    def post(self):
-        pass
-
-
-@api.resource('/notice')
-class Notice(BaseResource):
-    @swag_from(NOTICE_PREVIEW_POST)
-    def post(self):
-        pass
-
-
-@api.resource('/rule')
-class Rule(BaseResource):
-    @swag_from(RULE_PREVIEW_POST)
+@api.resource('/<category>')
+class Preview(BaseResource):
+    @swag_from(PREVIEW_POST)
     def post(self):
         pass
