@@ -34,8 +34,21 @@ class StudentList(BaseResource):
         } for student in StudentModel.objects])
 
 
-@api.resource('/penalty')
+@api.resource('/penalty/<student_id>')
 class StudentPenalty(BaseResource):
+    @auth_required(AdminModel)
     @swag_from(STUDENT_PENALTY_PATCH)
-    def patch(self):
-        pass
+    def patch(self, student_id):
+        """
+        학생 벌점 교육 상태 변경
+        """
+        status = request.json['status']
+
+        student = StudentModel.objects(id=student_id).first()
+
+        if not student:
+            return Response('', 204)
+
+        student.update(penalty_training_status=status)
+
+        return Response('', 200)
