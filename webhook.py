@@ -16,6 +16,7 @@ if __name__ == '__main__':
         payload = request.json
 
         if request.headers['X-GitHub-Event'] == 'push':
+            print('push!')
             subprocess.call(
                 ['git pull']
             )
