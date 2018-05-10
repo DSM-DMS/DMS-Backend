@@ -82,9 +82,9 @@ STUDENT_PENALTY_PATCH = {
             'required': True
         },
         {
-            'name': 'id',
+            'name': 'student_id',
             'description': '상벌점 교육 상태 변경 대상 학생 ID',
-            'in': 'json',
+            'in': 'path',
             'type': 'str',
             'required': True
         },
@@ -99,6 +99,9 @@ STUDENT_PENALTY_PATCH = {
     'responses': {
         '200': {
             'description': '변경 성공'
+        },
+        '204': {
+            'description': '존재하지 않는 학생 ID'
         },
         '403': {
             'description': '권한 없음'
