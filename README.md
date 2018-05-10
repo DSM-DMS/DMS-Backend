@@ -4,22 +4,23 @@
 ### Software Stack
 - Python
 - Flask
+### WAS
+- nginx
 ### Database
 - MongoDB(메인 데이터베이스) with Sharded Cluster
 - Redis(Expire가 필요하거나 latency가 적어야 하는 캐싱 데이터)
 ### API Architecture
 - REST
-### API Documentation
-- Swagger
 ### Host
 - cafe24
+### API Documentation
+- Swagger
 ### TDD
 - Travis-CI
-- Github Webhook(Continuous Delivery)
 - Coveralls(커버리지 리포트)
 - Scrutinizer(코드 퀄리티 관리)
-### WAS
-- nginx
+### Continuous Delivery
+- Github Webhook(Continuous Delivery)
 ### Monitoring
 #### Application Performance
 - None
@@ -30,6 +31,7 @@
 - Grafana
 ### Container
 - None
+### Message Queue
 
 ## 인프라 구축 과정에서의 특별한 점
 ### Swagger
