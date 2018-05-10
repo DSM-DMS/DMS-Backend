@@ -1,5 +1,5 @@
 git pull 
-# screen -r Web 
 # PID=$!
+# echo PID
 # kill -INT $PID
 # sudo -E python3.4 server.py

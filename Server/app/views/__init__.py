@@ -1,3 +1,5 @@
+import os
+
 from flask import current_app, request, render_template
 
 
@@ -51,3 +53,10 @@ def index_student():
 
 def index_admin():
     return render_template('admin.html')
+
+
+def webhook_event_handler():
+    if request.headers['X-GitHub-Event'] == 'push':
+        os.system('. ../hook.sh')
+
+    return 'hello'

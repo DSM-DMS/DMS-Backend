@@ -43,6 +43,7 @@ def create_app(*config_cls):
     app_.register_error_handler(Exception, exception_handler)
     app_.add_url_rule('/', view_func=index_student)
     app_.add_url_rule('/admin', view_func=index_admin)
+    app_.add_url_rule('/hook', view_func=webhook_event_handler, methods=['POST'])
 
     return app_
 
