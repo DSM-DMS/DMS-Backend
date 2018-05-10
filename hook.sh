@@ -1,5 +1,3 @@
 git pull 
-# PID=$!
-# echo $PID
-# kill -INT $PID
-# sudo -E python3.4 server.py
+kill $(ps aux | grep sudo\ -E\ python3.4\ server.py | awk '{print $2}')
+sudo -E python3.4 server.py
