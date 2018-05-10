@@ -35,7 +35,7 @@ def create_app(*config_cls):
     CORS().init_app(app_)
     Mongo().init_app(app_)
     Router().init_app(app_)
-    # InfluxCronJob().init_app(app_)
+    InfluxCronJob().init_app(app_)
 
     merge_v2_api(app_)
 

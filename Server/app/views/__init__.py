@@ -11,37 +11,37 @@ def after_request(response):
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'deny'
 
-    # current_app.config['INFLUX_DB_CLIENT'].write_points([
-    #     {
-    #         'measurement': 'api_process_data',
-    #         'tags': {
-    #             'status': response.status,
-    #             'method': request.method,
-    #             'uri': request.path
-    #         },
-    #         'fields': {
-    #             'count': 1
-    #         }
-    #     }
-    # ])
+    current_app.config['INFLUX_DB_CLIENT'].write_points([
+        {
+            'measurement': 'api_process_data',
+            'tags': {
+                'status': response.status,
+                'method': request.method,
+                'uri': request.path
+            },
+            'fields': {
+                'count': 1
+            }
+        }
+    ])
 
     return response
 
 
 def exception_handler(e):
-    # current_app.config['INFLUX_DB_CLIENT'].write_points([
-    #     {
-    #         'measurement': 'api_process_data',
-    #         'tags': {
-    #             'status': 500,
-    #             'method': request.method,
-    #             'uri': request.path
-    #         },
-    #         'fields': {
-    #             'count': 1
-    #         }
-    #     }
-    # ])
+    current_app.config['INFLUX_DB_CLIENT'].write_points([
+        {
+            'measurement': 'api_process_data',
+            'tags': {
+                'status': 500,
+                'method': request.method,
+                'uri': request.path
+            },
+            'fields': {
+                'count': 1
+            }
+        }
+    ])
 
     print(e)
 
