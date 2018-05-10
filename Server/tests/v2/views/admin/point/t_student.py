@@ -9,8 +9,13 @@ from tests.v2.views import TCBase
 class TestStudentList(TCBase):
     """
     학생 리스트 조회를 테스트합니다.
-        * GET /admin/point/student
     """
+    def __init__(self, *args, **kwargs):
+        super(TestStudentList, self).__init__(*args, **kwargs)
+
+        self.method = self.client.get
+        self.target_uri = '/admin/point/student'
+
     def setUp(self):
         super(TestStudentList, self).setUp()
 
@@ -30,8 +35,8 @@ class TestStudentList(TCBase):
         self.student.save()
 
         self._request = lambda *, token=None: self.request(
-            self.client.get,
-            '/admin/point/student',
+            self.method,
+            self.target_uri,
             token
         )
 
@@ -73,16 +78,21 @@ class TestStudentList(TCBase):
 class TestPenaltyTrainingStatusPatch(TCBase):
     """
     학생의 벌점 교육 상태 변경을 테스트합니다.
-        * PATCH /admin/point/student/penalty/<student_id>
     """
+    def __init__(self, *args, **kwargs):
+        super(TestPenaltyTrainingStatusPatch, self).__init__(*args, **kwargs)
+
+        self.method = self.client.patch
+        self.target_uri = '/admin/point/student/penalty/{}'
+    
     def setUp(self):
         super(TestPenaltyTrainingStatusPatch, self).setUp()
 
         # ---
 
         self._request = lambda *, token=None, id=self.student_id, status=True: self.request(
-            self.client.patch,
-            '/admin/point/student/penalty/{}'.format(id),
+            self.method,
+            self.target_uri.format(id),
             token,
             json={
                 'status': status

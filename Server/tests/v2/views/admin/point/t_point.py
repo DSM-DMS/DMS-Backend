@@ -8,8 +8,13 @@ from tests.v2.views.admin.point import add_point_rules
 class TestPointGiving(TCBase):
     """
     상벌점 부여를 테스트합니다.
-        * POST /admin/point/point
     """
+    def __init__(self, *args, **kwargs):
+        super(TestPointGiving, self).__init__(*args, **kwargs)
+
+        self.method = self.client.post
+        self.target_uri = '/admin/point/point/{}'
+
     def setUp(self):
         super(TestPointGiving, self).setUp()
 
@@ -18,8 +23,8 @@ class TestPointGiving(TCBase):
         self.good_point_rule, self.bad_point_rule = add_point_rules()
 
         self._request = lambda *, token=None, id=self.student_id, rule_id=self.good_point_rule.id, point=1: self.request(
-            self.client.post,
-            '/admin/point/point/{}'.format(id),
+            self.method,
+            self.target_uri.format(id),
             token,
             json={
                 'ruleId': str(rule_id),
@@ -99,48 +104,53 @@ class TestPointGiving(TCBase):
 class TestPointHistoryInquire(TCBase):
     """
     상벌점 내역 조회를 테스트합니다.
-        * GET /admin/point/point
     """
+    def __init__(self, *args, **kwargs):
+        super(TestPointHistoryInquire, self).__init__(*args, **kwargs)
+
+        self.method = self.client.get
+        self.target_uri = '/admin/point/point/{}'
+
     def setUp(self):
         super(TestPointHistoryInquire, self).setUp()
 
         # ---
 
-        self.student.point_histories.append(
-            PointHistoryModel(
-                reason='상점 규칙',
-                point_type=True,
-                point=1
-            )
+        good_point_history = PointHistoryModel(
+            reason='상점 규칙',
+            point_type=True,
+            point=1
         )
 
-        self.student.point_histories.append(
-            PointHistoryModel(
-                reason='벌점 규칙',
-                point_type=False,
-                point=1
-            )
+        self.student.point_histories.append(good_point_history)
+
+        bad_point_history = PointHistoryModel(
+            reason='벌점 규칙',
+            point_type=False,
+            point=1
         )
+
+        self.student.point_histories.append(bad_point_history)
 
         self.student.save()
 
         self.expected_good_point_history = {
             'date': self.today,
-            'reason': '상점 규칙',
-            'pointType': True,
-            'point': 1
+            'reason': good_point_history.reason,
+            'pointType': good_point_history.point_type,
+            'point': good_point_history.point
         }
 
         self.expected_bad_point_history = {
             'date': self.today,
-            'reason': '벌점 규칙',
-            'pointType': False,
-            'point': 1
+            'reason': bad_point_history.reason,
+            'pointType': bad_point_history.point_type,
+            'point': bad_point_history.point
         }
 
         self._request = lambda *, token=None, id=self.student_id: self.request(
-            self.client.get,
-            '/admin/point/point/{}'.format(id),
+            self.method,
+            self.target_uri.format(id),
             token
         )
 
@@ -187,6 +197,12 @@ class TestPointHistoryDeletion(TCBase):
     상벌점 내역 제거를 테스트합니다.
         * DELETE /admin/point/point
     """
+    def __init__(self, *args, **kwargs):
+        super(TestPointHistoryDeletion, self).__init__(*args, **kwargs)
+
+        self.method = self.client.delete
+        self.target_uri = '/admin/point/point/{}'
+
     def setUp(self):
         super(TestPointHistoryDeletion, self).setUp()
 
@@ -215,8 +231,8 @@ class TestPointHistoryDeletion(TCBase):
         self.good_point_history_id, self.bad_point_history_id = [history.id for history in self.student.point_histories]
 
         self._request = lambda *, token=None, id=self.student_id, history_id=self.good_point_history_id: self.request(
-            self.client.delete,
-            '/admin/point/point/{}'.format(id),
+            self.method,
+            self.target_uri.format(id),
             token,
             json={
                 'historyId': str(history_id)

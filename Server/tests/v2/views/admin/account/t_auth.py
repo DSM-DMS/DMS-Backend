@@ -4,24 +4,27 @@ from tests.v2.views import TCBase
 class TestAdminAuth(TCBase):
     """
     관리자 계정 로그인을 테스트합니다.
-        * POST /admin/auth
     """
+    def __init__(self, *args, **kwargs):
+        super(TestAdminAuth, self).__init__(*args, **kwargs)
+
+        self.method = self.client.post
+        self.target_uri = '/admin/auth'
+
     def setUp(self):
         super(TestAdminAuth, self).setUp()
 
         # ---
 
         self._request = lambda *, token=None, id=self.admin_id, pw=self.pw: self.request(
-            self.client.post,
-            '/admin/auth',
+            self.method,
+            self.target_uri,
             token,
             json={
                 'id': id,
                 'password': pw
             }
         )
-
-        self.token_regex = '(?:\w+\.){2}\w+'
 
     def _validate_response_data(self, resp):
         data = resp.json

@@ -7,8 +7,13 @@ from tests.v2.views.admin.point import add_point_rules
 class TestRuleAddition(TCBase):
     """
     상벌점 규칙 추가를 테스트합니다.
-        * POST /admin/point/rule
     """
+    def __init__(self, *args, **kwargs):
+        super(TestRuleAddition, self).__init__(*args, **kwargs)
+
+        self.method = self.client.post
+        self.target_uri = '/admin/point/rule'
+
     def setUp(self):
         super(TestRuleAddition, self).setUp()
 
@@ -20,8 +25,8 @@ class TestRuleAddition(TCBase):
         self.max_point = 3
 
         self._request = lambda *, token=None, name=self.good_point_rule_name, point_type=True, min_point=self.min_point, max_point=self.max_point: self.request(
-            self.client.post,
-            '/admin/point/rule',
+            self.method,
+            self.target_uri,
             token,
             json={
                 'name': name,
@@ -92,8 +97,13 @@ class TestRuleAddition(TCBase):
 class TestRuleInquire(TCBase):
     """
     상벌점 규칙 조회를 테스트합니다.
-        * GET /admin/point/rule
     """
+    def __init__(self, *args, **kwargs):
+        super(TestRuleInquire, self).__init__(*args, **kwargs)
+
+        self.method = self.client.get
+        self.target_uri = '/admin/point/rule'
+
     def setUp(self):
         super(TestRuleInquire, self).setUp()
 
@@ -102,8 +112,8 @@ class TestRuleInquire(TCBase):
         self.good_point_rule, self.bad_point_rule = add_point_rules()
 
         self._request = lambda *, token=None: self.request(
-            self.client.get,
-            '/admin/point/rule',
+            self.method,
+            self.target_uri,
             token
         )
 
@@ -145,8 +155,13 @@ class TestRuleInquire(TCBase):
 class TestRulePatch(TCBase):
     """
     상벌점 규칙 수정을 테스트합니다.
-        * PATCH /admin/point/rule
     """
+    def __init__(self, *args, **kwargs):
+        super(TestRulePatch, self).__init__(*args, **kwargs)
+
+        self.method = self.client.patch
+        self.target_uri = '/admin/point/rule/{}'
+
     def setUp(self):
         super(TestRulePatch, self).setUp()
 
@@ -159,8 +174,8 @@ class TestRulePatch(TCBase):
         self.new_max_point = 10
 
         self._request = lambda *, token=None, rule_id=self.good_point_rule.id, name=self.new_rule_name, point_type=True, min_point=self.new_min_point, max_point=self.new_max_point: self.request(
-            self.client.patch,
-            '/admin/point/rule/{}'.format(str(rule_id)),
+            self.method,
+            self.target_uri.format(str(rule_id)),
             token,
             json={
                 'name': name,
@@ -200,6 +215,12 @@ class TestRuleDeletion(TCBase):
     상벌점 규칙 삭제를 테스트합니다.
         * DELETE /admin/point/rule
     """
+    def __init__(self, *args, **kwargs):
+        super(TestRuleDeletion, self).__init__(*args, **kwargs)
+
+        self.method = self.client.delete
+        self.target_uri = '/admin/point/rule/{}'
+
     def setUp(self):
         super(TestRuleDeletion, self).setUp()
 
@@ -208,8 +229,8 @@ class TestRuleDeletion(TCBase):
         self.good_point_rule, self.bad_point_rule = add_point_rules()
 
         self._request = lambda *, token=None, rule_id=self.good_point_rule.id: self.request(
-            self.client.delete,
-            '/admin/point/rule/{}'.format(str(rule_id)),
+            self.method,
+            self.target_uri.format(str(rule_id)),
             token
         )
 

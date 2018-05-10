@@ -6,16 +6,21 @@ from tests.v2.views import TCBase
 class TestStudentAccountControl(TCBase):
     """
     관리자의 학생 계정 제거를 테스트합니다.
-        * DELETE /account-management/student
     """
+    def __init__(self, *args, **kwargs):
+        super(TestStudentAccountControl, self).__init__(*args, **kwargs)
+
+        self.method = self.client.delete
+        self.target_uri = '/account-management/student'
+
     def setUp(self):
         super(TestStudentAccountControl, self).setUp()
 
         # ---
 
         self._request = lambda *, token=None, number=self.student_number: self.request(
-            self.client.delete,
-            '/account-management/student',
+            self.method,
+            self.target_uri,
             token,
             json={
                 'number': number
@@ -75,8 +80,13 @@ class TestStudentAccountControl(TCBase):
 class TestAdminAccountCreation(TCBase):
     """
     관리자의 관리자 계정 생성을 테스트합니다.
-        * POST /account-management/admin
     """
+    def __init__(self, *args, **kwargs):
+        super(TestAdminAccountCreation, self).__init__(*args, **kwargs)
+
+        self.method = self.client.post
+        self.target_uri = '/account-management/admin'
+
     def setUp(self):
         super(TestAdminAccountCreation, self).setUp()
 
@@ -85,8 +95,8 @@ class TestAdminAccountCreation(TCBase):
         self.new_admin_id = 'new_admin'
 
         self._request = lambda *, token=None, id=self.new_admin_id, pw=self.pw, name=self.admin_name: self.request(
-            self.client.post,
-            '/account-management/admin',
+            self.method,
+            self.target_uri,
             token,
             json={
                 'id': id,
@@ -126,8 +136,13 @@ class TestAdminAccountCreation(TCBase):
 class TestAdminAccountDeletion(TCBase):
     """
     관리자의 관리자 계정 삭제를 테스트합니다.
-        * DELETE /account-management/admin
     """
+    def __init__(self, *args, **kwargs):
+        super(TestAdminAccountDeletion, self).__init__(*args, **kwargs)
+
+        self.method = self.client.delete
+        self.target_uri = '/account-management/admin'
+
     def setUp(self):
         super(TestAdminAccountDeletion, self).setUp()
 
@@ -145,8 +160,8 @@ class TestAdminAccountDeletion(TCBase):
         )
 
         self._request = lambda *, token=None, id=self.new_admin_id: self.request(
-            self.client.delete,
-            '/account-management/admin',
+            self.method,
+            self.target_uri,
             token,
             json={
                 'id': id
