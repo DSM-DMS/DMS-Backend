@@ -114,11 +114,9 @@ class Router:
         app.register_blueprint(self.add_v2_prefix(rule.api.blueprint))
         app.register_blueprint(self.add_v2_prefix(student.api.blueprint))
 
-        from .admin.post import faq, notice, preview, rule
-        app.register_blueprint(self.add_v2_prefix(faq.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(notice.api.blueprint))
+        from .admin.post import post, preview
+        app.register_blueprint(self.add_v2_prefix(post.api.blueprint))
         app.register_blueprint(self.add_v2_prefix(preview.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(rule.api.blueprint))
 
         from .admin.report import facility
         app.register_blueprint(self.add_v2_prefix(facility.api.blueprint))
