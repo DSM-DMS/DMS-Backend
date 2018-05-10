@@ -57,9 +57,9 @@ def generate_patch_doc(type):
                 'required': True
             },
             {
-                'name': 'id',
+                'name': 'post_id',
                 'description': '수정할 {}의 ID'.format(type),
-                'in': 'json',
+                'in': 'path',
                 'type': 'str',
                 'required': True
             },
@@ -105,9 +105,9 @@ def generate_delete_doc(type):
                 'required': True
             },
             {
-                'name': 'id',
+                'name': 'post_id',
                 'description': '삭제할 {}의 ID'.format(type),
-                'in': 'json',
+                'in': 'path',
                 'type': 'str',
                 'required': True
             }
