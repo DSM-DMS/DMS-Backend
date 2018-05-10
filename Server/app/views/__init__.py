@@ -57,6 +57,6 @@ def index_admin():
 
 def webhook_event_handler():
     if request.headers['X-GitHub-Event'] == 'push':
-        os.system('. ../hook.sh {} {}'.format(current_app.config['PORT'], current_app.config['RUN_COMMAND']))
+        os.system('. ../hook.sh')
 
     return 'hello'
