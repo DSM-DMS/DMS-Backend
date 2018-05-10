@@ -1,3 +1,3 @@
 git pull 
-kill $(lsof -i :80 | grep python | awk '{print $2}')
+kill $(ps a | grep python | grep R | awk '{print $1}')
 sudo -E python3.4 server.py
