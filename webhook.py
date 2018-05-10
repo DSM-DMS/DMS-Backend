@@ -1,5 +1,5 @@
 import socket
-import subprocess
+import os
 
 import json
 from flask import Flask, request
@@ -17,9 +17,7 @@ if __name__ == '__main__':
 
         if request.headers['X-GitHub-Event'] == 'push':
             print('push!')
-            subprocess.call(
-                ['. hook.sh']
-            )
+            os.system('. hook.sh')
 
         return 'hello'
 
