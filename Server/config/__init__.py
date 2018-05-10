@@ -6,7 +6,7 @@ class Config:
     SERVICE_NAME = 'dms-v2'
     REPRESENTATIVE_HOST = 'dsm2015.cafe24.com'
 
-    RUN_COMMAND = 'python3 server.py'
+    RUN_COMMAND = 'python3.4\ server.py'
     RUN_SETTING = {
         'threaded': True
     }
