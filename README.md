@@ -1,27 +1,35 @@
 # DMS for DSM - Backend [![Build Status](https://travis-ci.org/DSM-DMS/DMS-Backend.svg?branch=master)](https://travis-ci.org/DSM-DMS/DMS-Backend) [![Coverage Status](https://coveralls.io/repos/github/DSM-DMS/DMS-Backend/badge.svg?branch=master)](https://coveralls.io/github/DSM-DMS/DMS-Backend?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DSM-DMS/DMS-Backend/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DSM-DMS/DMS-Backend/?branch=master) [![Code Intelligence Status](https://scrutinizer-ci.com/g/DSM-DMS/DMS-Backend/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 
 ## Technical Stack
-### Host
-- cafe24
-### API Architecture
-- REST
-- Swagger
 ### Software Stack
 - Python
 - Flask
-### WAS
-- nginx
 ### Database
 - MongoDB(메인 데이터베이스) with Sharded Cluster
 - Redis(Expire가 필요하거나 latency가 적어야 하는 캐싱 데이터)
-### Monitoring
-- InfluxDB(로그 데이터 저장)
-- Grafana(시각화)
+### API Architecture
+- REST
+### API Documentation
+- Swagger
+### Host
+- cafe24
 ### TDD
 - Travis-CI
-- Github Webhook
+- Github Webhook(Continuous Delivery)
 - Coveralls(커버리지 리포트)
 - Scrutinizer(코드 퀄리티 관리)
+### WAS
+- nginx
+### Monitoring
+#### Application Performance
+- None
+#### Infrastructre Performance
+- None
+### Log Managmenet
+- InfluxDB
+- Grafana
+### Container
+- None
 
 ## 인프라 구축 과정에서의 특별한 점
 ### Swagger
