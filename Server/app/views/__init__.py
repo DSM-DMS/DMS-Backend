@@ -1,6 +1,7 @@
 import os
 
 from flask import current_app, request, render_template
+from werkzeug.exceptions import HTTPException
 
 
 def after_request(response):
@@ -43,8 +44,11 @@ def exception_handler(e):
     ])
 
     print(e)
-    
-    return '', 500
+
+    if isinstance(e, HTTPException):
+        return e.description, e.code
+    else:
+        return '', 500
 
 
 def index_student():
