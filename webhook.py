@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
         if request.headers['X-GitHub-Event'] == 'push':
             print('push!')
-            os.system('. hook.sh')
+            os.system('. ./hook.sh')
 
         return 'hello'
 
