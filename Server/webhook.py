@@ -10,7 +10,7 @@ PORT = 9999
 if __name__ == '__main__':
     app = Flask(__name__)
 
-    @app.route('/')
+    @app.route('/', methods=['POST'])
     def event_handler():
         payload = request.json
         print(json.dumps(payload, indent=4))
