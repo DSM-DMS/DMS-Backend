@@ -69,3 +69,45 @@ class TestStudentList(TCBase):
         resp = self._request(token=self.student_access_token)
         self.assertEqual(resp.status_code, 403)
 
+
+class TestPenaltyTrainingStatusPatch(TCBase):
+    """
+    학생의 벌점 교육 상태 변경을 테스트합니다.
+        * PATCH /admin/point/student/penalty/<student_id>
+    """
+    def setUp(self):
+        super(TestPenaltyTrainingStatusPatch, self).setUp()
+
+        # ---
+
+        self._request = lambda *, token=None, id=self.student_id, status=True: self.request(
+            self.client.patch,
+            '/admin/point/student/penalty/{}'.format(id),
+            token,
+            json={
+                'status': status
+            }
+        )
+
+    def testPatchSuccess(self):
+        # (1) 벌점 교육 상태 변경
+        resp = self._request()
+
+        # (2) status code 200
+        self.assertEqual(resp.status_code, 200)
+
+        # (3) 데이터베이스 확인
+        student = StudentModel.objects(id=self.student_id).first()
+
+        self.assertTrue(student.penalty_training_status)
+
+    def testPatchFailure_studentDoesNotExist(self):
+        # (1) 존재하지 않는 학생 ID를 통해 벌점 교육 상태 변경
+        resp = self._request(id='123')
+
+        # (2) status code 204
+        self.assertEqual(resp.status_code, 204)
+
+    def testForbidden(self):
+        resp = self._request(token=self.student_access_token)
+        self.assertEqual(resp.status_code, 403)
