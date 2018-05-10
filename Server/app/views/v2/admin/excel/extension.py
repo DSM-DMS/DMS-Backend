@@ -10,7 +10,7 @@ from app.views.v2.admin.excel import ExcelDownload
 
 from utils.excel_style_manager import get_cell_positions_from_student_number
 
-api = Api(Blueprint(__name__, __name__, url_prefix='/admin/extension'))
+api = Api(Blueprint(__name__, __name__, url_prefix='/admin/excel/extension'))
 
 
 class ExtensionExcelDownload(ExcelDownload):

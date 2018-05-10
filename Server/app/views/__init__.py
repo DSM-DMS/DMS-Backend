@@ -1,6 +1,7 @@
 import os
 
 from flask import current_app, request, render_template
+from werkzeug.exceptions import HTTPException
 
 
 def after_request(response):
@@ -43,8 +44,11 @@ def exception_handler(e):
     ])
 
     print(e)
-    
-    return '', 500
+
+    if isinstance(e, HTTPException):
+        return e.description, e.code
+    else:
+        return '', 500
 
 
 def index_student():
@@ -57,6 +61,6 @@ def index_admin():
 
 def webhook_event_handler():
     if request.headers['X-GitHub-Event'] == 'push':
-        os.system('. ../hook.sh {} {}'.format(current_app.config['PORT'], current_app.config['RUN_COMMAND']))
+        os.system('. ../hook.sh')
 
     return 'hello'
