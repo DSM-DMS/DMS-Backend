@@ -1,4 +1,5 @@
 import socket
+import subprocess
 
 import json
 from flask import Flask, request
@@ -13,8 +14,11 @@ if __name__ == '__main__':
     @app.route('/', methods=['POST'])
     def event_handler():
         payload = request.json
-        print(json.dumps(payload, indent=4))
-        print('Working!')
+
+        if request.headers['X-GitHub-Event'] == 'push':
+            subprocess.call(
+                ['git pull']
+            )
 
         return 'hello'
 
