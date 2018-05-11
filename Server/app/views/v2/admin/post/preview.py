@@ -11,6 +11,8 @@ api.prefix = '/admin/post-preview'
 
 @api.resource('/<category>')
 class Preview(BaseResource):
-    @swag_from(PREVIEW_POST)
-    def post(self):
-        pass
+    @swag_from(PREVIEW_PATCH)
+    def patch(self, category):
+        """
+        게시글 프리뷰 설정
+        """

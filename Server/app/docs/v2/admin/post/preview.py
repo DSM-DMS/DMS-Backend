@@ -1,4 +1,4 @@
-PREVIEW_POST = {
+PREVIEW_PATCH = {
     'tags': ['[Admin] 게시글 관리'],
     'description': '게시글 프리뷰를 설정합니다.',
     'parameters': [
@@ -25,7 +25,7 @@ PREVIEW_POST = {
         }
     ],
     'responses': {
-        '201': {
+        '200': {
             'description': '설정 성공'
         },
         '204': {
