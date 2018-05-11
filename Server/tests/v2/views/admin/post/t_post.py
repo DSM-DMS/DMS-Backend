@@ -162,3 +162,75 @@ class TestPostPatch(TCBase):
         self._testPatchFailure_idDoesNotExist('rule')
         self._testForbidden('rule')
 
+
+class TestPostDelete(TCBase):
+    """
+    게시글 제거를 테스트합니다.
+    """
+    def __init__(self, *args, **kwargs):
+        super(TestPostDelete, self).__init__(*args, **kwargs)
+
+        self.method = self.client.delete
+        self.target_uri = '/admin/post/{}/{}'
+
+    def setUp(self):
+        super(TestPostDelete, self).setUp()
+
+        # ---
+
+        self._request = lambda *, token=None, category='', id='': self.request(
+            self.method,
+            self.target_uri.format(category, id or self.id),
+            token
+        )
+
+    def _post(self, category):
+        resp = self.request(
+            self.client.post,
+            '/admin/post/{}'.format(category),
+            json={
+                'title': 'q',
+                'content': 'q'
+            }
+        )
+
+        self.id = resp.json['id']
+
+    def _testDeleteSuccess(self, category):
+        # (1) 게시글 삭제
+        resp = self._request(category=category)
+
+        # (2) status code 200
+        self.assertEqual(resp.status_code, 200)
+
+        # (3) 데이터베이스 확인
+        self.assertFalse(CATEGORY_MODEL_MAPPING[category.upper()].objects)
+
+    def _testDeleteFailure_idDoesNotExist(self, category):
+        # (1) 존재하지 않는 ID를 통해 게시글 수정
+        resp = self._request(category=category, id='123')
+
+        # (2) status code 204
+        self.assertEqual(resp.status_code, 204)
+
+    def _testForbidden(self, category):
+        resp = self._request(token=self.student_access_token, category=category)
+        self.assertEqual(resp.status_code, 403)
+
+    def testFAQ(self):
+        self._post('faq')
+        self._testDeleteSuccess('faq')
+        self._testDeleteFailure_idDoesNotExist('faq')
+        self._testForbidden('faq')
+
+    def testNotice(self):
+        self._post('notice')
+        self._testDeleteSuccess('notice')
+        self._testDeleteFailure_idDoesNotExist('notice')
+        self._testForbidden('notice')
+
+    def testRule(self):
+        self._post('rule')
+        self._testDeleteSuccess('rule')
+        self._testDeleteFailure_idDoesNotExist('rule')
+        self._testForbidden('rule')
