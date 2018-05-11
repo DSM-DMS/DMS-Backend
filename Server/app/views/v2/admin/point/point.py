@@ -5,7 +5,7 @@ from flasgger import swag_from
 from app.docs.v2.admin.point.point import *
 from app.models.account import AdminModel, StudentModel
 from app.models.point import PointRuleModel, PointHistoryModel
-from app.views.v2 import BaseResource, auth_required, json_required
+from app.views.v2 import BaseResource, auth_required, json_required_2
 
 api = Api(Blueprint(__name__, __name__))
 api.prefix = '/admin/point/point'
@@ -33,7 +33,7 @@ class Point(BaseResource):
         } for history in student.point_histories])
 
     @auth_required(AdminModel)
-    @json_required('ruleId', 'point')
+    @json_required_2({'ruleId': str, 'point': int})
     @swag_from(POINT_POST)
     def post(self, student_id):
         """
@@ -80,7 +80,7 @@ class Point(BaseResource):
         }, 201
 
     @auth_required(AdminModel)
-    @json_required('historyId')
+    @json_required_2({'historyId': str})
     @swag_from(POINT_DELETE)
     def delete(self, student_id):
         """

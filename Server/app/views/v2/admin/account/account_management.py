@@ -8,7 +8,7 @@ from flasgger import swag_from
 
 from app.docs.v2.admin.account.account_management import *
 from app.models.account import AdminModel, StudentModel, SignupWaitingModel
-from app.views.v2 import BaseResource, auth_required, json_required
+from app.views.v2 import BaseResource, auth_required, json_required_2
 
 api = Api(Blueprint(__name__, __name__))
 api.prefix = '/admin/account-management'
@@ -17,7 +17,7 @@ api.prefix = '/admin/account-management'
 @api.resource('/student')
 class StudentAccount(BaseResource):
     @auth_required(AdminModel)
-    @json_required('number')
+    @json_required_2({'number': int})
     @swag_from(STUDENT_ACCOUNT_DELETE)
     def delete(self):
         """
@@ -64,7 +64,7 @@ class StudentAccount(BaseResource):
 @api.resource('/admin')
 class AdminAccount(BaseResource):
     @auth_required(AdminModel)
-    @json_required('id', 'password', 'name')
+    @json_required_2({'id': str, 'password': str, 'name': str})
     @swag_from(ADMIN_ACCOUNT_POST)
     def post(self):
         """
@@ -96,7 +96,7 @@ class AdminAccount(BaseResource):
             raise Exception()
 
     @auth_required(AdminModel)
-    @json_required('id')
+    @json_required_2({'id': str})
     @swag_from(ADMIN_ACCOUNT_DELETE)
     def delete(self):
         """
