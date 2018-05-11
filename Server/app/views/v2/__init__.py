@@ -119,68 +119,68 @@ class Router:
         if app is not None:
             self.init_app(app)
 
-    def add_v2_prefix(self, blueprint):
-        if not blueprint.url_prefix.startswith('/v2'):
-            blueprint.url_prefix = '/{}{}'.format('v2', blueprint.url_prefix)
+    def add_v2_prefix(self, api):
+        if not api.prefix.startswith('/v2'):
+            api.prefix = '/{}{}'.format('v2', api.prefix)
 
-        return blueprint
+        return api
 
     def init_app(self, app):
         from .admin.account import account_management, auth
-        app.register_blueprint(self.add_v2_prefix(account_management.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(auth.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(account_management.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(auth.api).blueprint)
 
         from .admin.excel import extension, goingout, stay
-        app.register_blueprint(self.add_v2_prefix(extension.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(goingout.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(stay.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(extension.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(goingout.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(stay.api).blueprint)
 
         from .admin.point import point, rule, student
-        app.register_blueprint(self.add_v2_prefix(point.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(rule.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(student.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(point.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(rule.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(student.api).blueprint)
 
         from .admin.post import post, preview
-        app.register_blueprint(self.add_v2_prefix(post.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(preview.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(post.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(preview.api).blueprint)
 
         from .admin.report import facility
-        app.register_blueprint(self.add_v2_prefix(facility.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(facility.api).blueprint)
 
         from .admin.survey import question, survey
-        app.register_blueprint(self.add_v2_prefix(question.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(survey.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(question.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(survey.api).blueprint)
 
         from .mixed.jwt import checker, refresh
-        app.register_blueprint(self.add_v2_prefix(checker.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(refresh.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(checker.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(refresh.api).blueprint)
 
         from .mixed.metadata import developers, links
-        app.register_blueprint(self.add_v2_prefix(developers.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(links.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(developers.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(links.api).blueprint)
 
         from .mixed.post import post, preview
-        app.register_blueprint(self.add_v2_prefix(post.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(preview.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(post.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(preview.api).blueprint)
 
         from .mixed.school_data import meal
-        app.register_blueprint(self.add_v2_prefix(meal.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(meal.api).blueprint)
 
         from .student.account import alteration, auth, info, signup, social_auth
-        app.register_blueprint(self.add_v2_prefix(alteration.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(auth.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(info.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(signup.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(social_auth.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(alteration.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(auth.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(info.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(signup.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(social_auth.api).blueprint)
 
         from .student.apply import extension, goingout, stay
-        app.register_blueprint(self.add_v2_prefix(extension.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(goingout.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(stay.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(extension.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(goingout.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(stay.api).blueprint)
 
         from .student.report import facility_report, bug_report
-        app.register_blueprint(self.add_v2_prefix(facility_report.api.blueprint))
-        app.register_blueprint(self.add_v2_prefix(bug_report.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(facility_report.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(bug_report.api).blueprint)
 
         from .student.survey import survey
-        app.register_blueprint(self.add_v2_prefix(survey.api.blueprint))
+        app.register_blueprint(self.add_v2_prefix(survey.api).blueprint)

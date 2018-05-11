@@ -7,7 +7,8 @@ from app.models.account import AdminModel, StudentModel
 from app.models.point import PointRuleModel, PointHistoryModel
 from app.views.v2 import BaseResource, auth_required, json_required
 
-api = Api(Blueprint(__name__, __name__, url_prefix='/admin/point/point'))
+api = Api(Blueprint(__name__, __name__))
+api.prefix = '/admin/point/point'
 
 
 @api.resource('/<student_id>')

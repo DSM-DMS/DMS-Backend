@@ -11,7 +11,8 @@ from app.docs.v2.admin.account.auth import *
 from app.models.account import AdminModel, RefreshTokenModel
 from app.views.v2 import BaseResource, json_required
 
-api = Api(Blueprint(__name__, __name__, url_prefix='/admin'))
+api = Api(Blueprint(__name__, __name__))
+api.prefix = '/admin'
 
 
 @api.resource('/auth')

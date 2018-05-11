@@ -7,13 +7,14 @@ from app.models.account import AdminModel
 from app.models.post import FAQModel, NoticeModel, RuleModel
 from app.views.v2 import BaseResource, auth_required, json_required
 
-api = Api(Blueprint(__name__, __name__, url_prefix='/admin/post'))
 
 CATEGORY_MODEL_MAPPING = {
     'FAQ': FAQModel,
     'NOTICE': NoticeModel,
     'RULE': RuleModel
 }
+api = Api(Blueprint(__name__, __name__))
+api.prefix = '/admin/post'
 
 
 @api.resource('/<category>')
