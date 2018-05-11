@@ -43,9 +43,35 @@ class Post(BaseResource):
 
 @api.resource('/<category>/<post_id>')
 class PostAlteration(BaseResource):
+    @auth_required(AdminModel)
     @swag_from(POST_PATCH)
-    def patch(self, post_id):
-        pass
+    def patch(self, category, post_id):
+        """
+        게시글 수정
+        """
+        title = request.json['title']
+        content = request.json['content']
+
+        if category.upper() not in CATEGORY_MODEL_MAPPING:
+            abort(400)
+
+        if len(post_id) != 24:
+            return Response('', 204)
+
+        post = CATEGORY_MODEL_MAPPING[category.upper()].objects(id=post_id).first()
+
+        if not post:
+            return Response('', 204)
+
+        updated = post.update(
+            title=title,
+            content=content
+        )
+
+        if updated:
+            return Response('', 200)
+        else:
+            abort(500)
 
     @swag_from(POST_DELETE)
     def delete(self, post_id):
