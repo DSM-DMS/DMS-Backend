@@ -21,21 +21,18 @@ FACILITY_REPORT_GET = {
                     {
                         'id': SAMPLE_OBJECT_IDS[0],
                         'author': '이병찬',
-                        'title': '방에서 냄새가 나요',
                         'content': '내 발냄새인거같기도 하고',
                         'room': 415
                     },
                     {
                         'id': SAMPLE_OBJECT_IDS[1],
                         'author': '조민규',
-                        'title': '계엄령을 선포한다',
                         'content': '치킨먹고싶어',
                         'room': 415
                     },
                     {
                         'id': SAMPLE_OBJECT_IDS[2],
                         'author': '김동규',
-                        'title': '피카츄가 포켓볼에서 안나와요',
                         'content': '내가 이걸 얼마주고 샀는데',
                         'room': 320
                     }
@@ -61,9 +58,9 @@ FACILITY_REPORT_DELETE = {
             'required': True
         },
         {
-            'name': 'reportId',
+            'name': 'id',
             'description': '삭제할 시설고장 신고 ID',
-            'in': 'json',
+            'in': 'path',
             'type': 'str',
             'required': True
         }
