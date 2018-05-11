@@ -147,10 +147,6 @@ class Router:
         from .admin.report import facility
         app.register_blueprint(self.add_v2_prefix(facility.api).blueprint)
 
-        from .admin.survey import question, survey
-        app.register_blueprint(self.add_v2_prefix(question.api).blueprint)
-        app.register_blueprint(self.add_v2_prefix(survey.api).blueprint)
-
         from .mixed.jwt import checker, refresh
         app.register_blueprint(self.add_v2_prefix(checker.api).blueprint)
         app.register_blueprint(self.add_v2_prefix(refresh.api).blueprint)
