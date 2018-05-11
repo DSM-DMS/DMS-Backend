@@ -27,9 +27,9 @@ class TestPostUpload(TCBase):
         self.title = '제목'
         self.content = '내용'
 
-        self._request = lambda *, token=None, category='', title=self.title, content=self.content: self.request(
+        self._request = lambda *, token=None, title=self.title, content=self.content: self.request(
             self.method,
-            self.target_uri.format(category),
+            self.target_uri.format(self.category),
             token,
             json={
                 'title': self.title,
@@ -37,9 +37,9 @@ class TestPostUpload(TCBase):
             }
         )
 
-    def _testUploadSuccess(self, category):
+    def _testUploadSuccess(self):
         # (1) 업로드
-        resp = self._request(category=category)
+        resp = self._request()
 
         # (2) status code 201
         self.assertEqual(resp.status_code, 201)
@@ -53,7 +53,7 @@ class TestPostUpload(TCBase):
         self.assertIsInstance(id, str)
 
         # (4) 데이터베이스 확인
-        posts = CATEGORY_MODEL_MAPPING[category.upper()].objects
+        posts = CATEGORY_MODEL_MAPPING[self.category.upper()].objects
 
         self.assertEqual(len(posts), 1)
 
@@ -63,21 +63,24 @@ class TestPostUpload(TCBase):
         self.assertEqual(post.title, self.title)
         self.assertEqual(post.content, self.content)
 
-    def _testForbidden(self, category):
-        resp = self._request(token=self.student_access_token, category=category)
+    def _testForbidden(self):
+        resp = self._request(token=self.student_access_token)
         self.assertEqual(resp.status_code, 403)
 
     def testFAQ(self):
-        self._testUploadSuccess('faq')
-        self._testForbidden('faq')
+        self.category = 'faq'
+        self._testUploadSuccess()
+        self._testForbidden()
 
     def testNotice(self):
-        self._testUploadSuccess('notice')
-        self._testForbidden('notice')
+        self.category = 'notice'
+        self._testUploadSuccess()
+        self._testForbidden()
 
     def testRule(self):
-        self._testUploadSuccess('rule')
-        self._testForbidden('rule')
+        self.category = 'rule'
+        self._testUploadSuccess()
+        self._testForbidden()
 
 
 class TestPostPatch(TCBase):
@@ -98,9 +101,9 @@ class TestPostPatch(TCBase):
         self.new_title = '새 제목'
         self.new_content = '새 내용'
 
-        self._request = lambda *, token=None, category='', id='', title=self.new_title, content=self.new_content: self.request(
+        self._request = lambda *, token=None, id='', title=self.new_title, content=self.new_content: self.request(
             self.method,
-            self.target_uri.format(category, id or self.id),
+            self.target_uri.format(self.category, id or self.id),
             token,
             json={
                 'title': self.new_title,
@@ -108,10 +111,10 @@ class TestPostPatch(TCBase):
             }
         )
 
-    def _post(self, category):
+    def _post(self):
         resp = self.request(
             self.client.post,
-            '/admin/post/{}'.format(category),
+            '/admin/post/{}'.format(self.category),
             json={
                 'title': 'q',
                 'content': 'q'
@@ -120,47 +123,50 @@ class TestPostPatch(TCBase):
 
         self.id = resp.json['id']
 
-    def _testPatchSuccess(self, category):
+    def _testPatchSuccess(self):
         # (1) 게시글 수정
-        resp = self._request(category=category)
+        resp = self._request()
 
         # (2) status code 200
         self.assertEqual(resp.status_code, 200)
 
         # (3) 데이터베이스 확인
-        post = CATEGORY_MODEL_MAPPING[category.upper()].objects(id=self.id).first()
+        post = CATEGORY_MODEL_MAPPING[self.category.upper()].objects(id=self.id).first()
 
         self.assertEqual(post.title, self.new_title)
         self.assertEqual(post.content, self.new_content)
 
-    def _testPatchFailure_idDoesNotExist(self, category):
+    def _testPatchFailure_idDoesNotExist(self):
         # (1) 존재하지 않는 ID를 통해 게시글 수정
-        resp = self._request(category=category, id='123')
+        resp = self._request(id='123')
 
         # (2) status code 204
         self.assertEqual(resp.status_code, 204)
 
-    def _testForbidden(self, category):
-        resp = self._request(token=self.student_access_token, category=category)
+    def _testForbidden(self):
+        resp = self._request(token=self.student_access_token)
         self.assertEqual(resp.status_code, 403)
 
     def testFAQ(self):
-        self._post('faq')
-        self._testPatchSuccess('faq')
-        self._testPatchFailure_idDoesNotExist('faq')
-        self._testForbidden('faq')
+        self.category = 'faq'
+        self._post()
+        self._testPatchSuccess()
+        self._testPatchFailure_idDoesNotExist()
+        self._testForbidden()
 
     def testNotice(self):
-        self._post('notice')
-        self._testPatchSuccess('notice')
-        self._testPatchFailure_idDoesNotExist('notice')
-        self._testForbidden('notice')
+        self.category = 'notice'
+        self._post()
+        self._testPatchSuccess()
+        self._testPatchFailure_idDoesNotExist()
+        self._testForbidden()
 
     def testRule(self):
-        self._post('rule')
-        self._testPatchSuccess('rule')
-        self._testPatchFailure_idDoesNotExist('rule')
-        self._testForbidden('rule')
+        self.category = 'rule'
+        self._post()
+        self._testPatchSuccess()
+        self._testPatchFailure_idDoesNotExist()
+        self._testForbidden()
 
 
 class TestPostDelete(TCBase):
@@ -178,16 +184,16 @@ class TestPostDelete(TCBase):
 
         # ---
 
-        self._request = lambda *, token=None, category='', id='': self.request(
+        self._request = lambda *, token=None, id='': self.request(
             self.method,
-            self.target_uri.format(category, id or self.id),
+            self.target_uri.format(self.category, id or self.id),
             token
         )
 
-    def _post(self, category):
+    def _post(self):
         resp = self.request(
             self.client.post,
-            '/admin/post/{}'.format(category),
+            '/admin/post/{}'.format(self.category),
             json={
                 'title': 'q',
                 'content': 'q'
@@ -196,41 +202,44 @@ class TestPostDelete(TCBase):
 
         self.id = resp.json['id']
 
-    def _testDeleteSuccess(self, category):
+    def _testDeleteSuccess(self):
         # (1) 게시글 삭제
-        resp = self._request(category=category)
+        resp = self._request()
 
         # (2) status code 200
         self.assertEqual(resp.status_code, 200)
 
         # (3) 데이터베이스 확인
-        self.assertFalse(CATEGORY_MODEL_MAPPING[category.upper()].objects)
+        self.assertFalse(CATEGORY_MODEL_MAPPING[self.category.upper()].objects)
 
-    def _testDeleteFailure_idDoesNotExist(self, category):
+    def _testDeleteFailure_idDoesNotExist(self):
         # (1) 존재하지 않는 ID를 통해 게시글 수정
-        resp = self._request(category=category, id='123')
+        resp = self._request(id='123')
 
         # (2) status code 204
         self.assertEqual(resp.status_code, 204)
 
-    def _testForbidden(self, category):
-        resp = self._request(token=self.student_access_token, category=category)
+    def _testForbidden(self):
+        resp = self._request(token=self.student_access_token)
         self.assertEqual(resp.status_code, 403)
 
     def testFAQ(self):
-        self._post('faq')
-        self._testDeleteSuccess('faq')
-        self._testDeleteFailure_idDoesNotExist('faq')
-        self._testForbidden('faq')
+        self.category = 'faq'
+        self._post()
+        self._testDeleteSuccess()
+        self._testDeleteFailure_idDoesNotExist()
+        self._testForbidden()
 
     def testNotice(self):
-        self._post('notice')
-        self._testDeleteSuccess('notice')
-        self._testDeleteFailure_idDoesNotExist('notice')
-        self._testForbidden('notice')
+        self.category = 'notice'
+        self._post()
+        self._testDeleteSuccess()
+        self._testDeleteFailure_idDoesNotExist()
+        self._testForbidden()
 
     def testRule(self):
-        self._post('rule')
-        self._testDeleteSuccess('rule')
-        self._testDeleteFailure_idDoesNotExist('rule')
-        self._testForbidden('rule')
+        self.category = 'rule'
+        self._post()
+        self._testDeleteSuccess()
+        self._testDeleteFailure_idDoesNotExist()
+        self._testForbidden()
