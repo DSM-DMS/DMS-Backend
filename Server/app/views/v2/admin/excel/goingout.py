@@ -10,7 +10,8 @@ from app.views.v2.admin.excel import ExcelDownload
 
 from utils.excel_style_manager import get_cell_positions_from_student_number
 
-api = Api(Blueprint(__name__, __name__, url_prefix='/admin/excel/goingout'))
+api = Api(Blueprint(__name__, __name__))
+api.prefix = '/admin/excel/goingout'
 
 
 @api.resource('')

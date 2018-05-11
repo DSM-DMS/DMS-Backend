@@ -11,7 +11,7 @@ class TestStudentAccountControl(TCBase):
         super(TestStudentAccountControl, self).__init__(*args, **kwargs)
 
         self.method = self.client.delete
-        self.target_uri = '/account-management/student'
+        self.target_uri = '/admin/account-management/student'
 
     def setUp(self):
         super(TestStudentAccountControl, self).setUp()
@@ -85,7 +85,7 @@ class TestAdminAccountCreation(TCBase):
         super(TestAdminAccountCreation, self).__init__(*args, **kwargs)
 
         self.method = self.client.post
-        self.target_uri = '/account-management/admin'
+        self.target_uri = '/admin/account-management/admin'
 
     def setUp(self):
         super(TestAdminAccountCreation, self).setUp()
@@ -141,7 +141,7 @@ class TestAdminAccountDeletion(TCBase):
         super(TestAdminAccountDeletion, self).__init__(*args, **kwargs)
 
         self.method = self.client.delete
-        self.target_uri = '/account-management/admin'
+        self.target_uri = '/admin/account-management/admin'
 
     def setUp(self):
         super(TestAdminAccountDeletion, self).setUp()
@@ -151,7 +151,7 @@ class TestAdminAccountDeletion(TCBase):
         self.new_admin_id = 'new_admin'
         self.request(
             self.client.post,
-            '/account-management/admin',
+            self.target_uri,
             json={
                 'id': self.new_admin_id,
                 'password': self.pw,
