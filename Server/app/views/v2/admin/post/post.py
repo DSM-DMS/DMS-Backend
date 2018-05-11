@@ -23,6 +23,9 @@ class Post(BaseResource):
         title = request.json['title']
         content = request.json['content']
 
+        if 1000 < len(title) or 50000 < len(content):
+            abort(400)
+
         if category.upper() not in CATEGORY_MODEL_MAPPING:
             abort(400)
 
@@ -48,6 +51,9 @@ class PostAlteration(BaseResource):
         """
         title = request.json['title']
         content = request.json['content']
+
+        if 1000 < len(title) or 50000 < len(content):
+            abort(400)
 
         if category.upper() not in CATEGORY_MODEL_MAPPING:
             abort(400)
