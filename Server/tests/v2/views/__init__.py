@@ -14,12 +14,13 @@ from app.models.account import AdminModel, StudentModel
 
 app = create_app(TestConfig)
 
-mongo_setting = app.config['MONGODB_SETTINGS']
-db_name = mongo_setting.pop('db')
-mongo_client = pymongo.MongoClient(**mongo_setting)
-
 
 class TCBase(TC):
+    mongo_setting = app.config['MONGODB_SETTINGS']
+    db_name = mongo_setting.pop('db')
+    mongo_client = pymongo.MongoClient(**mongo_setting)
+    mongo_setting['db'] = db_name
+
     def __init__(self, *args, **kwargs):
         self.client = app.test_client()
         self.today = datetime.now().strftime('%Y-%m-%d')
@@ -66,7 +67,7 @@ class TCBase(TC):
         self._get_tokens()
 
     def tearDown(self):
-        mongo_client.drop_database(db_name)
+        self.mongo_client.drop_database(self.db_name)
 
     def request(self, method, target_url_rule, token=None, *args, **kwargs):
         """
