@@ -87,6 +87,27 @@ def json_required(*required_keys):
     return decorator
 
 
+def json_required_2(required_keys):
+    def decorator(fn):
+        if fn.__name__ == 'get':
+            print('[WARN] JSON with GET method? on "{}()"'.format(fn.__qualname__))
+
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            if not request.is_json:
+                abort(406)
+
+            for key, typ in required_keys.items():
+                if key not in request.json or not request.json[key] == typ:
+                    abort(400)
+                if typ is str and not request.json[key]:
+                    abort(400)
+
+            return fn(*args, **kwargs)
+        return wrapper
+    return decorator
+
+
 class BaseResource(Resource):
     """
     BaseResource with some helper functions based flask_restful.Resource
