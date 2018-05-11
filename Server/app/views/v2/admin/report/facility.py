@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, abort, g, request
+from flask import Blueprint, Response
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -29,8 +29,20 @@ class FacilityReport(BaseResource):
 
 @api.resource('/facility/<id>')
 class FacilityReportAlteration(BaseResource):
+    @auth_required(AdminModel)
     @swag_from(FACILITY_REPORT_DELETE)
     def delete(self, id):
         """
         시설고장신고 삭제
         """
+        if len(id) != 24:
+            return Response('', 204)
+
+        report = FacilityReportModel.objects(id=id).first()
+
+        if not report:
+            return Response('', 204)
+
+        report.delete()
+
+        return Response('', 200)
