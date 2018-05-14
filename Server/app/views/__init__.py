@@ -69,6 +69,6 @@ def reload_server():
 
 def webhook_event_handler():
     if request.headers['X-GitHub-Event'] == 'push':
-        threading.Thread(reload_server).run()
+        threading.Thread(target=reload_server).start()
 
     return 'hello'
