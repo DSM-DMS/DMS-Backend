@@ -25,9 +25,9 @@ class InfluxCronJob:
 
         threads = [
             Thread(target=self._setup_version_data),
-            Thread(target=self._setup_extension_apply_data, args=(10,)),
-            Thread(target=self._setup_goingout_apply_data, args=(60,)),
-            Thread(target=self._setup_stay_apply_data, args=(60,))
+            Thread(target=self._setup_extension_apply_data, args=(60,)),
+            Thread(target=self._setup_goingout_apply_data, args=(120,)),
+            Thread(target=self._setup_stay_apply_data, args=(120,))
         ]
 
         if not app.testing:
