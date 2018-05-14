@@ -10,7 +10,6 @@ from flask_restful import Resource
 from app.models.account import AccountBase, AdminModel, StudentModel, SystemModel
 
 MODEL_DOCSTRING_MAPPING = {
-    AccountBase: ' *로그인된 계정 모두',
     AdminModel: ' *관리자 권한',
     StudentModel: ' *학생 권한',
     SystemModel: ' *시스템 권한'
