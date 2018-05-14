@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from app.models import *
-from app.models.account import StudentModel
 
 
 class SurveyModel(Document):
@@ -50,7 +49,7 @@ class QuestionModel(Document):
     }
 
     survey = ReferenceField(
-        document_type=SurveyModel,
+        document_type='SurveyModel',
         required=True,
         reverse_delete_rule=CASCADE
     )
@@ -77,14 +76,14 @@ class AnswerModel(Document):
     }
 
     question = ReferenceField(
-        document_type=QuestionModel,
+        document_type='QuestionModel',
         required=True,
         reverse_delete_rule=CASCADE
     )
     # 할당된 질문
 
     answer_student = ReferenceField(
-        document_type=StudentModel,
+        document_type='StudentModel',
         required=True,
         reverse_delete_rule=CASCADE
     )

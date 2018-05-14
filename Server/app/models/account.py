@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from app.models import *
-from app.models.point import PointHistoryModel
 
 
 class SignupWaitingModel(Document):
@@ -85,7 +84,7 @@ class StudentModel(AccountBase):
     # 벌점
 
     point_histories = EmbeddedDocumentListField(
-        document_type=PointHistoryModel
+        document_type='PointHistoryModel'
         # default=[]
     )
     # 상벌점 내역
@@ -135,7 +134,7 @@ class RefreshTokenModel(Document):
     # Refresh token의 claim에 사용된 UUID
 
     token_owner = ReferenceField(
-        document_type=AccountBase,
+        document_type='AccountBase',
         required=True,
         reverse_delete_rule=CASCADE
     )

@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from app.models import *
-from app.models.account import StudentModel
 
 
 class ApplyBase(Document):
@@ -20,7 +19,7 @@ class ApplyBase(Document):
     # 신청 시간
 
     student = ReferenceField(
-        document_type=StudentModel,
+        document_type='StudentModel',
         required=True
     )
     # 신청 학생
