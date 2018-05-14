@@ -62,12 +62,13 @@ def index_admin():
 
 
 def reload_server():
+    time.sleep(2)
+
     os.system('. ../hook.sh')
 
 
 def webhook_event_handler():
     if request.headers['X-GitHub-Event'] == 'push':
-        time.sleep(2)
         threading.Thread(reload_server).run()
 
     return 'hello'
