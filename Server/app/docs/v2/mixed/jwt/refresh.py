@@ -25,7 +25,7 @@ REFRESH_GET = {
             'description': '해당 Refresh Token 발급 당시(로그인 시) 사용한 비밀번호가 변경되어, 재로그인 필요'
         },
         '401': {
-            'description': 'Refresh Token이 만료됨'
+            'description': 'Refresh Token이 만료되었거나, 서버에서 정상적으로 발급한 토큰이 아님'
         }
     }
 }
