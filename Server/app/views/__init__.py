@@ -1,4 +1,6 @@
 import os
+import threading
+import time
 
 from flask import current_app, request, render_template
 from werkzeug.exceptions import HTTPException
@@ -59,8 +61,13 @@ def index_admin():
     return render_template('admin.html')
 
 
+def reload_server():
+    os.system('. ../hook.sh')
+
+
 def webhook_event_handler():
     if request.headers['X-GitHub-Event'] == 'push':
-        os.system('. ../hook.sh')
+        time.sleep(2)
+        threading.Thread(reload_server).run()
 
     return 'hello'
