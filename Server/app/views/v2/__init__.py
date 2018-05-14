@@ -7,7 +7,7 @@ from flask import Response, abort, after_this_request, g, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 
-from app.models.account import AccountBase, AdminModel, StudentModel, SystemModel
+from app.models.account import AdminModel, StudentModel, SystemModel
 
 MODEL_DOCSTRING_MAPPING = {
     AdminModel: ' *관리자 권한',
