@@ -3,6 +3,7 @@ from binascii import hexlify
 from datetime import datetime
 from hashlib import pbkdf2_hmac
 from unittest import TestCase as TC
+from uuid import uuid4
 
 from flask import Response
 from flask_jwt_extended import create_access_token, create_refresh_token
@@ -10,7 +11,7 @@ import pymongo
 
 from app import create_app
 from config.test import TestConfig
-from app.models.account import AdminModel, StudentModel
+from app.models.account import AdminModel, StudentModel, RefreshTokenModel
 
 app = create_app(TestConfig)
 
@@ -45,9 +46,14 @@ class TCBase(TC):
     def _get_tokens(self):
         with app.app_context():
             self.admin_access_token = 'JWT {}'.format(create_access_token(self.admin_id))
-            self.admin_refresh_token = 'JWT {}'.format(create_refresh_token(self.admin_id))
+            uuid = uuid4()
+            RefreshTokenModel(token=uuid, token_owner=self.admin, pw_snapshot=self.admin.pw).save()
+            self.admin_refresh_token = 'JWT {}'.format(create_refresh_token(str(uuid)))
+
+            uuid = uuid4()
+            RefreshTokenModel(token=uuid, token_owner=self.student, pw_snapshot=self.student.pw).save()
             self.student_access_token = 'JWT {}'.format(create_access_token(self.student_id))
-            self.student_refresh_token = 'JWT {}'.format(create_refresh_token(self.student_id))
+            self.student_refresh_token = 'JWT {}'.format(create_refresh_token(str(uuid)))
 
     def setUp(self):
         self.admin_id = self.admin_name = 'admin'
