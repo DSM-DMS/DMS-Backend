@@ -181,9 +181,10 @@ class Router:
         app.register_blueprint(self.add_v2_prefix(checker.api).blueprint)
         app.register_blueprint(self.add_v2_prefix(refresh.api).blueprint)
 
-        from .mixed.metadata import developers, links
+        from .mixed.metadata import developers, links, version
         app.register_blueprint(self.add_v2_prefix(developers.api).blueprint)
         app.register_blueprint(self.add_v2_prefix(links.api).blueprint)
+        app.register_blueprint(self.add_v2_prefix(version.api).blueprint)
 
         from .mixed.post import post, preview
         app.register_blueprint(self.add_v2_prefix(post.api).blueprint)
