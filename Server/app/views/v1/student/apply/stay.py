@@ -2,12 +2,12 @@ from datetime import datetime, time
 
 from flask import Blueprint, Response, current_app, g, request
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
-from app.docs.v1.student.apply.stay import *
+
 from app.models.apply import StayApplyModel
 
 api = Api(Blueprint('student-stay-api', __name__))
@@ -15,7 +15,7 @@ api = Api(Blueprint('student-stay-api', __name__))
 
 @api.resource('/stay')
 class Stay(BaseResource):
-    @swag_from(STAY_GET)
+
     @student_only
     def get(self):
         """
@@ -29,7 +29,7 @@ class Stay(BaseResource):
             'value': apply.value
         }, 200)
 
-    @swag_from(STAY_POST)
+
     @student_only
     def post(self):
         """

@@ -1,10 +1,10 @@
-from flasgger import swag_from
+
 from flask import Blueprint
 from flask_restful import Api
 
 from app.views.v1 import auth_required
 
-from app.docs.v1.mixed.post.notice import *
+
 from app.models.post import NoticeModel
 from app.views.v1.mixed.post import PostAPIResource
 
@@ -13,7 +13,7 @@ api = Api(Blueprint('notice-api', __name__))
 
 @api.resource('/notice')
 class NoticeList(PostAPIResource):
-    @swag_from(NOTICE_LIST_GET)
+
     @auth_required
     def get(self):
         """
@@ -24,7 +24,7 @@ class NoticeList(PostAPIResource):
 
 @api.resource('/notice/<post_id>')
 class NoticeItem(PostAPIResource):
-    @swag_from(NOTICE_ITEM_GET)
+
     @auth_required
     def get(self, post_id):
         """

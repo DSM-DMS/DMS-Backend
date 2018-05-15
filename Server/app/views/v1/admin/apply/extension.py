@@ -2,12 +2,12 @@ from openpyxl import Workbook
 
 from flask import Blueprint, make_response, send_from_directory
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import admin_only
 
-from app.docs.v1.admin.apply.extension import *
+
 from app.models.apply import ExtensionApply11Model, ExtensionApply12Model
 
 from utils.excel_style_manager import get_cell_positions_from_student_number, ready_applyment_worksheet
@@ -20,7 +20,7 @@ api.prefix = '/admin/extension'
 
 @api.resource('/11')
 class Extension11Download(BaseResource):
-    @swag_from(EXTENSION_DOWNLOAD_GET)
+
     @admin_only
     def get(self):
         """
@@ -53,7 +53,7 @@ class Extension11Download(BaseResource):
 
 @api.resource('/12')
 class Extension12Download(BaseResource):
-    @swag_from(EXTENSION_DOWNLOAD_GET)
+
     @admin_only
     def get(self):
         """

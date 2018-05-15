@@ -2,12 +2,12 @@ from datetime import datetime
 
 from flask import Blueprint, Response, g, request
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
-from app.docs.v1.student.survey.survey import *
+
 from app.models.survey import AnswerModel, QuestionModel, SurveyModel
 
 api = Api(Blueprint('student-survey-api', __name__))
@@ -15,7 +15,7 @@ api = Api(Blueprint('student-survey-api', __name__))
 
 @api.resource('/survey')
 class Survey(BaseResource):
-    @swag_from(SURVEY_GET)
+
     @student_only
     def get(self):
         """
@@ -40,7 +40,7 @@ class Survey(BaseResource):
 
 @api.resource('/survey/question')
 class Question(BaseResource):
-    @swag_from(QUESTION_GET)
+
     @student_only
     def get(self):
         """
@@ -76,7 +76,7 @@ class Question(BaseResource):
 
         return self.unicode_safe_json_response(response)
 
-    @swag_from(QUESTION_POST)
+
     @student_only
     def post(self):
         """

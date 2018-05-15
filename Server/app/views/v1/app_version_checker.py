@@ -1,8 +1,8 @@
 from flask import Blueprint, Response, request
 from flask_restful import Api
-from flasgger import swag_from
 
-from app.docs.v1.etc.version import *
+
+
 from app.models.version import VersionModel
 from app.views.v1 import BaseResource
 from app.views.v1 import admin_only
@@ -22,7 +22,7 @@ class Version(BaseResource):
         
         super(Version, self).__init__()
 
-    @swag_from(VERSION_GET)
+    
     def get(self):
         """
         플랫폼의 최신 버전 확인 
@@ -35,7 +35,7 @@ class Version(BaseResource):
         else:
             return Response('', 204)
 
-    @swag_from(VERSION_POST)
+    
     @admin_only
     def post(self):
         """

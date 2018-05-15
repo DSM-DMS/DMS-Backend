@@ -3,12 +3,12 @@ import json
 
 from flask import Blueprint, Response, request
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import admin_only
 
-from app.docs.v1.admin.survey.survey import *
+
 from app.models.survey import QuestionModel, SurveyModel
 from app.models.support.mongo_helper import mongo_to_dict
 
@@ -18,7 +18,7 @@ api.prefix = '/admin'
 
 @api.resource('/survey')
 class SurveyManaging(BaseResource):
-    @swag_from(SURVEY_MANAGING_GET)
+
     @admin_only
     def get(self):
         """
@@ -28,7 +28,7 @@ class SurveyManaging(BaseResource):
 
         return self.unicode_safe_json_response(response)
 
-    @swag_from(SURVEY_MANAGING_POST)
+
     @admin_only
     def post(self):
         """
@@ -53,7 +53,7 @@ class SurveyManaging(BaseResource):
             'id': str(survey.id)
         }, 201)
 
-    @swag_from(SURVEY_MANAGING_DELETE)
+
     @admin_only
     def delete(self):
         """
@@ -74,7 +74,7 @@ class SurveyManaging(BaseResource):
 
 @api.resource('/survey/question')
 class QuestionManaging(BaseResource):
-    @swag_from(QUESTION_MANAGING_GET)
+
     @admin_only
     def get(self):
         """
@@ -92,7 +92,7 @@ class QuestionManaging(BaseResource):
 
         return self.unicode_safe_json_response(response)
 
-    @swag_from(QUESTION_MANAGING_POST)
+
     @admin_only
     def post(self):
         """

@@ -2,12 +2,12 @@ from datetime import datetime, time
 
 from flask import Blueprint, Response, current_app, g, request
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
-from app.docs.v1.student.apply.goingout import *
+
 from app.models.apply import GoingoutApplyModel
 
 api = Api(Blueprint('student-goingout-api', __name__))
@@ -15,7 +15,7 @@ api = Api(Blueprint('student-goingout-api', __name__))
 
 @api.resource('/goingout')
 class Goingout(BaseResource):
-    @swag_from(GOINGOUT_GET)
+
     @student_only
     def get(self):
         """
@@ -30,7 +30,7 @@ class Goingout(BaseResource):
             'sun': apply.on_sunday
         }, 200)
 
-    @swag_from(GOINGOUT_POST)
+
     @student_only
     def post(self):
         """

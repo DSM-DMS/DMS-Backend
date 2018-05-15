@@ -1,11 +1,11 @@
 from flask import Blueprint, g
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
-from app.docs.v1.student.account.info import *
+
 from app.models.apply import *
 
 api = Api(Blueprint('student-info-api', __name__))
@@ -13,7 +13,7 @@ api = Api(Blueprint('student-info-api', __name__))
 
 @api.resource('/mypage')
 class MyPage(BaseResource):
-    @swag_from(MYPAGE_GET)
+
     @student_only
     def get(self):
         """
@@ -54,7 +54,7 @@ class MyPage(BaseResource):
 
 @api.resource('/point/history')
 class PointHistory(BaseResource):
-    @swag_from(POINT_HISTORY_GET)
+
     @student_only
     def get(self):
         """

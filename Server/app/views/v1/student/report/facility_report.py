@@ -2,12 +2,12 @@ from datetime import datetime
 
 from flask import Blueprint, g, request
 from flask_restful import Api, abort
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
-from app.docs.v1.student.report.facility_report import *
+
 from app.models.report import FacilityReportModel
 
 api = Api(Blueprint('student-facility-report-api', __name__))
@@ -15,7 +15,7 @@ api = Api(Blueprint('student-facility-report-api', __name__))
 
 @api.resource('/report/facility')
 class FacilityReport(BaseResource):
-    @swag_from(FACILITY_REPORT_POST)
+
     @student_only
     def post(self):
         """

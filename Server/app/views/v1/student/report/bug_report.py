@@ -3,12 +3,12 @@ from slacker import Slacker
 
 from flask import Blueprint, Response, current_app, g, request
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
-from app.docs.v1.student.report.bug_report import *
+
 
 api = Api(Blueprint('student-bug-report-api', __name__))
 
@@ -24,7 +24,7 @@ class BugReport(BaseResource):
         
         super(BugReport, self).__init__()
 
-    @swag_from(BUG_REPORT_POST)
+    
     @student_only
     def post(self):
         """

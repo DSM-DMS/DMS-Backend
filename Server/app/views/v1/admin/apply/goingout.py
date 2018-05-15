@@ -2,12 +2,12 @@ from openpyxl import Workbook
 
 from flask import Blueprint, make_response, send_from_directory
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import admin_only
 
-from app.docs.v1.admin.apply.goingout import *
+
 from app.models.apply import GoingoutApplyModel, StayApplyModel
 
 from utils.excel_style_manager import get_cell_positions_from_student_number, ready_applyment_worksheet
@@ -18,7 +18,7 @@ api.prefix = '/admin'
 
 @api.resource('/goingout')
 class GoingoutDownload(BaseResource):
-    @swag_from(GOINGOUT_DOWNLOAD_GET)
+
     @admin_only
     def get(self):
         """

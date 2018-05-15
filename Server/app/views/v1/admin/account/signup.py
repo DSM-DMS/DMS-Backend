@@ -4,12 +4,12 @@ from hashlib import pbkdf2_hmac
 
 from flask import Blueprint, Response, current_app, request
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import admin_only
 
-from app.docs.v1.admin.account.signup import NEW_ACCOUNT_POST
+
 from app.models.account import StudentModel, AdminModel
 
 api = Api(Blueprint('admin-signup-api', __name__))
@@ -18,7 +18,7 @@ api.prefix = '/admin'
 
 @api.resource('/new-account')
 class NewAccount(BaseResource):
-    @swag_from(NEW_ACCOUNT_POST)
+    
     @admin_only
     def post(self):
         """

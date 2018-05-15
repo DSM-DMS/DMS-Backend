@@ -3,12 +3,12 @@ from bson import ObjectId
 
 from flask import Blueprint, Response, request
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import admin_only
 
-from app.docs.v1.admin.point.student import *
+
 from app.models.account import StudentModel
 from app.models.point import PointHistoryModel
 
@@ -18,7 +18,7 @@ api.prefix = '/admin/managing'
 
 @api.resource('/student')
 class StudentManaging(BaseResource):
-    @swag_from(STUDENT_MANAGING_GET)
+
     @admin_only
     def get(self):
         """
@@ -45,7 +45,7 @@ class StudentManaging(BaseResource):
 
 @api.resource('/student/penalty')
 class StudentPenaltyManaging(BaseResource):
-    @swag_from(STUDENT_PENALTY_MANAGING_PATCH)
+
     @admin_only
     def patch(self):
         """

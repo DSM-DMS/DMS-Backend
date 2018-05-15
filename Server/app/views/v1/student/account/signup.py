@@ -4,12 +4,12 @@ from hashlib import pbkdf2_hmac
 
 from flask import Blueprint, Response, current_app, request
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.models.account import SignupWaitingModel, StudentModel, AdminModel
 from app.models.apply import GoingoutApplyModel, StayApplyModel
 
-from app.docs.v1.student.account.signup import *
+
 from app.views.v1 import BaseResource
 
 api = Api(Blueprint('student-signup-api', __name__))
@@ -17,7 +17,7 @@ api = Api(Blueprint('student-signup-api', __name__))
 
 @api.resource('/verify/id')
 class IDVerification(BaseResource):
-    @swag_from(ID_VERIFICATION_POST)
+    
     def post(self):
         """
         ID 중복체크
@@ -35,7 +35,7 @@ class IDVerification(BaseResource):
 
 @api.resource('/verify/uuid')
 class UUIDVerification(BaseResource):
-    @swag_from(UUID_VERIFICATION_POST)
+    
     def post(self):
         """
         UUID에 대한 가입 가능 여부 검사
@@ -52,7 +52,7 @@ class UUIDVerification(BaseResource):
 
 @api.resource('/signup')
 class Signup(BaseResource):
-    @swag_from(SIGNUP_POST)
+    
     def post(self):
         """
         회원가입

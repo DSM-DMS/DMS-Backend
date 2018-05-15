@@ -6,11 +6,11 @@ from flask import Blueprint, current_app, request
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity, jwt_refresh_token_required
 from flask_restful import Api, abort
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 
-from app.docs.v1.admin.account.auth import *
+
 from app.models.account import AdminModel, RefreshTokenModel
 
 api = Api(Blueprint('admin-auth-api', __name__))
@@ -19,7 +19,7 @@ api.prefix = '/admin'
 
 @api.resource('/auth')
 class Auth(BaseResource):
-    @swag_from(AUTH_POST)
+
     def post(self):
         """
         관리자 로그인
@@ -58,7 +58,7 @@ class Auth(BaseResource):
 
 @api.resource('/refresh')
 class Refresh(BaseResource):
-    @swag_from(REFRESH_POST)
+
     @jwt_refresh_token_required
     def post(self):
         """

@@ -2,12 +2,12 @@ from openpyxl import Workbook
 
 from flask import Blueprint, make_response, send_from_directory
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import admin_only
 
-from app.docs.v1.admin.apply.stay import *
+
 from app.models.account import StudentModel
 from app.models.apply import StayApplyModel
 
@@ -19,7 +19,7 @@ api.prefix = '/admin'
 
 @api.resource('/stay')
 class StayDownload(BaseResource):
-    @swag_from(STAY_DOWNLOAD_GET)
+    
     @admin_only
     def get(self):
         """

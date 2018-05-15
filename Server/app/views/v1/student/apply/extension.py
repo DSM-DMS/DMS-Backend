@@ -2,12 +2,12 @@ from datetime import datetime
 
 from flask import Blueprint, Response, current_app, g, request
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
-from app.docs.v1.student.apply.extension import *
+
 from app.models.apply import ExtensionApply11Model, ExtensionApply12Model
 
 from utils.extension_meta import APPLY_START, APPLY_END_11, APPLY_END_12, MAPS
@@ -17,7 +17,7 @@ api = Api(Blueprint('student-extension-api', __name__))
 
 @api.resource('/extension/11')
 class Extension11(BaseResource):
-    @swag_from(EXTENSION_GET)
+
     @student_only
     def get(self):
         """
@@ -32,7 +32,7 @@ class Extension11(BaseResource):
             'seat_num': apply.seat
         }, 200) if apply else ('', 204)
 
-    @swag_from(EXTENSION_POST)
+
     @student_only
     def post(self):
         """
@@ -60,7 +60,7 @@ class Extension11(BaseResource):
 
         return Response('', 201)
 
-    @swag_from(EXTENSION_DELETE)
+
     @student_only
     def delete(self):
         """
@@ -81,7 +81,7 @@ class Extension11(BaseResource):
 
 @api.resource('/extension/12')
 class Extension12(BaseResource):
-    @swag_from(EXTENSION_GET)
+
     @student_only
     def get(self):
         """
@@ -96,7 +96,7 @@ class Extension12(BaseResource):
             'seat_num': apply.seat
         }, 200) if apply else ('', 204)
 
-    @swag_from(EXTENSION_POST)
+
     @student_only
     def post(self):
         """
@@ -124,7 +124,7 @@ class Extension12(BaseResource):
 
         return Response('', 201)
 
-    @swag_from(EXTENSION_DELETE)
+
     @student_only
     def delete(self):
         """
@@ -165,7 +165,7 @@ def _create_extension_map(class_, hour):
 
 @api.resource('/extension/map/11')
 class ExtensionMap11(BaseResource):
-    @swag_from(EXTENSION_MAP_GET)
+
     def get(self):
         """
         11시 연장신청 지도 조회
@@ -177,7 +177,7 @@ class ExtensionMap11(BaseResource):
 
 @api.resource('/extension/map/12')
 class ExtensionMap12(BaseResource):
-    @swag_from(EXTENSION_MAP_GET)
+
     def get(self):
         """
         12시 연장신청 지도 조회

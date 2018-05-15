@@ -1,11 +1,11 @@
 from flask import Blueprint
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.views.v1 import admin_only
 from app.views.v1.admin.post import PostAPIResource
 
-from app.docs.v1.admin.post.rule import *
+
 from app.models.post import RuleModel
 
 api = Api(Blueprint('admin-rule-api', __name__))
@@ -14,7 +14,7 @@ api.prefix = '/admin'
 
 @api.resource('/rule')
 class RuleManaging(PostAPIResource):
-    @swag_from(RULE_MANAGING_POST)
+
     @admin_only
     def post(self):
         """
@@ -22,7 +22,7 @@ class RuleManaging(PostAPIResource):
         """
         return self.upload_post(RuleModel)
 
-    @swag_from(RULE_MANAGING_PATCH)
+
     @admin_only
     def patch(self):
         """
@@ -30,7 +30,7 @@ class RuleManaging(PostAPIResource):
         """
         return self.modify_post(RuleModel)
 
-    @swag_from(RULE_MANAGING_DELETE)
+
     @admin_only
     def delete(self):
         """

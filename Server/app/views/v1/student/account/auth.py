@@ -6,12 +6,12 @@ from flask import Blueprint, Response, current_app, request
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity, jwt_refresh_token_required
 from flask_restful import Api, abort
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
-from app.docs.v1.student.account.auth import *
+
 from app.models.account import StudentModel, RefreshTokenModel
 
 api = Api(Blueprint('student-auth-api', __name__))
@@ -19,7 +19,7 @@ api = Api(Blueprint('student-auth-api', __name__))
 
 @api.resource('/auth')
 class Auth(BaseResource):
-    @swag_from(AUTH_POST)
+    
     def post(self):
         """
         학생 로그인
@@ -59,7 +59,7 @@ class Auth(BaseResource):
 
 @api.resource('/auth-check')
 class AuthCheck(BaseResource):
-    @swag_from(AUTH_CHECK_GET)
+    
     @student_only
     def get(self):
         return Response('', 200)
@@ -67,7 +67,7 @@ class AuthCheck(BaseResource):
 
 @api.resource('/refresh')
 class Refresh(BaseResource):
-    @swag_from(REFRESH_POST)
+    
     @jwt_refresh_token_required
     def post(self):
         """

@@ -1,11 +1,11 @@
 from flask import Blueprint, Response, request
 from flask_restful import Api
-from flasgger import swag_from
+
 
 from app.views.v1 import BaseResource
 from app.views.v1 import admin_only
 
-from app.docs.v1.admin.point.rule import *
+
 
 from app.models.point import PointRuleModel
 from app.models.support.mongo_helper import mongo_to_dict
@@ -16,7 +16,7 @@ api.prefix = '/admin/managing'
 
 @api.resource('/rule')
 class PointRuleManaging(BaseResource):
-    @swag_from(POINT_RULE_MANAGING_GET)
+
     @admin_only
     def get(self):
         """
@@ -26,7 +26,7 @@ class PointRuleManaging(BaseResource):
 
         return self.unicode_safe_json_response(response)
 
-    @swag_from(POINT_RULE_MANAGING_POST)
+
     @admin_only
     def post(self):
         """
@@ -48,7 +48,7 @@ class PointRuleManaging(BaseResource):
             'id': str(rule.id)
         }, 201
 
-    @swag_from(POINT_RULE_MANAGING_PATCH)
+
     @admin_only
     def patch(self):
         """
@@ -76,7 +76,7 @@ class PointRuleManaging(BaseResource):
 
         return Response('', 200)
 
-    @swag_from(POINT_RULE_MANAGING_DELETE)
+
     @admin_only
     def delete(self):
         """
