@@ -9,7 +9,8 @@ from mongoengine import connect
 from redis import Redis
 from influxdb import InfluxDBClient
 
-from app.views.v1 import Router
+from app.views.v1 import Router as V1Router
+from app.views.v2 import Router as V2Router
 from app.views import *
 from app._influxdb import InfluxCronJob
 
@@ -36,15 +37,15 @@ def create_app(*config_cls):
 
     JWTManager().init_app(app_)
     CORS().init_app(app_)
+    Swagger(template=app_.config['SWAGGER_TEMPLATE']).init_app(app_)
 
     connect(**app_.config['MONGODB_SETTINGS'])
     app_.config['REDIS_CLIENT'] = Redis(**app_.config['REDIS_SETTINGS'])
     app_.config['INFLUXDB_CLIENT'] = InfluxDBClient(**app_.config['INFLUXDB_SETTINGS'])
 
-    Router().init_app(app_)
+    V1Router().init_app(app_)
+    V2Router().init_app(app_)
     InfluxCronJob().init_app(app_)
-
-    merge_v2_api(app_)
 
     app_.after_request(after_request)
     app_.register_error_handler(Exception, exception_handler)
@@ -53,13 +54,3 @@ def create_app(*config_cls):
     app_.add_url_rule('/hook', view_func=webhook_event_handler, methods=['POST'])
 
     return app_
-
-
-def merge_v2_api(app_):
-    from app.views.v2 import Router
-
-    app_.config['SWAGGER']['specs_route'] = os.getenv('SWAGGER_URI_V2', '/v2/docs')
-    app_.config['SWAGGER']['basePath'] = '/v2'
-
-    Swagger(template=app_.config['SWAGGER_TEMPLATE']).init_app(app_)
-    Router().init_app(app_)
