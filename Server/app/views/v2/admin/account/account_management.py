@@ -75,7 +75,7 @@ class AdminAccount(BaseResource):
         name = request.json['name']
 
         if 100 < len(id) or 100 < len(password) or 100 < len(name):
-            abort(400)
+            raise self.ValidationError('Length of ID or password of name is over than 100')
 
         if AdminModel.objects(id=id).first():
             abort(409)

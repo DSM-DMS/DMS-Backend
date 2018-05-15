@@ -40,7 +40,7 @@ class Rule(BaseResource):
         max_point = request.json['maxPoint']
 
         if min_point > max_point:
-            abort(400)
+            self.ValidationError('minPoint should be under or equal than maxPoint')
 
         rule = PointRuleModel(
             name=name,

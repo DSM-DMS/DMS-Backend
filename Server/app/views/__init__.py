@@ -2,7 +2,7 @@ import os
 import threading
 import time
 
-from flask import current_app, request, render_template
+from flask import current_app, jsonify, request, render_template
 from werkzeug.exceptions import HTTPException
 
 from app.views.v2 import BaseResource
@@ -36,11 +36,18 @@ def exception_handler(e):
     print(e)
 
     if isinstance(e, HTTPException):
-        return e.description, e.code
+        description = e.description
+        code = e.code
     elif isinstance(e, BaseResource.ValidationError):
-        return e.description, 400
+        description = e.description
+        code = 400
     else:
-        return '', 500
+        description = ''
+        code = 500
+
+    return jsonify({
+        'msg': description
+    }), code
 
 
 def index_student():

@@ -23,7 +23,7 @@ class Preview(BaseResource):
         id = request.json['id']
 
         if category.upper() not in CATEGORY_MODEL_MAPPING:
-            abort(400)
+            self.ValidationError('Invalid category')
 
         if len(id) != 24:
             return Response('', 204)

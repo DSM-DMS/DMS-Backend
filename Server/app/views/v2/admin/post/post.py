@@ -24,10 +24,10 @@ class Post(BaseResource):
         content = request.json['content']
 
         if 1000 < len(title) or 50000 < len(content):
-            abort(400)
+            self.ValidationError('Length of title is over than 1000, or length of content is over than 50000')
 
         if category.upper() not in CATEGORY_MODEL_MAPPING:
-            abort(400)
+            self.ValidationError('Invalid category')
 
         post = CATEGORY_MODEL_MAPPING[category.upper()](
             author=g.user.name,
@@ -53,10 +53,10 @@ class PostAlteration(BaseResource):
         content = request.json['content']
 
         if 1000 < len(title) or 50000 < len(content):
-            abort(400)
+            self.ValidationError('Length of title is over than 1000, or length of content is over than 50000')
 
         if category.upper() not in CATEGORY_MODEL_MAPPING:
-            abort(400)
+            self.ValidationError('Invalid category')
 
         if len(post_id) != 24:
             return Response('', 204)
@@ -83,7 +83,7 @@ class PostAlteration(BaseResource):
         게시글 삭제
         """
         if category.upper() not in CATEGORY_MODEL_MAPPING:
-            abort(400)
+            self.ValidationError('Invalid category')
 
         if len(post_id) != 24:
             return Response('', 204)
