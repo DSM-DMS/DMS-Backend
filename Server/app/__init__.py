@@ -5,7 +5,10 @@ from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from flasgger import Swagger
 
-from app.models import Mongo
+from mongoengine import connect
+from redis import Redis
+from influxdb import InfluxDBClient
+
 from app.views.v1 import Router
 from app.views import *
 from app._influxdb import InfluxCronJob
@@ -33,7 +36,11 @@ def create_app(*config_cls):
 
     JWTManager().init_app(app_)
     CORS().init_app(app_)
-    Mongo().init_app(app_)
+
+    connect(**app_.config['MONGODB_SETTINGS'])
+    app_.config['REDIS_CLIENT'] = Redis(**app_.config['REDIS_SETTINGS'])
+    app_.config['INFLUXDB_CLIENT'] = InfluxDBClient(**app_.config['INFLUXDB_SETTINGS'])
+
     Router().init_app(app_)
     InfluxCronJob().init_app(app_)
 

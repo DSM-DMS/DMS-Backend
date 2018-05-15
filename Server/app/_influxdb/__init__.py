@@ -1,8 +1,6 @@
 import time
 from threading import Thread
 
-from influxdb import InfluxDBClient
-
 from app.models.apply import ExtensionApply11Model, ExtensionApply12Model, GoingoutApplyModel, StayApplyModel
 from app.models.version import VersionModel
 
@@ -10,18 +8,17 @@ from app.models.version import VersionModel
 class InfluxCronJob:
     def __init__(self, app=None):
         self.client = None
+        self.db_name = None
 
         if app is not None:
             self.init_app(app)
 
     def init_app(self, app):
-        db_name = app.config['INFLUX_DB_SETTINGS']['db']
+        self.client = app.config['INFLUXDB_CLIENT']
+        self.db_name = app.config['INFLUXDB_SETTINGS']['database']
 
-        self.client = InfluxDBClient(database=db_name)
-        app.config['INFLUX_DB_CLIENT'] = self.client
-
-        if db_name not in self.client.get_list_database():
-            self.client.create_database(db_name)
+        if self.db_name not in self.client.get_list_database():
+            self.client.create_database(self.db_name)
 
         threads = [
             Thread(target=self._setup_version_data),

@@ -1,7 +1,7 @@
 from bson.objectid import ObjectId
 from datetime import datetime
 
-from app.models import *
+from mongoengine import *
 
 
 class PointRuleModel(Document):

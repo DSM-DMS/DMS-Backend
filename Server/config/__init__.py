@@ -4,6 +4,7 @@ import os
 
 class Config:
     SERVICE_NAME = 'dms-v2'
+    SERVICE_NAME_UPPER = SERVICE_NAME.upper()
     REPRESENTATIVE_HOST = 'dsm2015.cafe24.com'
 
     RUN_SETTING = {
@@ -19,12 +20,25 @@ class Config:
 
     MONGODB_SETTINGS = {
         'db': SERVICE_NAME,
+        'host': None,
+        'port': None,
         'username': os.getenv('MONGO_ID'),
         'password': os.getenv('MONGO_PW')
     }
 
-    INFLUX_DB_SETTINGS = {
-        'db': SERVICE_NAME.replace('-', '_')
+    REDIS_SETTINGS = {
+        'host': 'localhost',
+        'port': 6379,
+        'password': os.getenv('REDIS_PW_{}'.format(SERVICE_NAME_UPPER.replace('-', '_'))),
+        'db': 0
+    }
+
+    INFLUXDB_SETTINGS = {
+        'host': 'localhost',
+        'port': 8086,
+        'username': 'root',
+        'password': os.getenv('INFLUX_PW_{}'.format(SERVICE_NAME_UPPER).replace('-', '_'), 'root'),
+        'database': SERVICE_NAME.replace('-', '_')
     }
 
     SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN')

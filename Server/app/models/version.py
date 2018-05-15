@@ -1,4 +1,4 @@
-from app.models import *
+from mongoengine import *
 
 
 class VersionModel(Document):
