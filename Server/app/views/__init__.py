@@ -5,6 +5,8 @@ import time
 from flask import current_app, request, render_template
 from werkzeug.exceptions import HTTPException
 
+from app.views.v2 import BaseResource
+
 
 def after_request(response):
     """
@@ -31,24 +33,12 @@ def after_request(response):
 
 
 def exception_handler(e):
-    current_app.config['INFLUXDB_CLIENT'].write_points([
-        {
-            'measurement': 'api_process_data',
-            'tags': {
-                'status': 500,
-                'method': request.method,
-                'uri': request.path
-            },
-            'fields': {
-                'count': 1
-            }
-        }
-    ])
-
     print(e)
 
     if isinstance(e, HTTPException):
         return e.description, e.code
+    elif isinstance(e, BaseResource.ValidationError):
+        return e.description, 400
     else:
         return '', 500
 

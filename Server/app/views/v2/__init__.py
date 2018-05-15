@@ -51,9 +51,11 @@ def gzipped(fn):
                 return response
 
             response.data = gzip.compress(response.data)
-            response.headers['Content-Encoding'] = 'gzip'
-            response.headers['Vary'] = 'Accept-Encoding'
-            response.headers['Content-Length'] = len(response.data)
+            response.headers.update({
+                'Content-Encoding': 'gzip',
+                'Vary': 'Accept-Encoding',
+                'Content-Length': len(response.data)
+            })
 
             return response
         return fn(*args, **kwargs)
@@ -134,6 +136,12 @@ class BaseResource(Resource):
             content_type='application/json; charset=utf8',
             **kwargs
         )
+
+    class ValidationError(Exception):
+        def __init__(self, description='', *args):
+            self.description = description
+
+            super(BaseResource.ValidationError, self).__init__(*args)
 
 
 class Router:
