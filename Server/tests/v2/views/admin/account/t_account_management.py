@@ -87,12 +87,12 @@ class TestAdminAccountCreation(TCBase):
         self.method = self.client.post
         self.target_uri = '/admin/account-management/admin'
 
+        self.new_admin_id = 'new_admin'
+
     def setUp(self):
         super(TestAdminAccountCreation, self).setUp()
 
         # ---
-
-        self.new_admin_id = 'new_admin'
 
         self._request = lambda *, token=None, id=self.new_admin_id, pw=self.pw, name=self.admin_name: self.request(
             self.method,
@@ -143,12 +143,13 @@ class TestAdminAccountDeletion(TCBase):
         self.method = self.client.delete
         self.target_uri = '/admin/account-management/admin'
 
+        self.new_admin_id = 'new_admin'
+
     def setUp(self):
         super(TestAdminAccountDeletion, self).setUp()
 
         # ---
 
-        self.new_admin_id = 'new_admin'
         self.request(
             self.client.post,
             self.target_uri,

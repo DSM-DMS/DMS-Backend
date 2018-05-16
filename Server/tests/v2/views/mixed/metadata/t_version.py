@@ -14,13 +14,13 @@ class TestVersionUpload(TCBase):
         self.method = self.client.put
         self.target_uri = '/metadata/version/{}'
 
+        self.target_platform = 1
+        self.new_version = '1.0'
+
     def setUp(self):
         super(TestVersionUpload, self).setUp()
 
         # ---
-
-        self.target_platform = 1
-        self.new_version = '1.0'
 
         self._request = lambda *, platform=self.target_platform, version=self.new_version: self.request(
             self.method,
@@ -61,13 +61,13 @@ class TestVersionCheck(TCBase):
         self.method = self.client.get
         self.target_uri = '/metadata/version/{}'
 
+        self.platform = 1
+        self.version = '1.0'
+
     def setUp(self):
         super(TestVersionCheck, self).setUp()
 
         # ---
-
-        self.platform = 1
-        self.version = '1.0'
 
         VersionModel(platform=self.platform, version=self.version).save()
 

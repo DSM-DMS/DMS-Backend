@@ -19,13 +19,13 @@ class TestPostUpload(TCBase):
         self.method = self.client.post
         self.target_uri = '/admin/post/{}'
 
+        self.title = '제목'
+        self.content = '내용'
+
     def setUp(self):
         super(TestPostUpload, self).setUp()
 
         # ---
-
-        self.title = '제목'
-        self.content = '내용'
 
         self._request = lambda *, token=None, title=self.title, content=self.content: self.request(
             self.method,
@@ -93,13 +93,13 @@ class TestPostPatch(TCBase):
         self.method = self.client.patch
         self.target_uri = '/admin/post/{}/{}'
 
+        self.new_title = '새 제목'
+        self.new_content = '새 내용'
+
     def setUp(self):
         super(TestPostPatch, self).setUp()
 
         # ---
-
-        self.new_title = '새 제목'
-        self.new_content = '새 내용'
 
         self._request = lambda *, token=None, id='', title=self.new_title, content=self.new_content: self.request(
             self.method,

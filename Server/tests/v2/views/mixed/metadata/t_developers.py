@@ -12,11 +12,6 @@ class TestDeveloperLoad(TCBase):
         self.method = self.client.get
         self.target_uri = '/metadata/developer-info'
 
-    def setUp(self):
-        super(TestDeveloperLoad, self).setUp()
-
-        # ---
-
         self.expected_response_data = {
             'app': ['조성빈', '이병찬', '윤정현', '이성현'],
             'server': ['김성래', '조민규', '인상민'],
@@ -24,6 +19,11 @@ class TestDeveloperLoad(TCBase):
             'desktop': ['김경식', '정원태', '김동현', '이종현', '류근찬'],
             'design': ['윤여환', '김동규']
         }
+
+    def setUp(self):
+        super(TestDeveloperLoad, self).setUp()
+
+        # ---
 
         self._request = lambda: self.request(
             self.method,

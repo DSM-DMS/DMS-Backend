@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from app.models.account import StudentModel
 from app.models.point import PointHistoryModel
 
@@ -30,8 +28,6 @@ class TestStudentList(TCBase):
         )
 
         self.student.good_point += 1
-
-        self.now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         self.student.save()
 
         self._request = lambda *, token=None: self.request(

@@ -14,15 +14,15 @@ class TestRuleAddition(TCBase):
         self.method = self.client.post
         self.target_uri = '/admin/point/rule'
 
-    def setUp(self):
-        super(TestRuleAddition, self).setUp()
-
-        # ---
-
         self.good_point_rule_name = '상점 규칙'
         self.bad_point_rule_name = '벌점 규칙'
         self.min_point = 1
         self.max_point = 3
+
+    def setUp(self):
+        super(TestRuleAddition, self).setUp()
+
+        # ---
 
         self._request = lambda *, token=None, name=self.good_point_rule_name, point_type=True, min_point=self.min_point, max_point=self.max_point: self.request(
             self.method,
@@ -162,16 +162,16 @@ class TestRulePatch(TCBase):
         self.method = self.client.patch
         self.target_uri = '/admin/point/rule/{}'
 
+        self.new_rule_name = '새로운 규칙'
+        self.new_min_point = 2
+        self.new_max_point = 10
+
     def setUp(self):
         super(TestRulePatch, self).setUp()
 
         # ---
 
         self.good_point_rule, self.bad_point_rule = add_point_rules()
-
-        self.new_rule_name = '새로운 규칙'
-        self.new_min_point = 2
-        self.new_max_point = 10
 
         self._request = lambda *, token=None, rule_id=self.good_point_rule.id, name=self.new_rule_name, point_type=True, min_point=self.new_min_point, max_point=self.new_max_point: self.request(
             self.method,

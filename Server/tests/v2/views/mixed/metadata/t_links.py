@@ -12,17 +12,17 @@ class TestDeveloperLoad(TCBase):
         self.method = self.client.get
         self.target_uri = '/metadata/links'
 
-    def setUp(self):
-        super(TestDeveloperLoad, self).setUp()
-
-        # ---
-
         self.expected_response_data = {
             'facebook': 'https://www.facebook.com/DMSforDSM/',
             'github': 'https://github.com/DSM-DMS',
             'android': 'https://play.google.com/store/apps/details?id=teamdms.dms_kotlin',
             'ios': 'https://itunes.apple.com/KR/app/id1328234395?mt=8'
         }
+
+    def setUp(self):
+        super(TestDeveloperLoad, self).setUp()
+
+        # ---
 
         self._request = lambda: self.request(
             self.method,

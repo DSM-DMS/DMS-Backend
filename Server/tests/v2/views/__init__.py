@@ -24,7 +24,10 @@ class TCBase(TC):
 
     def __init__(self, *args, **kwargs):
         self.client = app.test_client()
+
         self.today = datetime.now().strftime('%Y-%m-%d')
+        self.now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
         self.token_regex = '(?:\w+\.){2}\w+'
 
         super(TCBase, self).__init__(*args, **kwargs)
