@@ -15,12 +15,4 @@ if __name__ == '__main__':
     from utils import extension_apply_cleaner
     Process(target=extension_apply_cleaner.run).start()
 
-    from argparse import ArgumentParser
-
-    parser = ArgumentParser()
-    parser.add_argument('-p', '--port', type=int)
-    args = parser.parse_args()
-
-    app.config['RUN_SETTING']['port'] = args.port or app.config['PORT']
-
     app.run(**app.config['RUN_SETTING'])
