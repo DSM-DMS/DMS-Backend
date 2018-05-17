@@ -1,29 +1,35 @@
-from flask import Blueprint, Response, abort, g, request
+from flask import Blueprint, Response
 from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.v2.mixed.post.preview import *
-from app.views.v2 import BaseResource, auth_required, json_required
+from app.views.v2 import BaseResource
+from app.views.v2.admin.post import CATEGORY_MODEL_MAPPING
 
-api = Api(Blueprint(__name__, __name__, url_prefix='/preview'))
+api = Api(Blueprint(__name__, __name__))
+api.prefix = '/post-preview/<category>'
 
 
-@api.resource('/faq')
+@api.resource('')
 class FAQPreview(BaseResource):
-    @swag_from(FAQ_PREVIEW_GET)
-    def get(self):
-        pass
+    @swag_from(PREVIEW_GET)
+    def get(self, category):
+        if category.upper() not in CATEGORY_MODEL_MAPPING:
+            self.ValidationError('Invalid category')
 
+        model = CATEGORY_MODEL_MAPPING[category.upper()]
 
-@api.resource('/notice')
-class NoticePreview(BaseResource):
-    @swag_from(NOTICE_PREVIEW_GET)
-    def get(self):
-        pass
+        post = model.objects(pinned=True).first()
 
+        if not post:
+            post = model.objects.first()
 
-@api.resource('/rule')
-class RulePreview(BaseResource):
-    @swag_from(RULE_PREVIEW_GET)
-    def get(self):
-        pass
+            if not post:
+                return Response('', 204)
+
+        return {
+            'writeTime': post.write_time.strftime('%Y-%m-%d'),
+            'author': post.author,
+            'title': post.title,
+            'content': post.content
+        }
