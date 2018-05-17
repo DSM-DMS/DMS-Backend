@@ -9,7 +9,7 @@ api = Api(Blueprint(__name__, __name__))
 api.prefix = '/student/account'
 
 
-@api.resource('/')
+@api.resource('')
 class Account(BaseResource):
     @swag_from(ACCOUNT_DELETE)
     def delete(self):

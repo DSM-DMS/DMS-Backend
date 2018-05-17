@@ -8,7 +8,7 @@ from app.views.v2 import BaseResource, auth_required, json_required
 api = Api(Blueprint(__name__, __name__, url_prefix='/meal'))
 
 
-@api.resource('/')
+@api.resource('')
 class Meal(BaseResource):
     @swag_from(MEAL_GET)
     def get(self):

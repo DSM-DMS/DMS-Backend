@@ -9,7 +9,7 @@ api = Api(Blueprint(__name__, __name__))
 api.prefix = '/student/apply/stay'
 
 
-@api.resource('/')
+@api.resource('')
 class Stay(BaseResource):
     @swag_from(STAY_GET)
     def get(self):

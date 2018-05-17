@@ -48,9 +48,9 @@ class TCBase(TC):
 
     def _get_tokens(self):
         with app.app_context():
-            self.admin_access_token = 'JWT {}'.format(create_access_token(self.admin_id))
             uuid = uuid4()
             RefreshTokenModel(token=uuid, token_owner=self.admin, pw_snapshot=self.admin.pw).save()
+            self.admin_access_token = 'JWT {}'.format(create_access_token(self.admin_id))
             self.admin_refresh_token = 'JWT {}'.format(create_refresh_token(str(uuid)))
 
             uuid = uuid4()

@@ -9,7 +9,7 @@ api = Api(Blueprint(__name__, __name__))
 api.prefix = '/student/apply/goingout'
 
 
-@api.resource('/')
+@api.resource('')
 class Goingout(BaseResource):
     @swag_from(GOINGOUT_GET)
     def get(self):

@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, abort, g, request
+from flask import Blueprint, Response, abort, request
 from flask_restful import Api
 from flasgger import swag_from
 
