@@ -26,7 +26,6 @@ class TestStudentAccountAuth(TCBase):
             }
         )
 
-
     def _validate_response_data(self, resp):
         data = resp.json
         self.assertIsInstance(data, dict)
@@ -44,7 +43,7 @@ class TestStudentAccountAuth(TCBase):
         self.assertRegex(refresh_token, self.token_regex)
 
     def testAuthSuccess(self):
-        # (1) 관리자 계정으로 로그인
+        # (1) 학생 계정으로 로그인
         resp = self._request()
 
         # (2) status code 201
