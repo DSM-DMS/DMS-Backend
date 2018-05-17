@@ -21,7 +21,7 @@ install:
 before_script:
 - cd Server
 script:
-- python3 -m "nose" --with-coverage tests/__init__.py
+- python3 -m "nose" --verbose --with-coverage --cover-package=. tests/__init__.py
 after_success:
 - coverage report
 - coveralls
