@@ -1,3 +1,6 @@
+from binascii import hexlify
+from hashlib import pbkdf2_hmac
+
 from functools import wraps
 import gzip
 import ujson
@@ -136,6 +139,16 @@ class BaseResource(Resource):
             content_type='application/json; charset=utf8',
             **kwargs
         )
+
+    def encrypt(self, password):
+        encrypted_password = hexlify(pbkdf2_hmac(
+            hash_name='sha256',
+            password=password.encode(),
+            salt=current_app.secret_key.encode(),
+            iterations=100000
+        )).decode('utf-8')
+        return encrypted_password
+
 
     class ValidationError(Exception):
         def __init__(self, description='', *args):
