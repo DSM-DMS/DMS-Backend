@@ -27,6 +27,9 @@ class ChangePW(BaseResource):
     @auth_required(StudentModel)
     @swag_from(CHANGE_PW_POST)
     def post(self):
+        """
+        학생 비밀번호 변경
+        """
         student = StudentModel.objects(id=get_jwt_identity()).first()
 
         current_password = request.json['currentPassword']
