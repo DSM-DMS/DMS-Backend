@@ -6,7 +6,7 @@ import gzip
 import ujson
 import time
 
-from flask import Response, abort, after_this_request, g, request
+from flask import Response, abort, after_this_request, g, request, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 
@@ -140,14 +140,13 @@ class BaseResource(Resource):
             **kwargs
         )
 
-    def encrypt(self, password):
-        encrypted_password = hexlify(pbkdf2_hmac(
+    def encrypt_password(self, password):
+        return hexlify(pbkdf2_hmac(
             hash_name='sha256',
             password=password.encode(),
             salt=current_app.secret_key.encode(),
             iterations=100000
         )).decode('utf-8')
-        return encrypted_password
 
 
     class ValidationError(Exception):

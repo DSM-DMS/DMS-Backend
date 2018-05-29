@@ -80,12 +80,7 @@ class AdminAccount(BaseResource):
         if AdminModel.objects(id=id).first():
             abort(409)
 
-        encrypted_password = hexlify(pbkdf2_hmac(
-            hash_name='sha256',
-            password=password.encode(),
-            salt=current_app.secret_key.encode(),
-            iterations=100000
-        )).decode('utf-8')
+        encrypted_password = self.encrypt_password(password)
 
         admin = AdminModel(
             id=id,

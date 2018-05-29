@@ -35,10 +35,12 @@ class ChangePW(BaseResource):
         current_password = request.json['currentPassword']
         new_password = request.json['newPassword']
 
-        encrypted_current_password = self.encrypt(current_password)
+        encrypted_current_password = self.encrypt_password(current_password)
 
         if student.pw != encrypted_current_password:
             abort(403)
 
-        student.update(pw=new_password)
+        encrypted_new_password = self.encrypt_password(new_password)
+
+        student.update(pw=encrypted_new_password)
         return Response('', 200)

@@ -26,12 +26,7 @@ class Auth(BaseResource):
         id = request.json['id']
         password = request.json['password']
 
-        encrypted_password = hexlify(pbkdf2_hmac(
-            hash_name='sha256',
-            password=password.encode(),
-            salt=current_app.secret_key.encode(),
-            iterations=100000
-        )).decode('utf-8')
+        encrypted_password = self.encrypt_password(password)
 
         student = StudentModel.objects(id=id, pw=encrypted_password).first()
 
@@ -42,7 +37,7 @@ class Auth(BaseResource):
 
             RefreshTokenModel(
                 token=refresh_token,
-                token_owner=admin,
+                token_owner=student,
                 pw_snapshot=encrypted_password
             ).save()
 

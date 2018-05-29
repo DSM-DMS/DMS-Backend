@@ -26,12 +26,7 @@ class Auth(BaseResource):
         id = request.json['id']
         password = request.json['password']
 
-        encrypted_password = hexlify(pbkdf2_hmac(
-            hash_name='sha256',
-            password=password.encode(),
-            salt=current_app.secret_key.encode(),
-            iterations=100000
-        )).decode('utf-8')
+        encrypted_password = self.encrypt_password(password)
 
         admin = AdminModel.objects(id=id, pw=encrypted_password).first()
 
