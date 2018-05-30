@@ -46,7 +46,7 @@ class ApplyInfo(BaseResource):
 @api.resource('/mypage')
 class MyPage(BaseResource):
     @swag_from(MYPAGE_GET)
-    # @auth_required(StudentModel)
+    @auth_required(StudentModel)
     def get(self):
         """
         학생 마이페이지 정보 조회
@@ -64,7 +64,7 @@ class MyPage(BaseResource):
 @api.resource('/point-history')
 class PointHistory(BaseResource):
     @swag_from(POINT_HISTORY_GET)
-    # @auth_required(StudentModel)
+    @auth_required(StudentModel)
     def get(self):
         """
         상벌점 내역 조회
