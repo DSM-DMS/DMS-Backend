@@ -48,6 +48,9 @@ class MyPage(BaseResource):
     @swag_from(MYPAGE_GET)
     @auth_required(StudentModel)
     def get(self):
+        """
+        학생 마이페이지 정보 조회
+        """
         student = g.user
 
         return self.unicode_safe_json_dumps({
