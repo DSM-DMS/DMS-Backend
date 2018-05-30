@@ -13,7 +13,6 @@ class ApplyBase(Document):
     }
 
     apply_date = DateTimeField(
-        required=True,
         default=datetime.now
     )
     # 신청 시간

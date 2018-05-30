@@ -13,7 +13,6 @@ class ReportBase(Document):
     }
 
     report_time = DateTimeField(
-        required=True,
         default=datetime.now
     )
 

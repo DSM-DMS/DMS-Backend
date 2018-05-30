@@ -41,7 +41,6 @@ class AccountBase(Document):
     }
 
     signup_time = DateTimeField(
-        required=True,
         default=datetime.now
     )
     # 회원가입 시간
@@ -72,13 +71,11 @@ class StudentModel(AccountBase):
     )
 
     good_point = IntField(
-        required=True,
         default=0
     )
     # 상점
 
     bad_point = IntField(
-        required=True,
         default=0
     )
     # 벌점
@@ -90,13 +87,11 @@ class StudentModel(AccountBase):
     # 상벌점 내역
 
     penalty_training_status = BooleanField(
-        required=True,
         default=False
     )
     # 벌점 교육 중인지의 여부
 
     penalty_level = IntField(
-        required=True,
         default=0
     )
     # 벌점 교육 단계

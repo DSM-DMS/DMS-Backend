@@ -13,13 +13,11 @@ class PostBase(Document):
     }
 
     write_time = DateTimeField(
-        required=True,
         default=datetime.now
     )
     # 게시글 작성 시간
 
     author = StringField(
-        required=True,
         default='사감실'
     )
 
@@ -31,7 +29,6 @@ class PostBase(Document):
     )
 
     pinned = BooleanField(
-        required=True,
         default=False
     )
     # 고정 게시글 여부
