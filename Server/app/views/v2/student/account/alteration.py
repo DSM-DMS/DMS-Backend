@@ -1,5 +1,4 @@
-from flask import Blueprint, Response, abort, request
-from flask_jwt_extended import get_jwt_identity
+from flask import Blueprint, Response, abort, request, g
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -20,7 +19,7 @@ class ChangePW(BaseResource):
         """
         학생 비밀번호 변경
         """
-        student = StudentModel.objects(id=get_jwt_identity()).first()
+        student = g.user
 
         current_password = request.json['currentPassword']
         new_password = request.json['newPassword']
