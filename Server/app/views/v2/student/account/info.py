@@ -66,6 +66,9 @@ class PointHistory(BaseResource):
     @swag_from(POINT_HISTORY_GET)
     @auth_required(StudentModel)
     def get(self):
+        """
+        상벌점 내역 조회
+        """
         student = g.user
 
         return self.unicode_safe_json_dumps([
@@ -74,6 +77,6 @@ class PointHistory(BaseResource):
                 "pointType": history.point_type,
                 "reason": history.reason,
                 "time": history.time
-            }
+            } for history in student.point_histroies
         ])
 
