@@ -35,13 +35,13 @@ def create_app(*config_cls):
     for config in config_cls:
         app_.config.from_object(config)
 
-    JWTManager().init_app(app_)
-    CORS().init_app(app_)
-    Swagger(template=app_.config['SWAGGER_TEMPLATE']).init_app(app_)
-
     connect(**app_.config['MONGODB_SETTINGS'])
     app_.config['REDIS_CLIENT'] = Redis(**app_.config['REDIS_SETTINGS'])
     app_.config['INFLUXDB_CLIENT'] = InfluxDBClient(**app_.config['INFLUXDB_SETTINGS'])
+
+    JWTManager().init_app(app_)
+    CORS().init_app(app_)
+    Swagger(template=app_.config['SWAGGER_TEMPLATE']).init_app(app_)
 
     V1Router().init_app(app_)
     V2Router().init_app(app_)
