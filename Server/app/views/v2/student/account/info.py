@@ -46,12 +46,31 @@ class ApplyInfo(BaseResource):
 @api.resource('/mypage')
 class MyPage(BaseResource):
     @swag_from(MYPAGE_GET)
+    @auth_required(StudentModel)
     def get(self):
-        pass
+        student = g.user
+
+        return self.unicode_safe_json_dumps({
+            "badPoint": student.bad_point,
+            "goodPoint": student.good_point,
+            "name": student.name,
+            "number": student.number
+        })
 
 
 @api.resource('/point-history')
 class PointHistory(BaseResource):
     @swag_from(POINT_HISTORY_GET)
+    @auth_required(StudentModel)
     def get(self):
-        pass
+        student = g.user
+
+        return self.unicode_safe_json_dumps([
+            {
+                "point":history.point,
+                "pointType": history.point_type,
+                "reason": history.reason,
+                "time": history.time
+            } for history in student.point_histroies
+        ])
+
