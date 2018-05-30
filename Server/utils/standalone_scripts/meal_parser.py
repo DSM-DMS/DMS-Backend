@@ -1,8 +1,10 @@
-from schapi import SchoolAPI, Region
+from mongoengine import connect
+
+from schapi import SchoolAPI
 
 from app.models.meal import MealModel
 
-api = SchoolAPI(Region.DAEJEON, 'G100000170')
+api = SchoolAPI(SchoolAPI.Region.DAEJEON, 'G100000170')
 
 
 def _parse(year, month):
@@ -16,4 +18,6 @@ def _parse(year, month):
 
 
 if __name__ == '__main__':
-    _parse(2018, 7)
+    connect('dms-v2', host='dsm2015.cafe24.com', username='dms-v2', password='mountaindew')
+
+    _parse(2018, 6)
