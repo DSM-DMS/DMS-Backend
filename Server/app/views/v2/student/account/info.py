@@ -61,7 +61,7 @@ class MyPage(BaseResource):
 @api.resource('/point-history')
 class PointHistory(BaseResource):
     @swag_from(POINT_HISTORY_GET)
-    @auth_required(StudentModel)
+    # @auth_required(StudentModel)
     def get(self):
         student = g.user
 
