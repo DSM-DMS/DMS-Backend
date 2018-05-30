@@ -15,11 +15,10 @@ matrix:
 before_install:
 - docker run -d -p 8086:8086 influxdb
 - docker run -d -p 27017:27017 mongo
+- cd Server
 install:
 - pip3 install -r requirements.txt
 - pip3 install coveralls
-before_script:
-- cd Server
 script:
 - python3 -m "nose" --verbose --with-coverage --cover-package=. tests/__init__.py
 after_success:
