@@ -20,26 +20,26 @@ class ApplyInfo(BaseResource):
         학생 신청 정보 확인
         """
         student = g.user
-        extension11 = ExtensionApply11Model(student=student).first()
-        extension12 = ExtensionApply12Model(student=student).first()
+        extension11 = ExtensionApply11Model.objects(student=student).first()
+        extension12 = ExtensionApply12Model.objects(student=student).first()
 
-        goingout = GoingoutApplyModel(student=student).first()
+        goingout = GoingoutApplyModel.objects(student=student).first()
         stay = StayApplyModel.objects(student=student).first()
 
         return self.unicode_safe_json_dumps({
-            "extension11": {
-                "class": extension11.class_,
-                "seat": extension11.seat
+            'extension11': {
+                'class': extension11.class_,
+                'seat': extension11.seat
             } if extension11 else None,
-            "extension12": {
-                "class": extension12.class_,
-                "seat": extension12.seat
+            'extension12': {
+                'class': extension12.class_,
+                'seat': extension12.seat
             } if extension12 else None,
-            "goingout": {
-                "sat": goingout.on_saturday,
-                "sun": goingout.on_sunday
+            'goingout': {
+                'sat': goingout.on_saturday,
+                'sun': goingout.on_sunday
             } if goingout else None,
-            "stay": stay.value if stay else None
+            'stay': stay.value if stay else None
         })
 
 
@@ -54,10 +54,10 @@ class MyPage(BaseResource):
         student = g.user
 
         return self.unicode_safe_json_dumps({
-            "badPoint": student.bad_point,
-            "goodPoint": student.good_point,
-            "name": student.name,
-            "number": student.number
+            'badPoint': student.bad_point,
+            'goodPoint': student.good_point,
+            'name': student.name,
+            'number': student.number
         })
 
 
@@ -73,10 +73,10 @@ class PointHistory(BaseResource):
 
         return self.unicode_safe_json_dumps([
             {
-                "point":history.point,
-                "pointType": history.point_type,
-                "reason": history.reason,
-                "time": history.time
+                'point': history.point,
+                'pointType': history.point_type,
+                'reason': history.reason,
+                'time': history.time
             } for history in student.point_histroies
         ])
 

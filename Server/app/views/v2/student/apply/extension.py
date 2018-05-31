@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Blueprint, Response, abort, g, request, current_app
+from flask import Blueprint, Response, g, request, current_app
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -85,6 +85,7 @@ class Extension11(BaseResource):
 @api.resource('/12')
 class Extension12(BaseResource):
     @swag_from(EXTENSION_GET)
+    @auth_required(StudentModel)
     def get(self):
         """
         학생 12시 연장 신청 정보 조회
@@ -98,6 +99,8 @@ class Extension12(BaseResource):
         })
 
     @swag_from(EXTENSION_POST)
+    @auth_required(StudentModel)
+    @json_required({'classNum': int, 'seatNum': str})
     def post(self):
         """
         학생 12시 연장 신청
@@ -128,6 +131,7 @@ class Extension12(BaseResource):
         return Response('', 201)
 
     @swag_from(EXTENSION_DELETE)
+    @auth_required(StudentModel)
     def delete(self):
         """
         학생 12시 연장 신청 취소
@@ -145,15 +149,47 @@ class Extension12(BaseResource):
         return Response('', 200)
 
 
+def _create_extension_map(class_, hour):
+    seat_count = 1
+
+    map_ = MAPS[class_]
+    for i, row in enumerate(map_):
+        for j, seat in enumerate(row):
+            if map_[i][j]:
+                apply = ExtensionApply11Model.objects(class_=class_, seat=seat_count).first() if hour == 11 \
+                    else ExtensionApply12Model.objects(class_=class_, seat=seat_count).first()
+
+                if apply:
+                    map_[i][j] = apply.student.name
+                else:
+                    map_[i][j] = seat_count
+
+                seat_count += 1
+
+    return map_
+
+
 @api.resource('/11/map')
 class Extension11Map(BaseResource):
     @swag_from(EXTENSION_MAP_GET)
+    @auth_required(StudentModel)
     def get(self):
-        pass
+        """
+        11시 연장 신청 지도 조회
+        """
+        class_ = request.json['classNum']
+
+        return self.unicode_safe_json_response(_create_extension_map(class_, 11))
 
 
 @api.resource('/12/map')
 class Extension12Map(BaseResource):
     @swag_from(EXTENSION_MAP_GET)
+    @auth_required(StudentModel)
     def get(self):
-        pass
+        """
+        12시 연장 신청 지도 조회
+        """
+        class_ = request.json['classNum']
+
+        return self.unicode_safe_json_response(_create_extension_map(class_, 12))
