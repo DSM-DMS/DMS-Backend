@@ -4,7 +4,7 @@ from flasgger import swag_from
 
 from app.docs.v2.student.account.signup import *
 from app.models.account import StudentModel, SignupWaitingModel
-from app.views.v2 import BaseResource, json_required
+from app.views.v2 import BaseResource, json_required_2
 
 api = Api(Blueprint(__name__, __name__))
 api.prefix = '/student'
@@ -16,7 +16,7 @@ class IDVerification(BaseResource):
     학생 ID 중복체크
     """
     @swag_from(ID_VERIFICATION_POST)
-    @json_required({'id': str})
+    @json_required_2({'id': str})
     def post(self):
         id = request.json['id']
 
@@ -33,7 +33,7 @@ class UUIDVerification(BaseResource):
     학생 UUID 검증
     """
     @swag_from(UUID_VERIFICATION_POST)
-    @json_required({'uuid': str})
+    @json_required_2({'uuid': str})
     def post(self):
         uuid = request.json['uuid']
 
@@ -50,7 +50,7 @@ class Signup(BaseResource):
     학생 회원가입
     """
     @swag_from(SIGNUP_POST)
-    @json_required({'uuid': str, 'id': str, 'password': str})
+    @json_required_2({'uuid': str, 'id': str, 'password': str})
     def post(self):
         uuid = request.json['uuid']
         id = request.json['id']

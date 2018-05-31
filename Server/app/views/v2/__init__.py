@@ -76,22 +76,7 @@ def json_required(*required_keys):
     Args:
         *required_keys: Required keys on requested JSON payload
     """
-    def decorator(fn):
-        if fn.__name__ == 'get':
-            print('[WARN] JSON with GET method? on "{}()"'.format(fn.__qualname__))
-
-        @wraps(fn)
-        def wrapper(*args, **kwargs):
-            if not request.is_json:
-                abort(406)
-
-            for required_key in required_keys:
-                if required_key not in request.json:
-                    abort(400)
-
-            return fn(*args, **kwargs)
-        return wrapper
-    return decorator
+    raise DeprecationWarning()
 
 
 def json_required_2(required_keys):

@@ -5,7 +5,7 @@ from flasgger import swag_from
 from app.docs.v2.student.report.facility_report import *
 from app.models.account import StudentModel
 from app.models.report import FacilityReportModel
-from app.views.v2 import BaseResource, auth_required, json_required
+from app.views.v2 import BaseResource, auth_required, json_required_2
 
 api = Api(Blueprint(__name__, __name__))
 api.prefix = '/student/report'
@@ -15,7 +15,7 @@ api.prefix = '/student/report'
 class FacilityReport(BaseResource):
     @swag_from(FACILITY_REPORT_POST)
     @auth_required(StudentModel)
-    @json_required({'content': str, 'room': int})
+    @json_required_2({'content': str, 'room': int})
     def post(self):
         """
         시설 고장 신고 
