@@ -23,7 +23,7 @@ class PostList(BaseResource):
             'author': post.author,
             'title': post.title,
             'pinned': post.pinned
-        } for post in CATEGORY_MODEL_MAPPING[category.upper()]]
+        } for post in CATEGORY_MODEL_MAPPING[category.upper()].objects]
 
 
 @api.resource('/<post_id>')
