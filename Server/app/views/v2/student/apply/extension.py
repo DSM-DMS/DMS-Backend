@@ -6,7 +6,7 @@ from flasgger import swag_from
 
 from app.docs.v2.student.apply.extension import *
 from app.models.account import StudentModel
-from app.models.apply import ExtensionApply11Model
+from app.models.apply import ExtensionApply11Model, ExtensionApply12Model
 from app.views.v2 import BaseResource, auth_required, json_required
 
 from utils.extension_meta import APPLY_START, APPLY_END_11, APPLY_END_12, MAPS
@@ -21,7 +21,7 @@ class Extension11(BaseResource):
     @auth_required(StudentModel)
     def get(self):
         """
-        학생 연장 신청 정보 조회
+        학생 11시 연장 신청 정보 조회
         """
         student = g.user
         extension = ExtensionApply11Model.objects(student=student).first()
@@ -36,7 +36,7 @@ class Extension11(BaseResource):
     @json_required({'classNum': int, 'seatNum': str})
     def post(self):
         """
-        학생 연장 신청
+        학생 11시 연장 신청
         """
         student = g.user
 
@@ -67,7 +67,7 @@ class Extension11(BaseResource):
     @auth_required(StudentModel)
     def delete(self):
         """
-        학생 연장 신청 취소
+        학생 11시 연장 신청 취소
         """
         student = g.user
 
@@ -86,15 +86,63 @@ class Extension11(BaseResource):
 class Extension12(BaseResource):
     @swag_from(EXTENSION_GET)
     def get(self):
-        pass
+        """
+        학생 12시 연장 신청 정보 조회
+        """
+        student = g.user
+        extension = ExtensionApply12Model.objects(student=student).first()
+
+        return self.unicode_safe_json_dumps({
+            'classNum': extension.class_,
+            'seatNum': extension.seat
+        })
 
     @swag_from(EXTENSION_POST)
     def post(self):
-        pass
+        """
+        학생 12시 연장 신청
+        """
+        student = g.user
+
+        now = datetime.now().time()
+
+        if not current_app.testing and not APPLY_START < now < APPLY_END_12:
+            return Response('', 204)
+
+        class_ = request.json['classNum']
+        seat = request.json['seatNum']
+
+        extension = ExtensionApply12Model.objects(student=student).first()
+        if extension:
+            extension.delete()
+
+        extension = ExtensionApply12Model.objects(class_=class_, seat=seat).first()
+        if extension:
+            return Response('', 205)
+
+        ExtensionApply12Model(
+            class_=class_,
+            seat=seat
+        ).save()
+
+        return Response('', 201)
 
     @swag_from(EXTENSION_DELETE)
     def delete(self):
-        pass
+        """
+        학생 12시 연장 신청 취소
+        """
+        student = g.user
+
+        now = datetime.now().time()
+
+        extension = ExtensionApply12Model.objects(student=student).first()
+        if (not current_app.testing and not APPLY_START < now < APPLY_END_12) and (not extension):
+            return Response('', 204)
+
+        extension.delete()
+
+        return Response('', 200)
 
 
 @api.resource('/11/map')
