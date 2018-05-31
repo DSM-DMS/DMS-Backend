@@ -18,7 +18,7 @@ class PostList(BaseResource):
             self.ValidationError('Invalid category')
 
         return [{
-            'id': str(post),
+            'id': str(post.id),
             'writeTime': post.write_time.strftime('%Y-%m-%d'),
             'author': post.author,
             'title': post.title,
