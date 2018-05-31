@@ -21,7 +21,8 @@ MODEL_DOCSTRING_MAPPING = {
 
 def auth_required(model):
     def decorator(fn):
-        fn.__doc__ = fn.__doc__[:-9] + MODEL_DOCSTRING_MAPPING[model] + fn.__doc__[-9:]
+        if hasattr(fn, '__doc__'):
+            fn.__doc__ = fn.__doc__[:-9] + MODEL_DOCSTRING_MAPPING[model] + fn.__doc__[-9:]
 
         @wraps(fn)
         @jwt_required
