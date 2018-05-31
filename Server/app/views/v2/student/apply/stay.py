@@ -21,7 +21,7 @@ class Stay(BaseResource):
         """
         학생 잔류 신청 확인
         """
-        student = g.user()
+        student = g.user
 
         stay = StayApplyModel.objects(student=student).first()
 
