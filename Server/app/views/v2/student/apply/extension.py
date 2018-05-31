@@ -177,7 +177,7 @@ class Extension11Map(BaseResource):
         """
         11시 연장 신청 지도 조회
         """
-        class_ = request.json['classNum']
+        class_ = int(request.args['class_num'])
 
         return self.unicode_safe_json_response(_create_extension_map(class_, 11))
 
@@ -190,6 +190,6 @@ class Extension12Map(BaseResource):
         """
         12시 연장 신청 지도 조회
         """
-        class_ = request.json['classNum']
+        class_ = int(request.args['class_num'])
 
         return self.unicode_safe_json_response(_create_extension_map(class_, 12))
