@@ -16,8 +16,8 @@ APPLY_INFO_GET = {
             'examples': {
                 '': {
                     'extension11': {
-                        'class': 2,
-                        'seat': 13
+                        'classNum': 2,
+                        'seatNum': 13
                     },
                     'extension12': None,
                     'goingout': {

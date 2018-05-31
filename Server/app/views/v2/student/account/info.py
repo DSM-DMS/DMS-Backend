@@ -28,12 +28,12 @@ class ApplyInfo(BaseResource):
 
         return self.unicode_safe_json_dumps({
             'extension11': {
-                'class': extension11.class_,
-                'seat': extension11.seat
+                'classNum': extension11.class_,
+                'seatNum': extension11.seat
             } if extension11 else None,
             'extension12': {
-                'class': extension12.class_,
-                'seat': extension12.seat
+                'classNum': extension12.class_,
+                'seatNum': extension12.seat
             } if extension12 else None,
             'goingout': {
                 'sat': goingout.on_saturday,
