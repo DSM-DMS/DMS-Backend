@@ -85,6 +85,7 @@ class Extension11(BaseResource):
 @api.resource('/12')
 class Extension12(BaseResource):
     @swag_from(EXTENSION_GET)
+    @auth_required(StudentModel)
     def get(self):
         """
         학생 12시 연장 신청 정보 조회
@@ -98,6 +99,8 @@ class Extension12(BaseResource):
         })
 
     @swag_from(EXTENSION_POST)
+    @auth_required(StudentModel)
+    @json_required({'classNum': int, 'seatNum': str})
     def post(self):
         """
         학생 12시 연장 신청
@@ -128,6 +131,7 @@ class Extension12(BaseResource):
         return Response('', 201)
 
     @swag_from(EXTENSION_DELETE)
+    @auth_required(StudentModel)
     def delete(self):
         """
         학생 12시 연장 신청 취소
