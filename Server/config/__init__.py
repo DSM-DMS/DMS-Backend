@@ -53,7 +53,7 @@ class Config:
             'version': '1.0',
             'description': ''
         },
-        'basePath': '/v2'
+        'basePath': '/'
     }
 
     SWAGGER_TEMPLATE = {

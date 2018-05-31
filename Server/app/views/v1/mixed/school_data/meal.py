@@ -1,4 +1,3 @@
-
 from flask import Blueprint, Response
 from flask_restful import Api
 
