@@ -22,3 +22,5 @@ from .v2.views.mixed.jwt.t_refresh import *
 from .v2.views.mixed.metadata.t_developers import *
 from .v2.views.mixed.metadata.t_links import *
 from .v2.views.mixed.metadata.t_version import *
+
+from .v2.views.mixed.school_data.t_meal import *
