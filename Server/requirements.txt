@@ -26,7 +26,7 @@
 # app/views/v1/mixed/post/notice.py: 2
 # app/views/v1/mixed/post/preview.py: 2
 # app/views/v1/mixed/post/rule.py: 2
-# app/views/v1/mixed/school_data/meal.py: 2
+# app/views/v1/mixed/school_data/meal.py: 1
 # app/views/v1/student/account/alteration.py: 4
 # app/views/v1/student/account/auth.py: 5
 # app/views/v1/student/account/info.py: 1
@@ -40,7 +40,7 @@
 # app/views/v1/system/account_management.py: 7
 # app/views/v1/system/apply_management.py: 3
 # app/views/v1/system/auth.py: 5
-# app/views/v2/__init__.py: 6
+# app/views/v2/__init__.py: 9
 # app/views/v2/admin/account/account_management.py: 5
 # app/views/v2/admin/account/auth.py: 5
 # app/views/v2/admin/excel/__init__.py: 3
@@ -62,14 +62,14 @@
 # app/views/v2/mixed/post/preview.py: 1
 # app/views/v2/mixed/school_data/meal.py: 1
 # app/views/v2/student/account/alteration.py: 1
-# app/views/v2/student/account/auth.py: 1
+# app/views/v2/student/account/auth.py: 5
 # app/views/v2/student/account/info.py: 1
 # app/views/v2/student/account/signup.py: 1
 # app/views/v2/student/account/social_auth.py: 1
-# app/views/v2/student/apply/extension.py: 1
-# app/views/v2/student/apply/goingout.py: 1
-# app/views/v2/student/apply/stay.py: 1
-# app/views/v2/student/report/bug_report.py: 1
+# app/views/v2/student/apply/extension.py: 3
+# app/views/v2/student/apply/goingout.py: 3
+# app/views/v2/student/apply/stay.py: 3
+# app/views/v2/student/report/bug_report.py: 4
 # app/views/v2/student/report/facility_report.py: 1
 # app/views/v2/student/survey/survey.py: 1
 # tests/v2/views/__init__.py: 8
@@ -83,10 +83,11 @@ Flask_Cors == 3.0.4
 # app/views/v1/admin/account/auth.py: 7
 # app/views/v1/student/account/auth.py: 7
 # app/views/v1/system/auth.py: 7
-# app/views/v2/__init__.py: 7
+# app/views/v2/__init__.py: 10
 # app/views/v2/admin/account/auth.py: 6
 # app/views/v2/mixed/jwt/checker.py: 2
 # app/views/v2/mixed/jwt/refresh.py: 2
+# app/views/v2/student/account/auth.py: 6
 # tests/v2/views/__init__.py: 9
 # tests/v2/views/mixed/jwt/t_checker.py: 1
 # tests/v2/views/mixed/jwt/t_refresh.py: 1
@@ -113,7 +114,7 @@ Flask_JWT_Extended == 3.9.1
 # app/views/v1/mixed/post/notice.py: 3
 # app/views/v1/mixed/post/preview.py: 3
 # app/views/v1/mixed/post/rule.py: 3
-# app/views/v1/mixed/school_data/meal.py: 3
+# app/views/v1/mixed/school_data/meal.py: 2
 # app/views/v1/student/account/alteration.py: 5
 # app/views/v1/student/account/auth.py: 8
 # app/views/v1/student/account/info.py: 2
@@ -127,7 +128,7 @@ Flask_JWT_Extended == 3.9.1
 # app/views/v1/system/account_management.py: 8
 # app/views/v1/system/apply_management.py: 4
 # app/views/v1/system/auth.py: 8
-# app/views/v2/__init__.py: 8
+# app/views/v2/__init__.py: 11
 # app/views/v2/admin/account/account_management.py: 6
 # app/views/v2/admin/account/auth.py: 7
 # app/views/v2/admin/excel/extension.py: 2
@@ -148,14 +149,14 @@ Flask_JWT_Extended == 3.9.1
 # app/views/v2/mixed/post/preview.py: 2
 # app/views/v2/mixed/school_data/meal.py: 2
 # app/views/v2/student/account/alteration.py: 2
-# app/views/v2/student/account/auth.py: 2
+# app/views/v2/student/account/auth.py: 7
 # app/views/v2/student/account/info.py: 2
 # app/views/v2/student/account/signup.py: 2
 # app/views/v2/student/account/social_auth.py: 2
-# app/views/v2/student/apply/extension.py: 2
-# app/views/v2/student/apply/goingout.py: 2
-# app/views/v2/student/apply/stay.py: 2
-# app/views/v2/student/report/bug_report.py: 2
+# app/views/v2/student/apply/extension.py: 4
+# app/views/v2/student/apply/goingout.py: 4
+# app/views/v2/student/apply/stay.py: 4
+# app/views/v2/student/report/bug_report.py: 5
 # app/views/v2/student/report/facility_report.py: 2
 # app/views/v2/student/survey/survey.py: 2
 Flask_RESTful == 0.3.6
@@ -184,17 +185,17 @@ Werkzeug == 0.14.1
 # app/views/v2/mixed/post/preview.py: 3
 # app/views/v2/mixed/school_data/meal.py: 3
 # app/views/v2/student/account/alteration.py: 3
-# app/views/v2/student/account/auth.py: 3
+# app/views/v2/student/account/auth.py: 8
 # app/views/v2/student/account/info.py: 3
 # app/views/v2/student/account/signup.py: 3
 # app/views/v2/student/account/social_auth.py: 3
-# app/views/v2/student/apply/extension.py: 3
-# app/views/v2/student/apply/goingout.py: 3
-# app/views/v2/student/apply/stay.py: 3
-# app/views/v2/student/report/bug_report.py: 3
+# app/views/v2/student/apply/extension.py: 5
+# app/views/v2/student/apply/goingout.py: 5
+# app/views/v2/student/apply/stay.py: 5
+# app/views/v2/student/report/bug_report.py: 6
 # app/views/v2/student/report/facility_report.py: 3
 # app/views/v2/student/survey/survey.py: 3
-flasgger == 0.8.3
+flasgger == 0.9.0
 
 # app/__init__.py: 10
 influxdb == 5.0.0
@@ -209,7 +210,6 @@ influxdb == 5.0.0
 # app/models/support/mongo_helper.py: 5
 # app/models/survey.py: 3
 # app/models/version.py: 1
-# utils/standalone_scripts/meal_parser.py: 1
 mongoengine == 0.15.0
 
 # app/views/v1/admin/apply/extension.py: 1
@@ -233,14 +233,15 @@ pymongo == 3.6.1
 # app/__init__.py: 9
 redis == 2.10.6
 
-# utils/standalone_scripts/meal_parser.py: 3
+# utils/meal_parser.py: 1
 schapi == 1.1
 
 # app/views/v1/student/report/bug_report.py: 2
+# app/views/v2/student/report/bug_report.py: 2
 slacker == 0.9.65
 
 # app/views/v1/__init__.py: 2
-# app/views/v2/__init__.py: 3
+# app/views/v2/__init__.py: 6
 # tests/v1/views/__init__.py: 1
 # tests/v1/views/admin/survey/test_survey.py: 1
 # tests/v2/views/__init__.py: 1
@@ -276,10 +277,11 @@ ujson == 1.35
 # tests/v2/views/mixed/metadata/t_developers.py: 1
 # tests/v2/views/mixed/metadata/t_links.py: 1
 # tests/v2/views/mixed/metadata/t_version.py: 3
+# tests/v2/views/mixed/school_data/t_meal.py: 1
 # tests/v2/views/student/account/t_alteration.py: 1
 # tests/v2/views/student/account/t_auth.py: 1
 # tests/v2/views/student/account/t_info.py: 1
-# tests/v2/views/student/account/t_signup.py: 1
+# tests/v2/views/student/account/t_signup.py: 3
 # tests/v2/views/student/account/t_social_auth.py: 1
 # tests/v2/views/student/apply/t_extension.py: 1
 # tests/v2/views/student/apply/t_goingout.py: 1
