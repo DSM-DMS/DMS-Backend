@@ -43,7 +43,7 @@ class Stay(BaseResource):
             # - 일요일 오후 8시 30분 이후부터 목요일 오후 10시까지
             value = request.json['value']
 
-            StayApplyModel.objects(student=student).first().delete()
+            StayApplyModel.objects(student=student).delete()
             StayApplyModel(student=student, value=value).save()
 
             return Response('', 201)

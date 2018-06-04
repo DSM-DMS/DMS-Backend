@@ -46,7 +46,7 @@ class Goingout(BaseResource):
         now = datetime.now()
 
         if current_app.testing or (now.weekday() == 6 and now.time() > time(20, 30)) or (0 <= now.weekday() < 5) or (now.weekday() == 5 and now.time() < time(22, 00)):
-            GoingoutApplyModel.objects(student=student).first().delete()
+            GoingoutApplyModel.objects(student=student).delete()
             GoingoutApplyModel(student=student, on_saturday=sat, on_sunday=sun).save()
 
             return Response('', 201)

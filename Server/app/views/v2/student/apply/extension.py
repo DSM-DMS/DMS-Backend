@@ -48,9 +48,7 @@ class Extension11(BaseResource):
         class_ = request.json['classNum']
         seat = request.json['seatNum']
 
-        extension = ExtensionApply11Model.objects(student=student).first()
-        if extension:
-            extension.delete()
+        ExtensionApply11Model.objects(student=student).delete()
 
         extension = ExtensionApply11Model.objects(class_=class_, seat=seat).first()
         if extension:
@@ -115,9 +113,7 @@ class Extension12(BaseResource):
         class_ = request.json['classNum']
         seat = request.json['seatNum']
 
-        extension = ExtensionApply12Model.objects(student=student).first()
-        if extension:
-            extension.delete()
+        ExtensionApply12Model.objects(student=student).delete()
 
         extension = ExtensionApply12Model.objects(class_=class_, seat=seat).first()
         if extension:
