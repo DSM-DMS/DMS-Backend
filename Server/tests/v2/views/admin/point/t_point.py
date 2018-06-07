@@ -59,7 +59,7 @@ class TestPointGiving(TCBase):
 
     def testBadPointGivingSuccess(self):
         # (1) 벌점 부여
-        resp = self._request(rule_id=self.bad_point_rule.id, apply_good_point=False, point=-1)
+        resp = self._request(rule_id=self.bad_point_rule.id, apply_good_point=False, point=1)
 
         # (2) status code 201
         self.assertEqual(resp.status_code, 201)
@@ -78,7 +78,7 @@ class TestPointGiving(TCBase):
 
         history = student.point_histories[0]
         self.assertEqual(history.point_type, False)
-        self.assertEqual(history.point, -1)
+        self.assertEqual(history.point, 1)
 
         self.assertEqual(student.bad_point, 1)
 

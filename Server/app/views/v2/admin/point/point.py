@@ -53,11 +53,6 @@ class Point(BaseResource):
 
         rule = PointRuleModel.objects(id=rule_id).first()
 
-        if (apply_good_point and not rule.min_point <= point <= rule.max_point) or\
-                (not apply_good_point and not rule.max_point <= point <= rule.min_point):
-            # 최소 점수와 최대 점수 외의 점수를 부여하는 경우
-            abort(403)
-
         point_history = PointHistoryModel(
             reason=rule.name,
             point_type=rule.point_type,
