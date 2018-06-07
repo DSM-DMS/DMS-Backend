@@ -7,7 +7,7 @@ from flasgger import swag_from
 from app.docs.v2.student.apply.stay import *
 from app.models.account import StudentModel
 from app.models.apply import StayApplyModel
-from app.views.v2 import BaseResource, auth_required, json_required_2
+from app.views.v2 import BaseResource, auth_required, json_required
 
 api = Api(Blueprint(__name__, __name__))
 api.prefix = '/student/apply/stay'
@@ -31,7 +31,7 @@ class Stay(BaseResource):
 
     @swag_from(STAY_POST)
     @auth_required(StudentModel)
-    @json_required_2({'value': int})
+    @json_required({'value': int})
     def post(self):
         """
         학생 잔류 신청

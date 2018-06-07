@@ -66,20 +66,7 @@ def gzipped(fn):
     return wrapper
 
 
-def json_required(*required_keys):
-    """
-    View decorator for JSON validation.
-
-    - If content-type is not application/json : returns status code 406
-    - If required_keys are not exist on request.json : returns status code 400
-
-    Args:
-        *required_keys: Required keys on requested JSON payload
-    """
-    raise DeprecationWarning()
-
-
-def json_required_2(required_keys):
+def json_required(required_keys):
     def decorator(fn):
         if fn.__name__ == 'get':
             print('[WARN] JSON with GET method? on "{}()"'.format(fn.__qualname__))

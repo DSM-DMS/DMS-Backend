@@ -9,7 +9,7 @@ from flasgger import swag_from
 
 from app.docs.v2.admin.account.auth import *
 from app.models.account import AdminModel, RefreshTokenModel
-from app.views.v2 import BaseResource, json_required_2
+from app.views.v2 import BaseResource, json_required
 
 api = Api(Blueprint(__name__, __name__))
 api.prefix = '/admin'
@@ -17,7 +17,7 @@ api.prefix = '/admin'
 
 @api.resource('/auth')
 class Auth(BaseResource):
-    @json_required_2({'id': str, 'password': str})
+    @json_required({'id': str, 'password': str})
     @swag_from(AUTH_POST)
     def post(self):
         """

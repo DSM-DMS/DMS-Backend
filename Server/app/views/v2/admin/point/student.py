@@ -4,7 +4,7 @@ from flasgger import swag_from
 
 from app.docs.v2.admin.point.student import *
 from app.models.account import AdminModel, StudentModel
-from app.views.v2 import BaseResource, auth_required, json_required_2
+from app.views.v2 import BaseResource, auth_required, json_required
 
 api = Api(Blueprint(__name__, __name__))
 api.prefix = '/admin/point/student'
@@ -38,7 +38,7 @@ class StudentList(BaseResource):
 @api.resource('/penalty/<student_id>')
 class StudentPenalty(BaseResource):
     @auth_required(AdminModel)
-    @json_required_2({'status': bool})
+    @json_required({'status': bool})
     @swag_from(STUDENT_PENALTY_PATCH)
     def patch(self, student_id):
         """

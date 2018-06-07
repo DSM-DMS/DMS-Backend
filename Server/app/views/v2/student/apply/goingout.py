@@ -7,7 +7,7 @@ from flasgger import swag_from
 from app.docs.v2.student.apply.goingout import *
 from app.models.account import StudentModel
 from app.models.apply import GoingoutApplyModel
-from app.views.v2 import BaseResource, auth_required, json_required_2
+from app.views.v2 import BaseResource, auth_required, json_required
 
 api = Api(Blueprint(__name__, __name__))
 api.prefix = '/student/apply/goingout'
@@ -34,7 +34,7 @@ class Goingout(BaseResource):
 
     @swag_from(GOINGOUT_POST)
     @auth_required(StudentModel)
-    @json_required_2({'sat': bool, 'sun': bool})
+    @json_required({'sat': bool, 'sun': bool})
     def post(self):
         """
         학생 외출 신청

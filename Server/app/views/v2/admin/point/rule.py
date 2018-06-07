@@ -5,7 +5,7 @@ from flasgger import swag_from
 from app.docs.v2.admin.point.rule import *
 from app.models.account import AdminModel
 from app.models.point import PointRuleModel
-from app.views.v2 import BaseResource, auth_required, json_required_2
+from app.views.v2 import BaseResource, auth_required, json_required
 
 api = Api(Blueprint(__name__, __name__))
 api.prefix = '/admin/point/rule'
@@ -28,7 +28,7 @@ class Rule(BaseResource):
         } for rule in PointRuleModel.objects])
 
     @auth_required(AdminModel)
-    @json_required_2({'name': str, 'pointType': bool, 'minPoint': int, 'maxPoint': int})
+    @json_required({'name': str, 'pointType': bool, 'minPoint': int, 'maxPoint': int})
     @swag_from(RULE_POST)
     def post(self):
         """
@@ -57,7 +57,7 @@ class Rule(BaseResource):
 @api.resource('/<rule_id>')
 class RuleAlteration(BaseResource):
     @auth_required(AdminModel)
-    @json_required_2({'name': str, 'pointType': bool, 'minPoint': int, 'maxPoint': int})
+    @json_required({'name': str, 'pointType': bool, 'minPoint': int, 'maxPoint': int})
     @swag_from(RULE_ALTERATION_PATCH)
     def patch(self, rule_id):
         """

@@ -1,14 +1,12 @@
-from binascii import hexlify
-from hashlib import pbkdf2_hmac
 from uuid import uuid4
 
-from flask import Blueprint, Response, abort, current_app, request
+from flask import Blueprint, Response, abort, request
 from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.v2.admin.account.account_management import *
 from app.models.account import AdminModel, StudentModel, SignupWaitingModel
-from app.views.v2 import BaseResource, auth_required, json_required_2
+from app.views.v2 import BaseResource, auth_required, json_required
 
 api = Api(Blueprint(__name__, __name__))
 api.prefix = '/admin/account-management'
@@ -17,7 +15,7 @@ api.prefix = '/admin/account-management'
 @api.resource('/student')
 class StudentAccount(BaseResource):
     @auth_required(AdminModel)
-    @json_required_2({'number': int})
+    @json_required({'number': int})
     @swag_from(STUDENT_ACCOUNT_DELETE)
     def delete(self):
         """
@@ -64,7 +62,7 @@ class StudentAccount(BaseResource):
 @api.resource('/admin')
 class AdminAccount(BaseResource):
     @auth_required(AdminModel)
-    @json_required_2({'id': str, 'password': str, 'name': str})
+    @json_required({'id': str, 'password': str, 'name': str})
     @swag_from(ADMIN_ACCOUNT_POST)
     def post(self):
         """
@@ -94,7 +92,7 @@ class AdminAccount(BaseResource):
             raise Exception()
 
     @auth_required(AdminModel)
-    @json_required_2({'id': str})
+    @json_required({'id': str})
     @swag_from(ADMIN_ACCOUNT_DELETE)
     def delete(self):
         """
