@@ -1,5 +1,7 @@
 import time
 from threading import Thread
+from pymongo import MongoClient
+import os
 
 from app.models.apply import ExtensionApply11Model, ExtensionApply12Model, GoingoutApplyModel, StayApplyModel
 from app.models.version import VersionModel
@@ -10,12 +12,20 @@ class InfluxCronJob:
         self.client = None
         self.db_name = None
 
+        self.mongo = None
+
         if app is not None:
             self.init_app(app)
 
     def init_app(self, app):
         self.client = app.config['INFLUXDB_CLIENT']
         self.db_name = app.config['INFLUXDB_SETTINGS']['database']
+
+        self.mongo = MongoClient(
+            username=os.getenv('MONGO_ID'),
+            password=os.getenv('MONGO_PW'),
+            authSource=app.config['SERVICE_NAME']
+        )['dms-v2']
 
         if self.db_name not in self.client.get_list_database():
             self.client.create_database(self.db_name)
@@ -24,7 +34,8 @@ class InfluxCronJob:
             Thread(target=self._setup_version_data),
             Thread(target=self._setup_extension_apply_data, args=(60,)),
             Thread(target=self._setup_goingout_apply_data, args=(120,)),
-            Thread(target=self._setup_stay_apply_data, args=(120,))
+            Thread(target=self._setup_stay_apply_data, args=(120,)),
+            Thread(target=self._setup_document_count, args=(120,))
         ]
 
         if not app.testing:
@@ -143,6 +154,30 @@ class InfluxCronJob:
                     'measurement': measurement,
                     'fields': apply_counts
                 }
+            ]
+
+            self.client.write_points(payload)
+            self._log(payload)
+
+            time.sleep(sleep_seconds)
+
+    def _setup_document_count(self, sleep_seconds=3600):
+        measurement = 'document_count'
+
+        while True:
+            self.client.drop_measurement(measurement)
+
+            collections = self.mongo.collection_names()
+
+            document_counts = {
+                collection: self.mongo[collection].count()
+                for collection in collections}
+
+            payload = [
+                {
+                    'measurement': measurement,
+                    'fields': document_counts
+                 }
             ]
 
             self.client.write_points(payload)
