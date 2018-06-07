@@ -76,8 +76,15 @@ POINT_POST = {
             'required': True
         },
         {
+            'name': 'applyGoodPoint',
+            'description': '점수를 상점에 부여할지, 벌점에 부여할지(상점인 경우 true, 벌점인 경우 false)',
+            'in': 'json',
+            'type': 'bool',
+            'required': True
+        },
+        {
             'name': 'point',
-            'description': '점수(벌점일 경우 음수, 상점일 경우 양수)',
+            'description': '점수(증가일 경우 양수, 삭감일 경우 음수)',
             'in': 'json',
             'type': 'int',
             'required': True
