@@ -23,16 +23,15 @@ class PointRuleModel(Document):
     # True : 상점, False : 벌점
 
     min_point = IntField(
-        required=True,
-        # min_value=0
+        required=True
     )
     # 최소 점수
 
     max_point = IntField(
-        required=True,
-        min_value=0
+        required=True
     )
     # 최대 점수
+    # point_type이 false(벌점)라면 해당 필드들도 음수
 
 
 class PointHistoryModel(EmbeddedDocument):
