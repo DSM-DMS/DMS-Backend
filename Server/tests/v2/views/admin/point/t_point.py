@@ -22,12 +22,13 @@ class TestPointGiving(TCBase):
 
         self.good_point_rule, self.bad_point_rule = add_point_rules()
 
-        self._request = lambda *, token=None, id=self.student_id, rule_id=self.good_point_rule.id, point=1: self.request(
+        self._request = lambda *, token=None, id=self.student_id, rule_id=self.good_point_rule.id, apply_good_point=True, point=1: self.request(
             self.method,
             self.target_uri.format(id),
             token,
             json={
                 'ruleId': str(rule_id),
+                'applyGoodPoint': apply_good_point,
                 'point': point
             }
         )
@@ -58,7 +59,7 @@ class TestPointGiving(TCBase):
 
     def testBadPointGivingSuccess(self):
         # (1) 벌점 부여
-        resp = self._request(rule_id=self.bad_point_rule.id)
+        resp = self._request(rule_id=self.bad_point_rule.id, apply_good_point=False, point=-1)
 
         # (2) status code 201
         self.assertEqual(resp.status_code, 201)
@@ -77,7 +78,7 @@ class TestPointGiving(TCBase):
 
         history = student.point_histories[0]
         self.assertEqual(history.point_type, False)
-        self.assertEqual(history.point, 1)
+        self.assertEqual(history.point, -1)
 
         self.assertEqual(student.bad_point, 1)
 

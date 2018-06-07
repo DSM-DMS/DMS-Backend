@@ -33,13 +33,14 @@ class Point(BaseResource):
         } for history in student.point_histories])
 
     @auth_required(AdminModel)
-    @json_required_2({'ruleId': str, 'point': int})
+    @json_required_2({'ruleId': str, 'applyGoodPoint': bool, 'point': int})
     @swag_from(POINT_POST)
     def post(self, student_id):
         """
         특정 학생에게 상벌점 부여
         """
         rule_id = request.json['ruleId']
+        apply_good_point = request.json['applyGoodPoint']
         point = request.json['point']
 
         student = StudentModel.objects(id=student_id).first()
@@ -52,7 +53,8 @@ class Point(BaseResource):
 
         rule = PointRuleModel.objects(id=rule_id).first()
 
-        if not rule.min_point <= point <= rule.max_point:
+        if (apply_good_point and not rule.min_point <= point <= rule.max_point) or\
+                (not apply_good_point and not rule.max_point <= point <= rule.min_point):
             # 최소 점수와 최대 점수 외의 점수를 부여하는 경우
             abort(403)
 
@@ -68,7 +70,7 @@ class Point(BaseResource):
             student.penalty_level = student.penalty_level + 1
             student.penalty_training_status = True
 
-        if rule.point_type:
+        if apply_good_point:
             student.good_point += point
         else:
             student.bad_point += point

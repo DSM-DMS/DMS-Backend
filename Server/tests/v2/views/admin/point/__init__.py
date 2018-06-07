@@ -12,8 +12,8 @@ def add_point_rules():
     bad_point_rule = PointRuleModel(
         name='벌점 규칙',
         point_type=False,
-        min_point=1,
-        max_point=5
+        min_point=-1,
+        max_point=-5
     ).save()
 
     return good_point_rule, bad_point_rule
