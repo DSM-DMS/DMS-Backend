@@ -33,14 +33,6 @@ class Auth(BaseResource):
         if not student:
             abort(401)
         else:
-            refresh_token = uuid4()
-
-            RefreshTokenModel(
-                token=refresh_token,
-                token_owner=student,
-                pw_snapshot=encrypted_password
-            ).save()
-
             return {
                 'accessToken': create_access_token(TokenModel.generate_token(AccessTokenModel, student, request.headers['USER-AGENT'])),
                 'refreshToken': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, student, request.headers['USER-AGENT']))
