@@ -33,11 +33,11 @@ class TestAuthChecker(TCBase):
         self.assertEqual(resp.status_code, 200)
 
     def testCheckFailure_unknownIdentity(self):
-        # (1) 존재하지 않는 ID가 identity인 JWT 토큰을 이용한 check
+        # (1) UUID 형태가 아닌 identity로 구성된 토큰
         with app.app_context():
             token = 'JWT {}'.format(create_access_token('123'))
 
         resp = self._request(token=token)
 
-        # (2) status code 204
-        self.assertEqual(resp.status_code, 204)
+        # (2) status code 401
+        self.assertEqual(resp.status_code, 401)

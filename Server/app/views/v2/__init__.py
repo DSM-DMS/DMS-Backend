@@ -27,13 +27,17 @@ def auth_required(model):
         @wraps(fn)
         @jwt_required
         def wrapper(*args, **kwargs):
-            token = AccessTokenModel.objects(identity=UUID(get_jwt_identity())).first()
-            if not token or not isinstance(token.owner, model):
-                abort(403)
+            try:
+                token = AccessTokenModel.objects(identity=UUID(get_jwt_identity())).first()
 
-            g.user = token.owner
+                if not token or not isinstance(token.owner, model):
+                    abort(403)
 
-            return fn(*args, **kwargs)
+                g.user = token.owner
+
+                return fn(*args, **kwargs)
+            except ValueError:
+                abort(401)
         return wrapper
     return decorator
 
