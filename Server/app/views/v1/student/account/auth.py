@@ -65,7 +65,7 @@ class Refresh(BaseResource):
         새로운 Access Token 획득
         """
         try:
-            token = RefreshTokenModel.objects(token=UUID(get_jwt_identity())).first()
+            token = RefreshTokenModel.objects(identity=UUID(get_jwt_identity())).first()
 
             if not token or token.token_owner.pw != token.pw_snapshot:
                 # Invalid token or the token issuing password is different from the current password
