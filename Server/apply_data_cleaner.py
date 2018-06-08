@@ -14,7 +14,6 @@ from app.models.apply import ExtensionApply11Model, ExtensionApply12Model, Going
 if 0 < datetime.now().time().hour < 12:
     ExtensionApply11Model.objects.delete()
     ExtensionApply12Model.objects.delete()
-    time.sleep(3600)
 
 
 def clear_duplicated_apply_data(student, model):
