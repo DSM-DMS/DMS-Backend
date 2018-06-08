@@ -13,9 +13,6 @@ if __name__ == '__main__':
     if 'SECRET_KEY' not in os.environ:
         print('[WARN] SECRET KEY is not set in the environment variable !!')
 
-    from utils import extension_apply_cleaner
-    Process(target=extension_apply_cleaner.run).start()
-
     from utils.meal_parser import parse
 
     now = datetime.now()
