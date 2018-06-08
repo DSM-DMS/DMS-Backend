@@ -67,7 +67,7 @@ class Refresh(BaseResource):
         try:
             token = RefreshTokenModel.objects(identity=UUID(get_jwt_identity())).first()
 
-            if not token or token.token_owner.pw != token.pw_snapshot:
+            if not token or token.owner.pw != token.pw_snapshot:
                 # Invalid token or the token issuing password is different from the current password
                 # Returns status code 205 : Reset Content
                 return Response('', 205)
