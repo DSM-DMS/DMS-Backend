@@ -45,7 +45,7 @@ def create_app(*config_cls):
 
     V1Router().init_app(app_)
     V2Router().init_app(app_)
-    InfluxCronJob().init_app(app_)
+    # InfluxCronJob().init_app(app_)
 
     app_.after_request(after_request)
     app_.register_error_handler(Exception, exception_handler)
