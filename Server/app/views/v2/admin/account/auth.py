@@ -33,7 +33,7 @@ class Auth(BaseResource):
         if not admin:
             abort(401)
         else:
-            user_agent = request.headers.pop('USER-AGENT', 'Windows Application')
+            user_agent = request.headers.get('USER-AGENT', 'Windows Application')
             return {
                 'accessToken': create_access_token(TokenModel.generate_token(AccessTokenModel, admin, user_agent)),
                 'refreshToken': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, admin, user_agent))
