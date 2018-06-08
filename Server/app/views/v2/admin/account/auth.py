@@ -1,8 +1,4 @@
-from binascii import hexlify
-from hashlib import pbkdf2_hmac
-from uuid import uuid4
-
-from flask import Blueprint, abort, current_app, request
+from flask import Blueprint, abort, request
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_restful import Api
 from flasgger import swag_from
@@ -23,12 +19,12 @@ class Auth(BaseResource):
         """
         관리자 로그인
         """
-        id = request.json['id']
-        password = request.json['password']
+        payload = request.json
 
-        encrypted_password = self.encrypt_password(password)
+        id = payload['id']
+        password = payload['password']
 
-        admin = AdminModel.objects(id=id, pw=encrypted_password).first()
+        admin = AdminModel.objects(id=id, pw=self.encrypt_password(password)).first()
 
         if not admin:
             abort(401)
