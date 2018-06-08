@@ -40,4 +40,4 @@ class TestAuthChecker(TCBase):
         resp = self._request(token=token)
 
         # (2) status code 401
-        self.assertEqual(resp.status_code, 401)
+        self.assertEqual(resp.status_code, 422)

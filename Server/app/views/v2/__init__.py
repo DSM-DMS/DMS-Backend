@@ -37,7 +37,7 @@ def auth_required(model):
 
                 return fn(*args, **kwargs)
             except ValueError:
-                abort(401)
+                abort(422)
         return wrapper
     return decorator
 

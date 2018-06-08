@@ -32,4 +32,4 @@ class Refresh(BaseResource):
                     TokenModel.generate_token(AccessTokenModel, token.owner, request.headers['USER-AGENT']))
             }
         except ValueError:
-            abort(401)
+            abort(422)

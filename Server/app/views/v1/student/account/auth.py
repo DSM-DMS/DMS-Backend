@@ -64,13 +64,16 @@ class Refresh(BaseResource):
         """
         새로운 Access Token 획득
         """
-        token = RefreshTokenModel.objects(token=UUID(get_jwt_identity())).first()
+        try:
+            token = RefreshTokenModel.objects(token=UUID(get_jwt_identity())).first()
 
-        if not token or token.token_owner.pw != token.pw_snapshot:
-            # Invalid token or the token issuing password is different from the current password
-            # Returns status code 205 : Reset Content
-            return Response('', 205)
+            if not token or token.token_owner.pw != token.pw_snapshot:
+                # Invalid token or the token issuing password is different from the current password
+                # Returns status code 205 : Reset Content
+                return Response('', 205)
 
-        return self.unicode_safe_json_response({
-            'access_token': create_access_token(TokenModel.generate_token(AccessTokenModel, token.owner, request.headers['USER-AGENT']))
-        }, 200)
+            return self.unicode_safe_json_response({
+                'access_token': create_access_token(TokenModel.generate_token(AccessTokenModel, token.owner, request.headers['USER-AGENT']))
+            }, 200)
+        except ValueError:
+            abort(422)

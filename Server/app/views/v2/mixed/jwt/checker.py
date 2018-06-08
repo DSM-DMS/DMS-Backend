@@ -27,4 +27,4 @@ class AuthCheck(BaseResource):
 
             return Response('', 200)
         except ValueError:
-            abort(401)
+            abort(422)
