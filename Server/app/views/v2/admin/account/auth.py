@@ -8,7 +8,7 @@ from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.v2.admin.account.auth import *
-from app.models.account import AdminModel, RefreshTokenModel
+from app.models.account import AdminModel, TokenModel, AccessTokenModel, RefreshTokenModel
 from app.views.v2 import BaseResource, json_required
 
 api = Api(Blueprint(__name__, __name__))
@@ -33,15 +33,7 @@ class Auth(BaseResource):
         if not admin:
             abort(401)
         else:
-            refresh_token = uuid4()
-
-            RefreshTokenModel(
-                token=refresh_token,
-                token_owner=admin,
-                pw_snapshot=encrypted_password
-            ).save()
-
             return {
-                'accessToken': create_access_token(id),
-                'refreshToken': create_refresh_token(str(refresh_token))
+                'accessToken': create_access_token(TokenModel.generate_token(AccessTokenModel, admin, request.headers['USER-AGENT'])),
+                'refreshToken': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, admin, request.headers['USER-AGENT']))
             }, 201

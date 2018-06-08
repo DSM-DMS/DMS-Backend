@@ -1,4 +1,5 @@
 from functools import wraps
+from uuid import UUID
 import ujson
 import time
 
@@ -6,18 +7,18 @@ from flask import Response, abort, g, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 
-from app.models.account import AdminModel, StudentModel, SystemModel
+from app.models.account import AccessTokenModel, AdminModel, StudentModel
 
 
 def admin_only(fn):
     @wraps(fn)
     @jwt_required
     def wrapper(*args, **kwargs):
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        if not admin:
+        token = AccessTokenModel.objects(identity=UUID(get_jwt_identity())).first()
+        if not token or not isinstance(token.owner, AdminModel):
             abort(403)
 
-        g.user = admin
+        g.user = token.owner
         return fn(*args, **kwargs)
 
     return wrapper
@@ -27,25 +28,11 @@ def student_only(fn):
     @wraps(fn)
     @jwt_required
     def wrapper(*args, **kwargs):
-        student = StudentModel.objects(id=get_jwt_identity()).first()
-        if not student:
+        token = AccessTokenModel.objects(identity=UUID(get_jwt_identity())).first()
+        if not token or not isinstance(token.owner, StudentModel):
             abort(403)
 
-        g.user = student
-        return fn(*args, **kwargs)
-
-    return wrapper
-
-
-def system_only(fn):
-    @wraps(fn)
-    @jwt_required
-    def wrapper(*args, **kwargs):
-        system = SystemModel.objects(id=get_jwt_identity()).first()
-        if not system:
-            abort(403)
-
-        g.user = system
+        g.user = token.owner
         return fn(*args, **kwargs)
 
     return wrapper
@@ -55,14 +42,12 @@ def auth_required(fn):
     @wraps(fn)
     @jwt_required
     def wrapper(*args, **kwargs):
-        admin = AdminModel.objects(id=get_jwt_identity()).first()
-        student = StudentModel.objects(id=get_jwt_identity()).first()
-        system = SystemModel.objects(id=get_jwt_identity()).first()
+        token = AccessTokenModel.objects(identity=UUID(get_jwt_identity())).first()
 
-        if not any((admin, student, system)):
+        if not token:
             abort(403)
 
-        g.user = admin or student or system
+        g.user = token.owner
         return fn(*args, **kwargs)
 
     return wrapper
@@ -184,11 +169,6 @@ class Router:
 
         from app.views.v1.mixed.school_data import meal
         app.register_blueprint(meal.api.blueprint)
-
-        from app.views.v1.system import account_management, apply_management, auth
-        app.register_blueprint(account_management.api.blueprint)
-        app.register_blueprint(apply_management.api.blueprint)
-        app.register_blueprint(auth.api.blueprint)
 
         from app.views.v1 import app_version_checker
         app.register_blueprint(app_version_checker.api.blueprint)

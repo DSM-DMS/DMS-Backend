@@ -8,7 +8,7 @@ from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.v2.student.account.auth import *
-from app.models.account import StudentModel, RefreshTokenModel
+from app.models.account import StudentModel, TokenModel, AccessTokenModel, RefreshTokenModel
 from app.views.v2 import BaseResource, json_required
 
 api = Api(Blueprint(__name__, __name__))
@@ -42,6 +42,6 @@ class Auth(BaseResource):
             ).save()
 
             return {
-                'accessToken': create_access_token(id),
-                'refreshToken': create_refresh_token(str(refresh_token))
+                'accessToken': create_access_token(TokenModel.generate_token(AccessTokenModel, student, request.headers['USER-AGENT'])),
+                'refreshToken': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, student, request.headers['USER-AGENT']))
             }, 201

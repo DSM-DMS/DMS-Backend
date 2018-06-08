@@ -1,5 +1,6 @@
 from binascii import hexlify
 from hashlib import pbkdf2_hmac
+from uuid import UUID
 
 from functools import wraps
 import gzip
@@ -10,12 +11,11 @@ from flask import Response, abort, after_this_request, g, request, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 
-from app.models.account import AdminModel, StudentModel, SystemModel
+from app.models.account import AccessTokenModel, AdminModel, StudentModel
 
 MODEL_DOCSTRING_MAPPING = {
     AdminModel: ' *관리자 권한',
-    StudentModel: ' *학생 권한',
-    SystemModel: ' *시스템 권한'
+    StudentModel: ' *학생 권한'
 }
 
 
@@ -27,11 +27,11 @@ def auth_required(model):
         @wraps(fn)
         @jwt_required
         def wrapper(*args, **kwargs):
-            user = model.objects(id=get_jwt_identity()).first()
-            if not user:
+            token = AccessTokenModel.objects(identity=UUID(get_jwt_identity())).first()
+            if not token or not isinstance(token.owner, model):
                 abort(403)
 
-            g.user = user
+            g.user = token.owner
 
             return fn(*args, **kwargs)
         return wrapper

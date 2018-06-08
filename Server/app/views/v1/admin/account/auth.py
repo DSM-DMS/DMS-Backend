@@ -1,6 +1,6 @@
 from binascii import hexlify
 from hashlib import pbkdf2_hmac
-from uuid import uuid4
+from uuid import UUID
 
 from flask import Blueprint, current_app, request
 from flask_jwt_extended import create_access_token, create_refresh_token
@@ -11,7 +11,7 @@ from flask_restful import Api, abort
 from app.views.v1 import BaseResource
 
 
-from app.models.account import AdminModel, RefreshTokenModel
+from app.models.account import AdminModel, TokenModel, AccessTokenModel, RefreshTokenModel
 
 api = Api(Blueprint('admin-auth-api', __name__))
 api.prefix = '/admin'
@@ -42,17 +42,9 @@ class Auth(BaseResource):
 
         # --- Auth success
 
-        refresh_token = uuid4()
-        RefreshTokenModel(
-            token=refresh_token,
-            token_owner=admin,
-            pw_snapshot=pw
-        ).save()
-        # Generate new refresh token made up of uuid4
-
         return self.unicode_safe_json_response({
-            'access_token': create_access_token(id),
-            'refresh_token': create_refresh_token(str(refresh_token))
+            'access_token': create_access_token(TokenModel.generate_token(AccessTokenModel, admin, request.headers['USER-AGENT'])),
+            'refresh_token': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, admin, request.headers['USER-AGENT']))
         }, 200)
 
 
@@ -64,13 +56,11 @@ class Refresh(BaseResource):
         """
         새로운 Access Token 획득
         """
-        token = RefreshTokenModel.objects(token=get_jwt_identity()).first()
+        token = RefreshTokenModel.objects(identity=UUID(get_jwt_identity())).first()
 
-        # if not token or token.token_owner.pw != token.pw_snapshot:
-        #     # Invalid token or the token issuing password is different from the current password
-        #     # Returns status code 205 : Reset Content
-        #     return Response('', 205)
+        if not token:
+            abort(205)
 
         return self.unicode_safe_json_response({
-            'access_token': create_access_token(token.token_owner.id)
+            'access_token': create_access_token(TokenModel.generate_token(AccessTokenModel, token.owner, request.headers['USER_AGENT']))
         }, 200)
