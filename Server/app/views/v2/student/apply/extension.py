@@ -24,12 +24,13 @@ class Extension11(BaseResource):
         학생 11시 연장 신청 정보 조회
         """
         student = g.user
+
         extension = ExtensionApply11Model.objects(student=student).first()
 
         return self.unicode_safe_json_dumps({
             'classNum': extension.class_,
             'seatNum': extension.seat
-        })
+        }) if extension else Response('', 204)
 
     @swag_from(EXTENSION_POST)
     @auth_required(StudentModel)
@@ -89,12 +90,13 @@ class Extension12(BaseResource):
         학생 12시 연장 신청 정보 조회
         """
         student = g.user
+
         extension = ExtensionApply12Model.objects(student=student).first()
 
         return self.unicode_safe_json_dumps({
             'classNum': extension.class_,
             'seatNum': extension.seat
-        })
+        }) if extension else Response('', 204)
 
     @swag_from(EXTENSION_POST)
     @auth_required(StudentModel)

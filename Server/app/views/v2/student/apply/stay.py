@@ -27,7 +27,9 @@ class Stay(BaseResource):
 
         return self.unicode_safe_json_dumps({
             'value': stay.value or None
-        })
+        }) if stay else {
+            'value': 4
+        }
 
     @swag_from(STAY_POST)
     @auth_required(StudentModel)

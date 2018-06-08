@@ -24,13 +24,14 @@ class Goingout(BaseResource):
         student = g.user
 
         goingout = GoingoutApplyModel.objects(studnt=student).first()
-        if not goingout:
-            return Response('', 204)
 
         return self.unicode_safe_json_dumps({
             'sat': goingout.on_saturday,
             'sun': goingout.on_sunday
-        })
+        }) if goingout else {
+            'sat': False,
+            'sun': False
+        }
 
     @swag_from(GOINGOUT_POST)
     @auth_required(StudentModel)
