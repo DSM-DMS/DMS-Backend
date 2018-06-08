@@ -4,9 +4,8 @@ language: python
 cache: pip
 matrix:
   include:
-  - python: '3.5'
   - python: 3.5-dev
-  - python: '3.6'
+  - python: 3.6
   - python: 3.6-dev
   - python: pypy3.5
   allow_failures:
