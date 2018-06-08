@@ -106,10 +106,6 @@ class AdminModel(AccountBase):
     }
 
 
-class SystemModel(AccountBase):
-    """
-    시스템 계정
-    """
     meta = {
         'collection': 'account_system'
     }
