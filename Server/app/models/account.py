@@ -1,4 +1,5 @@
 from datetime import datetime
+from uuid import uuid4
 
 from mongoengine import *
 
@@ -82,7 +83,6 @@ class StudentModel(AccountBase):
 
     point_histories = EmbeddedDocumentListField(
         document_type='PointHistoryModel'
-        # default=[]
     )
     # 상벌점 내역
 
@@ -106,30 +106,62 @@ class AdminModel(AccountBase):
     }
 
 
+class TokenModel(Document):
     meta = {
-        'collection': 'account_system'
+        'abstract': True,
+        'allow_inheritance': True
+    }
+
+    owner = ReferenceField(
+        document_type='AccountBase',
+        required=True,
+        reverse_delete_rule=CASCADE,
+        unique_with='user_agent'
+    )
+
+    user_agent = StringField(
+        required=True
+    )
+
+    identity = UUIDField(
+        unique=True
+    )
+
+    @classmethod
+    def generate_token(cls, model, owner, user_agent):
+        while True:
+            uuid = uuid4()
+
+            if not model.objects(identity=uuid):
+                model.objects(owner=owner, user_agent=user_agent).delete()
+
+                params = {
+                    'owner': owner,
+                    'user_agent': user_agent,
+                    'identity': uuid
+                }
+
+                if model is RefreshTokenModel:
+                    params['pw_snapshot'] = owner.pw
+
+                model(**params).save()
+
+                return str(uuid)
+
+
+class AccessTokenModel(TokenModel):
+    meta = {
+        'collection': 'access_token'
     }
 
 
-class RefreshTokenModel(Document):
+class RefreshTokenModel(TokenModel):
     """
     JWT refresh token을 관리하기 위한 collection
     """
     meta = {
         'collection': 'refresh_token'
     }
-
-    token = UUIDField(
-        primary_key=True
-    )
-    # Refresh token의 claim에 사용된 UUID
-
-    token_owner = ReferenceField(
-        document_type='AccountBase',
-        required=True,
-        reverse_delete_rule=CASCADE
-    )
-    # Refresh token의 발급 대상자
 
     pw_snapshot = StringField(
         required=True
