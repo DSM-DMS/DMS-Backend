@@ -28,13 +28,17 @@ def student_only(fn):
     @wraps(fn)
     @jwt_required
     def wrapper(*args, **kwargs):
-        token = AccessTokenModel.objects(identity=UUID(get_jwt_identity())).first()
-        if not token or not isinstance(token.owner, StudentModel):
-            abort(403)
+        try:
+            token = AccessTokenModel.objects(identity=UUID(get_jwt_identity())).first()
+            if not token or not isinstance(token.owner, StudentModel):
+                abort(403)
 
-        g.user = token.owner
-        return fn(*args, **kwargs)
+            g.user = token.owner
 
+            return fn(*args, **kwargs)
+        except ValueError:
+            abort(401)
+            # TODO 422로 바꿔줘야 함
     return wrapper
 
 
