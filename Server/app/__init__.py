@@ -1,12 +1,10 @@
-import os
-
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from flasgger import Swagger
 
 from mongoengine import connect
-from redis import Redis
+# from redis import Redis
 from influxdb import InfluxDBClient
 
 from app.views.v1 import Router as V1Router
@@ -36,7 +34,7 @@ def create_app(*config_cls):
         app_.config.from_object(config)
 
     connect(**app_.config['MONGODB_SETTINGS'])
-    app_.config['REDIS_CLIENT'] = Redis(**app_.config['REDIS_SETTINGS'])
+    # app_.config['REDIS_CLIENT'] = Redis(**app_.config['REDIS_SETTINGS'])
     app_.config['INFLUXDB_CLIENT'] = InfluxDBClient(**app_.config['INFLUXDB_SETTINGS'])
 
     JWTManager().init_app(app_)

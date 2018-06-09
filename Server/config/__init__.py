@@ -26,12 +26,12 @@ class Config:
         'password': os.getenv('MONGO_PW')
     }
 
-    REDIS_SETTINGS = {
-        'host': 'localhost',
-        'port': 6379,
-        'password': os.getenv('REDIS_PW_{}'.format(SERVICE_NAME_UPPER.replace('-', '_'))),
-        'db': 0
-    }
+    # REDIS_SETTINGS = {
+    #     'host': 'localhost',
+    #     'port': 6379,
+    #     'password': os.getenv('REDIS_PW_{}'.format(SERVICE_NAME_UPPER.replace('-', '_'))),
+    #     'db': 0
+    # }
 
     INFLUXDB_SETTINGS = {
         'host': 'localhost',
