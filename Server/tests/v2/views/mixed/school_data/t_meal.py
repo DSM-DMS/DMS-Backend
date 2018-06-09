@@ -1,5 +1,5 @@
 from tests.v2.views import TCBase
-from utils.meal_parser import parse
+from meal_parser import _parse
 
 
 class TestMeal(TCBase):
@@ -23,7 +23,7 @@ class TestMeal(TCBase):
 
         # ---
 
-        parse(2018, 5)
+        _parse(2018, 5)
 
         self._request = lambda *, token=None, date=self.date: self.request(
             self.method,
