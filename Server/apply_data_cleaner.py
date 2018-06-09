@@ -1,14 +1,14 @@
 from datetime import datetime
-import time
 
 from mongoengine import *
 
 from config import Config
-connect(**Config.MONGODB_SETTINGS)
 
 from app.models.account import StudentModel
 from app.models.point import PointHistoryModel
 from app.models.apply import ExtensionApply11Model, ExtensionApply12Model, GoingoutApplyModel, StayApplyModel
+
+connect(**Config.MONGODB_SETTINGS)
 
 
 if 0 < datetime.now().time().hour < 12:
