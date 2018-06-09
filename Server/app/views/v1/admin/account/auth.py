@@ -41,10 +41,11 @@ class Auth(BaseResource):
             abort(401)
 
         # --- Auth success
+        user_agent = request.headers.get('USER-AGENT', 'Windows Application') or 'Windows Application'
 
         return self.unicode_safe_json_response({
-            'access_token': create_access_token(TokenModel.generate_token(AccessTokenModel, admin, request.headers['USER-AGENT'])),
-            'refresh_token': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, admin, request.headers['USER-AGENT']))
+            'access_token': create_access_token(TokenModel.generate_token(AccessTokenModel, admin, user_agent)),
+            'refresh_token': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, admin, user_agent))
         }, 200)
 
 
