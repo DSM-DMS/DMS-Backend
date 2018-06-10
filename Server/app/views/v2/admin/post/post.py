@@ -20,11 +20,10 @@ class Post(BaseResource):
         """
         게시글 업로드
         """
-        title = request.json['title']
-        content = request.json['content']
+        payload = request.json
 
-        if 1000 < len(title) or 50000 < len(content):
-            self.ValidationError('Length of title is over than 1000, or length of content is over than 50000')
+        title = payload['title']
+        content = payload['content']
 
         if category.upper() not in CATEGORY_MODEL_MAPPING:
             self.ValidationError('Invalid category')
@@ -49,11 +48,10 @@ class PostAlteration(BaseResource):
         """
         게시글 수정
         """
-        title = request.json['title']
-        content = request.json['content']
+        payload = request.json
 
-        if 1000 < len(title) or 50000 < len(content):
-            self.ValidationError('Length of title is over than 1000, or length of content is over than 50000')
+        title = payload['title']
+        content = payload['content']
 
         if category.upper() not in CATEGORY_MODEL_MAPPING:
             self.ValidationError('Invalid category')
@@ -66,15 +64,12 @@ class PostAlteration(BaseResource):
         if not post:
             return Response('', 204)
 
-        updated = post.update(
+        post.update(
             title=title,
             content=content
         )
 
-        if updated:
-            return Response('', 200)
-        else:
-            abort(500)
+        return Response('', 200)
 
     @auth_required(AdminModel)
     @swag_from(POST_DELETE)
