@@ -32,7 +32,7 @@ class StudentList(BaseResource):
                 'point': history.point
             } for history in student.point_histories],
             'penaltyTrainingStatus': student.penalty_training_status
-        } for student in StudentModel.objects])
+        } for student in StudentModel.objects.order_by('number')])
 
 
 @api.resource('/penalty/<student_id>')
