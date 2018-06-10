@@ -1,9 +1,13 @@
+from datetime import datetime
+from bson import ObjectId
+
 from flask import Blueprint, Response, request
 from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.v2.admin.point.student import *
 from app.models.account import AdminModel, StudentModel
+from app.models.point import PointHistoryModel
 from app.views.v2 import BaseResource, auth_required, json_required
 
 api = Api(Blueprint(__name__, __name__))
@@ -50,7 +54,31 @@ class StudentPenalty(BaseResource):
 
         if not student:
             return Response('', 204)
+        
+        if not status:
+            decrease_point = student.penalty_level + 4 if student.penalty_level < 3 else 7
+            student.update(
+                penalty_training_status=status,
+                good_point=student.good_point-decrease_point,
+                bad_point=student.bad_point-decrease_point
+            )
 
-        student.update(penalty_training_status=status)
+            student.point_histories.append(PointHistoryModel(
+                reason='벌점 봉사 수료 상점 삭감',
+                point_type=True,
+                point=-decrease_point,
+                time=datetime.now(),
+                id=ObjectId()
+            ))
+            student.point_histories.append(PointHistoryModel(
+                reason='벌점 봉사 수료 벌점 삭감',
+                point_type=False,
+                point=-decrease_point,
+                time=datetime.now(),
+                id=ObjectId()
+            ))
+
+        else:
+            student.update(penalty_training_status=status)
 
         return Response('', 200)
