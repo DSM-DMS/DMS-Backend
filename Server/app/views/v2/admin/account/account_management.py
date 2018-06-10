@@ -21,42 +21,35 @@ class StudentAccount(BaseResource):
         """
         학생 계정 제거
         """
-        student_number = request.json['number']
+        def generate_new_signup_waiting_student_account():
+            while True:
+                new_uuid = str(uuid4())[:4]
+
+                if not SignupWaitingModel.objects(uuid=new_uuid):
+                    break
+
+            SignupWaitingModel(uuid=new_uuid, name=student.name, number=student.number).save()
+
+            return new_uuid
+
+        payload = request.json
+
+        student_number = payload['number']
 
         student = StudentModel.objects(number=student_number).first()
 
         if not student:
-            # 해당 학번에 대해 학생이 존재하지 않는 경우
-
             signup_waiting = SignupWaitingModel.objects(number=student_number).first()
-            # signup waiting에서 한 번 더 조회
 
-            if not signup_waiting:
-                return Response('', 204)
-                # 여기에도 없다면 204
-            else:
-                return {
-                    'uuid': signup_waiting.uuid
-                }
+            return {
+                'uuid': signup_waiting.uuid
+            } if signup_waiting else Response('', 204)
         else:
-            # 학생이 존재하는 경우 : 학생 계정을 삭제하며 새로운 UUID를 발급하는 비즈니스 로직을 진행
-            new_uuid = str(uuid4())[:4]
+            student.delete()
 
-            signup_waiting = SignupWaitingModel(
-                uuid=new_uuid,
-                name=student.name,
-                number=student.number
-            ).save()
-
-            if signup_waiting:
-                # 성공
-                student.delete()
-
-                return {
-                    'uuid': signup_waiting.uuid
-                }, 201
-            else:
-                raise Exception()
+            return {
+                'uuid': generate_new_signup_waiting_student_account()
+            }, 201
 
 
 @api.resource('/admin')
@@ -68,28 +61,18 @@ class AdminAccount(BaseResource):
         """
         새로운 관리자 계정 생성
         """
-        id = request.json['id']
-        password = request.json['password']
-        name = request.json['name']
+        payload = request.json
 
-        if 100 < len(id) or 100 < len(password) or 100 < len(name):
-            raise self.ValidationError('Length of ID or password of name is over than 100')
+        id = payload['id']
+        password = payload['password']
+        name = payload['name']
 
-        if AdminModel.objects(id=id).first():
+        if AdminModel.objects(id=id):
             abort(409)
 
-        encrypted_password = self.encrypt_password(password)
+        AdminModel(id=id, pw=self.encrypt_password(password), name=name).save()
 
-        admin = AdminModel(
-            id=id,
-            pw=encrypted_password,
-            name=name
-        ).save()
-
-        if admin:
-            return Response('', 201)
-        else:
-            raise Exception()
+        return Response('', 201)
 
     @auth_required(AdminModel)
     @json_required({'id': str})
@@ -98,7 +81,9 @@ class AdminAccount(BaseResource):
         """
         관리자 계정 제거
         """
-        id = request.json['id']
+        payload = request.json
+
+        id = payload['id']
 
         admin = AdminModel.objects(id=id).first()
 
