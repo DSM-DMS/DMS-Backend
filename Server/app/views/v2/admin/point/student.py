@@ -44,7 +44,9 @@ class StudentPenalty(BaseResource):
         """
         학생 벌점 교육 상태 변경
         """
-        status = request.json['status']
+        payload = request.json
+
+        status = payload['status']
 
         student = StudentModel.objects(id=student_id).first()
 
