@@ -41,7 +41,10 @@ class ExtensionExcelDownload(ExcelDownload):
 @api.resource('/11')
 class Extension11ExcelDownload(ExtensionExcelDownload):
     def __init__(self):
-        super(Extension11ExcelDownload, self).__init__(ExtensionApply11Model, '11')
+        self.model = ExtensionApply11Model
+        self.filename = '11'
+
+        super(Extension11ExcelDownload, self).__init__(self.model, self.filename)
 
     @auth_required(AdminModel)
     @swag_from(EXTENSION_11_EXCEL_DOWNLOAD_GET)
@@ -57,7 +60,10 @@ class Extension11ExcelDownload(ExtensionExcelDownload):
 @api.resource('/12')
 class Extension12ExcelDownload(ExtensionExcelDownload):
     def __init__(self):
-        super(Extension12ExcelDownload, self).__init__(ExtensionApply12Model, '12')
+        self.model = ExtensionApply12Model
+        self.filename = '12'
+
+        super(Extension12ExcelDownload, self).__init__(self.model, self.filename)
 
     @auth_required(AdminModel)
     @swag_from(EXTENSION_12_EXCEL_DOWNLOAD_GET)

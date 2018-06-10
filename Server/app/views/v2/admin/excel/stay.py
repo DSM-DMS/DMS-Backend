@@ -3,7 +3,7 @@ from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.v2.admin.excel.stay import *
-from app.models.account import AdminModel, StudentModel
+from app.models.account import AdminModel
 from app.models.apply import StayApplyModel
 from app.views.v2 import auth_required
 from app.views.v2.admin.excel import ExcelDownload
@@ -37,7 +37,9 @@ class StayExcelDownload(ExcelDownload):
     def generate_excel(self):
         wb, ws = self.ready_worksheet()
 
-        for student in self.model.objects:
+        for apply in self.model.objects:
+            student = apply.student
+
             number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
 
             ws[number_cell] = student.number
