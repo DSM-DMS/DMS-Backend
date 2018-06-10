@@ -34,10 +34,12 @@ class Rule(BaseResource):
         """
         상벌점 규칙 추가
         """
-        name = request.json['name']
-        point_type = request.json['pointType']
-        min_point = request.json['minPoint']
-        max_point = request.json['maxPoint']
+        payload = request.json
+
+        name = payload['name']
+        point_type = payload['pointType']
+        min_point = payload['minPoint']
+        max_point = payload['maxPoint']
 
         rule = PointRuleModel(
             name=name,
@@ -60,10 +62,12 @@ class RuleAlteration(BaseResource):
         """
         상벌점 규칙 내용 수정
         """
-        name = request.json['name']
-        point_type = request.json['pointType']
-        min_point = request.json['minPoint']
-        max_point = request.json['maxPoint']
+        payload = request.json
+
+        name = payload['name']
+        point_type = payload['pointType']
+        min_point = payload['minPoint']
+        max_point = payload['maxPoint']
 
         if len(rule_id) != 24:
             return Response('', 204)
@@ -73,17 +77,14 @@ class RuleAlteration(BaseResource):
         if not rule:
             return Response('', 204)
 
-        updated = rule.update(
+        rule.update(
             name=name,
             point_type=point_type,
             min_point=min_point,
             max_point=max_point
         )
 
-        if updated:
-            return Response('', 200)
-        else:
-            abort(500)
+        return Response('', 200)
 
     @auth_required(AdminModel)
     @swag_from(RULE_ALTERATION_DELETE)
