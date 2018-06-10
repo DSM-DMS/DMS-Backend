@@ -79,6 +79,7 @@ class StudentPenalty(BaseResource):
                 time=datetime.now(),
                 id=ObjectId()
             ))
+            student.save()
 
         else:
             student.update(penalty_training_status=status)
