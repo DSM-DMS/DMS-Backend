@@ -66,7 +66,7 @@ class TestStudentAccountSignup(TCBase):
         resp = self._request(id=self.student_id)
 
         # (2) status code 204
-        self.assertEqual(resp.status_code, 204)
+        self.assertEqual(resp.status_code, 409)
 
         # (3) check database StudentModel
         student = StudentModel.objects(number=self.new_student_number)

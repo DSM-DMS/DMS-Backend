@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, request
+from flask import Blueprint, Response, abort, request
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -22,7 +22,7 @@ class IDVerification(BaseResource):
 
         student = StudentModel.objects(id=id).first()
         if student:
-            return Response('', 204)
+            abort(409)
         else:
             return Response('', 200)
 
