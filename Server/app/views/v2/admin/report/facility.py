@@ -19,12 +19,12 @@ class FacilityReport(BaseResource):
         """
         시설고장신고 조회
         """
-        return [{
+        return self.unicode_safe_json_dumps([{
             'id': str(report.id),
             'author': report.author,
             'content': report.content,
             'room': report.room
-        } for report in FacilityReportModel.objects]
+        } for report in FacilityReportModel.objects])
 
 
 @api.resource('/facility/<id>')

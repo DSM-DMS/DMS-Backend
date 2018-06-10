@@ -22,9 +22,6 @@ class AuthCheck(BaseResource):
         로그인 여부 체크
         """
         try:
-            if not AccessTokenModel.objects(identity=UUID(get_jwt_identity())):
-                return Response('', 204)
-
-            return Response('', 200)
+            return Response('', 200 if AccessTokenModel.objects(identity=UUID(get_jwt_identity())) else 204)
         except ValueError:
             abort(422)
