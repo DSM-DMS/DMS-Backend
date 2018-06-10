@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, abort, request
+from flask import Blueprint, Response, request
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -20,7 +20,9 @@ class Preview(BaseResource):
         """
         게시글 프리뷰 설정
         """
-        id = request.json['id']
+        payload = request.json
+
+        id = payload['id']
 
         if category.upper() not in CATEGORY_MODEL_MAPPING:
             self.ValidationError('Invalid category')
@@ -34,13 +36,8 @@ class Preview(BaseResource):
             return Response('', 204)
 
         pinned_post = CATEGORY_MODEL_MAPPING[category.upper()].objects(pinned=True).first()
+        pinned_post and pinned_post.update(pinned=False)
 
-        if pinned_post:
-            pinned_post.update(pinned=False)
+        post.update(pinned=True)
 
-        updated = post.update(pinned=True)
-
-        if updated:
-            return Response('', 200)
-        else:
-            abort(500)
+        return Response('', 200)

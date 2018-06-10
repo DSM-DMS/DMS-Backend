@@ -14,7 +14,7 @@ ID_VERIFICATION_POST = {
         '200': {
             'description': 'ID 중복되지 않음'
         },
-        '204': {
+        '409': {
             'description': 'ID 중복됨'
         }
     }

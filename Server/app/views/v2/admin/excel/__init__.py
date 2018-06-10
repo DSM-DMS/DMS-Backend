@@ -33,3 +33,6 @@ class ExcelDownload(BaseResource):
         resp.headers.extend({'Cache-Control': 'no-cache'})
 
         return resp
+
+    def get_status(self, apply):
+        raise NotImplementedError()
