@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, abort, g, request
+from flask import Blueprint, Response, g, request
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -22,16 +22,13 @@ class Post(BaseResource):
         """
         payload = request.json
 
-        title = payload['title']
-        content = payload['content']
-
         if category.upper() not in CATEGORY_MODEL_MAPPING:
-            self.ValidationError('Invalid category')
+            raise self.ValidationError('Invalid category')
 
         post = CATEGORY_MODEL_MAPPING[category.upper()](
             author=g.user.name,
-            title=title,
-            content=content
+            title=payload['title'],
+            content=payload['content']
         ).save()
 
         return {
@@ -50,11 +47,8 @@ class PostAlteration(BaseResource):
         """
         payload = request.json
 
-        title = payload['title']
-        content = payload['content']
-
         if category.upper() not in CATEGORY_MODEL_MAPPING:
-            self.ValidationError('Invalid category')
+            raise self.ValidationError('Invalid category')
 
         if len(post_id) != 24:
             return Response('', 204)
@@ -65,8 +59,8 @@ class PostAlteration(BaseResource):
             return Response('', 204)
 
         post.update(
-            title=title,
-            content=content
+            title=payload['title'],
+            content=payload['content']
         )
 
         return Response('', 200)
@@ -78,7 +72,7 @@ class PostAlteration(BaseResource):
         게시글 삭제
         """
         if category.upper() not in CATEGORY_MODEL_MAPPING:
-            self.ValidationError('Invalid category')
+            raise self.ValidationError('Invalid category')
 
         if len(post_id) != 24:
             return Response('', 204)

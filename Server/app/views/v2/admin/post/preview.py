@@ -25,7 +25,7 @@ class Preview(BaseResource):
         id = payload['id']
 
         if category.upper() not in CATEGORY_MODEL_MAPPING:
-            self.ValidationError('Invalid category')
+            raise self.ValidationError('Invalid category')
 
         if len(id) != 24:
             return Response('', 204)
@@ -37,6 +37,7 @@ class Preview(BaseResource):
 
         pinned_post = CATEGORY_MODEL_MAPPING[category.upper()].objects(pinned=True).first()
         pinned_post and pinned_post.update(pinned=False)
+        # Pin된 게시글이 없다면 update하도록
 
         post.update(pinned=True)
 
