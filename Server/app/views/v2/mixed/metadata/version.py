@@ -20,12 +20,9 @@ class Version(BaseResource):
         """
         version = VersionModel.objects(platform=platform).first()
 
-        if version:
-            return {
-                'version': version.version
-            }, 200
-        else:
-            return Response('', 204)
+        return {
+            'version': version.version
+        } if version else Response('', 204)
 
     @auth_required(AdminModel)
     @swag_from(VERSION_PUT)
@@ -33,9 +30,11 @@ class Version(BaseResource):
         """
         새로운 버전 업로드
         """
+        payload = request.json
+
         if not 1 <= platform <= 3:
             abort(400)
 
-        VersionModel(platform=platform, version=request.json['version']).save()
+        VersionModel(platform=platform, version=payload['version']).save()
 
         return Response('', 200)

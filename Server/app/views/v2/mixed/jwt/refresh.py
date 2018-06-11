@@ -24,12 +24,9 @@ class Refresh(BaseResource):
             if not token:
                 abort(401)
 
-            if token.owner.pw != token.pw_snapshot:
-                return Response('', 205)
-
             return {
                 'accessToken': create_access_token(
                     TokenModel.generate_token(AccessTokenModel, token.owner, request.headers['USER-AGENT']))
-            }
+            } if token.owner.pw == token.pw_snapshot else Response('', 205)
         except ValueError:
             abort(422)
