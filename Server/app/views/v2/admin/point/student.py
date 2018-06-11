@@ -4,6 +4,7 @@ from flasgger import swag_from
 
 from app.docs.v2.admin.point.student import *
 from app.models.account import AdminModel, StudentModel
+from app.models.point import PointHistoryModel
 from app.views.v2 import BaseResource, auth_required, json_required
 
 api = Api(Blueprint(__name__, __name__))
@@ -46,11 +47,33 @@ class StudentPenalty(BaseResource):
         """
         payload = request.json
 
+        status = payload['status']
+
         student = StudentModel.objects(id=student_id).first()
 
         if not student:
             return Response('', 204)
+        
+        if not status:
+            decrease_point = student.penalty_level + 4 if student.penalty_level < 3 else 7
 
-        student.update(penalty_training_status=payload['status'])
+            student.good_point = student.good_point - decrease_point
+            student.bad_point = student.bad_point - decrease_point
+
+            student.point_histories.append(PointHistoryModel(
+                reason='벌점 봉사 수료 상점 삭감',
+                point_type=True,
+                point=-decrease_point,
+            ))
+
+            student.point_histories.append(PointHistoryModel(
+                reason='벌점 봉사 수료 벌점 삭감',
+                point_type=False,
+                point=-decrease_point,
+            ))
+
+        student.penalty_training_status = status
+
+        student.save()
 
         return Response('', 200)
