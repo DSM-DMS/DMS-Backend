@@ -60,14 +60,14 @@ class Point(BaseResource):
 
         student.point_histories.append(point_history)
 
-        if (student.bad_point - 10) // 5 > student.penalty_level and not student.penalty_training_status:
-            student.penalty_level = student.penalty_level + 1
-            student.penalty_training_status = True
-
         if apply_good_point:
             student.good_point += point
         else:
             student.bad_point += point
+
+        if (student.bad_point - 10) // 5 > student.penalty_level and not student.penalty_training_status:
+            student.penalty_level = student.penalty_level + 1
+            student.penalty_training_status = True
 
         student.save()
 
