@@ -14,8 +14,11 @@ api.prefix = '/post/<category>'
 class PostList(BaseResource):
     @swag_from(POST_LIST_GET)
     def get(self, category):
+        """
+        게시글 목록 조회
+        """
         if category.upper() not in CATEGORY_MODEL_MAPPING:
-            self.ValidationError('Invalid category')
+            raise self.ValidationError('Invalid category')
 
         return [{
             'id': str(post.id),
@@ -30,13 +33,13 @@ class PostList(BaseResource):
 class PostItem(BaseResource):
     @swag_from(POST_ITEM_GET)
     def get(self, category, post_id):
+        """
+        게시글 내용 조회
+        """
         if len(post_id) != 24:
             return Response('', 204)
 
         post = CATEGORY_MODEL_MAPPING[category.upper()].objects(id=post_id).first()
-
-        if not post:
-            return Response('', 204)
 
         return {
             'writeTime': post.write_time.strftime('%Y-%m-%d'),
@@ -44,4 +47,4 @@ class PostItem(BaseResource):
             'title': post.title,
             'content': post.content,
             'pinned': post.pinned
-        }
+        } if post else Response('', 204)

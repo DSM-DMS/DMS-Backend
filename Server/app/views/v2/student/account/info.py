@@ -20,6 +20,7 @@ class ApplyInfo(BaseResource):
         학생 신청 정보 확인
         """
         student = g.user
+
         extension11 = ExtensionApply11Model.objects(student=student).first()
         extension12 = ExtensionApply12Model.objects(student=student).first()
 

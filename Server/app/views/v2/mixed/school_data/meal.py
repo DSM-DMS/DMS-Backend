@@ -16,11 +16,8 @@ class Meal(BaseResource):
     def get(self, date):
         meal = MealModel.objects(date=date).first()
 
-        if not meal:
-            return Response('', 204)
-
         return self.unicode_safe_json_dumps({
             'breakfast': meal.breakfast,
             'lunch': meal.lunch,
             'dinner': meal.dinner
-        })
+        }) if meal else Response('', 204)

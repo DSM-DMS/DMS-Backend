@@ -14,22 +14,19 @@ api.prefix = '/post-preview/<category>'
 class FAQPreview(BaseResource):
     @swag_from(PREVIEW_GET)
     def get(self, category):
+        """
+        특정 카테고리의 고정 게시글 조회
+        """
         if category.upper() not in CATEGORY_MODEL_MAPPING:
-            self.ValidationError('Invalid category')
+            raise self.ValidationError('Invalid category')
 
         model = CATEGORY_MODEL_MAPPING[category.upper()]
 
-        post = model.objects(pinned=True).first()
-
-        if not post:
-            post = model.objects.first()
-
-            if not post:
-                return Response('', 204)
+        post = model.objects(pinned=True).first() or model.objects.first()
 
         return {
             'writeTime': post.write_time.strftime('%Y-%m-%d'),
             'author': post.author,
             'title': post.title,
             'content': post.content
-        }
+        } if post else Response('', 204)
