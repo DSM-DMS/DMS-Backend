@@ -196,6 +196,3 @@ class Router:
         from .student.report import facility_report, bug_report
         app.register_blueprint(self.add_v2_prefix(facility_report.api).blueprint)
         app.register_blueprint(self.add_v2_prefix(bug_report.api).blueprint)
-
-        from .student.survey import survey
-        app.register_blueprint(self.add_v2_prefix(survey.api).blueprint)
