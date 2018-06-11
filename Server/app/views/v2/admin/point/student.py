@@ -46,13 +46,11 @@ class StudentPenalty(BaseResource):
         """
         payload = request.json
 
-        status = payload['status']
-
         student = StudentModel.objects(id=student_id).first()
 
         if not student:
             return Response('', 204)
 
-        student.update(penalty_training_status=status)
+        student.update(penalty_training_status=payload['status'])
 
         return Response('', 200)

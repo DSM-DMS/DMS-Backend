@@ -36,16 +36,11 @@ class Rule(BaseResource):
         """
         payload = request.json
 
-        name = payload['name']
-        point_type = payload['pointType']
-        min_point = payload['minPoint']
-        max_point = payload['maxPoint']
-
         rule = PointRuleModel(
-            name=name,
-            point_type=point_type,
-            min_point=min_point,
-            max_point=max_point
+            name=payload['name'],
+            point_type=payload['pointType'],
+            min_point=payload['minPoint'],
+            max_point=payload['maxPoint']
         ).save()
 
         return {
