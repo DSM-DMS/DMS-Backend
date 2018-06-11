@@ -1,4 +1,4 @@
-from flask import Blueprint, abort, request
+from flask import Blueprint, Response, request
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_restful import Api
 from flasgger import swag_from
@@ -21,16 +21,11 @@ class Auth(BaseResource):
         """
         payload = request.json
 
-        id = payload['id']
-        password = payload['password']
+        admin = AdminModel.objects(id=payload['id'], pw=self.encrypt_password(payload['password'])).first()
 
-        admin = AdminModel.objects(id=id, pw=self.encrypt_password(password)).first()
+        user_agent = request.headers.get('USER-AGENT', 'Windows Application') or 'Windows Application'
 
-        if not admin:
-            abort(401)
-        else:
-            user_agent = request.headers.get('USER-AGENT', 'Windows Application') or 'Windows Application'
-            return {
-                'accessToken': create_access_token(TokenModel.generate_token(AccessTokenModel, admin, user_agent)),
-                'refreshToken': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, admin, user_agent))
-            }, 201
+        return ({
+            'accessToken': create_access_token(TokenModel.generate_token(AccessTokenModel, admin, user_agent)),
+            'refreshToken': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, admin, user_agent))
+        }, 201) if admin else Response('', 401)

@@ -64,13 +64,11 @@ class AdminAccount(BaseResource):
         payload = request.json
 
         id = payload['id']
-        password = payload['password']
-        name = payload['name']
 
         if AdminModel.objects(id=id):
             abort(409)
 
-        AdminModel(id=id, pw=self.encrypt_password(password), name=name).save()
+        AdminModel(id=id, pw=self.encrypt_password(payload['password']), name=payload['name']).save()
 
         return Response('', 201)
 
@@ -83,9 +81,7 @@ class AdminAccount(BaseResource):
         """
         payload = request.json
 
-        id = payload['id']
-
-        admin = AdminModel.objects(id=id).first()
+        admin = AdminModel.objects(id=payload['id']).first()
 
         if not admin:
             return Response('', 204)
