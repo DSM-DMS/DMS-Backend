@@ -19,17 +19,11 @@ class ChangePW(BaseResource):
         """
         학생 비밀번호 변경
         """
-        student = g.user
+        payload = request.json
 
-        current_password = request.json['currentPassword']
-        new_password = request.json['newPassword']
-
-        encrypted_current_password = self.encrypt_password(current_password)
-
-        if student.pw != encrypted_current_password:
+        if g.user.pw != self.encrypt_password(payload['currentPassword']):
             abort(403)
 
-        encrypted_new_password = self.encrypt_password(new_password)
+        g.user.update(pw=self.encrypt_password(payload['newPassword']))
 
-        student.update(pw=encrypted_new_password)
         return Response('', 200)
