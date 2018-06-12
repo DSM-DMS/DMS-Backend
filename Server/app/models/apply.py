@@ -19,7 +19,7 @@ class ApplyBase(Document):
 
     student = ReferenceField(
         document_type='StudentModel',
-        primary_key=True
+        required=True
     )
     # 신청 학생
 
