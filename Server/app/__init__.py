@@ -16,12 +16,6 @@ WEB_FILE_ROOT_DIR = '../web_files'
 
 
 def create_app(*config_cls):
-    """
-    Creates Flask instance & initialize
-
-    Returns:
-        Flask
-    """
     print('[INFO] Flask application initialized with {}'.format([config.__name__ for config in config_cls]))
 
     app_ = Flask(

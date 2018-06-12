@@ -9,9 +9,6 @@ from app.views.v2 import BaseResource
 
 
 def after_request(response):
-    """
-    Set header - X-Content-Type-Options=nosniff, X-Frame-Options=deny before response
-    """
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'deny'
 

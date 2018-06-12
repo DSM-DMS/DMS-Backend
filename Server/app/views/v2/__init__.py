@@ -89,9 +89,6 @@ def json_required(required_keys):
 
 
 class BaseResource(Resource):
-    """
-    BaseResource with some helper functions based flask_restful.Resource
-    """
     def __init__(self):
         self.now = time.strftime('%Y-%m-%d %H:%M:%S')
 
