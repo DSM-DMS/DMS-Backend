@@ -7,7 +7,7 @@ import gzip
 import ujson
 import time
 
-from flask import Response, abort, after_this_request, g, request, current_app
+from flask import Response, abort, after_this_request, current_app, g, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 
@@ -43,9 +43,6 @@ def auth_required(model):
 
 
 def gzipped(fn):
-    """
-    View decorator for gzip compress the response body
-    """
     @wraps(fn)
     def wrapper(*args, **kwargs):
         @after_this_request
@@ -100,16 +97,6 @@ class BaseResource(Resource):
 
     @classmethod
     def unicode_safe_json_dumps(cls, data, status_code=200, **kwargs):
-        """
-        Helper function which processes json response with unicode using ujson
-
-        Args:
-            data (dict and list): Data for dump to JSON
-            status_code (int): Status code for response
-
-        Returns:
-            Response
-        """
         return Response(
             ujson.dumps(data, ensure_ascii=False),
             status_code,
@@ -117,7 +104,8 @@ class BaseResource(Resource):
             **kwargs
         )
 
-    def encrypt_password(self, password):
+    @classmethod
+    def encrypt_password(cls, password):
         return hexlify(pbkdf2_hmac(
             hash_name='sha256',
             password=password.encode(),
