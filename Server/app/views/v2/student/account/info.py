@@ -70,14 +70,12 @@ class PointHistory(BaseResource):
         """
         상벌점 내역 조회
         """
-        student = g.user
-
         return self.unicode_safe_json_dumps([
             {
                 'point': history.point,
                 'pointType': history.point_type,
                 'reason': history.reason,
                 'time': history.time
-            } for history in student.point_histroies
+            } for history in g.user.point_histories
         ])
 
