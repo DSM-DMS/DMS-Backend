@@ -1,4 +1,4 @@
-from flask import Blueprint, abort, request, current_app
+from flask import Blueprint, Response, request
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_restful import Api
 from flasgger import swag_from
@@ -19,17 +19,11 @@ class Auth(BaseResource):
         """
         학생 로그인 
         """
-        id = request.json['id']
-        password = request.json['password']
+        payload = request.json
 
-        encrypted_password = self.encrypt_password(password)
+        student = StudentModel.objects(id=payload['id'], pw=self.encrypt_password(payload['password'])).first()
 
-        student = StudentModel.objects(id=id, pw=encrypted_password).first()
-
-        if not student:
-            abort(401)
-        else:
-            return {
-                'accessToken': create_access_token(TokenModel.generate_token(AccessTokenModel, student, request.headers['USER-AGENT'])),
-                'refreshToken': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, student, request.headers['USER-AGENT']))
-            }, 201
+        return ({
+            'accessToken': create_access_token(TokenModel.generate_token(AccessTokenModel, student, request.headers['USER-AGENT'])),
+            'refreshToken': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, student, request.headers['USER-AGENT']))
+        }, 201) if student else Response('', 401)
