@@ -1,7 +1,7 @@
 from flask_jwt_extended import create_refresh_token
 from uuid import uuid4
 
-from tests.v2.views import TCBase, app
+from tests.v2.views import TCBase
 
 
 class TestTokenRefresh(TCBase):
@@ -51,7 +51,7 @@ class TestTokenRefresh(TCBase):
 
     def testRefreshFailure_tokenDoesNotExist(self):
         # (1) 존재하지 않는 refresh token으로 refresh
-        with app.app_context():
+        with self.app.app_context():
             token = 'JWT {}'.format(create_refresh_token(str(uuid4())))
 
         resp = self._request(token=token)

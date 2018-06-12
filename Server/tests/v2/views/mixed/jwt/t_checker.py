@@ -1,6 +1,6 @@
 from flask_jwt_extended import create_access_token
 
-from tests.v2.views import app, TCBase
+from tests.v2.views import TCBase
 
 
 class TestAuthChecker(TCBase):
@@ -34,7 +34,7 @@ class TestAuthChecker(TCBase):
 
     def testCheckFailure_unknownIdentity(self):
         # (1) UUID 형태가 아닌 identity로 구성된 토큰
-        with app.app_context():
+        with self.app.app_context():
             token = 'JWT {}'.format(create_access_token('123'))
 
         resp = self._request(token=token)

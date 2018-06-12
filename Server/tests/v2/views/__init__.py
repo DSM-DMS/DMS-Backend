@@ -1,9 +1,9 @@
+import copy
 import ujson
 from binascii import hexlify
 from datetime import datetime
 from hashlib import pbkdf2_hmac
 from unittest import TestCase as TC
-from uuid import uuid4
 
 from flask import Response
 from flask_jwt_extended import create_access_token, create_refresh_token
@@ -13,17 +13,16 @@ from app import create_app
 from config.test import TestConfig
 from app.models.account import AdminModel, StudentModel, TokenModel, AccessTokenModel, RefreshTokenModel
 
-app = create_app(TestConfig)
-
 
 class TCBase(TC):
-    mongo_setting = app.config['MONGODB_SETTINGS']
-    db_name = mongo_setting.pop('db')
-    mongo_client = pymongo.MongoClient(**mongo_setting)
-    mongo_setting['db'] = db_name
-
     def __init__(self, *args, **kwargs):
-        self.client = app.test_client()
+        self.app = create_app(TestConfig)
+
+        mongo_setting = copy.copy(self.app.config['MONGODB_SETTINGS'])
+        self.db_name = mongo_setting.pop('db')
+        self.mongo_client = pymongo.MongoClient(**mongo_setting)
+
+        self.client = self.app.test_client()
 
         self.today = datetime.now().strftime('%Y-%m-%d')
         self.now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -47,7 +46,7 @@ class TCBase(TC):
         ).save()
 
     def _get_tokens(self):
-        with app.app_context():
+        with self.app.app_context():
             self.admin_access_token = 'JWT {}'.format(create_access_token(TokenModel.generate_token(AccessTokenModel, self.admin, 'TEST')))
             self.admin_refresh_token = 'JWT {}'.format(create_refresh_token(TokenModel.generate_token(RefreshTokenModel, self.admin, 'TEST')))
 
@@ -63,7 +62,7 @@ class TCBase(TC):
             pbkdf2_hmac(
                 'sha256',
                 self.pw.encode(),
-                app.secret_key.encode(),
+                self.app.secret_key.encode(),
                 100000
             )
         ).decode()
@@ -92,9 +91,3 @@ class TCBase(TC):
             *args,
             **kwargs
         )
-
-    def decode_response_data(self, resp):
-        return resp.data.decode()
-
-    def get_response_data_as_json(self, resp):
-        return ujson.loads(self.decode_response_data(resp))
