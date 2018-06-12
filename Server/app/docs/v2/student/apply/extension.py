@@ -126,7 +126,7 @@ EXTENSION_MAP_GET = {
         {
             'name': 'classNum',
             'description': '지도를 조회할 학습실 번호',
-            'in': 'json',
+            'in': 'query',
             'type': 'int',
             'required': True
         }
