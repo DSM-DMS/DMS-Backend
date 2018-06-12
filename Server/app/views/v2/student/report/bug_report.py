@@ -33,14 +33,16 @@ class BugReport(BaseResource):
         """
         학생 버그 신고
         """
-        student = g.user
-
-        content = request.form['content']
-        platform_type = request.json['platform']
-        time = datetime.now()
+        payload = request.json
 
         if not current_app.testing:
-            self.slack_bot.chat.post_message(channel='#bug-report', text='제보자: {}\n제보시간: {}\n플랫폼: {}\n내용: {}'
-                                             .format(student.name, str(time)[:-7], self.PLATFORM_TYPES[platform_type], content))
+            self.slack_bot.chat.post_message(
+                channel='#bug-report', text='제보자: {}\n제보시간: {}\n플랫폼: {}\n내용: {}'.format(
+                    g.user.name,
+                    datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                    self.PLATFORM_TYPES[payload['platform']],
+                    payload['content']
+                )
+            )
 
         return Response('', 201)
