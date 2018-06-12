@@ -75,7 +75,7 @@ class PointHistory(BaseResource):
                 'point': history.point,
                 'pointType': history.point_type,
                 'reason': history.reason,
-                'time': history.time
+                'time': history.time.strftime('%Y-%m-%d')
             } for history in g.user.point_histories
         ])
 
