@@ -125,7 +125,8 @@ class Router:
         if app is not None:
             self.init_app(app)
 
-    def add_v2_prefix(self, api):
+    @classmethod
+    def add_v2_prefix(cls, api):
         if not api.prefix.startswith('/v2'):
             api.prefix = '/{}{}'.format('v2', api.prefix)
 
