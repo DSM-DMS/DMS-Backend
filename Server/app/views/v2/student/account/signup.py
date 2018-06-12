@@ -18,13 +18,7 @@ class IDVerification(BaseResource):
     @swag_from(ID_VERIFICATION_POST)
     @json_required({'id': str})
     def post(self):
-        id = request.json['id']
-
-        student = StudentModel.objects(id=id).first()
-        if student:
-            abort(409)
-        else:
-            return Response('', 200)
+        return Response('', 409 if StudentModel.objects(id=request.json['id']).first() else 200)
 
 
 @api.resource('/verify/uuid')
@@ -35,13 +29,7 @@ class UUIDVerification(BaseResource):
     @swag_from(UUID_VERIFICATION_POST)
     @json_required({'uuid': str})
     def post(self):
-        uuid = request.json['uuid']
-
-        signup_waiting = SignupWaitingModel(uuid=uuid).first()
-        if signup_waiting:
-            return Response('', 200)
-        else:
-            return Response('', 204)
+        return Response('', 200 if SignupWaitingModel.objects(uuid=request.json['uuid']).first() else 204)
 
 
 @api.resource('/signup')
@@ -52,23 +40,22 @@ class Signup(BaseResource):
     @swag_from(SIGNUP_POST)
     @json_required({'uuid': str, 'id': str, 'password': str})
     def post(self):
-        uuid = request.json['uuid']
-        id = request.json['id']
-        password = request.json['password']
+        payload = request.json
 
-        student = StudentModel.objects(id=id).first()
-        if student:
-            return Response('', 204)
+        uuid = payload['uuid']
+        id = payload['id']
+        password = payload['password']
+
+        if StudentModel.objects(id=id):
+            abort(409)
 
         signup_waiting = SignupWaitingModel.objects(uuid=uuid).first()
         if not signup_waiting:
-            return Response('', 205)
-
-        encrypted_password = self.encrypt_password(password)
+            return Response('', 204)
 
         StudentModel(
             id=id,
-            pw=encrypted_password,
+            pw=self.encrypt_password(password),
             name=signup_waiting.name,
             number=signup_waiting.number
         ).save()

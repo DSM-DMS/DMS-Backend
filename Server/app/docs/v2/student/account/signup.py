@@ -73,10 +73,10 @@ SIGNUP_POST = {
             'description': '가입 완료'
         },
         '204': {
-            'description': '가입 불가능(이미 가입된 ID)'
-        },
-        '205': {
             'description': '가입 불가능(유효하지 않은 UUID)'
+        },
+        '409': {
+            'description': '가입 불가능(중복된 ID)'
         }
     }
 }
