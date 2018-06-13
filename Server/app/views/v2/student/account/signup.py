@@ -18,7 +18,7 @@ class IDVerification(BaseResource):
     @swag_from(ID_VERIFICATION_POST)
     @json_required({'id': str})
     def post(self):
-        return Response('', 409 if StudentModel.objects(id=request.json['id']).first() else 200)
+        return Response('', 409 if StudentModel.objects(id=request.json['id']) else 200)
 
 
 @api.resource('/verify/uuid')
@@ -29,7 +29,7 @@ class UUIDVerification(BaseResource):
     @swag_from(UUID_VERIFICATION_POST)
     @json_required({'uuid': str})
     def post(self):
-        return Response('', 200 if SignupWaitingModel.objects(uuid=request.json['uuid']).first() else 204)
+        return Response('', 200 if SignupWaitingModel.objects(uuid=request.json['uuid']) else 204)
 
 
 @api.resource('/signup')
