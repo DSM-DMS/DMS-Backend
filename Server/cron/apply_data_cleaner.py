@@ -1,18 +1,18 @@
 from datetime import datetime
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join('..', 'config')))
+
 sys.path.append(os.path.abspath(os.path.join('..', 'app')))
 
 from mongoengine import *
 
-from config import Config
+from models.account import StudentModel
+from models.point import PointHistoryModel
+from models.apply import ExtensionApply11Model, ExtensionApply12Model, GoingoutApplyModel, StayApplyModel
 
-from app.models.account import StudentModel
-from app.models.point import PointHistoryModel
-from app.models.apply import ExtensionApply11Model, ExtensionApply12Model, GoingoutApplyModel, StayApplyModel
+from . import MONGODB_SETTINGS
 
-connect(**Config.MONGODB_SETTINGS)
+connect(**MONGODB_SETTINGS)
 
 
 if 0 < datetime.now().time().hour < 12:

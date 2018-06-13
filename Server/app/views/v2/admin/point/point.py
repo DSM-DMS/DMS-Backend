@@ -45,7 +45,7 @@ class Point(BaseResource):
 
             student.point_histories.append(point_history)
 
-            return point_history.id
+            return point_history
 
         def update_penalty_level():
             if (student.bad_point - 10) // 5 > student.penalty_level and not student.penalty_training_status:
