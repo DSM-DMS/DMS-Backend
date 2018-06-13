@@ -38,7 +38,6 @@ class Point(BaseResource):
         """
         payload = request.json
 
-        rule_id = payload['ruleId']
         apply_good_point = payload['applyGoodPoint']
         point = payload['point']
 
@@ -50,7 +49,7 @@ class Point(BaseResource):
         if len(rule_id) != 24 or not PointRuleModel.objects(id=rule_id):
             return Response('', 205)
 
-        rule = PointRuleModel.objects(id=rule_id).first()
+        rule = PointRuleModel.objects(id=payload['ruleId']).first()
 
         point_history = PointHistoryModel(
             reason=rule.name,

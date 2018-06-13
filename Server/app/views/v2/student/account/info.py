@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, abort, g, request
+from flask import Blueprint, g
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -19,15 +19,12 @@ class ApplyInfo(BaseResource):
         """
         학생 신청 정보 확인
         """
-        student = g.user
+        extension11 = ExtensionApply11Model.objects(student=g.user).first()
+        extension12 = ExtensionApply12Model.objects(student=g.user).first()
+        goingout = GoingoutApplyModel.objects(student=g.user).first()
+        stay = StayApplyModel.objects(student=g.user).first()
 
-        extension11 = ExtensionApply11Model.objects(student=student).first()
-        extension12 = ExtensionApply12Model.objects(student=student).first()
-
-        goingout = GoingoutApplyModel.objects(student=student).first()
-        stay = StayApplyModel.objects(student=student).first()
-
-        return self.unicode_safe_json_dumps({
+        return {
             'extension11': {
                 'classNum': extension11.class_,
                 'seatNum': extension11.seat
@@ -39,9 +36,9 @@ class ApplyInfo(BaseResource):
             'goingout': {
                 'sat': goingout.on_saturday,
                 'sun': goingout.on_sunday
-            } if goingout else None,
-            'stay': stay.value if stay else None
-        })
+            },
+            'stay': stay.value
+        }
 
 
 @api.resource('/mypage')
@@ -52,13 +49,11 @@ class MyPage(BaseResource):
         """
         학생 마이페이지 정보 조회
         """
-        student = g.user
-
         return self.unicode_safe_json_dumps({
-            'badPoint': student.bad_point,
-            'goodPoint': student.good_point,
-            'name': student.name,
-            'number': student.number
+            'badPoint': g.user.bad_point,
+            'goodPoint': g.user.good_point,
+            'name': g.user.name,
+            'number': g.user.number
         })
 
 
@@ -78,4 +73,3 @@ class PointHistory(BaseResource):
                 'time': history.time.strftime('%Y-%m-%d')
             } for history in g.user.point_histories
         ])
-
