@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, abort, g, request
+from flask import Blueprint, g, request
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -20,16 +20,14 @@ class FacilityReport(BaseResource):
         """
         시설 고장 신고 
         """
-        student = g.user
-        room = request.json['room']
-        content = request.json['content']
+        payload = request.json
 
         report = FacilityReportModel(
-            author=student.name,
-            room=room,
-            content=content
+            author=g.user.name,
+            content=payload['content'],
+            room=payload['room']
         ).save()
 
-        return self.unicode_safe_json_dumps({
+        return {
             'id': str(report.id)
-        }, 201)
+        }, 201
