@@ -21,16 +21,11 @@ class Goingout(BaseResource):
         """
         학생 외출 정보 확인
         """
-        student = g.user
+        goingout = GoingoutApplyModel.objects(studnt=g.user).first()
 
-        goingout = GoingoutApplyModel.objects(studnt=student).first()
-
-        return self.unicode_safe_json_dumps({
+        return {
             'sat': goingout.on_saturday,
             'sun': goingout.on_sunday
-        }) if goingout else {
-            'sat': False,
-            'sun': False
         }
 
     @swag_from(GOINGOUT_POST)
@@ -40,15 +35,12 @@ class Goingout(BaseResource):
         """
         학생 외출 신청
         """
-        student = g.user
-        sat = request.json['sat']
-        sun = request.json['sun']
+        payload = request.json
 
         now = datetime.now()
 
         if current_app.testing or (now.weekday() == 6 and now.time() > time(20, 30)) or (0 <= now.weekday() < 5) or (now.weekday() == 5 and now.time() < time(22, 00)):
-            GoingoutApplyModel.objects(student=student).delete()
-            GoingoutApplyModel(student=student, on_saturday=sat, on_sunday=sun).save()
+            GoingoutApplyModel(student=g.user, on_saturday=payload['sat'], on_sunday=payload['sun']).save()
 
             return Response('', 201)
 
