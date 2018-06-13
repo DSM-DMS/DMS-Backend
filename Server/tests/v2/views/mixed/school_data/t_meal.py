@@ -1,5 +1,5 @@
 from tests.v2.views import TCBase
-from meal_parser import _parse
+from cron.meal_parser import _parse
 
 
 class TestMeal(TCBase):

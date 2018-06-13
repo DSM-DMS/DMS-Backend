@@ -1,4 +1,8 @@
 from datetime import datetime
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join('..', 'config')))
+sys.path.append(os.path.abspath(os.path.join('..', 'app')))
 
 from mongoengine import *
 
