@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Blueprint, Response, g, request, current_app
+from flask import Blueprint, Response, abort, g, request, current_app
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -15,6 +15,31 @@ api = Api(Blueprint(__name__, __name__))
 api.prefix = '/student/apply/extension'
 
 
+def can_apply(end_time):
+    return APPLY_START < datetime.now().time() < end_time
+
+
+def can_apply_11():
+    return can_apply(APPLY_END_11)
+
+
+def can_apply_12():
+    return can_apply(APPLY_END_12)
+
+
+def apply_extension(model, class_num, seat_num) -> bool:
+    if model.objects(class_=class_num, seat=seat_num):
+        return False
+    else:
+        model(
+            student=g.user,
+            class_=class_num,
+            seat=seat_num
+        ).save()
+
+        return True
+
+
 @api.resource('/11')
 class Extension11(BaseResource):
     @swag_from(EXTENSION_GET)
@@ -23,9 +48,7 @@ class Extension11(BaseResource):
         """
         학생 11시 연장 신청 정보 조회
         """
-        student = g.user
-
-        extension = ExtensionApply11Model.objects(student=student).first()
+        extension = ExtensionApply11Model.objects(student=g.user).first()
 
         return self.unicode_safe_json_dumps({
             'classNum': extension.class_,
@@ -39,28 +62,12 @@ class Extension11(BaseResource):
         """
         학생 11시 연장 신청
         """
-        student = g.user
-
-        now = datetime.now().time()
-
-        if not current_app.testing and not APPLY_START < now < APPLY_END_11:
+        if not(current_app.testing or can_apply_11()):
             return Response('', 204)
 
-        class_ = request.json['classNum']
-        seat = request.json['seatNum']
+        payload = request.json
 
-        ExtensionApply11Model.objects(student=student).delete()
-
-        extension = ExtensionApply11Model.objects(class_=class_, seat=seat).first()
-        if extension:
-            return Response('', 205)
-
-        ExtensionApply11Model(
-            class_=class_,
-            seat=seat
-        ).save()
-
-        return Response('', 201)
+        return Response('', 201 if apply_extension(ExtensionApply11Model, payload['classNum'], payload['seatNum']) else 205)
 
     @swag_from(EXTENSION_DELETE)
     @auth_required(StudentModel)
@@ -68,15 +75,10 @@ class Extension11(BaseResource):
         """
         학생 11시 연장 신청 취소
         """
-        student = g.user
-
-        now = datetime.now().time()
-
-        extension = ExtensionApply11Model.objects(student=student).first()
-        if (not current_app.testing and not APPLY_START < now < APPLY_END_11) and (not extension):
+        if not(current_app.testing or can_apply_11()):
             return Response('', 204)
 
-        extension.delete()
+        ExtensionApply11Model.objects(student=g.user).delete()
 
         return Response('', 200)
 
@@ -89,9 +91,7 @@ class Extension12(BaseResource):
         """
         학생 12시 연장 신청 정보 조회
         """
-        student = g.user
-
-        extension = ExtensionApply12Model.objects(student=student).first()
+        extension = ExtensionApply12Model.objects(student=g.user).first()
 
         return self.unicode_safe_json_dumps({
             'classNum': extension.class_,
@@ -105,28 +105,12 @@ class Extension12(BaseResource):
         """
         학생 12시 연장 신청
         """
-        student = g.user
-
-        now = datetime.now().time()
-
-        if not current_app.testing and not APPLY_START < now < APPLY_END_12:
+        if not(current_app.testing or can_apply_12()):
             return Response('', 204)
 
-        class_ = request.json['classNum']
-        seat = request.json['seatNum']
+        payload = request.json
 
-        ExtensionApply12Model.objects(student=student).delete()
-
-        extension = ExtensionApply12Model.objects(class_=class_, seat=seat).first()
-        if extension:
-            return Response('', 205)
-
-        ExtensionApply12Model(
-            class_=class_,
-            seat=seat
-        ).save()
-
-        return Response('', 201)
+        return Response('', 201 if apply_extension(ExtensionApply12Model, payload['classNum'], payload['seatNum']) else 205)
 
     @swag_from(EXTENSION_DELETE)
     @auth_required(StudentModel)
@@ -134,28 +118,22 @@ class Extension12(BaseResource):
         """
         학생 12시 연장 신청 취소
         """
-        student = g.user
-
-        now = datetime.now().time()
-
-        extension = ExtensionApply12Model.objects(student=student).first()
-        if (not current_app.testing and not APPLY_START < now < APPLY_END_12) and (not extension):
+        if not(current_app.testing or can_apply_12()):
             return Response('', 204)
 
-        extension.delete()
+        ExtensionApply11Model.objects(student=g.user).delete()
 
         return Response('', 200)
 
 
-def _create_extension_map(class_, hour):
+def _create_extension_map(class_, model):
     seat_count = 1
 
     map_ = MAPS[class_]
     for i, row in enumerate(map_):
         for j, seat in enumerate(row):
             if map_[i][j]:
-                apply = ExtensionApply11Model.objects(class_=class_, seat=seat_count).first() if hour == 11 \
-                    else ExtensionApply12Model.objects(class_=class_, seat=seat_count).first()
+                apply = model.objects(class_=class_, seat=seat_count).first()
 
                 if apply:
                     map_[i][j] = apply.student.name
@@ -175,9 +153,10 @@ class Extension11Map(BaseResource):
         """
         11시 연장 신청 지도 조회
         """
-        class_ = int(request.args['class_num'])
-
-        return self.unicode_safe_json_response(_create_extension_map(class_, 11))
+        try:
+            return self.unicode_safe_json_response(_create_extension_map(int(request.args['class_num']), ExtensionApply11Model))
+        except ValueError:
+            abort(400)
 
 
 @api.resource('/12/map')
@@ -188,6 +167,7 @@ class Extension12Map(BaseResource):
         """
         12시 연장 신청 지도 조회
         """
-        class_ = int(request.args['class_num'])
-
-        return self.unicode_safe_json_response(_create_extension_map(class_, 12))
+        try:
+            return self.unicode_safe_json_response(_create_extension_map(int(request.args['class_num']), ExtensionApply12Model))
+        except ValueError:
+            abort(400)
