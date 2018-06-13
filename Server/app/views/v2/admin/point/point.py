@@ -40,6 +40,7 @@ class Point(BaseResource):
 
         apply_good_point = payload['applyGoodPoint']
         point = payload['point']
+        rule_id = payload['ruleId']
 
         student = StudentModel.objects(id=student_id).first()
 
@@ -49,7 +50,7 @@ class Point(BaseResource):
         if len(rule_id) != 24 or not PointRuleModel.objects(id=rule_id):
             return Response('', 205)
 
-        rule = PointRuleModel.objects(id=payload['ruleId']).first()
+        rule = PointRuleModel.objects(id=rule_id).first()
 
         point_history = PointHistoryModel(
             reason=rule.name,
