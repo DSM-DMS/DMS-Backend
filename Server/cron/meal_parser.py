@@ -1,20 +1,24 @@
 from datetime import datetime, timedelta
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join('..', 'config')))
+
 sys.path.append(os.path.abspath(os.path.join('..', 'app')))
 
 from mongoengine import *
 
-from config import Config
-
 from schapi import SchoolAPI
 
-from app.models.meal import MealModel
+from models.meal import MealModel
 
 api = SchoolAPI(SchoolAPI.Region.DAEJEON, 'G100000170')
 
-connect(**Config.MONGODB_SETTINGS)
+connect(**{
+    'db': 'dms-v2',
+    'host': None,
+    'port': None,
+    'username': os.getenv('MONGO_ID'),
+    'password': os.getenv('MONGO_PW')
+})
 
 
 def _parse(year, month):

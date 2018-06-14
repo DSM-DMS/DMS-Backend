@@ -10,9 +10,13 @@ from models.account import StudentModel
 from models.point import PointHistoryModel
 from models.apply import ExtensionApply11Model, ExtensionApply12Model, GoingoutApplyModel, StayApplyModel
 
-from . import MONGODB_SETTINGS
-
-connect(**MONGODB_SETTINGS)
+connect(**{
+    'db': 'dms-v2',
+    'host': None,
+    'port': None,
+    'username': os.getenv('MONGO_ID'),
+    'password': os.getenv('MONGO_PW')
+})
 
 
 if 0 < datetime.now().time().hour < 12:
