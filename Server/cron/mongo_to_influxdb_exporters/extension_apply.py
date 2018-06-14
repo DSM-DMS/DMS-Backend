@@ -6,6 +6,7 @@ sys.path.append(os.path.abspath(os.path.join('../..', 'app')))
 from mongoengine import *
 from influxdb import InfluxDBClient
 
+from models.account import StudentModel
 from models.apply import ExtensionApply11Model, ExtensionApply12Model
 
 connect(**{
