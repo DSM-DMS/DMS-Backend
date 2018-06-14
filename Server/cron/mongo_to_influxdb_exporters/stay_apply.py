@@ -31,11 +31,11 @@ apply_counts = {1: 0, 2: 0, 3: 0, 4: 0}
 for apply in StayApplyModel.objects:
     apply_counts[apply.value] += 1
 
-    payload = [
-        {
-            'measurement':  MEASUREMENT,
-            'fields': apply_counts
-        }
-    ]
+payload = [
+    {
+        'measurement':  MEASUREMENT,
+        'fields': apply_counts
+    }
+]
 
-    CLIENT.write_points(payload)
+CLIENT.write_points(payload)

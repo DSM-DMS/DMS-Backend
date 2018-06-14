@@ -33,14 +33,14 @@ for apply in GoingoutApplyModel.objects:
     saturday_goingout_applier += 1 if apply.on_saturday else 0
     sunday_goingout_applier += 1 if apply.on_sunday else 0
 
-    payload = [
-        {
-            'measurement': MEASUREMENT,
-            'fields': {
-                'saturday': saturday_goingout_applier,
-                'sunday': sunday_goingout_applier
-            }
+payload = [
+    {
+        'measurement': MEASUREMENT,
+        'fields': {
+            'saturday': saturday_goingout_applier,
+            'sunday': sunday_goingout_applier
         }
-    ]
+    }
+]
 
-    CLIENT.write_points(payload)
+CLIENT.write_points(payload)

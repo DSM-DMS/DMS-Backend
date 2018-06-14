@@ -30,11 +30,11 @@ version_data = {1: '', 2: '', 3: ''}
 for version in VersionModel.objects:
     version_data[version.platform] = version.version
 
-    payload = [
-        {
-            'measurement': MEASUREMENT,
-            'fields': version_data
-        }
-    ]
+payload = [
+    {
+        'measurement': MEASUREMENT,
+        'fields': version_data
+    }
+]
 
-    CLIENT.write_points(payload)
+CLIENT.write_points(payload)
