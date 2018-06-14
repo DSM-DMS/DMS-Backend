@@ -37,4 +37,4 @@ for version in VersionModel.objects:
         }
     ]
 
-    CLIENT.write(payload)
+    CLIENT.write_points(payload)

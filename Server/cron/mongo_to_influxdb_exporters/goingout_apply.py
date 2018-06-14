@@ -43,4 +43,4 @@ for apply in GoingoutApplyModel.objects:
         }
     ]
 
-    CLIENT.write(payload)
+    CLIENT.write_points(payload)

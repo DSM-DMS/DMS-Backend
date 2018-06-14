@@ -38,4 +38,4 @@ for apply in StayApplyModel.objects:
         }
     ]
 
-    CLIENT.write(payload)
+    CLIENT.write_points(payload)
