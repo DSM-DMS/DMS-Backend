@@ -30,6 +30,11 @@ def create_app(*config_cls):
     # app_.config['REDIS_CLIENT'] = Redis(**app_.config['REDIS_SETTINGS'])
     app_.config['INFLUXDB_CLIENT'] = InfluxDBClient(**app_.config['INFLUXDB_SETTINGS'])
 
+    cfg = app_.config
+
+    if cfg['INFLUXDB_SETTINGS']['database'] not in cfg['INFLUXDB_CLIENT'].get_list_database():
+        cfg['INFLUXDB_CLIENT'].create_database(cfg['INFLUXDB_SETTINGS']['database'])
+
     JWTManager().init_app(app_)
     CORS().init_app(app_)
     Swagger(template=app_.config['SWAGGER_TEMPLATE']).init_app(app_)
