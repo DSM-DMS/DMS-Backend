@@ -8,8 +8,6 @@ from mongoengine import *
 
 from schapi import SchoolAPI
 
-from models.meal import MealModel
-
 api = SchoolAPI(SchoolAPI.Region.DAEJEON, 'G100000170')
 
 connect(**{
@@ -22,6 +20,11 @@ connect(**{
 
 
 def _parse(year, month):
+    try:
+        from models.meal import MealModel
+    except ImportError:
+        from app.models.meal import MealModel
+
     if MealModel.objects(date='{}-{:0>2}-{:0>2}'.format(year, month, 1)):
         return
 
