@@ -25,7 +25,7 @@ CLIENT = InfluxDBClient(**{
 })
 MEASUREMENT = 'version'
 
-version_data = {1: None, 2: None, 3: None}
+version_data = {1: '', 2: '', 3: ''}
 
 for version in VersionModel.objects:
     version_data[version.platform] = version.version
