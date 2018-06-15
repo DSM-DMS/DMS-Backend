@@ -19,9 +19,8 @@ connect(**{
 })
 
 
-if 0 < datetime.now().time().hour < 12:
-    ExtensionApply11Model.objects.delete()
-    ExtensionApply12Model.objects.delete()
+ExtensionApply11Model.objects.delete()
+ExtensionApply12Model.objects.delete()
 
 
 def clear_duplicated_apply_data(student, model):
