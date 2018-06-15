@@ -121,7 +121,7 @@ class Extension12(BaseResource):
         if not(current_app.testing or can_apply_12()):
             return Response('', 204)
 
-        ExtensionApply11Model.objects(student=g.user).delete()
+        ExtensionApply12Model.objects(student=g.user).delete()
 
         return Response('', 200)
 
