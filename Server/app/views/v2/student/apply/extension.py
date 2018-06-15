@@ -155,7 +155,7 @@ class Extension11Map(BaseResource):
         """
         try:
             map = _create_extension_map(int(request.args['classNum']), ExtensionApply11Model)
-            return self.unicode_safe_json_response(map)
+            return self.unicode_safe_json_dumps(map)
         except ValueError:
             abort(400)
 
@@ -170,6 +170,6 @@ class Extension12Map(BaseResource):
         """
         try:
             map = _create_extension_map(int(request.args['classNum']), ExtensionApply12Model)
-            return self.unicode_safe_json_response(map)
+            return self.unicode_safe_json_dumps(map)
         except ValueError:
             abort(400)
