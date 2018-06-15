@@ -154,7 +154,8 @@ class Extension11Map(BaseResource):
         11시 연장 신청 지도 조회
         """
         try:
-            return self.unicode_safe_json_response(_create_extension_map(int(request.args['classNum']), ExtensionApply11Model))
+            map = _create_extension_map(int(request.args['classNum']), ExtensionApply11Model)
+            return self.unicode_safe_json_response(map)
         except ValueError:
             abort(400)
 
@@ -168,6 +169,7 @@ class Extension12Map(BaseResource):
         12시 연장 신청 지도 조회
         """
         try:
-            return self.unicode_safe_json_response(_create_extension_map(int(request.args['classNum']), ExtensionApply12Model))
+            map = _create_extension_map(int(request.args['classNum']), ExtensionApply12Model)
+            return self.unicode_safe_json_response(map)
         except ValueError:
             abort(400)
