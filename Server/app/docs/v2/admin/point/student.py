@@ -1,15 +1,9 @@
+from app.docs.v2 import jwt_header
+
 STUDENT_LIST_GET = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '학생 목록을 조회합니다. 벌점 교육 단계는 9점 이하가 0, 10점 이상이 1, 15점 이상 2, 20점 이상 3, ...',
-    'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        }
-    ],
+    'parameters': [jwt_header],
     'responses': {
         '200': {
             'description': '목록 조회 성공. 학번 기준으로 오름차순 정렬됩니다.',
@@ -74,13 +68,7 @@ STUDENT_PENALTY_PATCH = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '특정 학생의 벌점 교육 상태를 변경합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'student_id',
             'description': '상벌점 교육 상태 변경 대상 학생 ID',

@@ -1,16 +1,10 @@
-from app.docs.v2 import SAMPLE_OBJECT_IDS
+from app.docs.v2 import SAMPLE_OBJECT_IDS, jwt_header
 
 RULE_GET = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '상벌점 규칙 목록을 조회합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        }
+        jwt_header
     ],
     'responses': {
         '200': {
@@ -44,13 +38,7 @@ RULE_POST = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '상벌점 규칙을 추가합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'name',
             'description': '상벌점 규칙의 이름',
@@ -99,13 +87,7 @@ RULE_ALTERATION_PATCH = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '상벌점 규칙의 내용을 수정합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'rule_id',
             'description': '수정할 상벌점 규칙 ID',
@@ -159,13 +141,7 @@ RULE_ALTERATION_DELETE = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '상벌점 규칙을 삭제합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'ruleId',
             'description': '삭제할 상벌점 규칙 ID',

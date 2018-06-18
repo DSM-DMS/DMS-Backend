@@ -14,3 +14,11 @@ SAMPLE_REFRESH_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.' \
                        'zg1ZDAxNy1lYjIwLTRmYjgtYmVhYi1iYmYyZTQyY2NlYmYiLCJuYmYiOjE1MTM2NDU1NjMsInR5cGU' \
                        'iOiJhY2Nlc3MiLCJpYXQiOjE1MTM2NDU1NjN9.' \
                        '075C0_-b-oqSWc-jz7G35y00erRVntpcqN9uMIAnvfI'
+
+jwt_header = {
+    'name': 'Authorization',
+    'description': 'JWT Token(JWT ***)',
+    'in': 'header',
+    'type': 'str',
+    'required': True
+}

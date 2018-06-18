@@ -1,14 +1,10 @@
+from app.docs.v2 import jwt_header
+
 BUG_REPORT_POST = {
     'tags': ['[Student] 신고'],
     'description': '버그를 신고하며, Slackbot이 Slack의 #bug-report 채널로 메시지를 전송합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'platform',
             'description': '버그 신고를 한 플랫폼 타입(1: Web, 2: Android, 3: iOS)',

@@ -1,16 +1,10 @@
-from app.docs.v2 import SAMPLE_UUID
+from app.docs.v2 import SAMPLE_UUID, jwt_header
 
 STUDENT_ACCOUNT_DELETE = {
     'tags': ['[Admin] 계정 관리'],
     'description': '학생 계정을 제거하고, 새로운 UUID를 생성해 반환합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'number',
             'description': '제거하고자 하는 학생의 학번',

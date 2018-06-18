@@ -1,14 +1,10 @@
+from app.docs.v2 import jwt_header
+
 CHANGE_PW_POST = {
     'tags': ['[Student] 계정 관리'],
     'description': '비밀번호를 변경합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'currentPassword',
             'description': '현재 비밀번호',

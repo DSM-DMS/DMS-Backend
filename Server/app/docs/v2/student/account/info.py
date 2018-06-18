@@ -1,15 +1,9 @@
+from app.docs.v2 import jwt_header
+
 APPLY_INFO_GET = {
     'tags': ['[Student] 계정 관리'],
     'description': '학생 자신의 신청 정보를 조회합니다.',
-    'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        }
-    ],
+    'parameters': [jwt_header],
     'responses': {
         '200': {
             'description': '신청 정보 조회 성공',
@@ -37,15 +31,7 @@ APPLY_INFO_GET = {
 MYPAGE_GET = {
     'tags': ['[Student] 계정 관리'],
     'description': '학생 자신의 마이페이지 정보(이름, 학번, 상벌점 상태)를 조회합니다.',
-    'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        }
-    ],
+    'parameters': [jwt_header],
     'responses': {
         '200': {
             'description': '마이페이지 조회 성공',
@@ -67,15 +53,7 @@ MYPAGE_GET = {
 POINT_HISTORY_GET = {
     'tags': ['[Student] 계정 관리'],
     'description': '학생 자신의 상벌점 기록을 조회합니다.',
-    'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        }
-    ],
+    'parameters': [jwt_header],
     'responses': {
         '200': {
             'description': '내역 조회 성공',

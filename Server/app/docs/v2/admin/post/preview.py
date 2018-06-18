@@ -1,14 +1,10 @@
+from app.docs.v2 import jwt_header
+
 PREVIEW_PATCH = {
     'tags': ['[Admin] 게시글 관리'],
     'description': '게시글 프리뷰를 설정합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'category',
             'description': '게시글 카테고리(faq, notice, rule)',

@@ -1,3 +1,5 @@
+from app.docs.v2 import jwt_header
+
 VERSION_GET = {
     'tags': ['[Mixed] 메타데이터'],
     'description': '해당 플랫폼의 최신 버전을 응답합니다.',
@@ -29,13 +31,7 @@ VERSION_PUT = {
     'tags': ['[Mixed] 메타데이터'],
     'description': '해당 플랫폼의 새로운 버전을 업로드합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Refresh Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'platform',
             'description': '플랫폼 number(1: 웹, 2: 안드로이드, 3: iOS)',

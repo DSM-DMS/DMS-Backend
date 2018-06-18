@@ -1,16 +1,10 @@
-from app.docs.v2 import SAMPLE_OBJECT_IDS
+from app.docs.v2 import SAMPLE_OBJECT_IDS, jwt_header
 
 POINT_GET = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '특정 학생의 상벌점 내역을 조회합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'id',
             'description': '내역 조회 대상 학생 ID',
@@ -54,13 +48,7 @@ POINT_POST = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '특정 학생에 대해 상벌점을 부여합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'id',
             'description': '상벌점 데이터 등록 대상 학생 ID',
@@ -115,13 +103,7 @@ POINT_DELETE = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '특정 학생의 상벌점 기록을 삭제합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'id',
             'description': '상벌점 데이터 삭제 대상 학생 ID',

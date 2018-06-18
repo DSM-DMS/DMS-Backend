@@ -1,15 +1,9 @@
+from app.docs.v2 import jwt_header
+
 GOINGOUT_GET = {
     'tags': ['[Student] 신청'],
     'description': '학생 자신의 외출신청 정보를 조회합니다.',
-    'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        }
-    ],
+    'parameters': [jwt_header],
     'responses': {
         '200': {
             'description': '외출신청 정보 조회 성공',
@@ -37,13 +31,7 @@ GOINGOUT_POST = {
     금요귀가, 토요귀가 시 외출 신청이 불가능합니다.
     ''',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'sat',
             'description': '토요일 외출 여부',

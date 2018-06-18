@@ -1,16 +1,10 @@
-from app.docs.v2 import SAMPLE_OBJECT_IDS
+from app.docs.v2 import SAMPLE_OBJECT_IDS, jwt_header
 
 POST_POST = {
     'tags': ['[Admin] 게시글 관리'],
     'description': '게시글 업로드',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'category',
             'description': '게시글 카테고리(faq, notice, rule)',
@@ -52,13 +46,7 @@ POST_PATCH = {
     'tags': ['[Admin] 게시글 관리'],
     'description': '게시글 수정',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'category',
             'description': '게시글 카테고리(faq, notice, rule)',
@@ -105,13 +93,7 @@ POST_DELETE = {
     'tags': ['[Admin] 게시글 관리'],
     'description': '게시글 삭제',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'category',
             'description': '게시글 카테고리(faq, notice, rule)',

@@ -1,16 +1,10 @@
-from app.docs.v2 import SAMPLE_OBJECT_IDS
+from app.docs.v2 import SAMPLE_OBJECT_IDS, jwt_header
 
 FACILITY_REPORT_POST = {
     'tags': ['[Student] 신고'],
     'description': '시설고장신고',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'content',
             'description': '시설고장신고 내용',

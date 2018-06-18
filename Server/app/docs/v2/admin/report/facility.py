@@ -1,18 +1,10 @@
-from app.docs.v2 import SAMPLE_OBJECT_IDS
+from app.docs.v2 import SAMPLE_OBJECT_IDS, jwt_header
 
 
 FACILITY_REPORT_GET = {
     'tags': ['[Admin] 신고 정보 관리'],
     'description': '시설고장 신고 정보를 조회합니다.',
-    'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        }
-    ],
+    'parameters': [jwt_header],
     'responses': {
         '200': {
             'description': '시설고장 신고 리스트 조회 성공',
@@ -50,13 +42,7 @@ FACILITY_REPORT_DELETE = {
     'tags': ['[Admin] 신고 정보 관리'],
     'description': '시설고장 신고 정보를 삭제합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'id',
             'description': '삭제할 시설고장 신고 ID',
