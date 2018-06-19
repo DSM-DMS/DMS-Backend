@@ -43,13 +43,7 @@ ADMIN_ACCOUNT_POST = {
     'tags': ['[Admin] 계정 관리'],
     'description': '새로운 관리자 계정을 생성합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'id',
             'description': '생성할 관리자 계정의 ID',
@@ -89,13 +83,7 @@ ADMIN_ACCOUNT_DELETE = {
     'tags': ['[Admin] 계정 관리'],
     'description': '만들어진 관리자 계정을 제거합니다.',
     'parameters': [
-        {
-            'name': 'Authorization',
-            'description': 'JWT Token(JWT ***)',
-            'in': 'header',
-            'type': 'str',
-            'required': True
-        },
+        jwt_header,
         {
             'name': 'id',
             'description': '제거할 관리자 계정의 ID',
