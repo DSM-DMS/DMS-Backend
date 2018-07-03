@@ -57,7 +57,7 @@ class Extension11(BaseResource):
 
     @swag_from(EXTENSION_POST)
     @auth_required(StudentModel)
-    @json_required({'classNum': int, 'seatNum': str})
+    @json_required({'classNum': int, 'seatNum': int})
     def post(self):
         """
         학생 11시 연장 신청
@@ -100,7 +100,7 @@ class Extension12(BaseResource):
 
     @swag_from(EXTENSION_POST)
     @auth_required(StudentModel)
-    @json_required({'classNum': int, 'seatNum': str})
+    @json_required({'classNum': int, 'seatNum': int})
     def post(self):
         """
         학생 12시 연장 신청
