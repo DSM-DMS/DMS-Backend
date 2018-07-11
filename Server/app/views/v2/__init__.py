@@ -34,7 +34,7 @@ def auth_required(model):
                 if token and isinstance(token.owner, model):
                     g.user = token.owner
                 elif token_v2 and isinstance(token_v2.key.owner, model):
-                    g.user = token_v2.owner
+                    g.user = token_v2.key.owner
                 else:
                     abort(403)
 
