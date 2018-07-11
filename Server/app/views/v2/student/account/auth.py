@@ -1,10 +1,10 @@
 from flask import Blueprint, Response, request
-from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.v2.student.account.auth import *
-from app.models.account import StudentModel, TokenModel, AccessTokenModel, RefreshTokenModel
+from app.models.account import StudentModel
+from app.models.token import AccessTokenModelV2, RefreshTokenModelV2
 from app.views.v2 import BaseResource, json_required
 
 api = Api(Blueprint(__name__, __name__))
@@ -24,6 +24,6 @@ class Auth(BaseResource):
         student = StudentModel.objects(id=payload['id'], pw=self.encrypt_password(payload['password'])).first()
 
         return ({
-            'accessToken': create_access_token(TokenModel.generate_token(AccessTokenModel, student, request.headers['USER-AGENT'])),
-            'refreshToken': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, student, request.headers['USER-AGENT']))
+            'accessToken': AccessTokenModelV2.create_access_token(student, request.headers['USER-AGENT']),
+            'refreshToken': RefreshTokenModelV2.create_refresh_token(student, request.headers['USER-AGENT'])
         }, 201) if student else Response('', 401)

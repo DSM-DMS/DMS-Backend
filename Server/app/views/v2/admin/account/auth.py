@@ -1,10 +1,10 @@
 from flask import Blueprint, Response, request
-from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.v2.admin.account.auth import *
-from app.models.account import AdminModel, TokenModel, AccessTokenModel, RefreshTokenModel
+from app.models.account import AdminModel
+from app.models.token import AccessTokenModelV2, RefreshTokenModelV2
 from app.views.v2 import BaseResource, json_required
 
 api = Api(Blueprint(__name__, __name__))
@@ -26,6 +26,6 @@ class Auth(BaseResource):
         user_agent = request.headers.get('USER-AGENT', 'Windows Application') or 'Windows Application'
 
         return ({
-            'accessToken': create_access_token(TokenModel.generate_token(AccessTokenModel, admin, user_agent)),
-            'refreshToken': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, admin, user_agent))
+            'accessToken': AccessTokenModelV2.create_access_token(admin, user_agent),
+            'refreshToken': RefreshTokenModelV2.create_refresh_token(admin, user_agent)
         }, 201) if admin else Response('', 401)
