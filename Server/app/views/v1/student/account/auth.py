@@ -3,16 +3,14 @@ from hashlib import pbkdf2_hmac
 from uuid import UUID
 
 from flask import Blueprint, Response, current_app, request
-from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity, jwt_refresh_token_required
 from flask_restful import Api, abort
-
 
 from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
-
 from app.models.account import StudentModel, TokenModel, AccessTokenModel, RefreshTokenModel
+from app.models.token import AccessTokenModelV2, RefreshTokenModelV2
 
 api = Api(Blueprint('student-auth-api', __name__))
 
@@ -44,8 +42,8 @@ class Auth(BaseResource):
         # --- Auth success
 
         return self.unicode_safe_json_response({
-            'access_token': create_access_token(TokenModel.generate_token(AccessTokenModel, student, request.headers['USER-AGENT'])),
-            'refresh_token': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, student, request.headers['USER-AGENT']))
+            'accessToken': AccessTokenModelV2.create_access_token(student, request.headers['USER-AGENT']),
+            'refreshToken': RefreshTokenModelV2.create_refresh_token(student, request.headers['USER-AGENT'])
         }, 200)
 
 
@@ -73,7 +71,7 @@ class Refresh(BaseResource):
                 return Response('', 205)
 
             return self.unicode_safe_json_response({
-                'access_token': create_access_token(TokenModel.generate_token(AccessTokenModel, token.owner, request.headers['USER-AGENT']))
+                'access_token': AccessTokenModelV2.create_access_token(token.owner, request.headers['USER-AGENT'])
             }, 200)
         except ValueError:
             abort(422)

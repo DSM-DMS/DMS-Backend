@@ -7,11 +7,10 @@ from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity, jwt_refresh_token_required
 from flask_restful import Api, abort
 
-
 from app.views.v1 import BaseResource
 
-
 from app.models.account import AdminModel, TokenModel, AccessTokenModel, RefreshTokenModel
+from app.models.token import AccessTokenModelV2, RefreshTokenModelV2
 
 api = Api(Blueprint('admin-auth-api', __name__))
 api.prefix = '/admin'
@@ -44,8 +43,8 @@ class Auth(BaseResource):
         user_agent = request.headers.get('USER-AGENT', 'Windows Application') or 'Windows Application'
 
         return self.unicode_safe_json_response({
-            'access_token': create_access_token(TokenModel.generate_token(AccessTokenModel, admin, user_agent)),
-            'refresh_token': create_refresh_token(TokenModel.generate_token(RefreshTokenModel, admin, user_agent))
+            'access_token': AccessTokenModelV2.create_access_token(admin, user_agent),
+            'refresh_token': RefreshTokenModelV2.create_refresh_token(admin, user_agent)
         }, 200)
 
 
@@ -62,6 +61,8 @@ class Refresh(BaseResource):
         if not token:
             abort(205)
 
+        user_agent = request.headers.get('USER-AGENT', 'Windows Application') or 'Windows Application'
+
         return self.unicode_safe_json_response({
-            'access_token': create_access_token(TokenModel.generate_token(AccessTokenModel, token.owner, request.headers['USER_AGENT']))
+            'access_token': AccessTokenModelV2.create_access_token(token.owner, user_agent)
         }, 200)
