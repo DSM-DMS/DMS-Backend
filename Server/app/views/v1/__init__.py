@@ -143,9 +143,6 @@ class Router:
         from app.views.v1.admin.report import facility_report
         app.register_blueprint(facility_report.api.blueprint)
 
-        from app.views.v1.admin.survey import survey
-        app.register_blueprint(survey.api.blueprint)
-
         from app.views.v1.student.account import alteration, auth, info, signup
         app.register_blueprint(alteration.api.blueprint)
         app.register_blueprint(auth.api.blueprint)
@@ -160,9 +157,6 @@ class Router:
         from app.views.v1.student.report import bug_report, facility_report
         app.register_blueprint(bug_report.api.blueprint)
         app.register_blueprint(facility_report.api.blueprint)
-
-        from app.views.v1.student.survey import survey
-        app.register_blueprint(survey.api.blueprint)
 
         from app.views.v1.mixed.post import faq, notice, preview, rule
         app.register_blueprint(faq.api.blueprint)
