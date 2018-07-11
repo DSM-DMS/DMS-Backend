@@ -36,8 +36,11 @@ class TokenBase(Document):
 
     @classmethod
     def _create_token(cls, account, user_agent):
+        key = cls.Key(owner=account, user_agent=user_agent)
+        cls.objects(key=key).delete()
+
         return cls(
-            key=cls.Key(owner=account, user_agent=user_agent)
+            key=key
         ).save().identity
 
     @classmethod
