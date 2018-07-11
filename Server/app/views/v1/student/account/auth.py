@@ -71,7 +71,7 @@ class Refresh(BaseResource):
                 return Response('', 205)
 
             return self.unicode_safe_json_response({
-                'access_token': AccessTokenModelV2.create_access_token(token.owner, request.headers['USER-AGENT'])
+                'access_token': AccessTokenModelV2.create_access_token(token.key.owner, request.headers['USER-AGENT'])
             }, 200)
         except ValueError:
             abort(422)

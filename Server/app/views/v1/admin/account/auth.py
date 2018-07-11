@@ -63,5 +63,5 @@ class Refresh(BaseResource):
         user_agent = request.headers.get('USER-AGENT', 'Windows Application') or 'Windows Application'
 
         return self.unicode_safe_json_response({
-            'access_token': AccessTokenModelV2.create_access_token(token.owner, user_agent)
+            'access_token': AccessTokenModelV2.create_access_token(token.key.owner, user_agent)
         }, 200)
