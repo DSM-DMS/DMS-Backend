@@ -42,8 +42,8 @@ class Auth(BaseResource):
         # --- Auth success
 
         return self.unicode_safe_json_response({
-            'accessToken': AccessTokenModelV2.create_access_token(student, request.headers['USER-AGENT']),
-            'refreshToken': RefreshTokenModelV2.create_refresh_token(student, request.headers['USER-AGENT'])
+            'access_token': AccessTokenModelV2.create_access_token(student, request.headers['USER-AGENT']),
+            'refresh_token': RefreshTokenModelV2.create_refresh_token(student, request.headers['USER-AGENT'])
         }, 200)
 
 
