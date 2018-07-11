@@ -28,7 +28,7 @@ class Refresh(BaseResource):
                     abort(401)
 
             return {
-                'accessToken': AccessTokenModelV2.create_access_token(token.owner, request.headers['USER-AGENT'])
+                'accessToken': AccessTokenModelV2.create_access_token(token.owner if isinstance(token, RefreshTokenModel) else token.key.owner, request.headers['USER-AGENT'])
             } if token.owner.pw == token.pw_snapshot else Response('', 205)
         except ValueError:
             abort(422)
