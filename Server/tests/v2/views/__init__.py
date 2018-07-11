@@ -1,5 +1,4 @@
 import copy
-import ujson
 from binascii import hexlify
 from datetime import datetime
 from hashlib import pbkdf2_hmac
