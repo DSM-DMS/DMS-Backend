@@ -10,7 +10,8 @@ import pymongo
 
 from app import create_app
 from config.test import TestConfig
-from app.models.account import AdminModel, StudentModel, TokenModel, AccessTokenModel, RefreshTokenModel
+from app.models.account import AdminModel, StudentModel
+from app.models.token import TokenBase, AccessTokenModelV2, RefreshTokenModelV2
 
 
 class TCBase(TC):
@@ -46,11 +47,11 @@ class TCBase(TC):
 
     def _get_tokens(self):
         with self.app.app_context():
-            self.admin_access_token = 'JWT {}'.format(create_access_token(TokenModel.generate_token(AccessTokenModel, self.admin, 'TEST')))
-            self.admin_refresh_token = 'JWT {}'.format(create_refresh_token(TokenModel.generate_token(RefreshTokenModel, self.admin, 'TEST')))
+            self.admin_access_token = 'JWT {}'.format(AccessTokenModelV2.create_access_token(self.admin, 'TEST'))
+            self.admin_refresh_token = 'JWT {}'.format(RefreshTokenModelV2.create_refresh_token(self.admin, 'TEST'))
 
-            self.student_access_token = 'JWT {}'.format(create_access_token(TokenModel.generate_token(AccessTokenModel, self.student, 'TEST')))
-            self.student_refresh_token = 'JWT {}'.format(create_refresh_token(TokenModel.generate_token(RefreshTokenModel, self.student, 'TEST')))
+            self.student_access_token = 'JWT {}'.format(AccessTokenModelV2.create_access_token(self.student, 'TEST'))
+            self.student_refresh_token = 'JWT {}'.format(RefreshTokenModelV2.create_refresh_token(self.student, 'TEST'))
 
     def setUp(self):
         self.admin_id = self.admin_name = 'admin'

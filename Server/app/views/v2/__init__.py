@@ -10,7 +10,7 @@ from flask import Response, abort, current_app, g, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 
-from app.models.account import AccessTokenModel, AdminModel, StudentModel
+from app.models.account import AdminModel, StudentModel
 from app.models.token import AccessTokenModelV2
 
 MODEL_DOCSTRING_MAPPING = {
@@ -28,13 +28,10 @@ def auth_required(model):
         @jwt_required
         def wrapper(*args, **kwargs):
             try:
-                token = AccessTokenModel.objects(identity=UUID(get_jwt_identity())).first()
-                token_v2 = AccessTokenModelV2.objects(identity=UUID(get_jwt_identity())).first()
+                token= AccessTokenModelV2.objects(identity=UUID(get_jwt_identity())).first()
 
-                if token and isinstance(token.owner, model):
-                    g.user = token.owner
-                elif token_v2 and isinstance(token_v2.key.owner, model):
-                    g.user = token_v2.key.owner
+                if token and isinstance(token.key.owner, model):
+                    g.user = token.key.owner
                 else:
                     abort(403)
 

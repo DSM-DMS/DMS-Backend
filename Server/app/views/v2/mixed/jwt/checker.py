@@ -6,7 +6,7 @@ from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.v2.mixed.jwt.checker import *
-from app.models.account import AccessTokenModel
+from app.models.token import AccessTokenModelV2
 from app.views.v2 import BaseResource
 
 api = Api(Blueprint(__name__, __name__))
@@ -22,6 +22,6 @@ class AuthCheck(BaseResource):
         로그인 여부 체크
         """
         try:
-            return Response('', 200 if AccessTokenModel.objects(identity=UUID(get_jwt_identity())) else 204)
+            return Response('', 200 if AccessTokenModelV2.objects(identity=UUID(get_jwt_identity())) else 204)
         except ValueError:
             abort(422)

@@ -3,13 +3,12 @@ from hashlib import pbkdf2_hmac
 from uuid import UUID
 
 from flask import Blueprint, current_app, request
-from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity, jwt_refresh_token_required
 from flask_restful import Api, abort
 
 from app.views.v1 import BaseResource
 
-from app.models.account import AdminModel, TokenModel, AccessTokenModel, RefreshTokenModel
+from app.models.account import AdminModel
 from app.models.token import AccessTokenModelV2, RefreshTokenModelV2
 
 api = Api(Blueprint('admin-auth-api', __name__))
@@ -56,7 +55,7 @@ class Refresh(BaseResource):
         """
         새로운 Access Token 획득
         """
-        token = RefreshTokenModel.objects(identity=UUID(get_jwt_identity())).first()
+        token = RefreshTokenModelV2.objects(identity=UUID(get_jwt_identity())).first()
 
         if not token:
             abort(205)

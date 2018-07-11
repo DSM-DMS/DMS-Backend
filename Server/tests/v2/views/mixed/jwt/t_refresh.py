@@ -58,13 +58,3 @@ class TestTokenRefresh(TCBase):
 
         # (2) status code 401
         self.assertEqual(resp.status_code, 401)
-
-    def testRefreshFailure_passwordChanged(self):
-        # (1) Refresh token을 이미 받은 관리자 계정의 비밀번호를 변경하여 refresh
-        self.admin.pw = 'new'
-        self.admin.save()
-
-        resp = self._request()
-
-        # (2) status code 205
-        self.assertEqual(resp.status_code, 205)

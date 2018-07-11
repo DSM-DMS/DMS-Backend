@@ -6,7 +6,6 @@ from flask_restful import Api
 from flasgger import swag_from
 
 from app.docs.v2.mixed.jwt.refresh import *
-from app.models.account import RefreshTokenModel
 from app.models.token import AccessTokenModelV2, RefreshTokenModelV2
 from app.views.v2 import BaseResource
 
@@ -20,15 +19,13 @@ class Refresh(BaseResource):
     @swag_from(REFRESH_GET)
     def get(self):
         try:
-            token = RefreshTokenModel.objects(identity=UUID(get_jwt_identity())).first()
+            token = RefreshTokenModelV2.objects(identity=UUID(get_jwt_identity())).first()
 
             if not token:
-                token = RefreshTokenModelV2.objects(identity=UUID(get_jwt_identity())).first()
-                if not token:
-                    abort(401)
+                abort(401)
 
             return {
-                'accessToken': AccessTokenModelV2.create_access_token(token.owner if isinstance(token, RefreshTokenModel) else token.key.owner, request.headers['USER-AGENT'])
-            } if token.owner.pw == token.pw_snapshot else Response('', 205)
+                'accessToken': AccessTokenModelV2.create_access_token(token.key.owner, request.headers['USER-AGENT'])
+            }
         except ValueError:
             abort(422)

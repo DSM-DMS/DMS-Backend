@@ -9,7 +9,7 @@ from flask_restful import Api, abort
 from app.views.v1 import BaseResource
 from app.views.v1 import student_only
 
-from app.models.account import StudentModel, TokenModel, AccessTokenModel, RefreshTokenModel
+from app.models.account import StudentModel
 from app.models.token import AccessTokenModelV2, RefreshTokenModelV2
 
 api = Api(Blueprint('student-auth-api', __name__))
@@ -63,9 +63,9 @@ class Refresh(BaseResource):
         새로운 Access Token 획득
         """
         try:
-            token = RefreshTokenModel.objects(identity=UUID(get_jwt_identity())).first()
+            token = RefreshTokenModelV2.objects(identity=UUID(get_jwt_identity())).first()
 
-            if not token or token.owner.pw != token.pw_snapshot:
+            if not token:
                 # Invalid token or the token issuing password is different from the current password
                 # Returns status code 205 : Reset Content
                 return Response('', 205)
