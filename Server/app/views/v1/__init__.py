@@ -8,6 +8,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 
 from app.models.account import AccessTokenModel, AdminModel, StudentModel
+from app.models.token import AccessTokenModelV2
 
 
 def admin_only(fn):
@@ -15,12 +16,16 @@ def admin_only(fn):
     @jwt_required
     def wrapper(*args, **kwargs):
         token = AccessTokenModel.objects(identity=UUID(get_jwt_identity())).first()
-        if not token or not isinstance(token.owner, AdminModel):
+        token_v2 = AccessTokenModelV2.objects(identity=UUID(get_jwt_identity())).first()
+
+        if token and isinstance(token.owner, AdminModel):
+            g.user = token.owner
+        elif token_v2 and isinstance(token_v2.key.owner, AdminModel):
+            g.user = token_v2.key.owner
+        else:
             abort(403)
 
-        g.user = token.owner
         return fn(*args, **kwargs)
-
     return wrapper
 
 
@@ -28,17 +33,17 @@ def student_only(fn):
     @wraps(fn)
     @jwt_required
     def wrapper(*args, **kwargs):
-        try:
-            token = AccessTokenModel.objects(identity=UUID(get_jwt_identity())).first()
-            if not token or not isinstance(token.owner, StudentModel):
-                abort(403)
+        token = AccessTokenModel.objects(identity=UUID(get_jwt_identity())).first()
+        token_v2 = AccessTokenModelV2.objects(identity=UUID(get_jwt_identity())).first()
 
+        if token and isinstance(token.owner, StudentModel):
             g.user = token.owner
+        elif token_v2 and isinstance(token_v2.key.owner, StudentModel):
+            g.user = token_v2.key.owner
+        else:
+            abort(403)
 
-            return fn(*args, **kwargs)
-        except ValueError:
-            abort(401)
-            # TODO 422로 바꿔줘야 함
+        return fn(*args, **kwargs)
     return wrapper
 
 
@@ -47,13 +52,16 @@ def auth_required(fn):
     @jwt_required
     def wrapper(*args, **kwargs):
         token = AccessTokenModel.objects(identity=UUID(get_jwt_identity())).first()
+        token_v2 = AccessTokenModel.objects(identity=UUID(get_jwt_identity())).first()
 
-        if not token:
+        if token:
+            g.user = token.owner
+        elif token_v2:
+            g.user = token.key.owner
+        else:
             abort(403)
 
-        g.user = token.owner
         return fn(*args, **kwargs)
-
     return wrapper
 
 
