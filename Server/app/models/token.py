@@ -15,8 +15,7 @@ class TokenBase(Document):
     class Key(EmbeddedDocument):
         owner = ReferenceField(
             document_type=AccountBase,
-            required=True,
-            unique_with='user_agent'
+            required=True
         )
 
         user_agent = StringField(
