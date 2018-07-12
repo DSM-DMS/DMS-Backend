@@ -24,6 +24,19 @@ class ApplyInfo(BaseResource):
         goingout = GoingoutApplyModel.objects(student=g.user).first()
         stay = StayApplyModel.objects(student=g.user).first()
 
+        if not goingout:
+            goingout = GoingoutApplyModel(
+                student=g.user,
+                on_saturday=False,
+                on_sunday=False
+            ).save()
+
+        if not stay:
+            stay = StayApplyModel(
+                student=g.user,
+                value=4
+            ).save()
+
         return {
             'extension11': {
                 'classNum': extension11.class_,
