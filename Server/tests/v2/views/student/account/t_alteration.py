@@ -1,5 +1,3 @@
-from werkzeug.security import check_password_hash
-
 from tests.v2.views import TCBase
 
 
@@ -40,8 +38,7 @@ class TestChangePassword(TCBase):
 
         # (3) 데이터베이스 확인
         self.student.reload()
-
-        self.assertTrue(check_password_hash(self.student.pw, self.new_pw))
+        self.assertEqual(self.student.pw, self.encrypt_password(self.new_pw))
 
     def testPasswordChangeFailure_currentPasswordIncorrect(self):
         # (1) 틀린 현재 비밀번호로 비밀번호 변경

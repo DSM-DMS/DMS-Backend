@@ -13,6 +13,11 @@ class TestStudentAccountSignup(TCBase):
         self.method = self.client.post
         self.target_uri = '/student/signup'
 
+    def setUp(self):
+        super(TestStudentAccountSignup, self).setUp()
+
+        # ---
+
         self.new_student_data = {
             'uuid': 'aaaa',
             'id': 'new_student',
@@ -20,11 +25,6 @@ class TestStudentAccountSignup(TCBase):
             'name': 'DMS',
             'number': 1111
         }
-
-    def setUp(self):
-        super(TestStudentAccountSignup, self).setUp()
-
-        # ---
 
         SignupWaitingModel(
             uuid=self.new_student_data['uuid'],
@@ -52,13 +52,14 @@ class TestStudentAccountSignup(TCBase):
         # (3) 데이터베이스 확인
         student = StudentModel.objects(
             id=self.new_student_data['id'],
+            pw=self.encrypt_password(self.new_student_data['pw']),
             name=self.new_student_data['name'],
             number=self.new_student_data['number']
         ).first()
         # 조건을 고의적으로 많이 달아서, 별도의 assertion 코드를 줄임
 
         self.assertTrue(student)
-        self.assertTrue(check_password_hash(student.pw, self.new_student_data['pw']))
+
         self.assertFalse(SignupWaitingModel.objects(uuid=self.new_student_data['uuid']))
 
     def testSignupFailure_idAlreadyExist(self):
