@@ -21,9 +21,16 @@ class ChangePW(BaseResource):
         """
         payload = request.json
 
-        if g.user.pw != self.encrypt_password(payload['currentPassword']):
+        current_password = payload['currentPassword']
+        new_password = payload['newPassword']
+
+        if g.user.pw != self.encrypt_password(current_password):
             abort(403)
 
-        g.user.update(pw=self.encrypt_password(payload['newPassword']))
+        if current_password == new_password:
+            # g.user.pw == new_password로 하는 게 맞으나, 위에서 g.user.pw와 current_pw가 동일함을 확인함
+            abort(409)
+
+        g.user.update(pw=self.encrypt_password(new_password))
 
         return Response('', 200)
