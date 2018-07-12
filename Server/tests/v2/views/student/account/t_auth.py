@@ -3,7 +3,7 @@ from tests.v2.views import TCBase
 
 class TestStudentAccountAuth(TCBase):
     """
-    학생 계정 인증을 테스트 합니다.
+    학생 계정 로그인을 테스트 합니다.
     """
     def __init__(self, *args, **kwargs):
         super(TestStudentAccountAuth, self).__init__(*args, **kwargs)
@@ -16,10 +16,9 @@ class TestStudentAccountAuth(TCBase):
 
         # ---
 
-        self._request = lambda *, token=None, id=self.admin_id, pw=self.pw: self.request(
+        self._request = lambda *, id=self.student_id, pw=self.pw: self.request(
             self.method,
             self.target_uri,
-            token,
             json={
                 'id': id,
                 'password': pw
@@ -38,7 +37,7 @@ class TestStudentAccountAuth(TCBase):
 
     def testAuthFailure_id(self):
         # (1) 존재하지 않는 ID로 로그인
-        resp = self._request(id=self.student_id)
+        resp = self._request(id=self.admin_id)
 
         # (2) status code 401
         self.assertEqual(resp.status_code, 401)

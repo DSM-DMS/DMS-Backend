@@ -19,7 +19,7 @@ class TestChangePassword(TCBase):
 
         # ---
 
-        self._request = lambda *, token=None, current_pw=self.pw, new_pw=self.new_pw: self.request(
+        self._request = lambda *, token=self.student_access_token, current_pw=self.pw, new_pw=self.new_pw: self.request(
             self.method,
             self.target_uri,
             token,

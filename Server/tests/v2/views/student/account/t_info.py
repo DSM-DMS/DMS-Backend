@@ -20,7 +20,7 @@ class TestApplyStatus(TCBase):
 
         # ---
 
-        self._request = lambda *, token=None: self.request(
+        self._request = lambda *, token=self.student_access_token: self.request(
             self.method,
             self.target_uri,
             token
@@ -112,7 +112,7 @@ class TestMypage(TCBase):
 
         # ---
 
-        self._request = lambda *, token=None: self.request(
+        self._request = lambda *, token=self.student_access_token: self.request(
             self.method,
             self.target_uri,
             token
@@ -166,7 +166,7 @@ class TestPointHistory(TCBase):
 
         # ---
 
-        self._request = lambda *, token=None: self.request(
+        self._request = lambda *, token=self.student_access_token: self.request(
             self.method,
             self.target_uri,
             token
