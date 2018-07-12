@@ -1,7 +1,5 @@
 import copy
-from binascii import hexlify
 from datetime import datetime
-from hashlib import pbkdf2_hmac
 from unittest import TestCase as TC
 
 from flask import Response
@@ -57,14 +55,7 @@ class TCBase(TC):
         self.student_id = self.student_name = 'student'
         self.student_number = 3118
         self.pw = 'pw'
-        self.encrypted_pw = hexlify(
-            pbkdf2_hmac(
-                'sha256',
-                self.pw.encode(),
-                self.app.secret_key.encode(),
-                100000
-            )
-        ).decode()
+        self.encrypted_pw = self.encrypt_password(self.pw)
 
         self._create_fake_account()
         self._get_tokens()
@@ -90,6 +81,12 @@ class TCBase(TC):
             *args,
             **kwargs
         )
+
+    def encrypt_password(self, password):
+        with self.app.app_context():
+            from app.views.v2 import BaseResource
+
+            return BaseResource.encrypt_password(password)
 
     def validate_auth_response(self, resp):
         data = resp.json
