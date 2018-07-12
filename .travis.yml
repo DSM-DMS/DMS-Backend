@@ -1,5 +1,5 @@
 os: linux
-sudo: false
+sudo: required
 language: python
 cache: pip
 matrix:
