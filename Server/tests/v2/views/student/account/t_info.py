@@ -78,11 +78,11 @@ class TestApplyStatus(TCBase):
         self.assertDictEqual(resp.json, {
             'extension11': {
                 'classNum': extension_apply_11.class_,
-                'seat': extension_apply_11.seat
+                'seatNum': extension_apply_11.seat
             },
             'extension12': {
                 'classNum': extension_apply_12.class_,
-                'seat': extension_apply_12.seat
+                'seatNum': extension_apply_12.seat
             },
             'goingout': {
                 'sat': goingout_apply.on_saturday,
