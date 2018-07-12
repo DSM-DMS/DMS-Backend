@@ -5,13 +5,12 @@ from hashlib import pbkdf2_hmac
 from unittest import TestCase as TC
 
 from flask import Response
-from flask_jwt_extended import create_access_token, create_refresh_token
 import pymongo
 
 from app import create_app
 from config.test import TestConfig
 from app.models.account import AdminModel, StudentModel
-from app.models.token import TokenBase, AccessTokenModelV2, RefreshTokenModelV2
+from app.models.token import AccessTokenModelV2, RefreshTokenModelV2
 
 
 class TCBase(TC):
@@ -91,3 +90,27 @@ class TCBase(TC):
             *args,
             **kwargs
         )
+
+    def validate_auth_response(self, resp):
+        data = resp.json
+        self.assertIsInstance(data, dict)
+
+        self.assertIn('accessToken', data)
+        self.assertIn('refreshToken', data)
+
+        access_token = data['accessToken']
+        refresh_token = data['refreshToken']
+
+        self.assertIsInstance(access_token, str)
+        self.assertIsInstance(refresh_token, str)
+
+        self.assertRegex(access_token, self.token_regex)
+        self.assertRegex(refresh_token, self.token_regex)
+
+        import jwt
+
+        access_token_identity = jwt.decode(access_token, self.app.secret_key, 'HS256')
+        refresh_token_identity = jwt.decode(refresh_token, self.app.secret_key, 'HS256')
+
+        self.assertEqual(str(AccessTokenModelV2.objects.first().identity), access_token_identity)
+        self.assertEqual(str(RefreshTokenModelV2.objects.first().identity), refresh_token_identity)

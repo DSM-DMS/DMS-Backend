@@ -26,22 +26,6 @@ class TestAdminAuth(TCBase):
             }
         )
 
-    def _validate_response_data(self, resp):
-        data = resp.json
-        self.assertIsInstance(data, dict)
-
-        self.assertIn('accessToken', data)
-        self.assertIn('refreshToken', data)
-
-        access_token = data['accessToken']
-        refresh_token = data['refreshToken']
-
-        self.assertIsInstance(access_token, str)
-        self.assertIsInstance(refresh_token, str)
-
-        self.assertRegex(access_token, self.token_regex)
-        self.assertRegex(refresh_token, self.token_regex)
-
     def testAuthSuccess(self):
         # (1) 관리자 계정으로 로그인
         resp = self._request()
@@ -50,7 +34,7 @@ class TestAdminAuth(TCBase):
         self.assertEqual(resp.status_code, 201)
 
         # (3) response data
-        self._validate_response_data(resp)
+        self.validate_auth_response(resp)
 
     def testAuthFailure_id(self):
         # (1) 존재하지 않는 ID로 로그인
