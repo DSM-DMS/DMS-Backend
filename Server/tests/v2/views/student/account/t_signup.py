@@ -41,6 +41,52 @@ class TestIDVerification(TCBase):
         # (2) status code 200
         self.assertEqual(resp.status_code, 200)
 
+
+class TestUUIDVerification(TCBase):
+    """
+    UUID 유효성 체크를 테스트합니다.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super(TestUUIDVerification, self).__init__(*args, **kwargs)
+
+        self.method = self.client.post
+        self.target_uri = '/student/verify/uuid'
+
+    def setUp(self):
+        super(TestUUIDVerification, self).setUp()
+
+        # ---
+
+        self.signup_waiting = SignupWaitingModel(
+            uuid='aaaa',
+            name='DMS',
+            number=1111
+        ).save()
+
+        self._request = lambda *, uuid=self.signup_waiting.uuid: self.request(
+            self.method,
+            self.target_uri,
+            json={
+                'uuid': uuid
+            }
+        )
+
+    def testValidUUID(self):
+        # (1) 유효한 UUID로 체크
+        resp = self._request()
+
+        # (2) status code 200
+        self.assertEqual(resp.status_code, 200)
+
+    def testInvalidUUID(self):
+        # (1) 유효하지 않은 UUID로 체크
+        resp = self._request(uuid=self.signup_waiting.uuid + '12345')
+
+        # (2) status code 204
+        self.assertEqual(resp.status_code, 204)
+
+
 class TestStudentAccountSignup(TCBase):
     """
     학생 회원가입을 테스트합니다.
