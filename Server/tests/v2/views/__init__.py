@@ -106,8 +106,8 @@ class TCBase(TC):
 
         import jwt
 
-        access_token_identity = jwt.decode(access_token, self.app.secret_key, 'HS256')
-        refresh_token_identity = jwt.decode(refresh_token, self.app.secret_key, 'HS256')
+        access_token_identity = jwt.decode(access_token, self.app.secret_key, 'HS256')['identity']
+        refresh_token_identity = jwt.decode(refresh_token, self.app.secret_key, 'HS256')['identity']
 
-        self.assertEqual(str(AccessTokenModelV2.objects.first().identity), access_token_identity)
-        self.assertEqual(str(RefreshTokenModelV2.objects.first().identity), refresh_token_identity)
+        self.assertEqual(str(AccessTokenModelV2.objects[AccessTokenModelV2.objects.count() - 1].identity), access_token_identity)
+        self.assertEqual(str(RefreshTokenModelV2.objects[RefreshTokenModelV2.objects.count() - 1].identity), refresh_token_identity)
