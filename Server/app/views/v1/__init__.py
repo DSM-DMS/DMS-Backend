@@ -124,21 +124,10 @@ class Router:
         app.register_blueprint(auth.api.blueprint)
         app.register_blueprint(signup.api.blueprint)
 
-        from app.views.v1.admin.apply import extension, goingout, stay
-        app.register_blueprint(extension.api.blueprint)
-        app.register_blueprint(goingout.api.blueprint)
-        app.register_blueprint(stay.api.blueprint)
-
         from app.views.v1.admin.point import point, rule, student
         app.register_blueprint(point.api.blueprint)
         app.register_blueprint(rule.api.blueprint)
         app.register_blueprint(student.api.blueprint)
-
-        from app.views.v1.admin.post import faq, notice, preview, rule
-        app.register_blueprint(faq.api.blueprint)
-        app.register_blueprint(notice.api.blueprint)
-        app.register_blueprint(preview.api.blueprint)
-        app.register_blueprint(rule.api.blueprint)
 
         from app.views.v1.admin.report import facility_report
         app.register_blueprint(facility_report.api.blueprint)
