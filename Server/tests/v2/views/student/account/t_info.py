@@ -95,16 +95,60 @@ class TestApplyStatus(TCBase):
         # (1) 403 체크
         self.assertEqual(self._request(token=self.admin_access_token).status_code, 403)
 
+
+class TestMypage(TCBase):
     """
-    This TC tests
-        * METHOD /
+    마이페이지 API를 테스트합니다.
     """
+
+    def __init__(self, *args, **kwargs):
+        super(TestMypage, self).__init__(*args, **kwargs)
+
+        self.method = self.client.get
+        self.target_uri = '/student/info/mypage'
+
     def setUp(self):
-        super(TestStudentAccountAuth, self).setUp()
+        super(TestMypage, self).setUp()
 
         # ---
 
-    def tearDown(self):
+        self._request = lambda *, token=None: self.request(
+            self.method,
+            self.target_uri,
+            token
+        )
+
+    def _test(self):
+        # (1) 정보 조회
+        resp = self._request()
+
+        # (2) status code 200
+        self.assertEqual(resp.status_code, 200)
+
+        # (3) response data
+        self.assertDictEqual(resp.json, {
+            'badPoint': self.student.bad_point,
+            'goodPoint': self.student.good_point,
+            'name': self.student.name,
+            'number': self.student.number
+        })
+
+    def testDefaultStatus(self):
+        self._test()
+
+    def testAfterDataChange(self):
+        self.student.bad_point = 3
+        self.student.good_point = 10
+        self.student.name = 'DMS'
+        self.student.number = 3214
+        self.student.save()
+
+        self._test()
+
+    def testForbidden(self):
+        # (1) 403 체크
+        self.assertEqual(self._request(token=self.admin_access_token).status_code, 403)
+
         # ---
 
         super(TestStudentAccountAuth, self).tearDown()
