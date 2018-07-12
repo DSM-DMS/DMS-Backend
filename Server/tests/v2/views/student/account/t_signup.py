@@ -1,7 +1,45 @@
-from app.models.account import AdminModel, StudentModel, SignupWaitingModel
+from app.models.account import StudentModel, SignupWaitingModel
 
 from tests.v2.views import TCBase
 
+
+class TestIDVerification(TCBase):
+    """
+    ID 중복체크를 테스트합니다.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super(TestIDVerification, self).__init__(*args, **kwargs)
+
+        self.method = self.client.post
+        self.target_uri = '/student/verify/id'
+
+    def setUp(self):
+        super(TestIDVerification, self).setUp()
+
+        # ---
+
+        self._request = lambda *, id=self.student_id: self.request(
+            self.method,
+            self.target_uri,
+            json={
+                'id': id
+            }
+        )
+
+    def testDuplicatedID(self):
+        # (1) 중복되는 ID로 중복체크
+        resp = self._request()
+
+        # (2) status code 409
+        self.assertEqual(resp.status_code, 409)
+
+    def testValidID(self):
+        # (1) 중복되지 않는 ID로 중복체크
+        resp = self._request(id=self.student_id + '12345')
+
+        # (2) status code 200
+        self.assertEqual(resp.status_code, 200)
 
 class TestStudentAccountSignup(TCBase):
     """
