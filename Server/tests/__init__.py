@@ -24,3 +24,10 @@ from .v2.views.mixed.metadata.t_links import *
 from .v2.views.mixed.metadata.t_version import *
 
 from .v2.views.mixed.school_data.t_meal import *
+
+# ---
+
+from .v2.views.student.account.t_alteration import *
+from .v2.views.student.account.t_auth import *
+from .v2.views.student.account.t_info import *
+from .v2.views.student.account.t_signup import *

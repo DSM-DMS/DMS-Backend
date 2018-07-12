@@ -116,7 +116,7 @@ class TestAdminAccountCreation(TCBase):
         admins = AdminModel.objects
         self.assertEqual(admins.count(), 2)
 
-        admin = admins.filter(id=self.new_admin_id)
+        admin = admins.filter(id=self.new_admin_id, pw=self.encrypt_password(self.pw), name=self.admin_name)
         self.assertTrue(admin)
 
     def testCreationFailure_alreadyExists(self):
