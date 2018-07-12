@@ -27,9 +27,12 @@ def can_apply_12():
     return can_apply(APPLY_END_12)
 
 
-def apply_extension(model, class_num, seat_num) -> bool:
+def apply_extension_and_return_status(model, class_num, seat_num) -> int:
+    if class_num not in MAPS:
+        return 400
+
     if model.objects(class_=class_num, seat=seat_num):
-        return False
+        return 400
     else:
         model(
             student=g.user,
@@ -37,7 +40,7 @@ def apply_extension(model, class_num, seat_num) -> bool:
             seat=seat_num
         ).save()
 
-        return True
+        return 201
 
 
 @api.resource('/11')
@@ -67,7 +70,7 @@ class Extension11(BaseResource):
 
         payload = request.json
 
-        return Response('', 201 if apply_extension(ExtensionApply11Model, payload['classNum'], payload['seatNum']) else 205)
+        return Response('', apply_extension_and_return_status(ExtensionApply11Model, payload['classNum'], payload['seatNum']))
 
     @swag_from(EXTENSION_DELETE)
     @auth_required(StudentModel)
@@ -110,7 +113,7 @@ class Extension12(BaseResource):
 
         payload = request.json
 
-        return Response('', 201 if apply_extension(ExtensionApply12Model, payload['classNum'], payload['seatNum']) else 205)
+        return Response('', 201 if apply_extension_and_return_status(ExtensionApply12Model, payload['classNum'], payload['seatNum']) else 205)
 
     @swag_from(EXTENSION_DELETE)
     @auth_required(StudentModel)
