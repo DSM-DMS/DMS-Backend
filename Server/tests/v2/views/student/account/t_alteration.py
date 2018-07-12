@@ -1,21 +1,63 @@
+from werkzeug.security import check_password_hash
+
 from tests.v2.views import TCBase
 
 
-class TestStudentAccountAlteration(TCBase):
+class TestChangePassword(TCBase):
     """
-        학생 계정 삭제 테스트
-        * DELETE /student/account/
+    비밀번호 변경을 테스트합니다.
     """
+
+    def __init__(self, *args, **kwargs):
+        super(TestChangePassword, self).__init__(*args, **kwargs)
+
+        self.method = self.client.post
+        self.target_uri = '/student/account/change-pw'
+
+        self.new_pw = 'new'
+
     def setUp(self):
-        super(TestStudentAccountAlteration, self).setUp()
+        super(TestChangePassword, self).setUp()
 
         # ---
 
-    def tearDown(self):
-        # ---
+        self._request = lambda *, token=None, current_pw=self.pw, new_pw=self.new_pw: self.request(
+            self.method,
+            self.target_uri,
+            token,
+            json={
+                'currentPassword': current_pw,
+                'newPassword': new_pw
+            }
+        )
 
-        super(TestStudentAccountAlteration, self).tearDown()
+    def testPasswordChangeSuccess(self):
+        # (1) 비밀번호 변경
+        resp = self._request()
 
-    def test(self):
-        # -- Test --
-        pass
+        # (2) status code 200
+        self.assertEqual(resp.status_code, 200)
+
+        # (3) 데이터베이스 확인
+        self.student.reload()
+
+        self.assertTrue(check_password_hash(self.student.pw, self.new_pw))
+
+    def testPasswordChangeFailure_currentPasswordIncorrect(self):
+        # (1) 틀린 현재 비밀번호로 비밀번호 변경
+        resp = self._request(current_pw=self.pw + '12345')
+
+        # (2) status code 403
+        self.assertEqual(resp.status_code, 403)
+
+    def testPasswordChangeFailure_currentPasswordAndNewPasswordIsEqual(self):
+        # (1) 현재 비밀번호와 동일한 비밀번호를 새 비밀번호로 사용하여 변경
+        resp = self._request(new_pw=self.pw)
+
+        # (2) status code 409
+        self.assertEqual(resp.status_code, 409)
+
+    def testForbidden(self):
+        # (1) 403 체크
+        resp = self._request(token=self.admin_access_token)
+        self.assertEqual(resp.status_code, 403)
