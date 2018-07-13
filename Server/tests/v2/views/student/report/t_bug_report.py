@@ -25,7 +25,11 @@ class TestBugReport(TCBase):
         self._request = lambda *, token=self.student_access_token, platform=self.platform, content=self.content: self.request(
             self.method,
             self.target_uri,
-            token
+            token,
+            json={
+                'platform': platform,
+                'content': content
+            }
         )
 
     def testReportSuccess(self):
