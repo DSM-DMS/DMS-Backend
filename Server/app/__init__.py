@@ -28,12 +28,14 @@ def create_app(*config_cls):
 
     connect(**app_.config['MONGODB_SETTINGS'])
     # app_.config['REDIS_CLIENT'] = Redis(**app_.config['REDIS_SETTINGS'])
-    app_.config['INFLUXDB_CLIENT'] = InfluxDBClient(**app_.config['INFLUXDB_SETTINGS'])
 
-    cfg = app_.config
+    if not app_.testing:
+        app_.config['INFLUXDB_CLIENT'] = InfluxDBClient(**app_.config['INFLUXDB_SETTINGS'])
 
-    if cfg['INFLUXDB_SETTINGS']['database'] not in cfg['INFLUXDB_CLIENT'].get_list_database():
-        cfg['INFLUXDB_CLIENT'].create_database(cfg['INFLUXDB_SETTINGS']['database'])
+        cfg = app_.config
+
+        if cfg['INFLUXDB_SETTINGS']['database'] not in cfg['INFLUXDB_CLIENT'].get_list_database():
+            cfg['INFLUXDB_CLIENT'].create_database(cfg['INFLUXDB_SETTINGS']['database'])
 
     JWTManager().init_app(app_)
     CORS().init_app(app_)

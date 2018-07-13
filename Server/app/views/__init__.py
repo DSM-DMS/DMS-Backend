@@ -12,19 +12,20 @@ def after_request(response):
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'deny'
 
-    current_app.config['INFLUXDB_CLIENT'].write_points([
-        {
-            'measurement': 'api_process_data',
-            'tags': {
-                'status': response.status,
-                'method': request.method,
-                'uri': request.path
-            },
-            'fields': {
-                'count': 1
+    if not current_app.testing:
+        current_app.config['INFLUXDB_CLIENT'].write_points([
+            {
+                'measurement': 'api_process_data',
+                'tags': {
+                    'status': response.status,
+                    'method': request.method,
+                    'uri': request.path
+                },
+                'fields': {
+                    'count': 1
+                }
             }
-        }
-    ])
+        ])
 
     return response
 
