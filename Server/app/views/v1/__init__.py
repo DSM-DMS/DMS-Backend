@@ -1,6 +1,6 @@
 from functools import wraps
 from uuid import UUID
-import ujson
+import json
 import time
 
 from flask import Response, abort, g, request
@@ -107,7 +107,7 @@ class BaseResource(Resource):
         :rtype: Response
         """
         return Response(
-            ujson.dumps(data, ensure_ascii=False),
+            json.dumps(data, ensure_ascii=False),
             status_code,
             content_type='application/json; charset=utf8'
         )

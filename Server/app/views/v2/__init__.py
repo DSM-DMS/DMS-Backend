@@ -3,7 +3,7 @@ from hashlib import pbkdf2_hmac
 from uuid import UUID
 
 from functools import wraps
-import ujson
+import json
 import time
 
 from flask import Response, abort, current_app, g, request
@@ -95,7 +95,7 @@ class BaseResource(Resource):
     @classmethod
     def unicode_safe_json_dumps(cls, data, status_code=200, **kwargs):
         return Response(
-            ujson.dumps(data, ensure_ascii=False),
+            json.dumps(data, ensure_ascii=False),
             status_code,
             content_type='application/json; charset=utf8',
             **kwargs

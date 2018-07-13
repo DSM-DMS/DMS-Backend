@@ -36,7 +36,6 @@ requests==2.18.4
 schapi==1.1
 six==1.11.0
 slacker==0.9.65
-ujson==1.35
 urllib3==1.22
 Werkzeug==0.14.1
 yarl==1.2.5
