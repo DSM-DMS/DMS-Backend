@@ -40,4 +40,4 @@ class TestBugReport(TCBase):
         self.assertEqual(resp.status_code, 201)
 
     def testForbidden(self):
-        self.assertEqual(self._request().status_code, 403)
+        self.assertEqual(self._request(token=self.admin_access_token).status_code, 403)
