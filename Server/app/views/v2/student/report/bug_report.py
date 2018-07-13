@@ -35,15 +35,14 @@ class BugReport(BaseResource):
         """
         payload = request.json
 
-        if not current_app.testing:
-            self.slack_bot.chat.post_message(
-                channel='#bug-report{}'.format('-for-test' if current_app.testing else ''),
-                text='제보자: {}\n제보시간: {}\n플랫폼: {}\n내용: {}'.format(
-                    g.user.name,
-                    datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                    self.PLATFORM_TYPES[payload['platform']],
-                    payload['content']
-                )
+        self.slack_bot.chat.post_message(
+            channel='#bug-report{}'.format('-for-test' if current_app.testing else ''),
+            text='제보자: {}\n제보시간: {}\n플랫폼: {}\n내용: {}'.format(
+                g.user.name,
+                datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                self.PLATFORM_TYPES[payload['platform']],
+                payload['content']
             )
+        )
 
         return Response('', 201)
