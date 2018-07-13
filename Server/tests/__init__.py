@@ -31,3 +31,7 @@ from .v2.views.student.account.t_alteration import *
 from .v2.views.student.account.t_auth import *
 from .v2.views.student.account.t_info import *
 from .v2.views.student.account.t_signup import *
+
+from .v2.views.student.apply.t_extension.post import *
+from .v2.views.student.apply.t_extension.get import *
+from .v2.views.student.apply.t_extension.delete import *
