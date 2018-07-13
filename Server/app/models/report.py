@@ -34,8 +34,6 @@ class FacilityReportModel(ReportBase):
     }
 
     room = IntField(
-        required=True,
-        min_value=200,
-        max_value=519
+        required=True
     )
     # 호실

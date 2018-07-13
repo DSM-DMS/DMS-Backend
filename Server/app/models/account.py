@@ -24,9 +24,7 @@ class SignupWaitingModel(Document):
     # 학생 이름
 
     number = IntField(
-        required=True,
-        min_value=1101,
-        max_value=3421
+        required=True
     )
     # 학번
 
@@ -65,9 +63,7 @@ class StudentModel(AccountBase):
     }
 
     number = IntField(
-        required=True,
-        min_value=1101,
-        max_value=3421
+        required=True
     )
 
     good_point = IntField(
