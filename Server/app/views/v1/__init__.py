@@ -48,7 +48,7 @@ def auth_required(fn):
         token = AccessTokenModelV2.objects(identity=UUID(get_jwt_identity())).first()
 
         if token:
-            g.user = token.owner
+            g.user = token.key.owner
         else:
             abort(403)
 
