@@ -2,27 +2,28 @@ os: linux
 sudo: required
 language: python
 cache: pip
-matrix:
-  include:
-  - python: 3.5-dev
-  - python: 3.6
-  - python: 3.6-dev
-  - python: pypy3.5
-  allow_failures:
-  - python: nightly
-  fast_finish: true
+
+python:
+  - "3.5"
+  - "3.6"
+  - "3.7"
+
 before_install:
 - sudo docker run -d -p 8086:8086 influxdb
 - sudo docker run -d -p 27017:27017 mongo
 - cd Server
+
 install:
 - pip3 install -r requirements.txt
 - pip3 install coveralls
+
 script:
 - python3 -m "nose" --verbose --with-coverage --cover-package=. tests/__init__.py
+
 after_success:
 - coverage report
 - coveralls
+
 notifications:
   email: false
   slack:
