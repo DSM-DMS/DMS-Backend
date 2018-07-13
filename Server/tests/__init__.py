@@ -35,3 +35,4 @@ from .v2.views.student.account.t_signup import *
 from .v2.views.student.apply.t_extension.post import *
 from .v2.views.student.apply.t_extension.get import *
 from .v2.views.student.apply.t_extension.delete import *
+from .v2.views.student.apply.t_goingout import *
