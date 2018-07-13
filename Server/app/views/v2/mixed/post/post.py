@@ -1,4 +1,4 @@
-from flask import Blueprint, Response
+from flask import Blueprint, Response, abort
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -18,7 +18,7 @@ class PostList(BaseResource):
         게시글 목록 조회
         """
         if category.upper() not in CATEGORY_MODEL_MAPPING:
-            raise self.ValidationError('Invalid category')
+            abort(400)
 
         return [{
             'id': str(post.id),

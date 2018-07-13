@@ -35,9 +35,6 @@ def exception_handler(e):
     if isinstance(e, HTTPException):
         description = e.description
         code = e.code
-    elif isinstance(e, BaseResource.ValidationError):
-        description = e.description
-        code = 400
     else:
         description = ''
         code = 500

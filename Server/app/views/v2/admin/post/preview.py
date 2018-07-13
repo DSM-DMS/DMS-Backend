@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, request
+from flask import Blueprint, Response, abort, request
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -25,7 +25,7 @@ class Preview(BaseResource):
         id = payload['id']
 
         if category.upper() not in CATEGORY_MODEL_MAPPING:
-            raise self.ValidationError('Invalid category')
+            abort(400)
 
         if len(id) != 24:
             return Response('', 204)

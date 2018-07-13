@@ -111,12 +111,6 @@ class BaseResource(Resource):
             iterations=100000
         )).decode('utf-8')
 
-    class ValidationError(Exception):
-        def __init__(self, description='', *args):
-            self.description = description
-
-            super(BaseResource.ValidationError, self).__init__(*args)
-
 
 class Router:
     def __init__(self, app=None):
