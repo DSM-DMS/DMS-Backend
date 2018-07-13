@@ -7,6 +7,7 @@ from mongoengine import *
 from influxdb import InfluxDBClient
 
 from models.version import VersionModel
+from collections import defaultdict
 
 connect(**{
     'db': 'dms-v2',
@@ -25,7 +26,7 @@ CLIENT = InfluxDBClient(**{
 })
 MEASUREMENT = 'version'
 
-version_data = {1: '', 2: '', 3: ''}
+version_data = defaultdict(lambda: '')
 
 for version in VersionModel.objects:
     version_data[version.platform] = version.version

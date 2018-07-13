@@ -9,6 +9,8 @@ from influxdb import InfluxDBClient
 from models.account import StudentModel
 from models.apply import ExtensionApply11Model, ExtensionApply12Model
 
+from collections import defaultdict
+
 connect(**{
     'db': 'dms-v2',
     'host': None,
@@ -30,16 +32,7 @@ def export(measurement, model):
     CLIENT.drop_measurement(measurement)
     # 시간의 흐름에 따른 변화가 필요 없음
 
-    apply_counts = {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-        6: 0,
-        7: 0,
-        8: 0
-    }
+    apply_counts = defaultdict(lambda: 0)
 
     for apply in model.objects:
         apply_counts[apply.class_] += 1
