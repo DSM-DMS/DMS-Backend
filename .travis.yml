@@ -6,7 +6,6 @@ cache: pip
 python:
   - "3.5"
   - "3.6"
-  - "3.7"
 
 before_install:
 - sudo docker run -d -p 8086:8086 influxdb
