@@ -24,9 +24,9 @@ CLIENT = InfluxDBClient(**{
     'password': os.getenv('INFLUX_PW_{}'.format('DMS_V2'), 'root'),
     'database': 'dms_v2'
 })
-MEASUREMENT = 'stay_apply'
 
-apply_counts = {1: 0, 2: 0, 3: 0, 4: 0}
+MEASUREMENT = 'stay_apply'
+apply_counts = defaultdict(lambda: 0)
 
 for apply in StayApplyModel.objects:
     apply_counts[apply.value] += 1
