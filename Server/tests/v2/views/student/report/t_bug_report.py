@@ -1,21 +1,39 @@
+from uuid import uuid4
+
 from tests.v2.views import TCBase
 
 
-class TestStudentReportBugReport(TCBase):
+class TestBugReport(TCBase):
     """
-    This TC tests
-        * METHOD /
+    버그신고를 테스트합니다.
     """
+
+    def __init__(self, *args, **kwargs):
+        super(TestBugReport, self).__init__(*args, **kwargs)
+
+        self.method = self.client.post
+        self.target_uri = '/student/report/bug'
+
+        self.platform = 1
+        self.content = str(uuid4())
+
     def setUp(self):
-        super(TestStudentReportBugReport, self).setUp()
+        super(TestBugReport, self).setUp()
 
         # ---
 
-    def tearDown(self):
-        # ---
+        self._request = lambda *, token=self.student_access_token, platform=self.platform, content=self.content: self.request(
+            self.method,
+            self.target_uri,
+            token
+        )
 
-        super(TestStudentReportBugReport, self).tearDown()
+    def testReportSuccess(self):
+        # (1) 버그신고
+        resp = self._request()
 
-    def test(self):
-        # -- Test --
-        pass
+        # (2) status code 201
+        self.assertEqual(resp.status_code, 201)
+
+    def testForbidden(self):
+        self.assertEqual(self._request().status_code, 403)

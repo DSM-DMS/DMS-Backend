@@ -37,3 +37,5 @@ from .v2.views.student.apply.t_extension.get import *
 from .v2.views.student.apply.t_extension.delete import *
 from .v2.views.student.apply.t_goingout import *
 from .v2.views.student.apply.t_stay import *
+
+from .v2.views.student.report.t_bug_report import *
