@@ -21,8 +21,16 @@ class Stay(BaseResource):
         """
         학생 잔류 신청 확인
         """
+        stay = StayApplyModel.objects(student=g.user).first()
+
+        if not stay:
+            stay = StayApplyModel(
+                student=g.user,
+                value=4
+            ).save()
+
         return {
-            'value': StayApplyModel.objects(student=g.user).first().value
+            'value': stay.value
         }
 
     @swag_from(STAY_POST)

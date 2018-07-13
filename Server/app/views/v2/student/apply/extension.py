@@ -113,7 +113,7 @@ class Extension12(BaseResource):
 
         payload = request.json
 
-        return Response('', 201 if apply_extension_and_return_status(ExtensionApply12Model, payload['classNum'], payload['seatNum']) else 205)
+        return Response('', apply_extension_and_return_status(ExtensionApply12Model, payload['classNum'], payload['seatNum']))
 
     @swag_from(EXTENSION_DELETE)
     @auth_required(StudentModel)

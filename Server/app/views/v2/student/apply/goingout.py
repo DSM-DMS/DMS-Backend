@@ -1,6 +1,6 @@
 from datetime import datetime, time
 
-from flask import Blueprint, Response, abort, g, request, current_app
+from flask import Blueprint, Response, g, request, current_app
 from flask_restful import Api
 from flasgger import swag_from
 
@@ -21,7 +21,14 @@ class Goingout(BaseResource):
         """
         학생 외출 정보 확인
         """
-        goingout = GoingoutApplyModel.objects(studnt=g.user).first()
+        goingout = GoingoutApplyModel.objects(student=g.user).first()
+
+        if not goingout:
+            goingout = GoingoutApplyModel(
+                student=g.user,
+                on_saturday=False,
+                on_sunday=False
+            )
 
         return {
             'sat': goingout.on_saturday,
