@@ -1,9 +1,11 @@
-from app.docs.v2 import SAMPLE_OBJECT_IDS, jwt_header, json_parameter
+from app.docs.v2 import SAMPLE_OBJECT_IDS, jwt_header
 
 RULE_GET = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '상벌점 규칙 목록을 조회합니다.',
-    'parameters': [jwt_header],
+    'parameters': [
+        jwt_header
+    ],
     'responses': {
         '200': {
             'description': '목록 조회 성공',
@@ -37,10 +39,34 @@ RULE_POST = {
     'description': '상벌점 규칙을 추가합니다.',
     'parameters': [
         jwt_header,
-        json_parameter('name', '상벌점 규칙의 이름'),
-        json_parameter('pointType', 'true: 상점, false: 벌점', type='bool'),
-        json_parameter('minPoint', '최소 점수', type='int'),
-        json_parameter('maxPoint', '최대 점수', type='int')
+        {
+            'name': 'name',
+            'description': '상벌점 규칙의 이름',
+            'in': 'json',
+            'type': 'str',
+            'required': True
+        },
+        {
+            'name': 'pointType',
+            'description': 'true: 상점, false: 벌점',
+            'in': 'json',
+            'type': 'bool',
+            'required': True
+        },
+        {
+            'name': 'minPoint',
+            'description': '최소 점수',
+            'in': 'json',
+            'type': 'int',
+            'required': True
+        },
+        {
+            'name': 'maxPoint',
+            'description': '최대 점수',
+            'in': 'json',
+            'type': 'int',
+            'required': True
+        }
     ],
     'responses': {
         '201': {
