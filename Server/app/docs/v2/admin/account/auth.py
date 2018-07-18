@@ -1,23 +1,11 @@
-from app.docs.v2 import SAMPLE_ACCESS_TOKEN, SAMPLE_REFRESH_TOKEN
+from app.docs.v2 import SAMPLE_ACCESS_TOKEN, SAMPLE_REFRESH_TOKEN, json_parameter
 
 AUTH_POST = {
     'tags': ['[Admin] 계정'],
     'description': '로그인',
     'parameters': [
-        {
-            'name': 'id',
-            'description': '로그인할 관리자 ID',
-            'in': 'json',
-            'type': 'str',
-            'required': True
-        },
-        {
-            'name': 'password',
-            'description': '로그인할 관리자 비밀번호',
-            'in': 'json',
-            'type': 'str',
-            'required': True
-        }
+        json_parameter('id', '로그인할 관리자 ID'),
+        json_parameter('password', '로그인할 관리자 비밀번호')
     ],
     'responses': {
         '201': {

@@ -1,17 +1,11 @@
-from app.docs.v2 import SAMPLE_OBJECT_IDS, jwt_header
+from app.docs.v2 import SAMPLE_OBJECT_IDS, jwt_header, json_parameter
 
 POINT_GET = {
     'tags': ['[Admin] 상벌점 관리'],
     'description': '특정 학생의 상벌점 내역을 조회합니다.',
     'parameters': [
         jwt_header,
-        {
-            'name': 'id',
-            'description': '내역 조회 대상 학생 ID',
-            'in': 'path',
-            'type': 'str',
-            'required': True
-        }
+        json_parameter('id', '내역 조회 대상 학생 ID')
     ],
     'responses': {
         '200': {
@@ -49,34 +43,10 @@ POINT_POST = {
     'description': '특정 학생에 대해 상벌점을 부여합니다.',
     'parameters': [
         jwt_header,
-        {
-            'name': 'id',
-            'description': '상벌점 데이터 등록 대상 학생 ID',
-            'in': 'path',
-            'type': 'str',
-            'required': True
-        },
-        {
-            'name': 'ruleId',
-            'description': '상벌점을 부여하기 위한 규칙 ID',
-            'in': 'json',
-            'type': 'str',
-            'required': True
-        },
-        {
-            'name': 'applyGoodPoint',
-            'description': '점수를 상점에 부여할지, 벌점에 부여할지(상점인 경우 true, 벌점인 경우 false)',
-            'in': 'json',
-            'type': 'bool',
-            'required': True
-        },
-        {
-            'name': 'point',
-            'description': '점수(증가일 경우 양수, 삭감일 경우 음수)',
-            'in': 'json',
-            'type': 'int',
-            'required': True
-        }
+        json_parameter('id', '상벌점 데이터 등록 대상 학생 ID'),
+        json_parameter('ruleId', '상벌점을 부여하기 위한 규칙 ID'),
+        json_parameter('applyGoodPoint', '점수의 종류 (상점: true, 벌점 false)', type='bool'),
+        json_parameter('point', '부여할 점수 (음수도 가능)', type='int')
     ],
     'responses': {
         '201': {

@@ -22,3 +22,13 @@ jwt_header = {
     'type': 'str',
     'required': True
 }
+
+
+def json_parameter(name, description, *, type='str', required=True):
+    return {
+        'name': name,
+        'description': description,
+        'in': 'json',
+        'type': type,
+        'required': True
+    }

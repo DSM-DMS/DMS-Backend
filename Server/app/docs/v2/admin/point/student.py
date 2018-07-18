@@ -1,4 +1,4 @@
-from app.docs.v2 import jwt_header
+from app.docs.v2 import jwt_header, json_parameter
 
 STUDENT_LIST_GET = {
     'tags': ['[Admin] 상벌점 관리'],
@@ -69,20 +69,8 @@ STUDENT_PENALTY_PATCH = {
     'description': '특정 학생의 벌점 교육 상태를 변경합니다.',
     'parameters': [
         jwt_header,
-        {
-            'name': 'student_id',
-            'description': '상벌점 교육 상태 변경 대상 학생 ID',
-            'in': 'path',
-            'type': 'str',
-            'required': True
-        },
-        {
-            'name': 'status',
-            'description': '교육 상태(true : 교육됨, false : 교육되지 않음)',
-            'in': 'json',
-            'type': 'bool',
-            'required': True
-        }
+        json_parameter('student_id', '상벌점 교육상태 변경 대상 학생 ID'),
+        json_parameter('status', '교육 상태 (true: 교육중, false: 교육중이 아님)', type='bool')
     ],
     'responses': {
         '200': {
