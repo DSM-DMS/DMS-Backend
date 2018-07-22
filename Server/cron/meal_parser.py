@@ -26,7 +26,7 @@ def _parse(year, month):
         from app.models.meal import MealModel
 
     if MealModel.objects(date='{}-{:0>2}-{:0>2}'.format(year, month, 1)):
-        return
+        MealModel.objects(date_startwith='{}-{:0>2}-'.format(year, month)).delete()
 
     for index, meal in enumerate(api.get_monthly_menus(year, month)):
         if not index:
