@@ -36,3 +36,8 @@ class ExcelDownload(BaseResource):
 
     def get_status(self, apply):
         raise NotImplementedError()
+
+    employed = [3101, 3102, 3105, 3106, 3114, 3116, 3118,
+                3203, 3205, 3207, 3211, 2313,
+                3301, 3302, 3303, 3304, 3305, 3307, 3309, 3310,
+                3402, 3403, 3411, 3414, 3415]

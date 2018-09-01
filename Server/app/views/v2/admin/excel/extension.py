@@ -29,6 +29,9 @@ class ExtensionExcelDownload(ExcelDownload):
         for apply in self.model.objects:
             student = apply.student
 
+            if student.number in self.employed:
+                continue
+
             number_cell, name_cell, status_cell = get_cell_positions_from_student_number(student)
 
             ws[number_cell] = student.number
