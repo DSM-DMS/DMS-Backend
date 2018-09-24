@@ -1,0 +1,20 @@
+version: '2.1'
+
+services:
+  mongodb:
+    image: mongo:4.1
+    ports:
+      - "27017:27017"
+
+  influxdb:
+    image: influxdb:1.5
+    ports:
+      - "8086:8086"
+
+  dms:
+    build: .
+    ports:
+      - "80:80"
+    links:
+      - mongodb
+      - influxdb
