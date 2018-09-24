@@ -6,18 +6,11 @@ services:
     ports:
       - "27017:27017"
 
-  influxdb:
-    image: influxdb:1.6
-    ports:
-      - "8086:8086"
-
   dms:
     build: .
     ports:
       - "80:80"
     depends_on:
       - mongodb
-      - influxdb
     links:
       - mongodb
-      - influxdb
