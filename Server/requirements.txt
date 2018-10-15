@@ -33,7 +33,7 @@ pytz==2018.4
 PyYAML==3.12
 redis==2.10.6
 requests==2.18.4
-schapi==1.1
+schapi==1.2
 six==1.11.0
 slacker==0.9.65
 urllib3==1.22
