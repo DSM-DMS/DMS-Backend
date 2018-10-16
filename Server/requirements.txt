@@ -1,10 +1,10 @@
-aiohttp==3.3.4
-aniso8601==3.0.0
+aiohttp==3.4.4
+aniso8601==3.0.2
 async-timeout==3.0.1
 attrs==18.2.0
 beautifulsoup4==4.6.3
 bs4==0.0.1
-certifi==2018.4.16
+certifi==2018.10.15
 chardet==3.0.4
 click==6.7
 et-xmlfile==1.0.1
@@ -29,8 +29,8 @@ openpyxl==2.5.4
 PyJWT==1.6.4
 pymongo==3.6.1
 python-dateutil==2.7.3
-pytz==2018.4
-PyYAML==3.12
+pytz==2018.5
+PyYAML==3.13
 redis==2.10.6
 requests==2.18.4
 schapi==1.2
